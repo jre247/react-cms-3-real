@@ -1,12 +1,12 @@
 import React from 'react';
 import Footer from './Footer';
-import Navbar from './Navbar';
+import Header from './Header';
 
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <Navbar history={this.props.history} />
+      <div className="fixed-container">
+        <Header />
         {this.props.children}
         <Footer />
       </div>
