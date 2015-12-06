@@ -12,6 +12,7 @@ Run the following script in psql to create the database and necessary tables:
 CREATE USER Jason WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
 GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
+
 drop table content;
 drop table page;
 drop table content_type;
@@ -44,7 +45,8 @@ CREATE TABLE content
 	Value VARCHAR(840) null,
 	PageId INTEGER NOT NULL references page(Id),
 	ContentTypeId INTEGER NOT NULL references content_type(Id),
-	UserId INTEGER NULL references wedding_user(Id), 	
+	UserId INTEGER NULL references wedding_user(Id),
+	SortOrder INTEGER NULL,
 	DateCreated TIMESTAMP null,
 	IsActive BOOLEAN
 );

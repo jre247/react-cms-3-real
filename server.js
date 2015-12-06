@@ -23,9 +23,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var contentDb = require('./db/content-db');
 app.get('/api/pages/:id', function(req, res, next) {
   var pageId = req.params.id;
-  console.log('getting content for page with id: ' + pageId);
-  contentDb.get({pageId: pageId}).then(function(data){
-    console.log('finished getting content with data');
+  var userId = req.params.userId || 1;
+  contentDb.get(pageId, userId).then(function(data){
     res.status(200).send(data);
   });
 });
@@ -34,7 +33,6 @@ app.post('/api/pages/:id', function(req, res, next) {
   var contents = req.body.contents;
   var userId = req.params.userId || 1;
   contentDb.save(pageId, userId, contents).then(function(data){
-    console.log('finished getting content with data');
     res.status(200).send(data);
   });
 });

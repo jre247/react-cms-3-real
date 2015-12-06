@@ -99,7 +99,7 @@ var VenueActions = (function () {
     value: function getVenueData() {
       var _this = this;
 
-      var pageId = 2;
+      var pageId = 1;
       console.log('getting page content for page: ' + pageId);
       $.ajax({
         url: '/api/pages/' + pageId
@@ -344,22 +344,26 @@ var EditVenue = (function (_React$Component) {
         name: 'Venue Name',
         description: 'Venue Name',
         value: name,
-        contentType: 4
+        contentType: 4,
+        sortOrder: 1
       }, {
         name: 'Venue Image Url',
         description: 'Venue Image Url',
         value: url,
-        contentType: 1
+        contentType: 1,
+        sortOrder: 2
       }, {
         name: 'Venue Description',
         description: 'Venue Description',
         value: description,
-        contentType: 2
+        contentType: 2,
+        sortOrder: 3
       }, {
         name: 'Venue Ceremony Time',
         description: 'Venue Ceremony Time',
         value: ceremonyTime,
-        contentType: 2
+        contentType: 2,
+        sortOrder: 4
       }];
 
       _VenueActions2.default.saveVenueData(contents);
@@ -1041,45 +1045,66 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'Detail' },
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/venue/edit' },
-          'Edit'
-        ),
-        _react2.default.createElement(
+      if (!this.state.name) {
+        return _react2.default.createElement(
           'div',
-          { className: 'Content-text' },
+          null,
           _react2.default.createElement(
-            'span',
-            null,
-            this.state.name
+            _reactRouter.Link,
+            { className: 'Navigation-link', to: '/venue/edit' },
+            'Edit'
+          ),
+          _react2.default.createElement(
+            'div',
+            { 'class': 'emptyPageContent' },
+            _react2.default.createElement(
+              'span',
+              null,
+              'There is no content yet.'
+            )
           )
-        ),
-        _react2.default.createElement(
+        );
+      } else {
+        return _react2.default.createElement(
           'div',
-          { className: 'Content-text' },
+          { className: 'Detail' },
           _react2.default.createElement(
-            'span',
-            null,
-            this.state.ceremonytime
-          )
-        ),
-        _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.url, alt: 'Venue Image' }),
-        _react2.default.createElement(
-          'div',
-          { className: 'Content-text' },
+            _reactRouter.Link,
+            { className: 'Navigation-link', to: '/venue/edit' },
+            'Edit'
+          ),
           _react2.default.createElement(
-            'span',
-            null,
-            ' ',
-            this.state.description,
-            ' '
+            'div',
+            { className: 'Content-text' },
+            _react2.default.createElement(
+              'span',
+              null,
+              this.state.name
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-text' },
+            _react2.default.createElement(
+              'span',
+              null,
+              this.state.ceremonyTime
+            )
+          ),
+          _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.url, alt: 'Venue Image' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-text' },
+            _react2.default.createElement(
+              'span',
+              null,
+              ' ',
+              this.state.description,
+              ' '
+            )
           )
-        )
-      );
+        );
+      }
     }
   }]);
 
@@ -1304,10 +1329,10 @@ var VenueStore = (function () {
       console.log('onGetVenueDataSuccess');
       var contentItems = data;
       var venue = {
-        name: contentItems[0],
-        image: contentItems[1],
-        description: contentItems[2],
-        ceremonyTime: contentItems[3]
+        name: contentItems[0].value,
+        image: contentItems[1].value,
+        description: contentItems[2].value,
+        ceremonyTime: contentItems[3].value
       };
       console.log('contentItems.length: ' + contentItems.length);
       console.log('contentItems[0]: ' + contentItems[0]);

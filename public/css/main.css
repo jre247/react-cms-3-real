@@ -7411,3 +7411,8 @@ img.mfp-img {
   background: rgba(0, 0, 0, 0.3);
 }
 /* End Navigation */
+/* Vendor */
+.emptyPageContent {
+  text-align: center;
+}
+/* End Vendor */

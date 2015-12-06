@@ -17,7 +17,7 @@ class VenueActions {
   }
 
   getVenueData() {
-    var pageId = 2;
+    var pageId = 1;
     console.log('getting page content for page: ' + pageId);
     $.ajax({
       url: '/api/pages/' + pageId

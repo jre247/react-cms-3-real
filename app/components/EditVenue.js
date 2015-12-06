@@ -28,25 +28,29 @@ class EditVenue extends React.Component {
       name: 'Venue Name',
       description: 'Venue Name',
       value: name,
-      contentType: 4
+      contentType: 4,
+      sortOrder: 1
     },
     {
       name: 'Venue Image Url',
       description: 'Venue Image Url',
       value: url,
       contentType: 1,
+      sortOrder: 2
     },
     {
       name: 'Venue Description',
       description: 'Venue Description',
       value: description,
       contentType: 2,
+      sortOrder: 3
     },
     {
       name: 'Venue Ceremony Time',
       description: 'Venue Ceremony Time',
       value: ceremonyTime,
       contentType: 2,
+      sortOrder: 4
     }];
 
     VenueActions.saveVenueData(contents);

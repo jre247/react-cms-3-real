@@ -13,8 +13,10 @@ exports.save = function(pageId, userId, contents){
           processError(done, err);
         }
 
+        client.query('UPDATE content set IsActive = false where PageId = $1', [pageId]);
+
         client.query(buildBulkInsertStatement(pageId, userId, contents));
-        
+
 
         done();
 
@@ -43,6 +45,8 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(userId);
         valueClause.push('$' + params.length);
+        params.push(row.sortOrder);
+        valueClause.push('$' + params.length);
         params.push(new Date());
         valueClause.push('$' + params.length);
         params.push(true);
@@ -50,13 +54,13 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) VALUES ' +
+        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, SortOrder, DateCreated, IsActive) VALUES ' +
             chunks.join(', '),
         values: params
     }
 }
 
-exports.get = function(data){
+exports.get = function(pageId, userId){
   var results = [];
   var promise = new Promise();
 
@@ -66,9 +70,8 @@ exports.get = function(data){
           processError(done, err);
         }
 
-        console.log('running query.');
-        console.log('data.pageId: ' + data.pageId);
-        var query = client.query("select * from content where isactive = true And pageid = $1", [data.pageId]);
+        pageId = parseInt(pageId);
+        var query = client.query("select * from content where IsActive = true And PageId = $1 order by SortOrder", [pageId]);
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

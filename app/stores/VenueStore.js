@@ -15,10 +15,10 @@ class VenueStore {
     console.log('onGetVenueDataSuccess');
     var contentItems = data;
     var venue = {
-      name: contentItems[0],
-      image: contentItems[1],
-      description: contentItems[2],
-      ceremonyTime: contentItems[3],
+      name: contentItems[0].value,
+      image: contentItems[1].value,
+      description: contentItems[2].value,
+      ceremonyTime: contentItems[3].value,
     }
     console.log('contentItems.length: ' + contentItems.length);
     console.log('contentItems[0]: ' + contentItems[0]);

@@ -10,7 +10,7 @@ class EditVenueActions {
     );
   }
   saveVenueData(contents) {
-    var pageId = 2;
+    var pageId = 1;
     console.log('saving venue data for page: ' + pageId);
     $.ajax({
         type: 'POST',
