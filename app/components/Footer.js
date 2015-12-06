@@ -28,7 +28,7 @@ class Footer extends React.Component {
     return (
       <footer>
         <div className='container'>
-          Footer
+
         </div>
       </footer>
     );

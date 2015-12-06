@@ -7358,6 +7358,13 @@ img.mfp-img {
 }
 /* End Header */
 /* App */
+.Empty-Page-Content {
+  text-align: center;
+}
+.Edit-Content-Button {
+  text-align: right;
+  margin-right: 4%;
+}
 .fixed-container {
   background: white url(http://files.nearlyweds.com.s3.amazonaws.com/template_images/4731_46a9925d308d8f286b5de482380cd731d155c224.jpg) no-repeat scroll top left;
 }
@@ -7412,7 +7419,4 @@ img.mfp-img {
 }
 /* End Navigation */
 /* Vendor */
-.emptyPageContent {
-  text-align: center;
-}
 /* End Vendor */

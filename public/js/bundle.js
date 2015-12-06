@@ -496,11 +496,7 @@ var Footer = (function (_React$Component) {
       return _react2.default.createElement(
         'footer',
         null,
-        _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          'Footer'
-        )
+        _react2.default.createElement('div', { className: 'container' })
       );
     }
   }]);
@@ -1050,13 +1046,17 @@ var Venue = (function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/venue/edit' },
-            'Edit'
+            'div',
+            { className: 'Edit-Content-Button' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/venue/edit' },
+              'Edit'
+            )
           ),
           _react2.default.createElement(
             'div',
-            { 'class': 'emptyPageContent' },
+            { className: 'Empty-Page-Content' },
             _react2.default.createElement(
               'span',
               null,
@@ -1069,9 +1069,13 @@ var Venue = (function (_React$Component) {
           'div',
           { className: 'Detail' },
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/venue/edit' },
-            'Edit'
+            'div',
+            { className: 'Edit-Content-Button' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/venue/edit' },
+              'Edit'
+            )
           ),
           _react2.default.createElement(
             'div',
