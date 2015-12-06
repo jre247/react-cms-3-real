@@ -29,7 +29,16 @@ app.get('/api/pages/:id', function(req, res, next) {
     res.status(200).send(data);
   });
 });
-
+app.post('/api/pages/:id', function(req, res, next) {
+  var pageId = req.params.id;
+  var contents = req.params.contents;
+  console.log('contents.length: ' + contents.length);
+  console.log('getting content for page with id: ' + pageId);
+  contentDb.save({pageId: pageId, venue: venue}).then(function(data){
+    console.log('finished getting content with data');
+    res.status(200).send(data);
+  });
+});
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {

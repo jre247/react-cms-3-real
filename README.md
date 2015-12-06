@@ -12,13 +12,13 @@ Run the following script in psql to create the database and necessary tables:
 CREATE USER Jason WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
 GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
-DROP SCHEMA IF EXISTS content;
-DROP SCHEMA IF EXISTS content_type;
-DROP SCHEMA IF EXISTS page;
-DROP SCHEMA IF EXISTS wedding_user_role;
-DROP SCHEMA IF EXISTS wedding_user;
-DROP SCHEMA IF EXISTS wedding_role;
-CREATE TABLE wedding_user (Id SERIAL PRIMARY KEY, Name VARCHAR(40) not null, IsActive BOOLEAN);
+drop table content;
+drop table page;
+drop table content_type;
+drop table wedding_user_role;
+drop table wedding_role;
+drop table wedding_user;
+CREATE TABLE wedding_user (Id SERIAL PRIMARY KEY, FirstName VARCHAR(40) not null, LastName VARCHAR(40) not null, Email VARCHAR(40), IsActive BOOLEAN);
 CREATE TABLE wedding_role (Id SERIAL PRIMARY KEY, Name VARCHAR(40) not null, IsActive BOOLEAN);
 CREATE TABLE wedding_user_role(Id SERIAL PRIMARY KEY, UserId INTEGER not null references wedding_user(Id), RoleId INTEGER not null references wedding_role (Id), IsActive BOOLEAN);
 CREATE TABLE page
@@ -55,6 +55,6 @@ insert into content_type (Name, Description, IsActive) values ('Description', 'D
 insert into content_type (Name, Description, IsActive) values ('Title', 'Title', true);
 insert into content_type (Name, Description, IsActive) values ('ShortDescription', 'ShortDescription', true);
 
-insert into wedding_user (Name, IsActive) Values ('Jason Evans', true);
+insert into wedding_user (FirstName, LastName, Email, IsActive) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
 
 insert into page(Name, Description, UserId, DateCreated, IsActive) values ('Venue', 'Venue', 1, null, true);

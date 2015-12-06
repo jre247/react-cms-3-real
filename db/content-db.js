@@ -2,9 +2,9 @@ var pg = require('pg');
 var Promise = require("node-promise").Promise;
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/wedding';
 
-exports.insert = function(data){
+exports.save = function(data){
   try{
-    console.log('starting insert.');
+    console.log('starting save.');
 
     var results = [];
     var promise = new Promise();

@@ -91,7 +91,7 @@ var VenueActions = (function () {
   function VenueActions() {
     _classCallCheck(this, VenueActions);
 
-    this.generateActions('getVenueDataSuccess', 'getVenueDataFail', 'updateAjaxAnimation');
+    this.generateActions('getVenueDataSuccess', 'getVenueDataFail', 'saveVenueDataSuccess', 'saveVenueDataError', 'updateAjaxAnimation');
   }
 
   _createClass(VenueActions, [{
@@ -108,6 +108,23 @@ var VenueActions = (function () {
         _this.actions.getVenueDataSuccess(data);
       }).fail(function () {
         _this.actions.getVenueDataFail();
+      });
+    }
+  }, {
+    key: 'saveVenueData',
+    value: function saveVenueData(contents) {
+      var _this2 = this;
+
+      var pageId = 2;
+      console.log('saving venue data for page: ' + pageId);
+      $.ajax({
+        type: 'POST',
+        url: '/api/pages/' + pageId,
+        data: { contents: contents }
+      }).done(function (data) {
+        _this2.actions.saveVenueDataSuccess(data.message);
+      }).fail(function (jqXhr) {
+        _this2.actions.saveVenueDataFail(jqXhr.responseJSON.message);
       });
     }
   }]);
@@ -259,7 +276,7 @@ var App = (function (_React$Component) {
 exports.default = App;
 
 },{"./Footer":8,"./Header":10,"react":"react"}],7:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -267,9 +284,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _VenueStore = require('../stores/VenueStore');
+
+var _VenueStore2 = _interopRequireDefault(_VenueStore);
+
+var _VenueActions = require('../actions/VenueActions');
+
+var _VenueActions2 = _interopRequireDefault(_VenueActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -289,61 +314,83 @@ var EditVenue = (function (_React$Component) {
   }
 
   _createClass(EditVenue, [{
-    key: "handleSubmit",
+    key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
 
-      var description = this.refs.description.getDOMNode().value;
-      var name = this.refs.name.getDOMNode().value;
-      var url = this.refs.url.getDOMNode().value;
-      var ceremonyTime = this.refs.ceremonyTime.getDOMNode().value;
+      var description = this.state.venue.description;
+      var name = this.state.venue.name;
+      var url = this.state.venue.url;
+      var ceremonyTime = this.state.venue.ceremonyTime;
 
-      //this.transitionTo('save-venue', {}, {description, name, url, ceremonyTime});
+      var contents = [{
+        name: 'Venue Name',
+        description: 'Venue Name',
+        value: name,
+        contentType: 4
+      }, {
+        name: 'Venue Image Url',
+        description: 'Venue Image Url',
+        value: url,
+        contentType: 1
+      }, {
+        name: 'Venue Description',
+        description: 'Venue Description',
+        value: description,
+        contentType: 2
+      }, {
+        name: 'Venue Ceremony Time',
+        description: 'Venue Ceremony Time',
+        value: ceremonyTime,
+        contentType: 2
+      }];
+
+      _VenueActions2.default.SaveVenue(contents);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "Detail" },
+        'div',
+        { className: 'Detail' },
         _react2.default.createElement(
-          "h1",
-          { className: "Heading Heading--alt" },
-          "Edit Venue"
+          'h1',
+          { className: 'Heading Heading--alt' },
+          'Edit Venue'
         ),
         _react2.default.createElement(
-          "div",
-          { className: "Content padBox" },
+          'div',
+          { className: 'Content padBox' },
           _react2.default.createElement(
-            "form",
-            { action: "/save-venue", onSubmit: this.handleSubmit },
+            'form',
+            { action: '/save-venue', onSubmit: this.handleSubmit },
             _react2.default.createElement(
-              "p",
+              'p',
               null,
-              _react2.default.createElement("input", { ref: "name", name: "name", placeholder: "Name" })
+              _react2.default.createElement('input', { ref: 'name', name: 'name', placeholder: 'Name' })
             ),
             _react2.default.createElement(
-              "p",
+              'p',
               null,
-              _react2.default.createElement("input", { ref: "url", name: "url", placeholder: "Url" })
+              _react2.default.createElement('input', { ref: 'url', name: 'url', placeholder: 'Url' })
             ),
             _react2.default.createElement(
-              "p",
+              'p',
               null,
-              _react2.default.createElement("input", { ref: "ceremonyTime", name: "ceremonyTime", placeholder: "Ceremony Time" })
+              _react2.default.createElement('input', { ref: 'ceremonyTime', name: 'ceremonyTime', placeholder: 'Ceremony Time' })
             ),
             _react2.default.createElement(
-              "p",
+              'p',
               null,
-              _react2.default.createElement("textarea", { ref: "description", name: "description", placeholder: "Description" })
+              _react2.default.createElement('textarea', { ref: 'description', name: 'description', placeholder: 'Description' })
             ),
             _react2.default.createElement(
-              "p",
+              'p',
               null,
               _react2.default.createElement(
-                "button",
-                { type: "submit" },
-                "Save"
+                'button',
+                { type: 'submit' },
+                'Save'
               )
             )
           )
@@ -357,7 +404,7 @@ var EditVenue = (function (_React$Component) {
 
 exports.default = EditVenue;
 
-},{"react":"react"}],8:[function(require,module,exports){
+},{"../actions/VenueActions":3,"../stores/VenueStore":20,"react":"react"}],8:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

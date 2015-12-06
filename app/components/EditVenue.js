@@ -1,15 +1,42 @@
 import React from 'react';
+import VenueStore from '../stores/VenueStore';
+import VenueActions from '../actions/VenueActions';
 
 class EditVenue extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    var description = this.refs.description.getDOMNode().value;
-    var name = this.refs.name.getDOMNode().value;
-    var url = this.refs.url.getDOMNode().value;
-    var ceremonyTime = this.refs.ceremonyTime.getDOMNode().value;
+    var description = this.state.venue.description;
+    var name = this.state.venue.name;
+    var url = this.state.venue.url;
+    var ceremonyTime = this.state.venue.ceremonyTime;
 
-    //this.transitionTo('save-venue', {}, {description, name, url, ceremonyTime});
+    var contents = [{
+      name: 'Venue Name',
+      description: 'Venue Name',
+      value: name,
+      contentType: 4
+    },
+    {
+      name: 'Venue Image Url',
+      description: 'Venue Image Url',
+      value: url,
+      contentType: 1,
+    },
+    {
+      name: 'Venue Description',
+      description: 'Venue Description',
+      value: description,
+      contentType: 2,
+    },
+    {
+      name: 'Venue Ceremony Time',
+      description: 'Venue Ceremony Time',
+      value: ceremonyTime,
+      contentType: 2,
+    }];
+
+    VenueActions.SaveVenue(contents);
   }
   render() {
     return (
