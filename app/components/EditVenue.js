@@ -1,30 +1,29 @@
 import React from 'react';
-import EditVenueStore from '../stores/EditVenueStore';
-import EditVenueActions from '../actions/EditVenueActions';
+import VenueStore from '../stores/VenueStore';
+import VenueActions from '../actions/VenueActions';
 
 class EditVenue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = EditVenueStore.getState();
+    this.state = VenueStore.getState();
     this.onChange = this.onChange.bind(this);
   }
   onChange(state) {
     this.setState(state);
   }
   componentDidMount() {
-    EditVenueStore.listen(this.onChange);
-    EditVenueActions.getVenueData();
+    VenueStore.listen(this.onChange);
+    VenueActions.getVenueData();
   }
   componentWillUnmount() {
-    EditVenueStore.unlisten(this.onChange);
+    VenueStore.unlisten(this.onChange);
   }
   handleSubmit(event) {
     event.preventDefault();
-
-    var description = this.state.venue.description;
-    var name = this.state.venue.name;
-    var url = this.state.venue.url;
-    var ceremonyTime = this.state.venue.ceremonyTime;
+    var description = this.state.description;
+    var name = this.state.name;
+    var url = this.state.url;
+    var ceremonyTime = this.state.ceremonyTime;
 
     var contents = [{
       name: 'Venue Name',
@@ -58,22 +57,23 @@ class EditVenue extends React.Component {
       <div className="Detail">
           <h1 className="Heading Heading--alt">Edit Venue</h1>
           <div className="Content padBox">
-            <form action="/save-venue" onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit.bind(this)}>
               <p>
-                <input ref="name" name="name" placeholder="Name"/>
+                <input ref="name" name="name" placeholder="Name" value={this.state.venue.name}
+                  onChange={VenueActions.updateName}/>
               </p>
               <p>
-                <input ref="url" name="url" placeholder="Url"/>
+                <input ref="url" name="url" placeholder="Url" value={this.state.url}/>
               </p>
               <p>
-                <input ref="ceremonyTime" name="ceremonyTime" placeholder="Ceremony Time"/>
+                <input ref="ceremonyTime" name="ceremonyTime" placeholder="Ceremony Time" value={this.state.ceremonyTime}/>
               </p>
               <p>
-                <textarea ref="description" name="description" placeholder="Description"/>
+                <textarea ref="description" name="description" placeholder="Description" value={this.state.description}/>
               </p>
 
               <p>
-                <button type="submit">Save</button>
+                <button type='submit' className='btn btn-primary'>Save</button>
               </p>
             </form>
           </div>

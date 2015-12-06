@@ -4,7 +4,10 @@ import VenueActions from '../actions/VenueActions';
 class VenueStore {
   constructor() {
     this.bindActions(VenueActions);
-    this.venue = {};
+    this.name = '';
+    this.description = '';
+    this.ceremonyTime = '';
+    this.url = '';
     this.ajaxAnimationClass = '';
   }
 
@@ -24,6 +27,40 @@ class VenueStore {
 
   onGetVenueDataFail(jqXhr) {
     onsole.log('onGetVenueDataFail');
+    toastr.error(jqXhr.responseJSON.message);
+  }
+
+  onSaveVenueDataSuccess(data) {
+    console.log('onSaveVenueDataSuccess');
+
+  }
+
+  onUpdateName(event) {
+    this.name = event.target.value;
+    this.nameValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateDescription(event) {
+    this.description = event.target.value;
+    this.nameValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateUrl(event) {
+    this.url = event.target.value;
+    this.nameValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateCeremonyTime(event) {
+    this.ceremonyTime = event.target.value;
+    this.nameValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onSaveVenueDataFail(jqXhr) {
+    onsole.log('onSaveVenueDataFail');
     toastr.error(jqXhr.responseJSON.message);
   }
 
