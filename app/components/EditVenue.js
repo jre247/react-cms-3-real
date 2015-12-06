@@ -1,8 +1,23 @@
 import React from 'react';
-import VenueStore from '../stores/VenueStore';
-import VenueActions from '../actions/VenueActions';
+import EditVenueStore from '../stores/EditVenueStore';
+import EditVenueActions from '../actions/EditVenueActions';
 
 class EditVenue extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = EditVenueStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+  onChange(state) {
+    this.setState(state);
+  }
+  componentDidMount() {
+    EditVenueStore.listen(this.onChange);
+    EditVenueActions.getVenueData();
+  }
+  componentWillUnmount() {
+    EditVenueStore.unlisten(this.onChange);
+  }
   handleSubmit(event) {
     event.preventDefault();
 
