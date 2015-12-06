@@ -20,6 +20,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var contentDb = require('./db/content-db');
+app.get('/api/pages/:id', function(req, res, next) {
+  var pageId = req.params.id;
+  console.log('getting content for page with id: ' + pageId);
+  contentDb.get({pageId: pageId}).then(function(data){
+    console.log('finished getting content with data');
+    res.status(200).send(data);
+  });
+});
+
+
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
@@ -50,6 +61,7 @@ io.sockets.on('connection', function(socket) {
     io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
   });
 });
+
 
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

@@ -13,6 +13,7 @@ CREATE USER Jason WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
 GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
 DROP SCHEMA IF EXISTS content;
+DROP SCHEMA IF EXISTS content_type;
 DROP SCHEMA IF EXISTS page;
 DROP SCHEMA IF EXISTS wedding_user_role;
 DROP SCHEMA IF EXISTS wedding_user;
@@ -29,14 +30,31 @@ CREATE TABLE page
 	DateCreated TIMESTAMP null,
 	IsActive BOOLEAN
 );
+CREATE TABLE content_type
+(
+	Id SERIAL PRIMARY KEY,
+	Name VARCHAR(40) not null,
+	Description VARCHAR(840) null,
+	IsActive BOOLEAN
+);
 CREATE TABLE content
 (
 	Id SERIAL PRIMARY KEY,
 	Name VARCHAR(40) not null,
 	Value VARCHAR(840) null,
 	PageId INTEGER NOT NULL references page(Id),
+	ContentTypeId INTEGER NOT NULL references content_type(Id),
 	UserId INTEGER NULL references wedding_user(Id), 	
 	DateCreated TIMESTAMP null,
 	IsActive BOOLEAN
 );
 CREATE INDEX conect_page_idx ON content (PageId, DateCreated);
+
+insert into content_type (Name, Description, IsActive) values ('Image', 'Url for an Image', true);
+insert into content_type (Name, Description, IsActive) values ('Description', 'Description', true);
+insert into content_type (Name, Description, IsActive) values ('Title', 'Title', true);
+insert into content_type (Name, Description, IsActive) values ('ShortDescription', 'ShortDescription', true);
+
+insert into wedding_user (Name, IsActive) Values ('Jason Evans', true);
+
+insert into page(Name, Description, UserId, DateCreated, IsActive) values ('Venue', 'Venue', 1, null, true);

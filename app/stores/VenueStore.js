@@ -8,8 +8,23 @@ class VenueStore {
     this.ajaxAnimationClass = '';
   }
 
-  onGetVenueData(data) {
-    this.venue = data.venue;
+  onGetVenueDataSuccess(data) {
+    console.log('onGetVenueDataSuccess');
+    var contentItems = data;
+    var venue = {
+      name: contentItems[0],
+      image: contentItems[1],
+      description: contentItems[2],
+      ceremonyTime: contentItems[3],
+    }
+    console.log('contentItems.length: ' + contentItems.length);
+    console.log('contentItems[0]: ' + contentItems[0]);
+    this.venue = venue;
+  }
+
+  onGetVenueDataFail(jqXhr) {
+    onsole.log('onGetVenueDataFail');
+    toastr.error(jqXhr.responseJSON.message);
   }
 
   onUpdateAjaxAnimation(className) {
