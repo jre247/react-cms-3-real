@@ -24,7 +24,6 @@ class EditVenue extends React.Component {
     var name = this.state.name;
     var url = this.state.url;
     var ceremonyTime = this.state.ceremonyTime;
-    debugger;
     var contents = [{
       name: 'Venue Name',
       description: 'Venue Name',

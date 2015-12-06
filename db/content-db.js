@@ -3,46 +3,22 @@ var _ = require('underscore-node');
 var Promise = require("node-promise").Promise;
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/wedding';
 
-exports.save = function(contents){
+exports.save = function(pageId, userId, contents){
   try{
-    console.log('starting save.');
-
     var results = [];
     var promise = new Promise();
 
     pg.connect(connectionString, function(err, client, done) {
-        console.log('starting pg connect for insert.');
-
         if(err) {
           processError(done, err);
         }
 
-        console.log('about to insert content list.');
+        client.query(buildBulkInsertStatement(pageId, userId, contents));
+        
 
-        _.each(contents, function(contentItem){
-          console.log('about to insert one content item.');
-          console.log('content item name: ' + contentItem.name);
-          console.log('content item value: ' + contentItem.value);
+        done();
 
-          client.query(
-            "INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) values($1, $2, $3, $4, $5, $6, $7, $8)",
-            [contentItem.name, contentItem.value, contentItem.pageId, contentItem.contentTypeId, contentItem.userId,
-              contentItem.dateCreated, true]
-          );
-        });
-
-        var query = client.query("select * from Venue where IsActive = true");
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            console.log('pushing row for insert.');
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            console.log('starting process query end for insert.');
-            promise.resolve(processQueryEnd(done, results));
-        });
+        promise.resolve();
     });
   }
   catch(ex){
@@ -52,13 +28,37 @@ exports.save = function(contents){
   return promise;
 }
 
+var buildBulkInsertStatement = function(pageId, userId, rows) {
+    var params = []
+    var chunks = []
+    _.each(rows, function(row){
+        var valueClause = [];
+        params.push(row.name);
+        valueClause.push('$' + params.length);
+        params.push(row.value);
+        valueClause.push('$' + params.length);
+        params.push(pageId);
+        valueClause.push('$' + params.length);
+        params.push(row.contentType);
+        valueClause.push('$' + params.length);
+        params.push(userId);
+        valueClause.push('$' + params.length);
+        params.push(new Date());
+        valueClause.push('$' + params.length);
+        params.push(true);
+        valueClause.push('$' + params.length);
+        chunks.push('(' + valueClause.join(', ') + ')');
+    });
+    return {
+        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) VALUES ' +
+            chunks.join(', '),
+        values: params
+    }
+}
+
 exports.get = function(data){
-  console.log('db get for venue.');
   var results = [];
   var promise = new Promise();
-  console.log('promise: ' + promise);
-  console.log('pg: ' + pg);
-  console.log('connection string: ' + connectionString);
 
   try{
     pg.connect(connectionString, function(err, client, done) {

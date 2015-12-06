@@ -17,7 +17,7 @@ var app = express();
 app.set('port', process.env.PORT || 4400);
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var contentDb = require('./db/content-db');
@@ -31,12 +31,9 @@ app.get('/api/pages/:id', function(req, res, next) {
 });
 app.post('/api/pages/:id', function(req, res, next) {
   var pageId = req.params.id;
-  console.log('req.body: ' + req.body);
-  var contents = req.body;
-  console.log('req.body[0]: ' + req.body[0]);
-  console.log('contents.length: ' + contents.length);
-  console.log('getting content for page with id: ' + pageId);
-  contentDb.save({pageId: pageId, contents: contents[0]}).then(function(data){
+  var contents = req.body.contents;
+  var userId = req.params.userId || 1;
+  contentDb.save(pageId, userId, contents).then(function(data){
     console.log('finished getting content with data');
     res.status(200).send(data);
   });

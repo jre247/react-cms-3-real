@@ -32,9 +32,7 @@ class VenueActions {
   }
 
   saveVenueData(contents) {
-    var pageId = 2;
-    console.log('saving venue data for page: ' + pageId);
-    debugger;
+    var pageId = 1;
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,

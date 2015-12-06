@@ -115,9 +115,7 @@ var VenueActions = (function () {
     value: function saveVenueData(contents) {
       var _this2 = this;
 
-      var pageId = 2;
-      console.log('saving venue data for page: ' + pageId);
-      debugger;
+      var pageId = 1;
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
@@ -342,7 +340,6 @@ var EditVenue = (function (_React$Component) {
       var name = this.state.name;
       var url = this.state.url;
       var ceremonyTime = this.state.ceremonyTime;
-      debugger;
       var contents = [{
         name: 'Venue Name',
         description: 'Venue Name',
