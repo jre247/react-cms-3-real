@@ -121,7 +121,7 @@ var VenueActions = (function () {
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
-        data: contents
+        data: { contents: contents }
       }).done(function (data) {
         _this2.actions.saveVenueDataSuccess(data.message);
       }).fail(function (jqXhr) {

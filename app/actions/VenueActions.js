@@ -38,7 +38,7 @@ class VenueActions {
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
-        data: contents
+        data: {contents: contents}
       })
         .done((data) => {
           this.actions.saveVenueDataSuccess(data.message);

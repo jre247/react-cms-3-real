@@ -1,4 +1,5 @@
 var pg = require('pg');
+var _ = require('underscore-node');
 var Promise = require("node-promise").Promise;
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/wedding';
 
@@ -20,6 +21,8 @@ exports.save = function(contents){
 
         _.each(contents, function(contentItem){
           console.log('about to insert one content item.');
+          console.log('content item name: ' + contentItem.name);
+          console.log('content item value: ' + contentItem.value);
 
           client.query(
             "INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) values($1, $2, $3, $4, $5, $6, $7, $8)",
