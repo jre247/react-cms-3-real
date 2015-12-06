@@ -2,7 +2,7 @@ var pg = require('pg');
 var Promise = require("node-promise").Promise;
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/wedding';
 
-exports.save = function(data){
+exports.save = function(contents){
   try{
     console.log('starting save.');
 
@@ -16,10 +16,17 @@ exports.save = function(data){
           processError(done, err);
         }
 
-        client.query(
-          "INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) values($1, $2, $3, $4, $5, $6, $7, $8)",
-          [data.name, data.value, data.pageId, data.contentTypeId, data.userId, data.dateCreated, true]
-        );
+        console.log('about to insert content list.');
+
+        _.each(contents, function(contentItem){
+          console.log('about to insert one content item.');
+
+          client.query(
+            "INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, DateCreated, IsActive) values($1, $2, $3, $4, $5, $6, $7, $8)",
+            [contentItem.name, contentItem.value, contentItem.pageId, contentItem.contentTypeId, contentItem.userId,
+              contentItem.dateCreated, true]
+          );
+        });
 
         var query = client.query("select * from Venue where IsActive = true");
 

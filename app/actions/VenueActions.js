@@ -34,10 +34,11 @@ class VenueActions {
   saveVenueData(contents) {
     var pageId = 2;
     console.log('saving venue data for page: ' + pageId);
+    debugger;
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
-        data: { contents: contents }
+        data: contents
       })
         .done((data) => {
           this.actions.saveVenueDataSuccess(data.message);

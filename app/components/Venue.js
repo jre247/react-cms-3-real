@@ -20,27 +20,26 @@ class Venue extends React.Component {
     VenueStore.unlisten(this.onChange);
   }
   render() {
-    var venue = this.state.venue;
     return (
       <div className="Detail">
         <Link className="Navigation-link" to="/venue/edit">Edit</Link>
 
         <div className="Content-text">
           <span>
-            {venue.name}
+            {this.state.name}
           </span>
         </div>
 
         <div className="Content-text">
           <span>
-            {venue.ceremonytime}
+            {this.state.ceremonytime}
           </span>
         </div>
 
-        <img className="Content-large-image" src={venue.url} alt="Venue Image" />
+        <img className="Content-large-image" src={this.state.url} alt="Venue Image" />
 
         <div className="Content-text">
-          <span> {venue.description} </span>
+          <span> {this.state.description} </span>
         </div>
       </div>
     );

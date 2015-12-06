@@ -117,10 +117,11 @@ var VenueActions = (function () {
 
       var pageId = 2;
       console.log('saving venue data for page: ' + pageId);
+      debugger;
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
-        data: { contents: contents }
+        data: contents
       }).done(function (data) {
         _this2.actions.saveVenueDataSuccess(data.message);
       }).fail(function (jqXhr) {
@@ -341,7 +342,7 @@ var EditVenue = (function (_React$Component) {
       var name = this.state.name;
       var url = this.state.url;
       var ceremonyTime = this.state.ceremonyTime;
-
+      debugger;
       var contents = [{
         name: 'Venue Name',
         description: 'Venue Name',
@@ -364,7 +365,7 @@ var EditVenue = (function (_React$Component) {
         contentType: 2
       }];
 
-      _VenueActions2.default.SaveVenue(contents);
+      _VenueActions2.default.saveVenueData(contents);
     }
   }, {
     key: 'render',
@@ -386,23 +387,26 @@ var EditVenue = (function (_React$Component) {
             _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement('input', { ref: 'name', name: 'name', placeholder: 'Name', value: this.state.venue.name,
+              _react2.default.createElement('input', { ref: 'name', name: 'name', placeholder: 'Name', value: this.state.name,
                 onChange: _VenueActions2.default.updateName })
             ),
             _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement('input', { ref: 'url', name: 'url', placeholder: 'Url', value: this.state.url })
+              _react2.default.createElement('input', { ref: 'url', name: 'url', placeholder: 'Url', value: this.state.url,
+                onChange: _VenueActions2.default.updateUrl })
             ),
             _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement('input', { ref: 'ceremonyTime', name: 'ceremonyTime', placeholder: 'Ceremony Time', value: this.state.ceremonyTime })
+              _react2.default.createElement('input', { ref: 'ceremonyTime', name: 'ceremonyTime', placeholder: 'Ceremony Time', value: this.state.ceremonyTime,
+                onChange: _VenueActions2.default.updateCeremonyTime })
             ),
             _react2.default.createElement(
               'p',
               null,
-              _react2.default.createElement('textarea', { ref: 'description', name: 'description', placeholder: 'Description', value: this.state.description })
+              _react2.default.createElement('textarea', { ref: 'description', name: 'description', placeholder: 'Description', value: this.state.description,
+                onChange: _VenueActions2.default.updateDescription })
             ),
             _react2.default.createElement(
               'p',
@@ -1040,7 +1044,6 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var venue = this.state.venue;
       return _react2.default.createElement(
         'div',
         { className: 'Detail' },
@@ -1055,7 +1058,7 @@ var Venue = (function (_React$Component) {
           _react2.default.createElement(
             'span',
             null,
-            venue.name
+            this.state.name
           )
         ),
         _react2.default.createElement(
@@ -1064,10 +1067,10 @@ var Venue = (function (_React$Component) {
           _react2.default.createElement(
             'span',
             null,
-            venue.ceremonytime
+            this.state.ceremonytime
           )
         ),
-        _react2.default.createElement('img', { className: 'Content-large-image', src: venue.url, alt: 'Venue Image' }),
+        _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.url, alt: 'Venue Image' }),
         _react2.default.createElement(
           'div',
           { className: 'Content-text' },
@@ -1075,7 +1078,7 @@ var Venue = (function (_React$Component) {
             'span',
             null,
             ' ',
-            venue.description,
+            this.state.description,
             ' '
           )
         )

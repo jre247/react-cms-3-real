@@ -24,7 +24,7 @@ class EditVenue extends React.Component {
     var name = this.state.name;
     var url = this.state.url;
     var ceremonyTime = this.state.ceremonyTime;
-
+    debugger;
     var contents = [{
       name: 'Venue Name',
       description: 'Venue Name',
@@ -50,7 +50,7 @@ class EditVenue extends React.Component {
       contentType: 2,
     }];
 
-    VenueActions.SaveVenue(contents);
+    VenueActions.saveVenueData(contents);
   }
   render() {
     return (
@@ -59,17 +59,20 @@ class EditVenue extends React.Component {
           <div className="Content padBox">
           <form onSubmit={this.handleSubmit.bind(this)}>
               <p>
-                <input ref="name" name="name" placeholder="Name" value={this.state.venue.name}
+                <input ref="name" name="name" placeholder="Name" value={this.state.name}
                   onChange={VenueActions.updateName}/>
               </p>
               <p>
-                <input ref="url" name="url" placeholder="Url" value={this.state.url}/>
+                <input ref="url" name="url" placeholder="Url" value={this.state.url}
+                  onChange={VenueActions.updateUrl}/>
               </p>
               <p>
-                <input ref="ceremonyTime" name="ceremonyTime" placeholder="Ceremony Time" value={this.state.ceremonyTime}/>
+                <input ref="ceremonyTime" name="ceremonyTime" placeholder="Ceremony Time" value={this.state.ceremonyTime}
+                  onChange={VenueActions.updateCeremonyTime}/>
               </p>
               <p>
-                <textarea ref="description" name="description" placeholder="Description" value={this.state.description}/>
+                <textarea ref="description" name="description" placeholder="Description" value={this.state.description}
+                  onChange={VenueActions.updateDescription}/>
               </p>
 
               <p>

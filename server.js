@@ -31,10 +31,12 @@ app.get('/api/pages/:id', function(req, res, next) {
 });
 app.post('/api/pages/:id', function(req, res, next) {
   var pageId = req.params.id;
-  var contents = req.params.contents;
+  console.log('req.body: ' + req.body);
+  var contents = req.body;
+  console.log('req.body[0]: ' + req.body[0]);
   console.log('contents.length: ' + contents.length);
   console.log('getting content for page with id: ' + pageId);
-  contentDb.save({pageId: pageId, venue: venue}).then(function(data){
+  contentDb.save({pageId: pageId, contents: contents[0]}).then(function(data){
     console.log('finished getting content with data');
     res.status(200).send(data);
   });
