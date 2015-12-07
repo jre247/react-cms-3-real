@@ -4,24 +4,20 @@ import VenueActions from '../actions/VenueActions';
 class VenueStore {
   constructor() {
     this.bindActions(VenueActions);
-    this.name = '';
-    this.description = '';
-    this.ceremonyTime = '';
-    this.url = '';
+    this.venue = {};
     this.ajaxAnimationClass = '';
   }
 
   onGetVenueDataSuccess(data) {
     console.log('onGetVenueDataSuccess');
     var contentItems = data;
+    debugger;
     var venue = {
       name: contentItems[0].value,
       image: contentItems[1].value,
       description: contentItems[2].value,
       ceremonyTime: contentItems[3].value,
     }
-    console.log('contentItems.length: ' + contentItems.length);
-    console.log('contentItems[0]: ' + contentItems[0]);
     this.venue = venue;
   }
 

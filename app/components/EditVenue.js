@@ -60,27 +60,37 @@ class EditVenue extends React.Component {
       <div className="Detail">
           <h1 className="Heading Heading--alt">Edit Venue</h1>
           <div className="Content padBox">
-          <form onSubmit={this.handleSubmit.bind(this)}>
-              <p>
-                <input ref="name" name="name" placeholder="Name" value={this.state.name}
-                  onChange={VenueActions.updateName}/>
-              </p>
-              <p>
-                <input ref="url" name="url" placeholder="Url" value={this.state.url}
-                  onChange={VenueActions.updateUrl}/>
-              </p>
-              <p>
-                <input ref="ceremonyTime" name="ceremonyTime" placeholder="Ceremony Time" value={this.state.ceremonyTime}
-                  onChange={VenueActions.updateCeremonyTime}/>
-              </p>
-              <p>
-                <textarea ref="description" name="description" placeholder="Description" value={this.state.description}
-                  onChange={VenueActions.updateDescription}/>
-              </p>
+            <form onSubmit={this.handleSubmit.bind(this)}>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <div className="form-group">
+                      <input ref="name" className='form-control' name="name" placeholder="Name" value={this.state.venue.name}
+                        onChange={VenueActions.updateName} autoFocus/>
+                    </div>
+                    <div className="form-group">
+                      <input ref="url" className='form-control' name="url" placeholder="Url" value={this.state.venue.url}
+                        onChange={VenueActions.updateUrl}/>
+                    </div>
+                    <div className="form-group">
+                      <input ref="ceremonyTime" className='form-control' name="ceremonyTime" placeholder="Ceremony Time"
+                        value={this.state.venue.ceremonyTime} onChange={VenueActions.updateCeremonyTime}/>
+                    </div>
+                    <div className="form-group">
+                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
+                        value={this.state.venue.timelineOne} onChange={VenueActions.updateTimelineOne}/>
+                    </div>
+                    <div className="form-group">
+                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
+                        value={this.state.venue.timelineTwo} onChange={VenueActions.updateTimelineTwo}/>
+                    </div>
 
-              <p>
-                <button type='submit' className='btn btn-primary'>Save</button>
-              </p>
+                    <div className="form-group">
+                      <button type='submit' className='btn btn-primary'>Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </form>
           </div>
         </div>

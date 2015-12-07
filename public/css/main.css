@@ -7319,6 +7319,9 @@ img.mfp-img {
   max-width: 100%;
   text-align: center;
 }
+.Heading {
+  margin-left: 3%;
+}
 .Header-brand {
   color: #7e3d10;
   text-decoration: none;

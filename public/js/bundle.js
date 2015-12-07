@@ -386,36 +386,54 @@ var EditVenue = (function (_React$Component) {
             'form',
             { onSubmit: this.handleSubmit.bind(this) },
             _react2.default.createElement(
-              'p',
-              null,
-              _react2.default.createElement('input', { ref: 'name', name: 'name', placeholder: 'Name', value: this.state.name,
-                onChange: _VenueActions2.default.updateName })
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              _react2.default.createElement('input', { ref: 'url', name: 'url', placeholder: 'Url', value: this.state.url,
-                onChange: _VenueActions2.default.updateUrl })
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              _react2.default.createElement('input', { ref: 'ceremonyTime', name: 'ceremonyTime', placeholder: 'Ceremony Time', value: this.state.ceremonyTime,
-                onChange: _VenueActions2.default.updateCeremonyTime })
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
-              _react2.default.createElement('textarea', { ref: 'description', name: 'description', placeholder: 'Description', value: this.state.description,
-                onChange: _VenueActions2.default.updateDescription })
-            ),
-            _react2.default.createElement(
-              'p',
-              null,
+              'div',
+              { className: 'container' },
               _react2.default.createElement(
-                'button',
-                { type: 'submit', className: 'btn btn-primary' },
-                'Save'
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-8' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement('input', { ref: 'name', className: 'form-control', name: 'name', placeholder: 'Name', value: this.state.venue.name,
+                      onChange: _VenueActions2.default.updateName, autoFocus: true })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.state.venue.url,
+                      onChange: _VenueActions2.default.updateUrl })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement('input', { ref: 'ceremonyTime', className: 'form-control', name: 'ceremonyTime', placeholder: 'Ceremony Time',
+                      value: this.state.venue.ceremonyTime, onChange: _VenueActions2.default.updateCeremonyTime })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
+                      value: this.state.venue.timelineOne, onChange: _VenueActions2.default.updateTimelineOne })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
+                      value: this.state.venue.timelineTwo, onChange: _VenueActions2.default.updateTimelineTwo })
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                      'button',
+                      { type: 'submit', className: 'btn btn-primary' },
+                      'Save'
+                    )
+                  )
+                )
               )
             )
           )
@@ -1041,7 +1059,7 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.name) {
+      if (!this.state.venue) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1083,7 +1101,7 @@ var Venue = (function (_React$Component) {
             _react2.default.createElement(
               'span',
               null,
-              this.state.name
+              this.state.venue.name
             )
           ),
           _react2.default.createElement(
@@ -1092,7 +1110,7 @@ var Venue = (function (_React$Component) {
             _react2.default.createElement(
               'span',
               null,
-              this.state.ceremonyTime
+              this.state.venue.ceremonyTime
             )
           ),
           _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.url, alt: 'Venue Image' }),
@@ -1103,7 +1121,7 @@ var Venue = (function (_React$Component) {
               'span',
               null,
               ' ',
-              this.state.description,
+              this.state.venue.description,
               ' '
             )
           )
@@ -1320,10 +1338,7 @@ var VenueStore = (function () {
     _classCallCheck(this, VenueStore);
 
     this.bindActions(_VenueActions2.default);
-    this.name = '';
-    this.description = '';
-    this.ceremonyTime = '';
-    this.url = '';
+    this.venue = {};
     this.ajaxAnimationClass = '';
   }
 
@@ -1332,14 +1347,13 @@ var VenueStore = (function () {
     value: function onGetVenueDataSuccess(data) {
       console.log('onGetVenueDataSuccess');
       var contentItems = data;
+      debugger;
       var venue = {
         name: contentItems[0].value,
         image: contentItems[1].value,
         description: contentItems[2].value,
         ceremonyTime: contentItems[3].value
       };
-      console.log('contentItems.length: ' + contentItems.length);
-      console.log('contentItems[0]: ' + contentItems[0]);
       this.venue = venue;
     }
   }, {

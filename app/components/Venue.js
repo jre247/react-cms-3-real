@@ -20,7 +20,7 @@ class Venue extends React.Component {
     VenueStore.unlisten(this.onChange);
   }
   render() {
-    if(!this.state.name){
+    if(!this.state.venue){
       return (
         <div>
           <div className="Edit-Content-Button">
@@ -41,20 +41,20 @@ class Venue extends React.Component {
           </div>
           <div className="Content-text">
             <span>
-              {this.state.name}
+              {this.state.venue.name}
             </span>
           </div>
 
           <div className="Content-text">
             <span>
-              {this.state.ceremonyTime}
+              {this.state.venue.ceremonyTime}
            </span>
           </div>
 
           <img className="Content-large-image" src={this.state.url} alt="Venue Image" />
 
           <div className="Content-text">
-            <span> {this.state.description} </span>
+            <span> {this.state.venue.description} </span>
           </div>
         </div>
       );
