@@ -15,7 +15,7 @@ class TheProposalActions {
   }
 
   getProposalData() {
-    var pageId = 1;
+    var pageId = 2;
     console.log('getting page content for page: ' + pageId);
     $.ajax({
       url: '/api/pages/' + pageId

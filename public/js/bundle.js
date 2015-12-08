@@ -99,7 +99,7 @@ var TheProposalActions = (function () {
     value: function getProposalData() {
       var _this = this;
 
-      var pageId = 1;
+      var pageId = 2;
       console.log('getting page content for page: ' + pageId);
       $.ajax({
         url: '/api/pages/' + pageId
@@ -454,7 +454,7 @@ var EditTheProposal = (function (_React$Component) {
                     'div',
                     { className: 'form-group' },
                     _react2.default.createElement('input', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
-                      value: this.state.proposal.Description, onChange: _TheProposalActions2.default.updateDescription })
+                      value: this.state.proposal.description, onChange: _TheProposalActions2.default.updateDescription })
                   ),
                   _react2.default.createElement(
                     'div',

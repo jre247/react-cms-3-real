@@ -55,7 +55,7 @@ class EditTheProposal extends React.Component {
                     </div>
                     <div className="form-group">
                       <input ref="description" className='form-control' name="description" placeholder="Description"
-                        value={this.state.proposal.Description} onChange={TheProposalActions.updateDescription}/>
+                        value={this.state.proposal.description} onChange={TheProposalActions.updateDescription}/>
                     </div>
                     <div className="form-group">
                       <button type='submit' className='btn btn-primary'>Save</button>
