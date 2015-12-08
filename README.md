@@ -50,7 +50,7 @@ CREATE TABLE content
 	DateCreated TIMESTAMP null,
 	IsActive BOOLEAN
 );
-CREATE INDEX conect_page_idx ON content (PageId, DateCreated);
+CREATE INDEX conect_page_idx ON content (PageId, IsActivce);
 
 insert into content_type (Name, Description, IsActive) values ('Image', 'Url for an Image', true);
 insert into content_type (Name, Description, IsActive) values ('Description', 'Description', true);

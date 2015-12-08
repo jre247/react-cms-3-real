@@ -11,12 +11,14 @@ class VenueStore {
   onGetVenueDataSuccess(data) {
     console.log('onGetVenueDataSuccess');
     var contentItems = data;
-    debugger;
     var venue = {
       name: contentItems[0].value,
-      image: contentItems[1].value,
-      description: contentItems[2].value,
+      eventDate: contentItems[1].value,
+      url: contentItems[2].value,
       ceremonyTime: contentItems[3].value,
+      cocktailHourTime: contentItems[4].value,
+      receptionTime: contentItems[5].value,
+      afterPartyTime: contentItems[6].value,
     }
     this.venue = venue;
   }
@@ -26,8 +28,8 @@ class VenueStore {
     toastr.error(jqXhr.responseJSON.message);
   }
 
-  onSaveVenueDataSuccess(data) {
-    console.log('onSaveVenueDataSuccess');
+  onSaveVenueDataSuccess(history) {
+    history.pushState(null, '/venue');
 
   }
 
@@ -37,21 +39,39 @@ class VenueStore {
     this.helpBlock = '';
   }
 
-  onUpdateDescription(event) {
-    this.description = event.target.value;
-    this.nameValidationState = '';
+  onUpdateEventDate(event) {
+    this.eventDate = event.target.value;
+    this.eventDateValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateUrl(event) {
     this.url = event.target.value;
-    this.nameValidationState = '';
+    this.urlValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateCeremonyTime(event) {
     this.ceremonyTime = event.target.value;
-    this.nameValidationState = '';
+    this.ceremonyTimeValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateCocktailHourTime(event) {
+    this.cocktailHourTime = event.target.value;
+    this.cocktailHourTimeValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateReceptionTime(event) {
+    this.receptionTime = event.target.value;
+    this.receptionTimeValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onUpdateAfterPartyTime(event) {
+    this.afterPartyTime = event.target.value;
+    this.afterPartyValidationState = '';
     this.helpBlock = '';
   }
 

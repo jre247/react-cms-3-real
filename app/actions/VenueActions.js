@@ -9,9 +9,12 @@ class VenueActions {
       'saveVenueDataSuccess',
       'saveVenueDataFail',
       'updateName',
-      'updateDescription',
+      'updateEventDate',
       'updateUrl',
       'updateCeremonyTime',
+      'updateCocktailHourTime',
+      'updateReceptionTime',
+      'updateAfterPartyTime',
       'updateAjaxAnimation'
     );
   }
@@ -31,7 +34,7 @@ class VenueActions {
       });
   }
 
-  saveVenueData(contents) {
+  saveVenueData(contents, history) {
     var pageId = 1;
     $.ajax({
         type: 'POST',
@@ -39,7 +42,7 @@ class VenueActions {
         data: {contents: contents}
       })
         .done((data) => {
-          this.actions.saveVenueDataSuccess(data.message);
+          this.actions.saveVenueDataSuccess(data.message, history);
         })
         .fail((jqXhr) => {
           this.actions.saveVenueDataFail(jqXhr.responseJSON.message);

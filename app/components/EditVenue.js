@@ -20,40 +20,60 @@ class EditVenue extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    var description = this.state.description;
-    var name = this.state.name;
-    var url = this.state.url;
-    var ceremonyTime = this.state.ceremonyTime;
-    var contents = [{
-      name: 'Venue Name',
-      description: 'Venue Name',
-      value: name,
-      contentType: 4,
-      sortOrder: 1
-    },
-    {
-      name: 'Venue Image Url',
-      description: 'Venue Image Url',
-      value: url,
-      contentType: 1,
-      sortOrder: 2
-    },
-    {
-      name: 'Venue Description',
-      description: 'Venue Description',
-      value: description,
-      contentType: 2,
-      sortOrder: 3
-    },
-    {
-      name: 'Venue Ceremony Time',
-      description: 'Venue Ceremony Time',
-      value: ceremonyTime,
-      contentType: 2,
-      sortOrder: 4
-    }];
 
-    VenueActions.saveVenueData(contents);
+    var contents = [
+      {
+        name: 'Venue Name',
+        description: 'Venue Name',
+        value: this.state.name,
+        contentType: 4,
+        sortOrder: 1
+      },
+      {
+        name: 'Venue Event Date',
+        description: 'Venue Event Date',
+        value: this.state.eventDate,
+        contentType: 2,
+        sortOrder: 2
+      },
+      {
+        name: 'Venue Image Url',
+        description: 'Venue Image Url',
+        value: this.state.url,
+        contentType: 1,
+        sortOrder: 3
+      },
+      {
+        name: 'Venue Ceremony Time',
+        description: 'Venue Ceremony Time',
+        value: this.state.ceremonyTime,
+        contentType: 2,
+        sortOrder: 4
+      },
+      {
+        name: 'Venue Cockailtail Hour',
+        description: 'Venue Cockailtail Hour',
+        value: this.state.cocktailHourTime,
+        contentType: 2,
+        sortOrder: 5
+      },
+      {
+        name: 'Venue Reception',
+        description: 'Venue Reception',
+        value: this.state.receptionTime,
+        contentType: 2,
+        sortOrder: 6
+      },
+      {
+        name: 'Venue After Party',
+        description: 'Venue After Party',
+        value: this.state.afterPartyTime,
+        contentType: 2,
+        sortOrder: 7
+      }
+    ];
+
+    VenueActions.saveVenueData(contents, this.props.history);
   }
   render() {
     return (
@@ -69,6 +89,10 @@ class EditVenue extends React.Component {
                         onChange={VenueActions.updateName} autoFocus/>
                     </div>
                     <div className="form-group">
+                      <input ref="eventDate" className='form-control' name="eventDate" placeholder="Date" value={this.state.venue.eventDate}
+                        onChange={VenueActions.updateEventDate}/>
+                    </div>
+                    <div className="form-group">
                       <input ref="url" className='form-control' name="url" placeholder="Url" value={this.state.venue.url}
                         onChange={VenueActions.updateUrl}/>
                     </div>
@@ -77,12 +101,16 @@ class EditVenue extends React.Component {
                         value={this.state.venue.ceremonyTime} onChange={VenueActions.updateCeremonyTime}/>
                     </div>
                     <div className="form-group">
-                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
-                        value={this.state.venue.timelineOne} onChange={VenueActions.updateTimelineOne}/>
+                      <textarea ref="cocktailHourTime" className='form-control' name="cocktailHourTime" placeholder="Cocktail Hour"
+                        value={this.state.venue.cocktailHourTime} onChange={VenueActions.updateCocktailHourTime}/>
                     </div>
                     <div className="form-group">
-                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
-                        value={this.state.venue.timelineTwo} onChange={VenueActions.updateTimelineTwo}/>
+                      <textarea ref="receptionTime" className='form-control' name="receptionTime" placeholder="Reception"
+                        value={this.state.venue.receptionTime} onChange={VenueActions.updateReceptionTime}/>
+                    </div>
+                    <div className="form-group">
+                      <textarea ref="afterPartyTime" className='form-control' name="afterPartyTime" placeholder="After Party"
+                        value={this.state.venue.afterPartyTime} onChange={VenueActions.updateAfterPartyTime}/>
                     </div>
 
                     <div className="form-group">
