@@ -7390,8 +7390,13 @@ img.mfp-img {
 /* End List Collection */
 /* Long Description */
 .Content-long-description {
-  text-align: center;
   color: #7e3d10;
+  font-size: 28px;
+}
+.Content-long-description-container {
+  width: 67%;
+  margin-left: 16%;
+  margin-top: 10px;
 }
 /* End Long Description */
 /* Navigation */
