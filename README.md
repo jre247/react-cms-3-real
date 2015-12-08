@@ -9,6 +9,8 @@ How to run the app locally:
 3) run brew install postgresql to download postgresql
 	note: run the following command if homebrew is not installed:
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	note: if getting the error "pg_config command not found" then trying running this command, but make sure you have the correct location for PostgresSQL:
+		export PATH=/Library/PostgreSQL/9.3/bin:$PATH
 4) open application postgresql and run the following command to connect to wedding database:
 	"\connect wedding"
 
