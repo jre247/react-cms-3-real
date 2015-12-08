@@ -1,23 +1,56 @@
 import React from 'react';
+import {Link} from 'react-router';
+import TheProposalStore from '../stores/TheProposalStore';
+import TheProposalActions from '../actions/TheProposalActions';
 
 class TheProposal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = TheProposalStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+  onChange(state) {
+    this.setState(state);
+  }
+  componentDidMount() {
+    TheProposalStore.listen(this.onChange);
+    TheProposalActions.getProposalData();
+  }
+  componentWillUnmount() {
+    TheProposalStore.unlisten(this.onChange);
+  }
   render() {
-    return (
-      <div className="Detail">
+    if(!this.state.proposal && !this.state.description){
+      return (
+        <div>
+          <div className="Edit-Content-Button">
+            <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
+          </div>
 
-        <img className="Content-large-image" src="https://scontent-lga3-1.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/12219352_10205322216999523_2989781224031728729_n.jpg?oh=2ce868d093f34a72a5a333752218e4eb&oe=56E30ABC"/>
-
-        <div className="Content-long-description-container">
-          <div className="Content-long-description">
-            Jenna and Jason were married at a beautiful restaurant called Michaels on the Hill in Stowe, Vermont.
-            Jason was very nervous but built up the courage to get down on one knee and ask the girl of his dreams
-            to marry him. Luckily she said yes and he was ecstatic. Our waitor at the restaurant was observant
-            enough to notice his proposal and brought out some champagne.
+          <div className="Empty-Page-Content">
+            <span>There is no content yet.</span>
           </div>
         </div>
+      );
+    }
+    else {
+      return (
+        <div className="Detail">
+          <div className="Edit-Content-Button">
+            <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
+          </div>
 
-      </div>
-    );
+          <img className="Content-large-image" src={this.state.proposal.url} alt="Proposal Image" />
+
+          <div className="Content-long-description-container">
+            <div className="Content-long-description">
+                {this.state.proposal.description}
+            </div>
+          </div>
+
+        </div>
+      );
+    }
   }
 }
 
