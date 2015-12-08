@@ -13,13 +13,13 @@ How to run the app locally:
 		export PATH=/Library/PostgreSQL/9.3/bin:$PATH
 4) open application postgresql and run the following command to connect to wedding database:
 	"\connect wedding"
-
-
-Run the following script in psql to create the database and necessary tables:
+5) Run the following script in psql to create the database and necessary tables:
 
 CREATE USER Jason WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
 GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
+
+6) run the following psql script below to create tables and some data
 
 drop table content;
 drop table page;
