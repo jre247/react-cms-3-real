@@ -20,7 +20,7 @@ class Venue extends React.Component {
     VenueStore.unlisten(this.onChange);
   }
   render() {
-    if(!this.state.venue){
+    if(!this.state.venue && !this.state.name){
       return (
         <div>
           <div className="Edit-Content-Button">

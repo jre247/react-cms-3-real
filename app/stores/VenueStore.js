@@ -10,17 +10,19 @@ class VenueStore {
 
   onGetVenueDataSuccess(data) {
     console.log('onGetVenueDataSuccess');
-    var contentItems = data;
-    var venue = {
-      name: contentItems[0].value,
-      eventDate: contentItems[1].value,
-      url: contentItems[2].value,
-      ceremonyTime: contentItems[3].value,
-      cocktailHourTime: contentItems[4].value,
-      receptionTime: contentItems[5].value,
-      afterPartyTime: contentItems[6].value,
+    if(data && data.length > 0){
+      var contentItems = data;
+      var venue = {
+        name: contentItems[0].value,
+        eventDate: contentItems[1].value,
+        url: contentItems[2].value,
+        ceremonyTime: contentItems[3].value,
+        cocktailHourTime: contentItems[4].value,
+        receptionTime: contentItems[5].value,
+        afterPartyTime: contentItems[6].value,
+      }
+      this.venue = venue;
     }
-    this.venue = venue;
   }
 
   onGetVenueDataFail(jqXhr) {
@@ -34,43 +36,43 @@ class VenueStore {
   }
 
   onUpdateName(event) {
-    this.name = event.target.value;
+    this.venue.name = event.target.value;
     this.nameValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateEventDate(event) {
-    this.eventDate = event.target.value;
+    this.venue.eventDate = event.target.value;
     this.eventDateValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateUrl(event) {
-    this.url = event.target.value;
+    this.venue.url = event.target.value;
     this.urlValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateCeremonyTime(event) {
-    this.ceremonyTime = event.target.value;
+    this.venue.ceremonyTime = event.target.value;
     this.ceremonyTimeValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateCocktailHourTime(event) {
-    this.cocktailHourTime = event.target.value;
+    this.venue.cocktailHourTime = event.target.value;
     this.cocktailHourTimeValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateReceptionTime(event) {
-    this.receptionTime = event.target.value;
+    this.venue.receptionTime = event.target.value;
     this.receptionTimeValidationState = '';
     this.helpBlock = '';
   }
 
   onUpdateAfterPartyTime(event) {
-    this.afterPartyTime = event.target.value;
+    this.venue.afterPartyTime = event.target.value;
     this.afterPartyValidationState = '';
     this.helpBlock = '';
   }

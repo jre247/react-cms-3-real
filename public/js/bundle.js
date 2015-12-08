@@ -340,43 +340,43 @@ var EditVenue = (function (_React$Component) {
       var contents = [{
         name: 'Venue Name',
         description: 'Venue Name',
-        value: this.state.name,
+        value: this.state.venue.name,
         contentType: 4,
         sortOrder: 1
       }, {
         name: 'Venue Event Date',
         description: 'Venue Event Date',
-        value: this.state.eventDate,
+        value: this.state.venue.eventDate,
         contentType: 2,
         sortOrder: 2
       }, {
         name: 'Venue Image Url',
         description: 'Venue Image Url',
-        value: this.state.url,
+        value: this.state.venue.url,
         contentType: 1,
         sortOrder: 3
       }, {
         name: 'Venue Ceremony Time',
         description: 'Venue Ceremony Time',
-        value: this.state.ceremonyTime,
+        value: this.state.venue.ceremonyTime,
         contentType: 2,
         sortOrder: 4
       }, {
         name: 'Venue Cockailtail Hour',
         description: 'Venue Cockailtail Hour',
-        value: this.state.cocktailHourTime,
+        value: this.state.venue.cocktailHourTime,
         contentType: 2,
         sortOrder: 5
       }, {
         name: 'Venue Reception',
         description: 'Venue Reception',
-        value: this.state.receptionTime,
+        value: this.state.venue.receptionTime,
         contentType: 2,
         sortOrder: 6
       }, {
         name: 'Venue After Party',
         description: 'Venue After Party',
-        value: this.state.afterPartyTime,
+        value: this.state.venue.afterPartyTime,
         contentType: 2,
         sortOrder: 7
       }];
@@ -1086,7 +1086,7 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.venue) {
+      if (!this.state.venue && !this.state.name) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1400,17 +1400,19 @@ var VenueStore = (function () {
     key: 'onGetVenueDataSuccess',
     value: function onGetVenueDataSuccess(data) {
       console.log('onGetVenueDataSuccess');
-      var contentItems = data;
-      var venue = {
-        name: contentItems[0].value,
-        eventDate: contentItems[1].value,
-        url: contentItems[2].value,
-        ceremonyTime: contentItems[3].value,
-        cocktailHourTime: contentItems[4].value,
-        receptionTime: contentItems[5].value,
-        afterPartyTime: contentItems[6].value
-      };
-      this.venue = venue;
+      if (data && data.length > 0) {
+        var contentItems = data;
+        var venue = {
+          name: contentItems[0].value,
+          eventDate: contentItems[1].value,
+          url: contentItems[2].value,
+          ceremonyTime: contentItems[3].value,
+          cocktailHourTime: contentItems[4].value,
+          receptionTime: contentItems[5].value,
+          afterPartyTime: contentItems[6].value
+        };
+        this.venue = venue;
+      }
     }
   }, {
     key: 'onGetVenueDataFail',
@@ -1426,49 +1428,49 @@ var VenueStore = (function () {
   }, {
     key: 'onUpdateName',
     value: function onUpdateName(event) {
-      this.name = event.target.value;
+      this.venue.name = event.target.value;
       this.nameValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateEventDate',
     value: function onUpdateEventDate(event) {
-      this.eventDate = event.target.value;
+      this.venue.eventDate = event.target.value;
       this.eventDateValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateUrl',
     value: function onUpdateUrl(event) {
-      this.url = event.target.value;
+      this.venue.url = event.target.value;
       this.urlValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateCeremonyTime',
     value: function onUpdateCeremonyTime(event) {
-      this.ceremonyTime = event.target.value;
+      this.venue.ceremonyTime = event.target.value;
       this.ceremonyTimeValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateCocktailHourTime',
     value: function onUpdateCocktailHourTime(event) {
-      this.cocktailHourTime = event.target.value;
+      this.venue.cocktailHourTime = event.target.value;
       this.cocktailHourTimeValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateReceptionTime',
     value: function onUpdateReceptionTime(event) {
-      this.receptionTime = event.target.value;
+      this.venue.receptionTime = event.target.value;
       this.receptionTimeValidationState = '';
       this.helpBlock = '';
     }
   }, {
     key: 'onUpdateAfterPartyTime',
     value: function onUpdateAfterPartyTime(event) {
-      this.afterPartyTime = event.target.value;
+      this.venue.afterPartyTime = event.target.value;
       this.afterPartyValidationState = '';
       this.helpBlock = '';
     }
