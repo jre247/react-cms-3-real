@@ -44,35 +44,38 @@ class Venue extends React.Component {
               {this.state.venue.name}
             </span>
           </div>
-
-          <img className="Content-large-image" src={this.state.venue.url} alt="Venue Image" />
-
           <div className="Content-text">
             <span> {this.state.venue.eventDate} </span>
           </div>
 
-          <div className="Content-text">
-            <span>
-                {this.state.venue.ceremonyTime}
-             </span>
-          </div>
+          <img className="Content-large-image" src={this.state.venue.url} alt="Venue Image" />
 
-          <div className="Content-text">
-            <span>
-                {this.state.venue.cocktailHourTime}
-            </span>
-          </div>
+          <div className="List-items">
 
-          <div className="Content-text">
-            <span>
-                {this.state.venue.receptionTime}
-            </span>
-          </div>
+            <div>
+              <span>
+                  {this.state.venue.ceremonyTime}
+               </span>
+            </div>
 
-          <div className="Content-text">
-            <span>
-                {this.state.venue.afterPartyTime}
-            </span>
+            <div>
+              <span>
+                  {this.state.venue.cocktailHourTime}
+              </span>
+            </div>
+
+            <div>
+              <span>
+                  {this.state.venue.receptionTime}
+              </span>
+            </div>
+
+            <div>
+              <span>
+                  {this.state.venue.afterPartyTime}
+              </span>
+            </div>
+
           </div>
 
         </div>

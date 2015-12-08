@@ -47,7 +47,7 @@ class Navbar extends React.Component {
 
       <div className='Navigation' role="navigation">
           <Link className="Navigation-link" to="/">Home</Link>
-          <Link className="Navigation-link" to="/our-story">Our Story</Link>
+          <Link className="Navigation-link" to="/the-proposal">The Proposal</Link>
           <Link className="Navigation-link" to="/venue">The Wedding</Link>
           <Link className="Navigation-link" to="/photo-album">Photo Album</Link>
           <Link className="Navigation-link" to="/accomodations">Accomodations</Link>

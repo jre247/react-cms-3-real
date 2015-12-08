@@ -4,7 +4,7 @@ import App from './components/App';
 import Home from './components/Home';
 import Venue from './components/Venue';
 import Accomodations from './components/Accomodations';
-import OurStory from './components/OurStory';
+import TheProposal from './components/TheProposal';
 import PhotoAlbum from './components/PhotoAlbum';
 import EditVenue from './components/EditVenue';
 import GiftRegistry from './components/GiftRegistry';
@@ -12,7 +12,7 @@ import GiftRegistry from './components/GiftRegistry';
 export default (
   <Route component={App}>
     <Route path='/' component={Home} />
-    <Route path='/our-story' component={OurStory} />
+    <Route path='/the-proposal' component={TheProposal} />
     <Route path='/venue' component={Venue} />
     <Route path='/venue/edit' component={EditVenue} />
     <Route path='/photo-album' component={PhotoAlbum} />

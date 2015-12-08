@@ -68,3 +68,9 @@ insert into content_type (Name, Description, IsActive) values ('ShortDescription
 insert into wedding_user (FirstName, LastName, Email, IsActive) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
 
 insert into page(Name, Description, UserId, DateCreated, IsActive) values ('Venue', 'Venue', 1, null, true);
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Note: reference this article for concepts used in this app:
+http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/

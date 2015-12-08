@@ -2,20 +2,8 @@
 @import '../../bower_components/toastr/toastr';
 @import (less) '../../bower_components/magnific-popup/dist/magnific-popup.css';
 
-/*
-
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
-
-
-
-
+@content-margin-top: 10px;
+@content-text: #7e3d10;
 
 /* Header */
 
@@ -117,18 +105,52 @@
 }
 
 .Content-large-image{
-  width: 81%;
-  margin-left: 11%;
-  margin-top: 10px;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: @content-margin-top;
 }
 
 .Content-small-image{
   width: 15%;
   margin-left: 11%;
-  margin-top: 10px;
+  margin-top: @content-margin-top;
 }
 
  /* End App */
+
+
+
+
+
+
+
+/* List Collection */
+
+.List-items{
+ text-align: center;
+ color: @content-text;
+ font-size: 28px;
+ line-height: 1.6em;
+ margin-top: @content-margin-top;
+}
+
+/* End List Collection */
+
+
+
+
+
+
+/* Long Description */
+
+.Content-long-description{
+  text-align: center;
+  color: @content-text;
+  font-size: @content-long-descrip;
+}
+
+
+/* End Long Description */
 
 
 

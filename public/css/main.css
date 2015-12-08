@@ -7298,16 +7298,6 @@ img.mfp-img {
   right: 0;
   padding-top: 0;
 }
-/*
-
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
-/**********************************/
-/*********************************/
 /* Header */
 .Header {
   background: white;
@@ -7379,8 +7369,8 @@ img.mfp-img {
   line-height: 1.6em;
 }
 .Content-large-image {
-  width: 81%;
-  margin-left: 11%;
+  width: 50%;
+  margin-left: 25%;
   margin-top: 10px;
 }
 .Content-small-image {
@@ -7389,6 +7379,21 @@ img.mfp-img {
   margin-top: 10px;
 }
 /* End App */
+/* List Collection */
+.List-items {
+  text-align: center;
+  color: #7e3d10;
+  font-size: 28px;
+  line-height: 1.6em;
+  margin-top: 10px;
+}
+/* End List Collection */
+/* Long Description */
+.Content-long-description {
+  text-align: center;
+  color: #7e3d10;
+}
+/* End Long Description */
 /* Navigation */
 .Navigation-link {
   display: inline-block;

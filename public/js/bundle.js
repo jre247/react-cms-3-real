@@ -864,8 +864,8 @@ var Navbar = (function (_React$Component) {
         ),
         _react2.default.createElement(
           _reactRouter.Link,
-          { className: 'Navigation-link', to: '/our-story' },
-          'Our Story'
+          { className: 'Navigation-link', to: '/the-proposal' },
+          'The Proposal'
         ),
         _react2.default.createElement(
           _reactRouter.Link,
@@ -897,61 +897,6 @@ var Navbar = (function (_React$Component) {
 exports.default = Navbar;
 
 },{"../actions/NavbarActions":2,"../stores/NavbarStore":19,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
-"use strict";
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var OurStory = (function (_React$Component) {
-  _inherits(OurStory, _React$Component);
-
-  function OurStory() {
-    _classCallCheck(this, OurStory);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(OurStory).apply(this, arguments));
-  }
-
-  _createClass(OurStory, [{
-    key: "render",
-    value: function render() {
-      return _react2.default.createElement(
-        "div",
-        { className: "Detail" },
-        _react2.default.createElement("img", { className: "Content-large-image", src: "https://scontent-lga3-1.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/12219352_10205322216999523_2989781224031728729_n.jpg?oh=2ce868d093f34a72a5a333752218e4eb&oe=56E30ABC" }),
-        _react2.default.createElement(
-          "div",
-          { className: "Content padBox" },
-          _react2.default.createElement(
-            "p",
-            null,
-            "Jenna and Jason were married at a beautiful restaurant called Michael''s on the Hill in Stowe, Vermont. Jason was very nervous but built up the courage to get down on one knee and ask the girl of his dreams to marry him. Luckily she said yes and he was ecstatic. Our waitor at the restaurant was observant enough to notice his proposal and brought out some champagne. "
-          )
-        )
-      );
-    }
-  }]);
-
-  return OurStory;
-})(_react2.default.Component);
-
-exports.default = OurStory;
-
-},{"react":"react"}],14:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1023,7 +968,62 @@ var PhotoAlbum = (function (_React$Component) {
 
 exports.default = PhotoAlbum;
 
-},{"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],14:[function(require,module,exports){
+"use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require("react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TheProposal = (function (_React$Component) {
+  _inherits(TheProposal, _React$Component);
+
+  function TheProposal() {
+    _classCallCheck(this, TheProposal);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(TheProposal).apply(this, arguments));
+  }
+
+  _createClass(TheProposal, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "Detail" },
+        _react2.default.createElement("img", { className: "Content-large-image", src: "https://scontent-lga3-1.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/12219352_10205322216999523_2989781224031728729_n.jpg?oh=2ce868d093f34a72a5a333752218e4eb&oe=56E30ABC" }),
+        _react2.default.createElement(
+          "div",
+          { className: "Content-long-description" },
+          _react2.default.createElement(
+            "p",
+            null,
+            "Jenna and Jason were married at a beautiful restaurant called Michael''s on the Hill in Stowe, Vermont. Jason was very nervous but built up the courage to get down on one knee and ask the girl of his dreams to marry him. Luckily she said yes and he was ecstatic. Our waitor at the restaurant was observant enough to notice his proposal and brought out some champagne. "
+          )
+        )
+      );
+    }
+  }]);
+
+  return TheProposal;
+})(_react2.default.Component);
+
+exports.default = TheProposal;
+
+},{"react":"react"}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1131,7 +1131,6 @@ var Venue = (function (_React$Component) {
               this.state.venue.name
             )
           ),
-          _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.venue.url, alt: 'Venue Image' }),
           _react2.default.createElement(
             'div',
             { className: 'Content-text' },
@@ -1143,40 +1142,45 @@ var Venue = (function (_React$Component) {
               ' '
             )
           ),
+          _react2.default.createElement('img', { className: 'Content-large-image', src: this.state.venue.url, alt: 'Venue Image' }),
           _react2.default.createElement(
             'div',
-            { className: 'Content-text' },
+            { className: 'List-items' },
             _react2.default.createElement(
-              'span',
+              'div',
               null,
-              this.state.venue.ceremonyTime
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-text' },
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.venue.ceremonyTime
+              )
+            ),
             _react2.default.createElement(
-              'span',
+              'div',
               null,
-              this.state.venue.cocktailHourTime
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-text' },
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.venue.cocktailHourTime
+              )
+            ),
             _react2.default.createElement(
-              'span',
+              'div',
               null,
-              this.state.venue.receptionTime
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-text' },
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.venue.receptionTime
+              )
+            ),
             _react2.default.createElement(
-              'span',
+              'div',
               null,
-              this.state.venue.afterPartyTime
+              _react2.default.createElement(
+                'span',
+                null,
+                this.state.venue.afterPartyTime
+              )
             )
           )
         );
@@ -1251,9 +1255,9 @@ var _Accomodations = require('./components/Accomodations');
 
 var _Accomodations2 = _interopRequireDefault(_Accomodations);
 
-var _OurStory = require('./components/OurStory');
+var _TheProposal = require('./components/TheProposal');
 
-var _OurStory2 = _interopRequireDefault(_OurStory);
+var _TheProposal2 = _interopRequireDefault(_TheProposal);
 
 var _PhotoAlbum = require('./components/PhotoAlbum');
 
@@ -1273,7 +1277,7 @@ exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _App2.default },
   _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/our-story', component: _OurStory2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/the-proposal', component: _TheProposal2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/venue', component: _Venue2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/venue/edit', component: _EditVenue2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/photo-album', component: _PhotoAlbum2.default }),
@@ -1281,7 +1285,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/gift-registry', component: _GiftRegistry2.default })
 );
 
-},{"./components/Accomodations":5,"./components/App":6,"./components/EditVenue":7,"./components/GiftRegistry":9,"./components/Home":11,"./components/OurStory":13,"./components/PhotoAlbum":14,"./components/Venue":15,"react":"react","react-router":"react-router"}],18:[function(require,module,exports){
+},{"./components/Accomodations":5,"./components/App":6,"./components/EditVenue":7,"./components/GiftRegistry":9,"./components/Home":11,"./components/PhotoAlbum":13,"./components/TheProposal":14,"./components/Venue":15,"react":"react","react-router":"react-router"}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
