@@ -6,6 +6,12 @@ How to run the app locally:
 
 1) Open terminal window, run "gulp"
 2) Open second terminal window, run "npm run watch"
+3) run brew install postgresql to download postgresql
+	note: run the following command if homebrew is not installed:
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+4) open application postgresql and run the following command to connect to wedding database:
+	"\connect wedding"
+
 
 Run the following script in psql to create the database and necessary tables:
 
