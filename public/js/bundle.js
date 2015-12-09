@@ -87,11 +87,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var pageId = 2;
+
 var TheProposalActions = (function () {
   function TheProposalActions() {
     _classCallCheck(this, TheProposalActions);
 
-    this.generateActions('getProposalDataSuccess', 'getProposalDataFail', 'saveProposalDataSuccess', 'saveVProposalDataFail', 'updateUrl', 'updateLongDescription', 'updateAjaxAnimation');
+    this.generateActions('getProposalDataSuccess', 'getProposalDataFail', 'saveProposalDataSuccess', 'saveVProposalDataFail', 'updateUrl', 'updateDescription', 'updateAjaxAnimation');
   }
 
   _createClass(TheProposalActions, [{
@@ -99,7 +101,6 @@ var TheProposalActions = (function () {
     value: function getProposalData() {
       var _this = this;
 
-      var pageId = 2;
       console.log('getting page content for page: ' + pageId);
       $.ajax({
         url: '/api/pages/' + pageId
@@ -115,7 +116,6 @@ var TheProposalActions = (function () {
     value: function saveProposalData(contents, history) {
       var _this2 = this;
 
-      var pageId = 1;
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
@@ -453,7 +453,7 @@ var EditTheProposal = (function (_React$Component) {
                   _react2.default.createElement(
                     'div',
                     { className: 'form-group' },
-                    _react2.default.createElement('input', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
+                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
                       value: this.state.proposal.description, onChange: _TheProposalActions2.default.updateDescription })
                   ),
                   _react2.default.createElement(
@@ -1196,6 +1196,8 @@ var _TheProposalActions = require('../actions/TheProposalActions');
 
 var _TheProposalActions2 = _interopRequireDefault(_TheProposalActions);
 
+var _underscore = require('underscore');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1236,7 +1238,7 @@ var TheProposal = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.proposal && !this.state.description) {
+      if (_underscore._.isEmpty(this.state.proposal)) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1292,7 +1294,7 @@ var TheProposal = (function (_React$Component) {
 
 exports.default = TheProposal;
 
-},{"../actions/TheProposalActions":3,"../stores/TheProposalStore":22,"react":"react","react-router":"react-router"}],17:[function(require,module,exports){
+},{"../actions/TheProposalActions":3,"../stores/TheProposalStore":22,"react":"react","react-router":"react-router","underscore":"underscore"}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1314,6 +1316,8 @@ var _VenueStore2 = _interopRequireDefault(_VenueStore);
 var _VenueActions = require('../actions/VenueActions');
 
 var _VenueActions2 = _interopRequireDefault(_VenueActions);
+
+var _underscore = require('underscore');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1355,7 +1359,7 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.venue && !this.state.name) {
+      if (_underscore._.isEmpty(this.state.venue)) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1462,7 +1466,7 @@ var Venue = (function (_React$Component) {
 
 exports.default = Venue;
 
-},{"../actions/VenueActions":4,"../stores/VenueStore":23,"react":"react","react-router":"react-router"}],18:[function(require,module,exports){
+},{"../actions/VenueActions":4,"../stores/VenueStore":23,"react":"react","react-router":"react-router","underscore":"underscore"}],18:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -1708,7 +1712,7 @@ var TheProposalStore = (function () {
   }, {
     key: 'onUpdateDescription',
     value: function onUpdateDescription(event) {
-      this.proposal.eventDate = event.target.value;
+      this.proposal.description = event.target.value;
       this.descriptionValidationState = '';
       this.helpBlock = '';
     }

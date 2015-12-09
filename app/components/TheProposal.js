@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import TheProposalStore from '../stores/TheProposalStore';
 import TheProposalActions from '../actions/TheProposalActions';
+import {_} from 'underscore';
 
 class TheProposal extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class TheProposal extends React.Component {
     TheProposalStore.unlisten(this.onChange);
   }
   render() {
-    if(!this.state.proposal && !this.state.description){
+    if(_.isEmpty(this.state.proposal)){
       return (
         <div>
           <div className="Edit-Content-Button">

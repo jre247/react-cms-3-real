@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import VenueStore from '../stores/VenueStore';
 import VenueActions from '../actions/VenueActions';
+import {_} from 'underscore';
 
 class Venue extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Venue extends React.Component {
     VenueStore.unlisten(this.onChange);
   }
   render() {
-    if(!this.state.venue && !this.state.name){
+    if(_.isEmpty(this.state.venue)){
       return (
         <div>
           <div className="Edit-Content-Button">

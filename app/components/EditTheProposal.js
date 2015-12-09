@@ -54,8 +54,8 @@ class EditTheProposal extends React.Component {
                         onChange={TheProposalActions.updateUrl} autoFocus/>
                     </div>
                     <div className="form-group">
-                      <input ref="description" className='form-control' name="description" placeholder="Description"
-                        value={this.state.proposal.description} onChange={TheProposalActions.updateDescription}/>
+                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
+                        value={this.state.proposal.description} onChange={TheProposalActions.updateDescription}></textarea>
                     </div>
                     <div className="form-group">
                       <button type='submit' className='btn btn-primary'>Save</button>

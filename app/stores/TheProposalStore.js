@@ -37,7 +37,7 @@ class TheProposalStore {
   }
 
   onUpdateDescription(event) {
-    this.proposal.eventDate = event.target.value;
+    this.proposal.description = event.target.value;
     this.descriptionValidationState = '';
     this.helpBlock = '';
   }
