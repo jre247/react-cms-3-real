@@ -45,7 +45,7 @@ class ThingsToDo extends React.Component {
             <div className="List-item-container">
               <div className="Parent-list-item">
                 <span>
-                    {thingToDo.parentListItem}
+                    {thingToDo.parentItem}
                  </span>
               </div>
               <div className="Sub-list-item">

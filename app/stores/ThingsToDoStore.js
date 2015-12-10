@@ -9,7 +9,8 @@ class ThingsToDoStore {
   }
 
   onGetThingsToDoDataSuccess(data) {
-    console.log('onGetProposalDataSuccess');
+    console.log('onGetThingsToDoDataSuccess');
+    debugger;
     if(data && data.length > 0){
       var contentItems = data;
       var thingsToDoHash = {};
@@ -55,20 +56,20 @@ class ThingsToDoStore {
 
   }
 
-  onUpdateChildNode(event, index) {
-    this.thingsToDo[index] = event.target.value;
+  onUpdateParentNode(event, index) {
+    this.thingsToDo[index].parentItem = event.target.value;
     this.pthingsToDoValidationState = '';
     this.helpBlock = '';
   }
 
-  onUpdateParentNode(event, parentIndex) {
+  onUpdateChildNode(event, parentIndex) {
     this.thingsToDo[parentIndex].subListItems[0] = event.target.value;
     this.thingsToDoValidationState = '';
     this.helpBlock = '';
   }
 
   onSaveThingsToDoDataFail(jqXhr) {
-    onsole.log('onSaveProposalDataFail');
+    onsole.log('onSaveThingsToDoDataFail');
     toastr.error(jqXhr.responseJSON.message);
   }
 
