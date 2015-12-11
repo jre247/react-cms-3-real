@@ -158,7 +158,7 @@ var ThingsToDoActions = (function () {
   function ThingsToDoActions() {
     _classCallCheck(this, ThingsToDoActions);
 
-    this.generateActions('getThingsToDoDataSuccess', 'getThingsToDoDataFail', 'saveThingsToDoDataSuccess', 'saveThingsToDoDataFail', 'updateListItem', 'updateAjaxAnimation');
+    this.generateActions('getThingsToDoDataSuccess', 'getThingsToDoDataFail', 'saveThingsToDoDataSuccess', 'saveThingsToDoDataFail', 'updateListItem', 'addListItem', 'updateAjaxAnimation');
   }
 
   _createClass(ThingsToDoActions, [{
@@ -603,30 +603,6 @@ var EditThingsToDo = (function (_React$Component) {
       _ThingsToDoStore2.default.unlisten(this.onChange);
     }
   }, {
-    key: 'addListItem',
-    value: function addListItem(event) {
-      debugger;
-      var parentSortOrder = this.state.thingsToDo.length + 1;
-      var childSortOrder = parentSortOrder + 1;
-
-      var contents = [{
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        contentType: 2,
-        sortOrder: parentSortOrder
-      }, {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        contentType: 1,
-        parentIndex: parentSortOrder,
-        sortOrder: childSortOrder
-      }];
-
-      this.state.thingsToDo.concat(contents);
-    }
-  }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
@@ -664,7 +640,7 @@ var EditThingsToDo = (function (_React$Component) {
       //   },
       // ];
 
-      _ThingsToDoActions2.default.saveThingsToDoData(this.thingsToDo, this.props.history);
+      _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
   }, {
     key: 'render',
@@ -721,7 +697,7 @@ var EditThingsToDo = (function (_React$Component) {
         { className: 'container' },
         _react2.default.createElement(
           'button',
-          { onClick: this.addListItem.bind(this) },
+          { onClick: _ThingsToDoActions2.default.addListItem.bind(this) },
           'Add'
         ),
         _react2.default.createElement(

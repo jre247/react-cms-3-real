@@ -18,31 +18,6 @@ class EditThingsToDo extends React.Component {
   componentWillUnmount() {
     ThingsToDoStore.unlisten(this.onChange);
   }
-  addListItem(event){
-    debugger;
-    var parentSortOrder = this.state.thingsToDo.length + 1;
-    var childSortOrder = parentSortOrder + 1;
-
-    var contents = [
-      {
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        contentType: 2,
-        sortOrder: parentSortOrder
-      },
-      {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        contentType: 1,
-        parentIndex: parentSortOrder,
-        sortOrder: childSortOrder
-      }
-    ];
-
-    this.state.thingsToDo.concat(contents);
-  }
   handleSubmit(event) {
     event.preventDefault();
 
@@ -80,7 +55,7 @@ class EditThingsToDo extends React.Component {
     //   },
     // ];
 
-    ThingsToDoActions.saveThingsToDoData(this.thingsToDo, this.props.history);
+    ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
   render() {
       debugger;
@@ -113,7 +88,7 @@ class EditThingsToDo extends React.Component {
 
     return (
       <div className='container'>
-        <button onClick={this.addListItem.bind(this)}>Add</button>
+        <button onClick={ThingsToDoActions.addListItem.bind(this)}>Add</button>
         <div className='row'>
           {thingsToDoNodes}
         </div>

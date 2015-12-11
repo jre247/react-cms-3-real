@@ -10,6 +10,7 @@ class ThingsToDoActions {
       'saveThingsToDoDataSuccess',
       'saveThingsToDoDataFail',
       'updateListItem',
+      'addListItem',
       'updateAjaxAnimation'
     );
   }
