@@ -43,18 +43,12 @@ class ThingsToDo extends React.Component {
             </div>
 
             <div className="List-item-container">
-              <div className="Parent-list-item">
+              <div className={thingToDo.parentIndex > 0 ? 'Child-list-item' : 'Parent-list-item'}>
                 <span>
-                    {thingToDo.parentItem}
+                    {thingToDo.value}
                  </span>
               </div>
-              <div className="Sub-list-item">
-                <span>
-                    {thingToDo.subListItems[0]}
-                </span>
-              </div>
             </div>
-
           </div>
         );
       });

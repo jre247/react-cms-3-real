@@ -9,6 +9,8 @@ import PhotoAlbum from './components/PhotoAlbum';
 import EditVenue from './components/EditVenue';
 import EditTheProposal from './components/EditTheProposal';
 import GiftRegistry from './components/GiftRegistry';
+import ThingsToDo from './components/ThingsToDo';
+import EditThingsToDo from './components/EditThingsToDo';
 
 export default (
   <Route component={App}>
@@ -20,5 +22,7 @@ export default (
     <Route path='/photo-album' component={PhotoAlbum} />
     <Route path='/accomodations' component={Accomodations} />
     <Route path='/gift-registry' component={GiftRegistry} />
+    <Route path='/things-to-do' component={ThingsToDo} />
+    <Route path='/things-to-do/edit' component={EditThingsToDo} />
   </Route>
 );

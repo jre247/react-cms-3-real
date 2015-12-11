@@ -17,7 +17,6 @@ exports.save = function(pageId, userId, contents){
 
         client.query(buildBulkInsertStatement(pageId, userId, contents));
 
-
         done();
 
         promise.resolve();
@@ -46,6 +45,8 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         params.push(userId);
         valueClause.push('$' + params.length);
         params.push(row.sortOrder);
+        valueClause.push('$' + params.length);
+        params.push(row.parentIndex);
         valueClause.push('$' + params.length);
         params.push(new Date());
         valueClause.push('$' + params.length);

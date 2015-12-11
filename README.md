@@ -55,10 +55,11 @@ CREATE TABLE content
 	ContentTypeId INTEGER NOT NULL references content_type(Id),
 	UserId INTEGER NULL references wedding_user(Id),
 	SortOrder INTEGER NULL,
+	parentIndex INTEGER NULL,
 	DateCreated TIMESTAMP null,
 	IsActive BOOLEAN
 );
-CREATE INDEX conect_page_idx ON content (PageId, IsActivce);
+CREATE INDEX conect_page_idx ON content (PageId, IsActive);
 
 insert into content_type (Name, Description, IsActive) values ('Image', 'Url for an Image', true);
 insert into content_type (Name, Description, IsActive) values ('Description', 'Description', true);

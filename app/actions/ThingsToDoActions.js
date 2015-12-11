@@ -5,12 +5,11 @@ var pageId = 2;
 class ThingsToDoActions {
   constructor() {
     this.generateActions(
-      'getProposalDataSuccess',
-      'getProposalDataFail',
-      'saveProposalDataSuccess',
-      'saveVProposalDataFail',
-      'updateUrl',
-      'updateDescription',
+      'getThingsToDoDataSuccess',
+      'getThingsToDoDataFail',
+      'saveThingsToDoDataSuccess',
+      'saveThingsToDoDataFail',
+      'updateListItem',
       'updateAjaxAnimation'
     );
   }
