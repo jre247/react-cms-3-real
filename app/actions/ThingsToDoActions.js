@@ -29,9 +29,6 @@ class ThingsToDoActions {
       });
   }
 
-
-  
-
   saveThingsToDoData(contents, history) {
     $.ajax({
         type: 'POST',

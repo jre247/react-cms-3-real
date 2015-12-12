@@ -13,20 +13,13 @@ class EditThingsToDo extends React.Component {
     this.setState(state);
   }
 
-  HandleClick(){
-    debugger;
-    ThingsToDoActions.addListItem();
-
-    //this.forceUpdate();
-  }
-
   componentDidMount() {
     ThingsToDoStore.listen(this.onChange);
+
     ThingsToDoActions.getThingsToDoData();
   }
   componentWillUnmount() {
     ThingsToDoStore.unlisten(this.onChange);
-    ThingsToDoStore.unlisten(this.onClick);
   }
 
 
@@ -51,7 +44,7 @@ class EditThingsToDo extends React.Component {
     this.forceUpdate();
   }
 
-  addSublistItem(){
+  addSublistItem(index, event){
     var sortOrder = this.state.thingsToDo.length + 1;
 
     var content =
@@ -64,9 +57,9 @@ class EditThingsToDo extends React.Component {
         sortOrder: sortOrder
     };
 
-    this.state.thingsToDo.push(content);
+    this.state.thingsToDo.splice(index + 1, 0, content)
 
-    this.forceUpdate();
+    this.setState({thingsToDo: this.state.thingsToDo})
   }
 
   findParentIndex(currentIndex){
@@ -84,10 +77,17 @@ class EditThingsToDo extends React.Component {
   }
 
   handleSubmit(event) {
+    debugger;
     event.preventDefault();
 
+    //ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
+  }
+
+  submit(event){
+    debugger;
     ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
+
   render() {
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
@@ -110,7 +110,7 @@ class EditThingsToDo extends React.Component {
               <div className='row'>
                 <div className='col-sm-8 Add-sub-list-item'>
                   <div className="form-group">
-                    <button className="btn btn-primary" onClick={this.addSublistItem.bind(this)}>Add Sub List Item</button>
+                    <button className="btn btn-primary" onClick={this.addSublistItem.bind(this, index)}>Add Sub List Item</button>
                   </div>
                 </div>
               </div>
@@ -138,7 +138,7 @@ class EditThingsToDo extends React.Component {
               {thingsToDoNodes}
             </div>
             <div className={this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden'}>
-              <button type='submit' className='btn btn-primary'>Save</button>
+              <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
             </div>
           </div>
         </form>

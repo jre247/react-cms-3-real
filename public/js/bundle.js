@@ -594,24 +594,16 @@ var EditThingsToDo = (function (_React$Component) {
       this.setState(state);
     }
   }, {
-    key: 'HandleClick',
-    value: function HandleClick() {
-      debugger;
-      _ThingsToDoActions2.default.addListItem();
-
-      //this.forceUpdate();
-    }
-  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _ThingsToDoStore2.default.listen(this.onChange);
+
       _ThingsToDoActions2.default.getThingsToDoData();
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       _ThingsToDoStore2.default.unlisten(this.onChange);
-      _ThingsToDoStore2.default.unlisten(this.onClick);
     }
   }, {
     key: 'isSubListItem',
@@ -637,7 +629,7 @@ var EditThingsToDo = (function (_React$Component) {
     }
   }, {
     key: 'addSublistItem',
-    value: function addSublistItem() {
+    value: function addSublistItem(index, event) {
       var sortOrder = this.state.thingsToDo.length + 1;
 
       var content = {
@@ -649,9 +641,9 @@ var EditThingsToDo = (function (_React$Component) {
         sortOrder: sortOrder
       };
 
-      this.state.thingsToDo.push(content);
+      this.state.thingsToDo.splice(index + 1, 0, content);
 
-      this.forceUpdate();
+      this.setState({ thingsToDo: this.state.thingsToDo });
     }
   }, {
     key: 'findParentIndex',
@@ -671,8 +663,15 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
+      debugger;
       event.preventDefault();
 
+      //ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
+    }
+  }, {
+    key: 'submit',
+    value: function submit(event) {
+      debugger;
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
   }, {
@@ -715,7 +714,7 @@ var EditThingsToDo = (function (_React$Component) {
                   { className: 'form-group' },
                   _react2.default.createElement(
                     'button',
-                    { className: 'btn btn-primary', onClick: _this2.addSublistItem.bind(_this2) },
+                    { className: 'btn btn-primary', onClick: _this2.addSublistItem.bind(_this2, index) },
                     'Add Sub List Item'
                   )
                 )
@@ -763,7 +762,7 @@ var EditThingsToDo = (function (_React$Component) {
               { className: this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden' },
               _react2.default.createElement(
                 'button',
-                { type: 'submit', className: 'btn btn-primary' },
+                { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
                 'Save'
               )
             )
@@ -2230,30 +2229,6 @@ var ThingsToDoStore = (function () {
       toastr.error(jqXhr.responseJSON.message);
     }
   }, {
-    key: 'onHandleAddListItem',
-    value: function onHandleAddListItem() {
-      debugger;
-      var parentSortOrder = this.state.thingsToDo.length + 1;
-      var childSortOrder = parentSortOrder + 1;
-
-      var contents = [{
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        contentType: 2,
-        sortOrder: parentSortOrder
-      }, {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        contentType: 1,
-        parentIndex: parentSortOrder,
-        sortOrder: childSortOrder
-      }];
-
-      this.state.thingsToDo.concat(contents);
-    }
-  }, {
     key: 'onSaveThingsToDoDataSuccess',
     value: function onSaveThingsToDoDataSuccess(history) {
       history.pushState(null, '/things-to-do');
@@ -2261,6 +2236,7 @@ var ThingsToDoStore = (function () {
   }, {
     key: 'onUpdateListItem',
     value: function onUpdateListItem(index, event) {
+      debugger;
       this.thingsToDo[index].value = event.target.value;
       this.pthingsToDoValidationState = '';
       this.helpBlock = '';

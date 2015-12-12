@@ -55,7 +55,7 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, SortOrder, DateCreated, IsActive) VALUES ' +
+        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, SortOrder, ParentIndex, DateCreated, IsActive) VALUES ' +
             chunks.join(', '),
         values: params
     }
