@@ -55,7 +55,7 @@ class EditThingsToDo extends React.Component {
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
     };
-    debugger;
+
     this.state.thingsToDo.splice(index + 1, 0, content)
 
     this.setState({thingsToDo: this.state.thingsToDo})

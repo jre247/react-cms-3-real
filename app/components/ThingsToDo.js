@@ -1,27 +1,30 @@
 import React from 'react';
 import {Link} from 'react-router';
-import TheProposalStore from '../stores/TheProposalStore';
-import TheProposalActions from '../actions/TheProposalActions';
+import ThingsToDoStore from '../stores/ThingsToDoStore';
+import ThingsToDoActions from '../actions/ThingsToDoActions';
 import {_} from 'underscore';
 
 class ThingsToDo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = TheProposalStore.getState();
+    this.state = ThingsToDoStore.getState();
     this.onChange = this.onChange.bind(this);
   }
   onChange(state) {
     this.setState(state);
   }
   componentDidMount() {
-    TheProposalStore.listen(this.onChange);
-    TheProposalActions.getProposalData();
+    ThingsToDoStore.listen(this.onChange);
+    ThingsToDoActions.getThingsToDoData();
   }
   componentWillUnmount() {
-    TheProposalStore.unlisten(this.onChange);
+    ThingsToDoStore.unlisten(this.onChange);
+  }
+  isSubListItem(node){
+    return node.parent_index > 0;
   }
   render() {
-    if(_.isEmpty(this.state.proposal)){
+    if(_.isEmpty(this.state.thingsToDo)){
       return (
         <div>
           <div className="Edit-Content-Button">
@@ -35,28 +38,46 @@ class ThingsToDo extends React.Component {
       );
     }
     else {
-      var thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
-        return (
-          <div>
-            <div className="Edit-Content-Button">
-              <Link className="Navigation-link" to="/things-to-do/edit">Edit</Link>
-            </div>
-
-            <div className="List-item-container">
-              <div className={thingToDo.parentIndex > 0 ? 'Child-list-item' : 'Parent-list-item'}>
-                <span>
-                    {thingToDo.value}
-                 </span>
+        let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
+          if(this.isSubListItem(thingToDo)){
+            return (
+              <div key={thingToDo.sort_order} className='container'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <div className="form-group Sub-list-item">
+                      <a ref="url" name="url" href={thingToDo.value}>{thingToDo.value}</a>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        );
+            );
+          }
+          else{
+            return (
+              <div key={thingToDo.sort_order} className='container List-item-group'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <div className="form-group">
+                      <span ref="description" name="description">
+                        {thingToDo.value}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
       });
 
       return (
-        <div className='container'>
-          <div className='row'>
-            {thingsToDoNodes}
+        <div>
+          <div className='container'>
+            <div className="Edit-Content-Button">
+              <Link className="Navigation-link" to="/things-to-do/edit">Edit</Link>
+            </div>
+            <div className='row List-container'>
+              {thingsToDoNodes}
+            </div>
           </div>
         </div>
       );

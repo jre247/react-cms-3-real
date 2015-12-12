@@ -641,7 +641,7 @@ var EditThingsToDo = (function (_React$Component) {
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
       };
-      debugger;
+
       this.state.thingsToDo.splice(index + 1, 0, content);
 
       this.setState({ thingsToDo: this.state.thingsToDo });
@@ -1617,13 +1617,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _TheProposalStore = require('../stores/TheProposalStore');
+var _ThingsToDoStore = require('../stores/ThingsToDoStore');
 
-var _TheProposalStore2 = _interopRequireDefault(_TheProposalStore);
+var _ThingsToDoStore2 = _interopRequireDefault(_ThingsToDoStore);
 
-var _TheProposalActions = require('../actions/TheProposalActions');
+var _ThingsToDoActions = require('../actions/ThingsToDoActions');
 
-var _TheProposalActions2 = _interopRequireDefault(_TheProposalActions);
+var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
 
 var _underscore = require('underscore');
 
@@ -1643,7 +1643,7 @@ var ThingsToDo = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ThingsToDo).call(this, props));
 
-    _this.state = _TheProposalStore2.default.getState();
+    _this.state = _ThingsToDoStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
@@ -1656,18 +1656,25 @@ var ThingsToDo = (function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _TheProposalStore2.default.listen(this.onChange);
-      _TheProposalActions2.default.getProposalData();
+      _ThingsToDoStore2.default.listen(this.onChange);
+      _ThingsToDoActions2.default.getThingsToDoData();
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      _TheProposalStore2.default.unlisten(this.onChange);
+      _ThingsToDoStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'isSubListItem',
+    value: function isSubListItem(node) {
+      return node.parent_index > 0;
     }
   }, {
     key: 'render',
     value: function render() {
-      if (_underscore._.isEmpty(this.state.proposal)) {
+      var _this2 = this;
+
+      if (_underscore._.isEmpty(this.state.thingsToDo)) {
         return _react2.default.createElement(
           'div',
           null,
@@ -1692,9 +1699,59 @@ var ThingsToDo = (function (_React$Component) {
         );
       } else {
         var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
-          return _react2.default.createElement(
+          if (_this2.isSubListItem(thingToDo)) {
+            return _react2.default.createElement(
+              'div',
+              { key: thingToDo.sort_order, className: 'container' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-8' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group Sub-list-item' },
+                    _react2.default.createElement(
+                      'a',
+                      { ref: 'url', name: 'url', href: thingToDo.value },
+                      thingToDo.value
+                    )
+                  )
+                )
+              )
+            );
+          } else {
+            return _react2.default.createElement(
+              'div',
+              { key: thingToDo.sort_order, className: 'container List-item-group' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-8' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group' },
+                    _react2.default.createElement(
+                      'span',
+                      { ref: 'description', name: 'description' },
+                      thingToDo.value
+                    )
+                  )
+                )
+              )
+            );
+          }
+        });
+
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
             'div',
-            null,
+            { className: 'container' },
             _react2.default.createElement(
               'div',
               { className: 'Edit-Content-Button' },
@@ -1706,27 +1763,9 @@ var ThingsToDo = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'List-item-container' },
-              _react2.default.createElement(
-                'div',
-                { className: thingToDo.parentIndex > 0 ? 'Child-list-item' : 'Parent-list-item' },
-                _react2.default.createElement(
-                  'span',
-                  null,
-                  thingToDo.value
-                )
-              )
+              { className: 'row List-container' },
+              thingsToDoNodes
             )
-          );
-        });
-
-        return _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            thingsToDoNodes
           )
         );
       }
@@ -1738,7 +1777,7 @@ var ThingsToDo = (function (_React$Component) {
 
 exports.default = ThingsToDo;
 
-},{"../actions/TheProposalActions":3,"../stores/TheProposalStore":25,"react":"react","react-router":"react-router","underscore":"underscore"}],20:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":4,"../stores/ThingsToDoStore":26,"react":"react","react-router":"react-router","underscore":"underscore"}],20:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
