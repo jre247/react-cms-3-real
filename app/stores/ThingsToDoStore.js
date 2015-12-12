@@ -12,36 +12,6 @@ class ThingsToDoStore {
     console.log('onGetThingsToDoDataSuccess');
     debugger;
     if(data && data.length > 0){
-      //var contentItems = data;
-    //  var thingsToDoHash = {};
-    //  var thingsToDo = [];
-
-      // _.each(contentItems, function(item, index){
-      //   var parentId = item.parentId;
-      //
-      //   if(parentId > 0){
-      //     var thingToDoItem = thingsToDoHash[parentId];
-      //     if (_.isEmpty(thingToDoItem){
-      //       thingToDoItem = {};
-      //       thingToDoItem.subListItems = [];
-      //     }
-      //
-      //     var subListItem = item.value;
-      //     thingToDoItem.subListItems.push(subListItem);
-      //   }
-      //   else{
-      //     var thingToDoItem = thingsToDoHash[item.Id];
-      //     if (_.isEmpty(thingToDoItem){
-      //       thingToDoItem = {};
-      //       thingToDoItem.parentItem = item.value;
-      //     }
-      //   }
-      // });
-      //
-      // _.each(thingsToDoHash, function(item, index){
-      //   thingsToDo.push(item);
-      // });
-
       this.thingsToDo = data;
     }
   }
@@ -49,6 +19,32 @@ class ThingsToDoStore {
   onGetThingsToDoDataFail(jqXhr) {
     onsole.log('onGetThingsToDoDataFail');
     toastr.error(jqXhr.responseJSON.message);
+  }
+
+  onHandleAddListItem(){
+    debugger;
+    var parentSortOrder = this.state.thingsToDo.length + 1;
+    var childSortOrder = parentSortOrder + 1;
+
+    var contents = [
+      {
+        name: 'Things To Do Parent List Item',
+        description: 'Things To Do Parent List Item',
+        value: '',
+        contentType: 2,
+        sortOrder: parentSortOrder
+      },
+      {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        contentType: 1,
+        parentIndex: parentSortOrder,
+        sortOrder: childSortOrder
+      }
+    ];
+
+    this.state.thingsToDo.concat(contents);
   }
 
   onSaveThingsToDoDataSuccess(history) {

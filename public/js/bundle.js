@@ -158,7 +158,7 @@ var ThingsToDoActions = (function () {
   function ThingsToDoActions() {
     _classCallCheck(this, ThingsToDoActions);
 
-    this.generateActions('getThingsToDoDataSuccess', 'getThingsToDoDataFail', 'saveThingsToDoDataSuccess', 'saveThingsToDoDataFail', 'updateListItem', 'addListItem', 'updateAjaxAnimation');
+    this.generateActions('getThingsToDoDataSuccess', 'getThingsToDoDataFail', 'saveThingsToDoDataSuccess', 'saveThingsToDoDataFail', 'updateListItem', 'handleAddListItem', 'updateAjaxAnimation');
   }
 
   _createClass(ThingsToDoActions, [{
@@ -565,6 +565,8 @@ var _ThingsToDoActions = require('../actions/ThingsToDoActions');
 
 var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
 
+var _underscore = require('underscore');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -592,6 +594,14 @@ var EditThingsToDo = (function (_React$Component) {
       this.setState(state);
     }
   }, {
+    key: 'HandleClick',
+    value: function HandleClick() {
+      debugger;
+      _ThingsToDoActions2.default.addListItem();
+
+      //this.forceUpdate();
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _ThingsToDoStore2.default.listen(this.onChange);
@@ -601,44 +611,41 @@ var EditThingsToDo = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       _ThingsToDoStore2.default.unlisten(this.onChange);
+      _ThingsToDoStore2.default.unlisten(this.onClick);
+    }
+  }, {
+    key: 'addListItem',
+    value: function addListItem() {
+      debugger;
+      var parentSortOrder = this.state.thingsToDo.length + 1;
+      var childSortOrder = parentSortOrder + 1;
+
+      var contents = [{
+        name: 'Things To Do Parent List Item',
+        description: 'Things To Do Parent List Item',
+        value: '',
+        contentType: 2,
+        sortOrder: parentSortOrder
+      }, {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        contentType: 1,
+        parentIndex: parentSortOrder,
+        sortOrder: childSortOrder
+      }];
+
+      var self = this;
+      _underscore._.each(contents, function (item) {
+        self.state.thingsToDo.push(item);
+      });
+
+      this.forceUpdate();
     }
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
-
-      // var contents = [
-      //   {
-      //     name: 'Things To Do Description',
-      //     description: 'Things To Do Description',
-      //     value: this.state.thingsToDo[0].value,
-      //     contentType: 2,
-      //     sortOrder: 1
-      //   },
-      //   {
-      //     name: 'Things To Do Image Url',
-      //     description: 'Proposal Image Url',
-      //     value: this.state.thingsToDo[0].value,
-      //     contentType: 1,
-      //     parentIndex: 1,
-      //     sortOrder: 2
-      //   },
-      //   {
-      //     name: 'Things To Do Description 2',
-      //     description: 'Things To Do Description 2',
-      //     value: this.state.thingsToDo[0].parentItem,
-      //     contentType: 2,
-      //     sortOrder: 3
-      //   },
-      //   {
-      //     name: 'Things To Do Image Url 2',
-      //     description: 'Proposal Image Url 2',
-      //     value: this.state.thingsToDo[0].subListItems[0],
-      //     contentType: 1,
-      //     parentIndex: 3,
-      //     sortOrder: 4
-      //   },
-      // ];
 
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
@@ -675,15 +682,6 @@ var EditThingsToDo = (function (_React$Component) {
                     { className: 'form-group Sub-list-item' },
                     _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
                       value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement(
-                      'button',
-                      { type: 'submit', className: 'btn btn-primary' },
-                      'Save'
-                    )
                   )
                 )
               )
@@ -697,13 +695,22 @@ var EditThingsToDo = (function (_React$Component) {
         { className: 'container' },
         _react2.default.createElement(
           'button',
-          { onClick: _ThingsToDoActions2.default.addListItem.bind(this) },
+          { onClick: this.addListItem.bind(this) },
           'Add'
         ),
         _react2.default.createElement(
           'div',
           { className: 'row' },
           thingsToDoNodes
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(
+            'button',
+            { type: 'submit', className: 'btn btn-primary' },
+            'Save'
+          )
         )
       );
     }
@@ -714,7 +721,7 @@ var EditThingsToDo = (function (_React$Component) {
 
 exports.default = EditThingsToDo;
 
-},{"../actions/ThingsToDoActions":4,"../stores/ThingsToDoStore":26,"react":"react"}],11:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":4,"../stores/ThingsToDoStore":26,"react":"react","underscore":"underscore"}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2156,36 +2163,6 @@ var ThingsToDoStore = (function () {
       console.log('onGetThingsToDoDataSuccess');
       debugger;
       if (data && data.length > 0) {
-        //var contentItems = data;
-        //  var thingsToDoHash = {};
-        //  var thingsToDo = [];
-
-        // _.each(contentItems, function(item, index){
-        //   var parentId = item.parentId;
-        //
-        //   if(parentId > 0){
-        //     var thingToDoItem = thingsToDoHash[parentId];
-        //     if (_.isEmpty(thingToDoItem){
-        //       thingToDoItem = {};
-        //       thingToDoItem.subListItems = [];
-        //     }
-        //
-        //     var subListItem = item.value;
-        //     thingToDoItem.subListItems.push(subListItem);
-        //   }
-        //   else{
-        //     var thingToDoItem = thingsToDoHash[item.Id];
-        //     if (_.isEmpty(thingToDoItem){
-        //       thingToDoItem = {};
-        //       thingToDoItem.parentItem = item.value;
-        //     }
-        //   }
-        // });
-        //
-        // _.each(thingsToDoHash, function(item, index){
-        //   thingsToDo.push(item);
-        // });
-
         this.thingsToDo = data;
       }
     }
@@ -2194,6 +2171,30 @@ var ThingsToDoStore = (function () {
     value: function onGetThingsToDoDataFail(jqXhr) {
       onsole.log('onGetThingsToDoDataFail');
       toastr.error(jqXhr.responseJSON.message);
+    }
+  }, {
+    key: 'onHandleAddListItem',
+    value: function onHandleAddListItem() {
+      debugger;
+      var parentSortOrder = this.state.thingsToDo.length + 1;
+      var childSortOrder = parentSortOrder + 1;
+
+      var contents = [{
+        name: 'Things To Do Parent List Item',
+        description: 'Things To Do Parent List Item',
+        value: '',
+        contentType: 2,
+        sortOrder: parentSortOrder
+      }, {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        contentType: 1,
+        parentIndex: parentSortOrder,
+        sortOrder: childSortOrder
+      }];
+
+      this.state.thingsToDo.concat(contents);
     }
   }, {
     key: 'onSaveThingsToDoDataSuccess',

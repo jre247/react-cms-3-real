@@ -10,7 +10,7 @@ class ThingsToDoActions {
       'saveThingsToDoDataSuccess',
       'saveThingsToDoDataFail',
       'updateListItem',
-      'addListItem',
+      'handleAddListItem',
       'updateAjaxAnimation'
     );
   }
@@ -28,6 +28,9 @@ class ThingsToDoActions {
         this.actions.getThingsToDoDataFail();
       });
   }
+
+
+  
 
   saveThingsToDoData(contents, history) {
     $.ajax({
