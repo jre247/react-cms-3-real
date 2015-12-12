@@ -21,11 +21,16 @@ class EditThingsToDo extends React.Component {
     ThingsToDoStore.unlisten(this.onChange);
   }
 
-
+  //TODO: put in helper
   isSubListItem(node){
     return node.parent_index > 0;
   }
+  //TODO: put in helper
+  isDescription(node){
+    return node.content_type_id == 2;
+  }
 
+  //TODO: create function to return new content item
   addParentListItem(){
     var sortOrder = this.state.thingsToDo.length + 1;
 
@@ -43,20 +48,32 @@ class EditThingsToDo extends React.Component {
     this.forceUpdate();
   }
 
+  //TODO: create function to return new content item
   addSublistItem(index, event){
     var sortOrder = this.state.thingsToDo.length + 1;
 
-    var content =
+    var description =
     {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        content_type_id: 1,
+        content_type_id: 2,
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
     };
+    this.state.thingsToDo.splice(index + 1, 0, description);
 
-    this.state.thingsToDo.splice(index + 1, 0, content)
+    sortOrder += 1;
+    var link =
+    {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        content_type_id: 5,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder
+    };
+    this.state.thingsToDo.splice(index + 2, 0, link);
 
     this.setState({thingsToDo: this.state.thingsToDo})
   }
@@ -90,21 +107,40 @@ class EditThingsToDo extends React.Component {
     ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
 
+  //TODO: create field component that will figure out what kind of field to render
   render() {
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
-          return (
-            <div key={thingToDo.sort_order} className='container'>
-              <div className='row'>
-                <div className='col-sm-8'>
-                  <div className="form-group Sub-list-item">
-                    <input ref="url" className='form-control' name="url" placeholder="Url"
-                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
+          if(this.isDescription(thingToDo)){
+            return (
+              <div key={thingToDo.sort_order} className='container'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <div className="form-group Sub-list-item">
+                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
+                        value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}>
+                      </textarea>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          }
+          else{
+            return (
+              <div key={thingToDo.sort_order} className='container'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <div className="form-group Sub-list-item">
+                      <input ref="link" className='form-control' name="link" placeholder="Link"
+                        value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
         }
         else{
           return (
@@ -120,9 +156,8 @@ class EditThingsToDo extends React.Component {
               <div className='row'>
                 <div className='col-sm-8'>
                   <div className="form-group">
-                    <textarea ref="description" className='form-control' name="description" placeholder="Desription"
-                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}>
-                    </textarea>
+                    <input ref="title" className='form-control' name="title" placeholder="Title"
+                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
                   </div>
                 </div>
               </div>

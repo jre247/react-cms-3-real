@@ -65,6 +65,7 @@ insert into content_type (name, description, is_active) values ('Image', 'Url fo
 insert into content_type (name, description, is_active) values ('Description', 'Description', true);
 insert into content_type (name, description, is_active) values ('Title', 'Title', true);
 insert into content_type (name, description, is_active) values ('ShortDescription', 'ShortDescription', true);
+insert into content_type (name, description, is_active) values ('Link', 'Link', true);
 
 insert into wedding_user (first_name, last_name, email, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
 

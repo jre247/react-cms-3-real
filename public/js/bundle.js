@@ -604,11 +604,24 @@ var EditThingsToDo = (function (_React$Component) {
     value: function componentWillUnmount() {
       _ThingsToDoStore2.default.unlisten(this.onChange);
     }
+
+    //TODO: put in helper
+
   }, {
     key: 'isSubListItem',
     value: function isSubListItem(node) {
       return node.parent_index > 0;
     }
+    //TODO: put in helper
+
+  }, {
+    key: 'isDescription',
+    value: function isDescription(node) {
+      return node.content_type_id == 2;
+    }
+
+    //TODO: create function to return new content item
+
   }, {
     key: 'addParentListItem',
     value: function addParentListItem() {
@@ -626,21 +639,34 @@ var EditThingsToDo = (function (_React$Component) {
 
       this.forceUpdate();
     }
+
+    //TODO: create function to return new content item
+
   }, {
     key: 'addSublistItem',
     value: function addSublistItem(index, event) {
       var sortOrder = this.state.thingsToDo.length + 1;
 
-      var content = {
+      var description = {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        content_type_id: 1,
+        content_type_id: 2,
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
       };
+      this.state.thingsToDo.splice(index + 1, 0, description);
 
-      this.state.thingsToDo.splice(index + 1, 0, content);
+      sortOrder += 1;
+      var link = {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        content_type_id: 5,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder
+      };
+      this.state.thingsToDo.splice(index + 2, 0, link);
 
       this.setState({ thingsToDo: this.state.thingsToDo });
     }
@@ -677,6 +703,9 @@ var EditThingsToDo = (function (_React$Component) {
     value: function submit(event) {
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
+
+    //TODO: create field component that will figure out what kind of field to render
+
   }, {
     key: 'render',
     value: function render() {
@@ -684,24 +713,45 @@ var EditThingsToDo = (function (_React$Component) {
 
       var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
         if (_this2.isSubListItem(thingToDo)) {
-          return _react2.default.createElement(
-            'div',
-            { key: thingToDo.sort_order, className: 'container' },
-            _react2.default.createElement(
+          if (_this2.isDescription(thingToDo)) {
+            return _react2.default.createElement(
               'div',
-              { className: 'row' },
+              { key: thingToDo.sort_order, className: 'container' },
               _react2.default.createElement(
                 'div',
-                { className: 'col-sm-8' },
+                { className: 'row' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'form-group Sub-list-item' },
-                  _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
-                    value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
+                  { className: 'col-sm-8' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group Sub-list-item' },
+                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
+                      value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
+                  )
                 )
               )
-            )
-          );
+            );
+          } else {
+            return _react2.default.createElement(
+              'div',
+              { key: thingToDo.sort_order, className: 'container' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-8' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'form-group Sub-list-item' },
+                    _react2.default.createElement('input', { ref: 'link', className: 'form-control', name: 'link', placeholder: 'Link',
+                      value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
+                  )
+                )
+              )
+            );
+          }
         } else {
           return _react2.default.createElement(
             'div',
@@ -732,7 +782,7 @@ var EditThingsToDo = (function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'form-group' },
-                  _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Desription',
+                  _react2.default.createElement('input', { ref: 'title', className: 'form-control', name: 'title', placeholder: 'Title',
                     value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
                 )
               )
@@ -1662,10 +1712,19 @@ var ThingsToDo = (function (_React$Component) {
     value: function componentWillUnmount() {
       _ThingsToDoStore2.default.unlisten(this.onChange);
     }
+    //TODO: put in helper
+
   }, {
     key: 'isSubListItem',
     value: function isSubListItem(node) {
       return node.parent_index > 0;
+    }
+    //TODO: put in helper
+
+  }, {
+    key: 'isDescription',
+    value: function isDescription(node) {
+      return node.content_type_id == 2;
     }
   }, {
     key: 'render',
@@ -1698,27 +1757,53 @@ var ThingsToDo = (function (_React$Component) {
       } else {
         var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
           if (_this2.isSubListItem(thingToDo)) {
-            return _react2.default.createElement(
-              'div',
-              { key: thingToDo.sort_order, className: 'container' },
-              _react2.default.createElement(
+            if (_this2.isDescription(thingToDo)) {
+              return _react2.default.createElement(
                 'div',
-                { className: 'row' },
+                { key: thingToDo.sort_order, className: 'container' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'col-sm-8' },
+                  { className: 'row' },
                   _react2.default.createElement(
                     'div',
-                    { className: 'form-group Sub-list-item' },
+                    { className: 'col-sm-8' },
                     _react2.default.createElement(
-                      'a',
-                      { ref: 'url', name: 'url', href: thingToDo.value },
-                      thingToDo.value
+                      'div',
+                      { className: 'form-group Sub-list-item' },
+                      _react2.default.createElement(
+                        'span',
+                        { ref: 'description', name: 'description' },
+                        ' ',
+                        thingToDo.value,
+                        ' '
+                      )
                     )
                   )
                 )
-              )
-            );
+              );
+            } else {
+              return _react2.default.createElement(
+                'div',
+                { key: thingToDo.sort_order, className: 'container' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'row' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-8' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'form-group Sub-list-item' },
+                      _react2.default.createElement(
+                        'a',
+                        { ref: 'link', name: 'link', href: thingToDo.value },
+                        thingToDo.value
+                      )
+                    )
+                  )
+                )
+              );
+            }
           } else {
             return _react2.default.createElement(
               'div',

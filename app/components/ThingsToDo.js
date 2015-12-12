@@ -20,8 +20,13 @@ class ThingsToDo extends React.Component {
   componentWillUnmount() {
     ThingsToDoStore.unlisten(this.onChange);
   }
+  //TODO: put in helper
   isSubListItem(node){
     return node.parent_index > 0;
+  }
+  //TODO: put in helper
+  isDescription(node){
+    return node.content_type_id == 2;
   }
   render() {
     if(_.isEmpty(this.state.thingsToDo)){
@@ -40,17 +45,33 @@ class ThingsToDo extends React.Component {
     else {
         let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
           if(this.isSubListItem(thingToDo)){
-            return (
-              <div key={thingToDo.sort_order} className='container'>
-                <div className='row'>
-                  <div className='col-sm-8'>
-                    <div className="form-group Sub-list-item">
-                      <a ref="url" name="url" href={thingToDo.value}>{thingToDo.value}</a>
+            if(this.isDescription(thingToDo)){
+              return (
+                <div key={thingToDo.sort_order} className='container'>
+                  <div className='row'>
+                    <div className='col-sm-8'>
+                      <div className="form-group Sub-list-item">
+                        <span ref="description" name="description"> {thingToDo.value} </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
+            }
+            else{
+              return (
+                <div key={thingToDo.sort_order} className='container'>
+                  <div className='row'>
+                    <div className='col-sm-8'>
+                      <div className="form-group Sub-list-item">
+                        <a ref="link" name="link" href={thingToDo.value}>{thingToDo.value}</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
           }
           else{
             return (
