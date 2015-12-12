@@ -40,13 +40,13 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(pageId);
         valueClause.push('$' + params.length);
-        params.push(row.content_type);
+        params.push(row.content_type_id);
         valueClause.push('$' + params.length);
         params.push(userId);
         valueClause.push('$' + params.length);
         params.push(row.sort_order);
         valueClause.push('$' + params.length);
-        params.push(row.parent_index);
+        params.push(row.parent_index == "" ? null : row.parent_index);
         valueClause.push('$' + params.length);
         params.push(new Date());
         valueClause.push('$' + params.length);

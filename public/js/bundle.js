@@ -171,7 +171,6 @@ var ThingsToDoActions = (function () {
         url: '/api/pages/' + pageId
       }).done(function (data) {
         console.log('getThingsToDoDataSuccess(data)');
-        debugger;
         _this.actions.getThingsToDoDataSuccess(data);
       }).fail(function () {
         _this.actions.getThingsToDoDataFail();
@@ -182,7 +181,6 @@ var ThingsToDoActions = (function () {
     value: function saveThingsToDoData(contents, history) {
       var _this2 = this;
 
-      debugger;
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
@@ -473,14 +471,14 @@ var EditTheProposal = (function (_React$Component) {
         name: 'Proposal Image Url',
         description: 'Proposal Image Url',
         value: this.state.proposal.url,
-        contentType: 1,
-        sortOrder: 1
+        content_type_id: 1,
+        sort_order: 1
       }, {
         name: 'Proposal Description',
         description: 'Proposal Description',
         value: this.state.proposal.description,
-        contentType: 2,
-        sortOrder: 2
+        content_type_id: 2,
+        sort_order: 2
       }];
 
       _TheProposalActions2.default.saveProposalData(contents, this.props.history);
@@ -620,7 +618,7 @@ var EditThingsToDo = (function (_React$Component) {
         name: 'Things To Do Parent List Item',
         description: 'Things To Do Parent List Item',
         value: '',
-        content_type: 2,
+        content_type_id: 2,
         sort_order: sortOrder
       };
 
@@ -637,7 +635,7 @@ var EditThingsToDo = (function (_React$Component) {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        content_type: 1,
+        content_type_id: 1,
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
       };
@@ -751,7 +749,7 @@ var EditThingsToDo = (function (_React$Component) {
           { onSubmit: this.handleSubmit.bind(this) },
           _react2.default.createElement(
             'div',
-            { className: 'container' },
+            { className: 'container List-page' },
             _react2.default.createElement(
               'button',
               { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
@@ -849,44 +847,44 @@ var EditVenue = (function (_React$Component) {
         name: 'Venue Name',
         description: 'Venue Name',
         value: this.state.venue.name,
-        contentType: 4,
-        sortOrder: 1
+        content_type_id: 4,
+        sort_order: 1
       }, {
         name: 'Venue Event Date',
         description: 'Venue Event Date',
         value: this.state.venue.eventDate,
-        contentType: 2,
-        sortOrder: 2
+        content_type_id: 2,
+        sort_order: 2
       }, {
         name: 'Venue Image Url',
         description: 'Venue Image Url',
         value: this.state.venue.url,
-        contentType: 1,
-        sortOrder: 3
+        content_type_id: 1,
+        sort_order: 3
       }, {
         name: 'Venue Ceremony Time',
         description: 'Venue Ceremony Time',
         value: this.state.venue.ceremonyTime,
-        contentType: 2,
-        sortOrder: 4
+        content_type_id: 2,
+        sort_order: 4
       }, {
         name: 'Venue Cockailtail Hour',
         description: 'Venue Cockailtail Hour',
         value: this.state.venue.cocktailHourTime,
-        contentType: 2,
-        sortOrder: 5
+        content_type_id: 2,
+        sort_order: 5
       }, {
         name: 'Venue Reception',
         description: 'Venue Reception',
         value: this.state.venue.receptionTime,
-        contentType: 2,
-        sortOrder: 6
+        content_type_id: 2,
+        sort_order: 6
       }, {
         name: 'Venue After Party',
         description: 'Venue After Party',
         value: this.state.venue.afterPartyTime,
-        contentType: 2,
-        sortOrder: 7
+        content_type_id: 2,
+        sort_order: 7
       }];
 
       _VenueActions2.default.saveVenueData(contents, this.props.history);
@@ -1763,7 +1761,7 @@ var ThingsToDo = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'row List-container' },
+              { className: 'row List-page' },
               thingsToDoNodes
             )
           )
@@ -2261,7 +2259,6 @@ var ThingsToDoStore = (function () {
     key: 'onGetThingsToDoDataSuccess',
     value: function onGetThingsToDoDataSuccess(data) {
       console.log('onGetThingsToDoDataSuccess');
-      debugger;
       if (data && data.length > 0) {
         this.thingsToDo = data;
       }

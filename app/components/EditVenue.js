@@ -26,50 +26,50 @@ class EditVenue extends React.Component {
         name: 'Venue Name',
         description: 'Venue Name',
         value: this.state.venue.name,
-        contentType: 4,
-        sortOrder: 1
+        content_type_id: 4,
+        sort_order: 1
       },
       {
         name: 'Venue Event Date',
         description: 'Venue Event Date',
         value: this.state.venue.eventDate,
-        contentType: 2,
-        sortOrder: 2
+        content_type_id: 2,
+        sort_order: 2
       },
       {
         name: 'Venue Image Url',
         description: 'Venue Image Url',
         value: this.state.venue.url,
-        contentType: 1,
-        sortOrder: 3
+        content_type_id: 1,
+        sort_order: 3
       },
       {
         name: 'Venue Ceremony Time',
         description: 'Venue Ceremony Time',
         value: this.state.venue.ceremonyTime,
-        contentType: 2,
-        sortOrder: 4
+        content_type_id: 2,
+        sort_order: 4
       },
       {
         name: 'Venue Cockailtail Hour',
         description: 'Venue Cockailtail Hour',
         value: this.state.venue.cocktailHourTime,
-        contentType: 2,
-        sortOrder: 5
+        content_type_id: 2,
+        sort_order: 5
       },
       {
         name: 'Venue Reception',
         description: 'Venue Reception',
         value: this.state.venue.receptionTime,
-        contentType: 2,
-        sortOrder: 6
+        content_type_id: 2,
+        sort_order: 6
       },
       {
         name: 'Venue After Party',
         description: 'Venue After Party',
         value: this.state.venue.afterPartyTime,
-        contentType: 2,
-        sortOrder: 7
+        content_type_id: 2,
+        sort_order: 7
       }
     ];
 

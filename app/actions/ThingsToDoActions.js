@@ -22,7 +22,6 @@ class ThingsToDoActions {
     })
       .done((data) => {
         console.log('getThingsToDoDataSuccess(data)');
-        debugger;
         this.actions.getThingsToDoDataSuccess(data);
       })
       .fail(() => {
@@ -31,7 +30,6 @@ class ThingsToDoActions {
   }
 
   saveThingsToDoData(contents, history) {
-    debugger;
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,

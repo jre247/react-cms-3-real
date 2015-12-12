@@ -75,7 +75,7 @@ class ThingsToDo extends React.Component {
             <div className="Edit-Content-Button">
               <Link className="Navigation-link" to="/things-to-do/edit">Edit</Link>
             </div>
-            <div className='row List-container'>
+            <div className='row List-page'>
               {thingsToDoNodes}
             </div>
           </div>

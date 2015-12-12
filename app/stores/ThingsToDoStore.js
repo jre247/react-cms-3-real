@@ -10,7 +10,6 @@ class ThingsToDoStore {
 
   onGetThingsToDoDataSuccess(data) {
     console.log('onGetThingsToDoDataSuccess');
-    debugger;
     if(data && data.length > 0){
       this.thingsToDo = data;
     }

@@ -26,15 +26,15 @@ class EditTheProposal extends React.Component {
         name: 'Proposal Image Url',
         description: 'Proposal Image Url',
         value: this.state.proposal.url,
-        contentType: 1,
-        sortOrder: 1
+        content_type_id: 1,
+        sort_order: 1
       },
       {
         name: 'Proposal Description',
         description: 'Proposal Description',
         value: this.state.proposal.description,
-        contentType: 2,
-        sortOrder: 2
+        content_type_id: 2,
+        sort_order: 2
       }
     ];
 

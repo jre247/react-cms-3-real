@@ -7432,6 +7432,9 @@ img.mfp-img {
 }
 /* End Navigation */
 /* List */
+.List-page {
+  margin-left: 16%;
+}
 .List-container {
   margin-top: 10px;
   margin-bottom: 10px;

@@ -34,7 +34,7 @@ class EditThingsToDo extends React.Component {
       name: 'Things To Do Parent List Item',
       description: 'Things To Do Parent List Item',
       value: '',
-      content_type: 2,
+      content_type_id: 2,
       sort_order: sortOrder
     };
 
@@ -51,7 +51,7 @@ class EditThingsToDo extends React.Component {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        content_type: 1,
+        content_type_id: 1,
         parent_index: this.findParentIndex(sortOrder),
         sort_order: sortOrder
     };
@@ -134,7 +134,7 @@ class EditThingsToDo extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className='container'>
+          <div className='container List-page'>
             <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
             <div className='row List-container'>
               {thingsToDoNodes}
