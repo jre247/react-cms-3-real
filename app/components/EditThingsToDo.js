@@ -29,35 +29,63 @@ class EditThingsToDo extends React.Component {
     ThingsToDoStore.unlisten(this.onClick);
   }
 
-  addListItem(){
-    debugger;
-    var parentSortOrder = this.state.thingsToDo.length + 1;
-    var childSortOrder = parentSortOrder + 1;
 
-    var contents = [
-      {
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        contentType: 2,
-        sortOrder: parentSortOrder
-      },
-      {
+  isSubListItem(node){
+    return node.parentIndex > 0;
+  }
+
+  addParentListItem(){
+    debugger;
+    var sortOrder = this.state.thingsToDo.length + 1;
+
+    var content =
+    {
+      name: 'Things To Do Parent List Item',
+      description: 'Things To Do Parent List Item',
+      value: '',
+      contentType: 2,
+      sortOrder: sortOrder,
+      //key: this.generateKey()
+    };
+
+    this.state.thingsToDo.push(content);
+
+    this.forceUpdate();
+  }
+
+  addSublistItem(){
+    debugger;
+    var sortOrder = this.state.thingsToDo.length + 1;
+
+    var content =
+    {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
         contentType: 1,
-        parentIndex: parentSortOrder,
-        sortOrder: childSortOrder
-      }
-    ];
+        parentIndex: this.findParentIndex(sortOrder),
+        sortOrder: sortOrder,
+        //key: this.generateKey()
+    };
 
-    var self = this;
-    _.each(contents, function(item){
-      self.state.thingsToDo.push(item);
-    });
+    this.state.thingsToDo.push(content);
 
     this.forceUpdate();
+  }
+
+  findParentIndex(currentIndex){
+    debugger;
+    var parentIndex = 1;
+
+    for(var index = currentIndex - 2; index > 0; index--){
+      var listItem = this.state.thingsToDo[index];
+      if(!listItem.parentIndex){
+        parentIndex = listItem.sortOrder;
+        break;
+      }
+    }
+
+    return parentIndex;
   }
 
   handleSubmit(event) {
@@ -66,19 +94,12 @@ class EditThingsToDo extends React.Component {
     ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
   render() {
-      debugger;
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
-      return (
-        <div>
-          <form onSubmit={this.handleSubmit.bind(this)}>
-            <div className='container'>
+        if(this.isSubListItem(thingToDo)){
+          return (
+            <div key={thingToDo.sortOrder} className='container'>
               <div className='row'>
                 <div className='col-sm-8'>
-                  <div className="form-group">
-                    <textarea ref="description" className='form-control' name="description" placeholder="Desription"
-                      value={thingToDo.value} onChange={ThingsToDoActions.updateListItem.bind(this, index)}>
-                    </textarea>
-                  </div>
                   <div className="form-group Sub-list-item">
                     <input ref="url" className='form-control' name="url" placeholder="Url"
                       value={thingToDo.value} onChange={ThingsToDoActions.updateListItem.bind(this, index)}/>
@@ -86,21 +107,39 @@ class EditThingsToDo extends React.Component {
                 </div>
               </div>
             </div>
-          </form>
-        </div>
-      );
+          );
+        }
+        else{
+          return (
+            <div key={thingToDo.sortOrder} className='container'>
+              <button onClick={this.addSublistItem.bind(this)}>Add Sub List Item</button>
+
+              <div className='row'>
+                <div className='col-sm-8'>
+                  <div className="form-group">
+                    <textarea ref="description" className='form-control' name="description" placeholder="Desription"
+                      value={thingToDo.value} onChange={ThingsToDoActions.updateListItem.bind(this, index)}>
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        }
     });
 
     return (
-      <div className='container'>
-        <button onClick={this.addListItem.bind(this)}>Add</button>
-        <div className='row'>
-          {thingsToDoNodes}
+      <form onSubmit={this.handleSubmit.bind(this)}>
+        <div className='container'>
+          <button onClick={this.addParentListItem.bind(this)}>Add</button>
+          <div className='row'>
+            {thingsToDoNodes}
+          </div>
+          <div className={this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden'}>
+            <button type='submit' className='btn btn-primary'>Save</button>
+          </div>
         </div>
-        <div className="form-group">
-          <button type='submit' className='btn btn-primary'>Save</button>
-        </div>
-      </div>
+      </form>
     );
   }
 }

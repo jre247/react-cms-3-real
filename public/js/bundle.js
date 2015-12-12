@@ -614,33 +614,64 @@ var EditThingsToDo = (function (_React$Component) {
       _ThingsToDoStore2.default.unlisten(this.onClick);
     }
   }, {
-    key: 'addListItem',
-    value: function addListItem() {
+    key: 'isSubListItem',
+    value: function isSubListItem(node) {
+      return node.parentIndex > 0;
+    }
+  }, {
+    key: 'addParentListItem',
+    value: function addParentListItem() {
       debugger;
-      var parentSortOrder = this.state.thingsToDo.length + 1;
-      var childSortOrder = parentSortOrder + 1;
+      var sortOrder = this.state.thingsToDo.length + 1;
 
-      var contents = [{
+      var content = {
         name: 'Things To Do Parent List Item',
         description: 'Things To Do Parent List Item',
         value: '',
         contentType: 2,
-        sortOrder: parentSortOrder
-      }, {
+        sortOrder: sortOrder
+      };
+
+      //key: this.generateKey()
+      this.state.thingsToDo.push(content);
+
+      this.forceUpdate();
+    }
+  }, {
+    key: 'addSublistItem',
+    value: function addSublistItem() {
+      debugger;
+      var sortOrder = this.state.thingsToDo.length + 1;
+
+      var content = {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
         contentType: 1,
-        parentIndex: parentSortOrder,
-        sortOrder: childSortOrder
-      }];
+        parentIndex: this.findParentIndex(sortOrder),
+        sortOrder: sortOrder
+      };
 
-      var self = this;
-      _underscore._.each(contents, function (item) {
-        self.state.thingsToDo.push(item);
-      });
+      //key: this.generateKey()
+      this.state.thingsToDo.push(content);
 
       this.forceUpdate();
+    }
+  }, {
+    key: 'findParentIndex',
+    value: function findParentIndex(currentIndex) {
+      debugger;
+      var parentIndex = 1;
+
+      for (var index = currentIndex - 2; index > 0; index--) {
+        var listItem = this.state.thingsToDo[index];
+        if (!listItem.parentIndex) {
+          parentIndex = listItem.sortOrder;
+          break;
+        }
+      }
+
+      return parentIndex;
     }
   }, {
     key: 'handleSubmit',
@@ -654,62 +685,77 @@ var EditThingsToDo = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      debugger;
       var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
-        return _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(
-            'form',
-            { onSubmit: _this2.handleSubmit.bind(_this2) },
+        if (_this2.isSubListItem(thingToDo)) {
+          return _react2.default.createElement(
+            'div',
+            { key: thingToDo.sortOrder, className: 'container' },
             _react2.default.createElement(
               'div',
-              { className: 'container' },
+              { className: 'row' },
               _react2.default.createElement(
                 'div',
-                { className: 'row' },
+                { className: 'col-sm-8' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'col-sm-8' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'form-group' },
-                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Desription',
-                      value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'form-group Sub-list-item' },
-                    _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
-                      value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
-                  )
+                  { className: 'form-group Sub-list-item' },
+                  _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
+                    value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
                 )
               )
             )
-          )
-        );
+          );
+        } else {
+          return _react2.default.createElement(
+            'div',
+            { key: thingToDo.sortOrder, className: 'container' },
+            _react2.default.createElement(
+              'button',
+              { onClick: _this2.addSublistItem.bind(_this2) },
+              'Add Sub List Item'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'row' },
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-8' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-group' },
+                  _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Desription',
+                    value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
+                )
+              )
+            )
+          );
+        }
       });
 
       return _react2.default.createElement(
-        'div',
-        { className: 'container' },
-        _react2.default.createElement(
-          'button',
-          { onClick: this.addListItem.bind(this) },
-          'Add'
-        ),
+        'form',
+        { onSubmit: this.handleSubmit.bind(this) },
         _react2.default.createElement(
           'div',
-          { className: 'row' },
-          thingsToDoNodes
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'form-group' },
+          { className: 'container' },
           _react2.default.createElement(
             'button',
-            { type: 'submit', className: 'btn btn-primary' },
-            'Save'
+            { onClick: this.addParentListItem.bind(this) },
+            'Add'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            thingsToDoNodes
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit', className: 'btn btn-primary' },
+              'Save'
+            )
           )
         )
       );
