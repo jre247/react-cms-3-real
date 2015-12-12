@@ -7455,7 +7455,19 @@ img.mfp-img {
 .List-item-group {
   margin-top: 10px;
   font-size: 20px;
-  border-top: 1px solid lightgray;
   line-height: 33px;
+}
+.Link-list-item {
+  margin-bottom: 25px;
+}
+.Thing-to-do-title {
+  font-size: 33px;
+  font-weight: bold;
+  margin-bottom: 28px;
+}
+.Row-separator {
+  border-top: 1px solid lightgray;
+  margin-top: 25px;
+  padding-top: 25px;
 }
 /* End List */

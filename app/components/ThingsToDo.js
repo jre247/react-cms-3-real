@@ -60,7 +60,7 @@ class ThingsToDo extends React.Component {
             }
             else{
               return (
-                <div key={thingToDo.sort_order} className='container'>
+                <div key={thingToDo.sort_order} className='container Link-list-item'>
                   <div className='row'>
                     <div className='col-sm-8'>
                       <div className="form-group Sub-list-item">
@@ -75,13 +75,14 @@ class ThingsToDo extends React.Component {
           }
           else{
             return (
-              <div key={thingToDo.sort_order} className='container List-item-group'>
+              <div key={thingToDo.sort_order} className={thingToDo.sort_order > 1 ? 'container List-item-group Row-separator' :
+                'container List-item-group'}>
                 <div className='row'>
                   <div className='col-sm-8'>
-                    <div className="form-group">
-                      <h3 ref="description" name="description">
+                    <div className="form-group Thing-to-do-title" >
+                      <span  ref="description" name="description">
                         {thingToDo.value}
-                      </h3>
+                      </span>
                     </div>
                   </div>
                 </div>

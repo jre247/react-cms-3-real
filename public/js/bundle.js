@@ -744,7 +744,7 @@ var EditThingsToDo = (function (_React$Component) {
                   { className: 'col-sm-8' },
                   _react2.default.createElement(
                     'div',
-                    { className: 'form-group Sub-list-item' },
+                    { className: 'form-group Sub-list-item Link-list-item' },
                     _react2.default.createElement('input', { ref: 'link', className: 'form-control', name: 'link', placeholder: 'Link',
                       value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
                   )
@@ -1784,7 +1784,7 @@ var ThingsToDo = (function (_React$Component) {
             } else {
               return _react2.default.createElement(
                 'div',
-                { key: thingToDo.sort_order, className: 'container' },
+                { key: thingToDo.sort_order, className: 'container Link-list-item' },
                 _react2.default.createElement(
                   'div',
                   { className: 'row' },
@@ -1807,7 +1807,7 @@ var ThingsToDo = (function (_React$Component) {
           } else {
             return _react2.default.createElement(
               'div',
-              { key: thingToDo.sort_order, className: 'container List-item-group' },
+              { key: thingToDo.sort_order, className: thingToDo.sort_order > 1 ? 'container List-item-group Row-separator' : 'container List-item-group' },
               _react2.default.createElement(
                 'div',
                 { className: 'row' },
@@ -1816,9 +1816,9 @@ var ThingsToDo = (function (_React$Component) {
                   { className: 'col-sm-8' },
                   _react2.default.createElement(
                     'div',
-                    { className: 'form-group' },
+                    { className: 'form-group Thing-to-do-title' },
                     _react2.default.createElement(
-                      'h3',
+                      'span',
                       { ref: 'description', name: 'description' },
                       thingToDo.value
                     )

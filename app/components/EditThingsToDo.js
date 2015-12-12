@@ -131,7 +131,7 @@ class EditThingsToDo extends React.Component {
               <div key={thingToDo.sort_order} className='container'>
                 <div className='row'>
                   <div className='col-sm-8'>
-                    <div className="form-group Sub-list-item">
+                    <div className="form-group Sub-list-item Link-list-item">
                       <input ref="link" className='form-control' name="link" placeholder="Link"
                         value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
                     </div>
