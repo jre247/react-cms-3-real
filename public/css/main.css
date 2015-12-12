@@ -7432,11 +7432,21 @@ img.mfp-img {
 }
 /* End Navigation */
 /* List */
+.List-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .Sub-list-item {
-  margin-left: 10px;
+  margin-left: 15px;
   margin-bottom: 5px;
 }
 .Parent-list-item {
   margin-top: 20px;
+}
+.Add-sub-list-item {
+  text-align: right;
+}
+.List-item-group {
+  margin-top: 10px;
 }
 /* End List */

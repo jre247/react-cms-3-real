@@ -621,7 +621,6 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'addParentListItem',
     value: function addParentListItem() {
-      debugger;
       var sortOrder = this.state.thingsToDo.length + 1;
 
       var content = {
@@ -632,7 +631,6 @@ var EditThingsToDo = (function (_React$Component) {
         sortOrder: sortOrder
       };
 
-      //key: this.generateKey()
       this.state.thingsToDo.push(content);
 
       this.forceUpdate();
@@ -640,7 +638,6 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'addSublistItem',
     value: function addSublistItem() {
-      debugger;
       var sortOrder = this.state.thingsToDo.length + 1;
 
       var content = {
@@ -652,7 +649,6 @@ var EditThingsToDo = (function (_React$Component) {
         sortOrder: sortOrder
       };
 
-      //key: this.generateKey()
       this.state.thingsToDo.push(content);
 
       this.forceUpdate();
@@ -660,7 +656,6 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'findParentIndex',
     value: function findParentIndex(currentIndex) {
-      debugger;
       var parentIndex = 1;
 
       for (var index = currentIndex - 2; index > 0; index--) {
@@ -708,11 +703,23 @@ var EditThingsToDo = (function (_React$Component) {
         } else {
           return _react2.default.createElement(
             'div',
-            { key: thingToDo.sortOrder, className: 'container' },
+            { key: thingToDo.sortOrder, className: 'container List-item-group' },
             _react2.default.createElement(
-              'button',
-              { onClick: _this2.addSublistItem.bind(_this2) },
-              'Add Sub List Item'
+              'div',
+              { className: 'row' },
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-8 Add-sub-list-item' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-group' },
+                  _react2.default.createElement(
+                    'button',
+                    { className: 'btn btn-primary', onClick: _this2.addSublistItem.bind(_this2) },
+                    'Add Sub List Item'
+                  )
+                )
+              )
             ),
             _react2.default.createElement(
               'div',
@@ -733,28 +740,32 @@ var EditThingsToDo = (function (_React$Component) {
       });
 
       return _react2.default.createElement(
-        'form',
-        { onSubmit: this.handleSubmit.bind(this) },
+        'div',
+        null,
         _react2.default.createElement(
-          'div',
-          { className: 'container' },
-          _react2.default.createElement(
-            'button',
-            { onClick: this.addParentListItem.bind(this) },
-            'Add'
-          ),
+          'form',
+          { onSubmit: this.handleSubmit.bind(this) },
           _react2.default.createElement(
             'div',
-            { className: 'row' },
-            thingsToDoNodes
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden' },
+            { className: 'container' },
             _react2.default.createElement(
               'button',
-              { type: 'submit', className: 'btn btn-primary' },
-              'Save'
+              { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+              'Add'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'row List-container' },
+              thingsToDoNodes
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden' },
+              _react2.default.createElement(
+                'button',
+                { type: 'submit', className: 'btn btn-primary' },
+                'Save'
+              )
             )
           )
         )
