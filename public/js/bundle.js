@@ -1818,7 +1818,7 @@ var ThingsToDo = (function (_React$Component) {
                     'div',
                     { className: 'form-group' },
                     _react2.default.createElement(
-                      'span',
+                      'h3',
                       { ref: 'description', name: 'description' },
                       thingToDo.value
                     )

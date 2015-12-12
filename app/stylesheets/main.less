@@ -3,7 +3,8 @@
 @import (less) '../../bower_components/magnific-popup/dist/magnific-popup.css';
 
 @content-margin-top: 10px;
-@content-text: #7e3d10;
+@content-text-color: #7e3d10;
+@content-text-font-family: 'Josefin Sans';
 @content-description-font-size: 28px;
 /* Header */
 
@@ -128,7 +129,7 @@
 
 .List-items{
  text-align: center;
- color: @content-text;
+ color: @content-text-color;
  font-size: 28px;
  line-height: 1.6em;
  margin-top: @content-margin-top;
@@ -144,7 +145,7 @@
 /* Long Description */
 
 .Content-long-description{
-  color: @content-text;
+  color: @content-text-color;
   font-size: @content-description-font-size;
 }
 
@@ -210,11 +211,14 @@
 
 .List-page{
   margin-left: 16%;
+  font-family: @content-text-font-family;
+  font-size: 20px;
 }
 
 .List-container{
     margin-top: 10px;
-    margin-bottom: 10px;  
+    margin-bottom: 10px;
+    font-size: 20px;
 }
 
 .Sub-list-item{
@@ -232,6 +236,9 @@
 
 .List-item-group{
   margin-top: 10px;
+  font-size: 20px;
+  border-top: 1px solid lightgray;
+  line-height: 33px;
 }
 
 

@@ -79,9 +79,9 @@ class ThingsToDo extends React.Component {
                 <div className='row'>
                   <div className='col-sm-8'>
                     <div className="form-group">
-                      <span ref="description" name="description">
+                      <h3 ref="description" name="description">
                         {thingToDo.value}
-                      </span>
+                      </h3>
                     </div>
                   </div>
                 </div>

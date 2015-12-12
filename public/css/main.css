@@ -7434,10 +7434,13 @@ img.mfp-img {
 /* List */
 .List-page {
   margin-left: 16%;
+  font-family: 'Josefin Sans';
+  font-size: 20px;
 }
 .List-container {
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 .Sub-list-item {
   margin-left: 15px;
@@ -7451,5 +7454,8 @@ img.mfp-img {
 }
 .List-item-group {
   margin-top: 10px;
+  font-size: 20px;
+  border-top: 1px solid lightgray;
+  line-height: 33px;
 }
 /* End List */
