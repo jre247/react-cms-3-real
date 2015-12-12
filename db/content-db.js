@@ -13,7 +13,7 @@ exports.save = function(pageId, userId, contents){
           processError(done, err);
         }
 
-        client.query('UPDATE content set IsActive = false where PageId = $1', [pageId]);
+        client.query('UPDATE content set is_active = false where page_id = $1', [pageId]);
 
         client.query(buildBulkInsertStatement(pageId, userId, contents));
 
@@ -40,13 +40,13 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(pageId);
         valueClause.push('$' + params.length);
-        params.push(row.contentType);
+        params.push(row.content_type);
         valueClause.push('$' + params.length);
         params.push(userId);
         valueClause.push('$' + params.length);
-        params.push(row.sortOrder);
+        params.push(row.sort_order);
         valueClause.push('$' + params.length);
-        params.push(row.parentIndex);
+        params.push(row.parent_index);
         valueClause.push('$' + params.length);
         params.push(new Date());
         valueClause.push('$' + params.length);
@@ -55,7 +55,7 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content(Name, Value, PageId, ContentTypeId, UserId, SortOrder, ParentIndex, DateCreated, IsActive) VALUES ' +
+        text: 'INSERT INTO content(name, value, page_id, content_type_id, user_id, sort_order, parent_index, date_created, is_active) VALUES ' +
             chunks.join(', '),
         values: params
     }
@@ -72,7 +72,7 @@ exports.get = function(pageId, userId){
         }
 
         pageId = parseInt(pageId);
-        var query = client.query("select * from content where IsActive = true And PageId = $1 order by SortOrder", [pageId]);
+        var query = client.query("select * from content where is_active = true And page_id = $1 order by sort_order", [pageId]);
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

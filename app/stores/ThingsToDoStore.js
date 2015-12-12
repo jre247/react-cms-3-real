@@ -1,9 +1,9 @@
 import alt from '../alt';
-import TheProposalActions from '../actions/TheProposalActions';
+import ThingsToDoActions from '../actions/ThingsToDoActions';
 
 class ThingsToDoStore {
   constructor() {
-    this.bindActions(TheProposalActions);
+    this.bindActions(ThingsToDoActions);
     this.thingsToDo = [];
     this.ajaxAnimationClass = '';
   }
@@ -26,12 +26,12 @@ class ThingsToDoStore {
 
   }
 
-  onUpdateListItem(index, event) {
-    debugger;
-    this.thingsToDo[index].value = event.target.value;
-    this.pthingsToDoValidationState = '';
-    this.helpBlock = '';
-  }
+  // onUpdateListItem(index, event) {
+  //   debugger;
+  //   this.thingsToDo[index].value = event.target.value;
+  //   this.pthingsToDoValidationState = '';
+  //   this.helpBlock = '';
+  // }
 
 
   onSaveThingsToDoDataFail(jqXhr) {

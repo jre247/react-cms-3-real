@@ -27,49 +27,49 @@ drop table content_type;
 drop table wedding_user_role;
 drop table wedding_role;
 drop table wedding_user;
-CREATE TABLE wedding_user (Id SERIAL PRIMARY KEY, FirstName VARCHAR(40) not null, LastName VARCHAR(40) not null, Email VARCHAR(40), IsActive BOOLEAN);
-CREATE TABLE wedding_role (Id SERIAL PRIMARY KEY, Name VARCHAR(40) not null, IsActive BOOLEAN);
-CREATE TABLE wedding_user_role(Id SERIAL PRIMARY KEY, UserId INTEGER not null references wedding_user(Id), RoleId INTEGER not null references wedding_role (Id), IsActive BOOLEAN);
+CREATE TABLE wedding_user (id SERIAL PRIMARY KEY, first_name VARCHAR(40) not null, last_name VARCHAR(40) not null, email VARCHAR(40), is_active BOOLEAN);
+CREATE TABLE wedding_role (id SERIAL PRIMARY KEY, name VARCHAR(40) not null, is_active BOOLEAN);
+CREATE TABLE wedding_user_role(id SERIAL PRIMARY KEY, user_id INTEGER not null references wedding_user(id), role_id INTEGER not null references wedding_role (id), is_active BOOLEAN);
 CREATE TABLE page
 (
-	Id SERIAL PRIMARY KEY,
-	Name VARCHAR(40) not null,
-	Description VARCHAR(840) null,
-	UserId INTEGER NULL references wedding_user(Id), 	
-	DateCreated TIMESTAMP null,
-	IsActive BOOLEAN
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	description VARCHAR(840) null,
+	user_id INTEGER NULL references wedding_user(id), 	
+	date_created TIMESTAMP null,
+	is_active BOOLEAN
 );
 CREATE TABLE content_type
 (
-	Id SERIAL PRIMARY KEY,
-	Name VARCHAR(40) not null,
-	Description VARCHAR(840) null,
-	IsActive BOOLEAN
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	description VARCHAR(840) null,
+	is_active BOOLEAN
 );
 CREATE TABLE content
 (
-	Id SERIAL PRIMARY KEY,
-	Name VARCHAR(40) not null,
-	Value VARCHAR(840) null,
-	PageId INTEGER NOT NULL references page(Id),
-	ContentTypeId INTEGER NOT NULL references content_type(Id),
-	UserId INTEGER NULL references wedding_user(Id),
-	SortOrder INTEGER NULL,
-	parentIndex INTEGER NULL,
-	DateCreated TIMESTAMP null,
-	IsActive BOOLEAN
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	value VARCHAR(840) null,
+	page_id INTEGER NOT NULL references page(id),
+	content_type_id INTEGER NOT NULL references content_type(id),
+	user_id INTEGER NULL references wedding_user(id),
+	sort_order INTEGER NULL,
+	parent_index INTEGER NULL,
+	date_created TIMESTAMP null,
+	is_active BOOLEAN
 );
-CREATE INDEX conect_page_idx ON content (PageId, IsActive);
+CREATE INDEX conect_page_idx ON content (page_id, is_active);
 
-insert into content_type (Name, Description, IsActive) values ('Image', 'Url for an Image', true);
-insert into content_type (Name, Description, IsActive) values ('Description', 'Description', true);
-insert into content_type (Name, Description, IsActive) values ('Title', 'Title', true);
-insert into content_type (Name, Description, IsActive) values ('ShortDescription', 'ShortDescription', true);
+insert into content_type (name, description, is_active) values ('Image', 'Url for an Image', true);
+insert into content_type (name, description, is_active) values ('Description', 'Description', true);
+insert into content_type (name, description, is_active) values ('Title', 'Title', true);
+insert into content_type (name, description, is_active) values ('ShortDescription', 'ShortDescription', true);
 
-insert into wedding_user (FirstName, LastName, Email, IsActive) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
+insert into wedding_user (first_name, last_name, email, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
 
-insert into page(Name, Description, UserId, DateCreated, IsActive) values ('Venue', 'Venue', 1, null, true);
-insert into page(Name, Description, UserId, DateCreated, IsActive) values ('The Proposal', 'The Proposal', 1, null, true);
+insert into page(name, description, user_id, date_created, is_active) values ('Venue', 'Venue', 1, null, true);
+insert into page(name, description, user_id, date_created, is_active) values ('The Proposal', 'The Proposal', 1, null, true);
 
 -------------------------------------------------------------------------------------------------------------------
 

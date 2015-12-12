@@ -171,6 +171,7 @@ var ThingsToDoActions = (function () {
         url: '/api/pages/' + pageId
       }).done(function (data) {
         console.log('getThingsToDoDataSuccess(data)');
+        debugger;
         _this.actions.getThingsToDoDataSuccess(data);
       }).fail(function () {
         _this.actions.getThingsToDoDataFail();
@@ -181,6 +182,7 @@ var ThingsToDoActions = (function () {
     value: function saveThingsToDoData(contents, history) {
       var _this2 = this;
 
+      debugger;
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,
@@ -597,7 +599,6 @@ var EditThingsToDo = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _ThingsToDoStore2.default.listen(this.onChange);
-
       _ThingsToDoActions2.default.getThingsToDoData();
     }
   }, {
@@ -608,7 +609,7 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'isSubListItem',
     value: function isSubListItem(node) {
-      return node.parentIndex > 0;
+      return node.parent_index > 0;
     }
   }, {
     key: 'addParentListItem',
@@ -619,8 +620,8 @@ var EditThingsToDo = (function (_React$Component) {
         name: 'Things To Do Parent List Item',
         description: 'Things To Do Parent List Item',
         value: '',
-        contentType: 2,
-        sortOrder: sortOrder
+        content_type: 2,
+        sort_order: sortOrder
       };
 
       this.state.thingsToDo.push(content);
@@ -636,11 +637,11 @@ var EditThingsToDo = (function (_React$Component) {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        contentType: 1,
-        parentIndex: this.findParentIndex(sortOrder),
-        sortOrder: sortOrder
+        content_type: 1,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder
       };
-
+      debugger;
       this.state.thingsToDo.splice(index + 1, 0, content);
 
       this.setState({ thingsToDo: this.state.thingsToDo });
@@ -652,8 +653,8 @@ var EditThingsToDo = (function (_React$Component) {
 
       for (var index = currentIndex - 2; index > 0; index--) {
         var listItem = this.state.thingsToDo[index];
-        if (!listItem.parentIndex) {
-          parentIndex = listItem.sortOrder;
+        if (!listItem.parent_index) {
+          parentIndex = listItem.sort_order;
           break;
         }
       }
@@ -663,15 +664,19 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
-      debugger;
       event.preventDefault();
 
       //ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
   }, {
+    key: 'updateListItem',
+    value: function updateListItem(index, event) {
+      this.state.thingsToDo[index].value = event.target.value;
+      this.setState({ thingsToDo: this.state.thingsToDo });
+    }
+  }, {
     key: 'submit',
     value: function submit(event) {
-      debugger;
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
   }, {
@@ -683,7 +688,7 @@ var EditThingsToDo = (function (_React$Component) {
         if (_this2.isSubListItem(thingToDo)) {
           return _react2.default.createElement(
             'div',
-            { key: thingToDo.sortOrder, className: 'container' },
+            { key: thingToDo.sort_order, className: 'container' },
             _react2.default.createElement(
               'div',
               { className: 'row' },
@@ -694,7 +699,7 @@ var EditThingsToDo = (function (_React$Component) {
                   'div',
                   { className: 'form-group Sub-list-item' },
                   _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
-                    value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
+                    value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
                 )
               )
             )
@@ -702,7 +707,7 @@ var EditThingsToDo = (function (_React$Component) {
         } else {
           return _react2.default.createElement(
             'div',
-            { key: thingToDo.sortOrder, className: 'container List-item-group' },
+            { key: thingToDo.sort_order, className: 'container List-item-group' },
             _react2.default.createElement(
               'div',
               { className: 'row' },
@@ -730,7 +735,7 @@ var EditThingsToDo = (function (_React$Component) {
                   'div',
                   { className: 'form-group' },
                   _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Desription',
-                    value: thingToDo.value, onChange: _ThingsToDoActions2.default.updateListItem.bind(_this2, index) })
+                    value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
                 )
               )
             )
@@ -2196,9 +2201,9 @@ var _alt = require('../alt');
 
 var _alt2 = _interopRequireDefault(_alt);
 
-var _TheProposalActions = require('../actions/TheProposalActions');
+var _ThingsToDoActions = require('../actions/ThingsToDoActions');
 
-var _TheProposalActions2 = _interopRequireDefault(_TheProposalActions);
+var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2208,7 +2213,7 @@ var ThingsToDoStore = (function () {
   function ThingsToDoStore() {
     _classCallCheck(this, ThingsToDoStore);
 
-    this.bindActions(_TheProposalActions2.default);
+    this.bindActions(_ThingsToDoActions2.default);
     this.thingsToDo = [];
     this.ajaxAnimationClass = '';
   }
@@ -2233,14 +2238,14 @@ var ThingsToDoStore = (function () {
     value: function onSaveThingsToDoDataSuccess(history) {
       history.pushState(null, '/things-to-do');
     }
-  }, {
-    key: 'onUpdateListItem',
-    value: function onUpdateListItem(index, event) {
-      debugger;
-      this.thingsToDo[index].value = event.target.value;
-      this.pthingsToDoValidationState = '';
-      this.helpBlock = '';
-    }
+
+    // onUpdateListItem(index, event) {
+    //   debugger;
+    //   this.thingsToDo[index].value = event.target.value;
+    //   this.pthingsToDoValidationState = '';
+    //   this.helpBlock = '';
+    // }
+
   }, {
     key: 'onSaveThingsToDoDataFail',
     value: function onSaveThingsToDoDataFail(jqXhr) {
@@ -2259,7 +2264,7 @@ var ThingsToDoStore = (function () {
 
 exports.default = _alt2.default.createStore(ThingsToDoStore);
 
-},{"../actions/TheProposalActions":3,"../alt":6}],27:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":4,"../alt":6}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

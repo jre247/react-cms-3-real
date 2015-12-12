@@ -15,7 +15,6 @@ class EditThingsToDo extends React.Component {
 
   componentDidMount() {
     ThingsToDoStore.listen(this.onChange);
-
     ThingsToDoActions.getThingsToDoData();
   }
   componentWillUnmount() {
@@ -24,7 +23,7 @@ class EditThingsToDo extends React.Component {
 
 
   isSubListItem(node){
-    return node.parentIndex > 0;
+    return node.parent_index > 0;
   }
 
   addParentListItem(){
@@ -35,8 +34,8 @@ class EditThingsToDo extends React.Component {
       name: 'Things To Do Parent List Item',
       description: 'Things To Do Parent List Item',
       value: '',
-      contentType: 2,
-      sortOrder: sortOrder
+      content_type: 2,
+      sort_order: sortOrder
     };
 
     this.state.thingsToDo.push(content);
@@ -52,11 +51,11 @@ class EditThingsToDo extends React.Component {
         name: 'Things To Do Child List Item',
         description: 'Things To Do Child List Item',
         value: '',
-        contentType: 1,
-        parentIndex: this.findParentIndex(sortOrder),
-        sortOrder: sortOrder
+        content_type: 1,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder
     };
-
+    debugger;
     this.state.thingsToDo.splice(index + 1, 0, content)
 
     this.setState({thingsToDo: this.state.thingsToDo})
@@ -67,8 +66,8 @@ class EditThingsToDo extends React.Component {
 
     for(var index = currentIndex - 2; index > 0; index--){
       var listItem = this.state.thingsToDo[index];
-      if(!listItem.parentIndex){
-        parentIndex = listItem.sortOrder;
+      if(!listItem.parent_index){
+        parentIndex = listItem.sort_order;
         break;
       }
     }
@@ -77,14 +76,17 @@ class EditThingsToDo extends React.Component {
   }
 
   handleSubmit(event) {
-    debugger;
     event.preventDefault();
 
     //ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
 
+  updateListItem(index, event){
+    this.state.thingsToDo[index].value = event.target.value;
+    this.setState({thingsToDo: this.state.thingsToDo});
+  }
+
   submit(event){
-    debugger;
     ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
 
@@ -92,12 +94,12 @@ class EditThingsToDo extends React.Component {
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
           return (
-            <div key={thingToDo.sortOrder} className='container'>
+            <div key={thingToDo.sort_order} className='container'>
               <div className='row'>
                 <div className='col-sm-8'>
                   <div className="form-group Sub-list-item">
                     <input ref="url" className='form-control' name="url" placeholder="Url"
-                      value={thingToDo.value} onChange={ThingsToDoActions.updateListItem.bind(this, index)}/>
+                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
                   </div>
                 </div>
               </div>
@@ -106,7 +108,7 @@ class EditThingsToDo extends React.Component {
         }
         else{
           return (
-            <div key={thingToDo.sortOrder} className='container List-item-group'>
+            <div key={thingToDo.sort_order} className='container List-item-group'>
               <div className='row'>
                 <div className='col-sm-8 Add-sub-list-item'>
                   <div className="form-group">
@@ -119,7 +121,7 @@ class EditThingsToDo extends React.Component {
                 <div className='col-sm-8'>
                   <div className="form-group">
                     <textarea ref="description" className='form-control' name="description" placeholder="Desription"
-                      value={thingToDo.value} onChange={ThingsToDoActions.updateListItem.bind(this, index)}>
+                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}>
                     </textarea>
                   </div>
                 </div>
