@@ -1,8 +1,10 @@
+//
+// if(process.env.NODE_ENV !== 'production'){
+//   // Babel ES6/JSX Compiler
+//   require('babel-core/register');
+// }
 
-if(process.env.NODE_ENV !== 'production'){
-  // Babel ES6/JSX Compiler
-  require('babel-core/register');
-}
+require('babel-core/register');
 
 
 var swig  = require('swig');
