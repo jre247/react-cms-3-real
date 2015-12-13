@@ -9,7 +9,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "postinstall": "bower install && gulp build"
   },
   "babel": {
     "presets": [
@@ -66,10 +67,6 @@
   "devDependencies": {
 
   },
-  "license": "MIT",
-  "scripts": {
-    "postinstall": "bower install && gulp build",
-    "start": "npm run"
-  }
+  "license": "MIT"
 
 }
