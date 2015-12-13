@@ -4,6 +4,8 @@ import PhotoAlbumActions from '../actions/PhotoAlbumActions';
 import Carousel from './Carousel/Carousel';
 import {Link} from 'react-router';
 import {_} from 'underscore';
+//mport Modal from './Modal/Modal';
+//import { Modal } from 'react-bootstrap';
 
 class PhotoAlbum extends React.Component {
   constructor(props) {
@@ -23,12 +25,26 @@ class PhotoAlbum extends React.Component {
     PhotoAlbumStore.unlisten(this.onChange);
   }
 
+  closeModal() {
+    //this.setState({ isModalOpen: false });
+    $('#largeCarouselModal').modal('hide');
+  }
+
+  openModal(index) {
+  //  this.setState({isModalOpen: true});
+  //  this.setState({isModalOpen: true});
+    this.state.selectedPhoto = index || 1;
+    $('#largeCarouselModal').modal('show');
+  }
+
   //TODO: create field component that will figure out what kind of field to render
   render() {
+    var props = {photoAlbum: this.state.photoAlbum, selectedPhoto: this.state.selectedPhoto};
+
     let photoAlbumNodes = this.state.photoAlbum.map((photo, index) => {
       return (
         <div key={photo.sort_order} className="Photo">
-            <img className="Content-small-image" src={photo.value}/>
+            <img onClick={this.openModal.bind(this, index)} className="Content-small-image" src={photo.value}/>
         </div>
       );
     });
@@ -52,7 +68,7 @@ class PhotoAlbum extends React.Component {
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
           </div>
-          <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#largeCarouselModal">Open Modal</button>
+
           <div className="Photo-album-container">
             {photoAlbumNodes}
           </div>
@@ -64,12 +80,11 @@ class PhotoAlbum extends React.Component {
                   <button type="button" className="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div className="modal-body">
-                  <Carousel {...this.state.photoAlbum} />
+                  <Carousel {...props} />
                 </div>
               </div>
             </div>
           </div>
-
         </div>
 
       );

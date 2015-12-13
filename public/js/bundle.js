@@ -597,12 +597,14 @@ var CarouselContent = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var propsArray = _PropsHelper2.default.convertPropsToArray(this.props);
+      var _this2 = this;
+
+      var propsArray = _PropsHelper2.default.convertPropsToArray(this.props.photoAlbum);
 
       var images = propsArray.map(function (image, index) {
         return _react2.default.createElement(
           'div',
-          { className: index == 0 ? 'item active' : 'item' },
+          { className: index == _this2.props.selectedPhoto ? 'item active' : 'item' },
           _react2.default.createElement('img', { key: index, src: image.value })
         );
       });
@@ -665,10 +667,12 @@ var CarouselIndicators = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var propsArray = _PropsHelper2.default.convertPropsToArray(this.props);
+      var _this2 = this;
+
+      var propsArray = _PropsHelper2.default.convertPropsToArray(this.props.photoAlbum);
 
       var indicators = propsArray.map(function (indicator, index) {
-        return _react2.default.createElement('li', { key: index, 'data-target': '#largeCarousel', className: index == 0 ? 'active' : '', 'data-slide-to': index });
+        return _react2.default.createElement('li', { key: index, 'data-target': '#largeCarousel', className: index == _this2.props.selectedPhoto ? 'active' : '', 'data-slide-to': index });
       });
 
       return _react2.default.createElement(
@@ -1940,6 +1944,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//mport Modal from './Modal/Modal';
+//import { Modal } from 'react-bootstrap';
+
 var PhotoAlbum = (function (_React$Component) {
   _inherits(PhotoAlbum, _React$Component);
 
@@ -1969,17 +1976,35 @@ var PhotoAlbum = (function (_React$Component) {
     value: function componentWillUnmount() {
       _PhotoAlbumStore2.default.unlisten(this.onChange);
     }
+  }, {
+    key: 'closeModal',
+    value: function closeModal() {
+      //this.setState({ isModalOpen: false });
+      $('#largeCarouselModal').modal('hide');
+    }
+  }, {
+    key: 'openModal',
+    value: function openModal(index) {
+      //  this.setState({isModalOpen: true});
+      //  this.setState({isModalOpen: true});
+      this.state.selectedPhoto = index || 1;
+      $('#largeCarouselModal').modal('show');
+    }
 
     //TODO: create field component that will figure out what kind of field to render
 
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
+      var props = { photoAlbum: this.state.photoAlbum, selectedPhoto: this.state.selectedPhoto };
+
       var photoAlbumNodes = this.state.photoAlbum.map(function (photo, index) {
         return _react2.default.createElement(
           'div',
           { key: photo.sort_order, className: 'Photo' },
-          _react2.default.createElement('img', { className: 'Content-small-image', src: photo.value })
+          _react2.default.createElement('img', { onClick: _this2.openModal.bind(_this2, index), className: 'Content-small-image', src: photo.value })
         );
       });
 
@@ -2020,11 +2045,6 @@ var PhotoAlbum = (function (_React$Component) {
             )
           ),
           _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'btn btn-info btn-lg', 'data-toggle': 'modal', 'data-target': '#largeCarouselModal' },
-            'Open Modal'
-          ),
-          _react2.default.createElement(
             'div',
             { className: 'Photo-album-container' },
             photoAlbumNodes
@@ -2050,7 +2070,7 @@ var PhotoAlbum = (function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'modal-body' },
-                  _react2.default.createElement(_Carousel2.default, this.state.photoAlbum)
+                  _react2.default.createElement(_Carousel2.default, props)
                 )
               )
             )
@@ -2844,6 +2864,8 @@ var PhotoAlbumStore = (function () {
 
     this.bindActions(_PhotoAlbumActions2.default);
     this.photoAlbum = [];
+    this.isModalOpen = false;
+    this.selectedPhoto = 1;
     this.ajaxAnimationClass = '';
   }
 

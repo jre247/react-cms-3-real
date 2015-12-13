@@ -5,6 +5,8 @@ class PhotoAlbumStore {
   constructor() {
     this.bindActions(PhotoAlbumActions);
     this.photoAlbum = [];
+    this.isModalOpen = false;
+    this.selectedPhoto = 1;
     this.ajaxAnimationClass = '';
   }
 

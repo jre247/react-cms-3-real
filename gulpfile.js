@@ -20,6 +20,7 @@ var dependencies = [
   'react',
   'react-dom',
   'react-router',
+  'simple-react-modal',
   'underscore'
 ];
 

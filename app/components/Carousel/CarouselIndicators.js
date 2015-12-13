@@ -16,11 +16,11 @@ class CarouselIndicators extends React.Component {
   }
 
   render() {
-    var propsArray = PropsHelper.convertPropsToArray(this.props);
+    var propsArray = PropsHelper.convertPropsToArray(this.props.photoAlbum);
 
     let indicators = propsArray.map((indicator, index) => {
       return (
-        <li key={index} data-target="#largeCarousel" className={index == 0 ? 'active' : ''} data-slide-to={index}></li>
+        <li key={index} data-target="#largeCarousel" className={index == this.props.selectedPhoto ? 'active' : ''} data-slide-to={index}></li>
       );
     });
 

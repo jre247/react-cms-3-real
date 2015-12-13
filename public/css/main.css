@@ -7517,3 +7517,33 @@ img.mfp-img {
   padding-top: 25px;
 }
 /* End List */
+/* Modal */
+.modal-anim-enter {
+  opacity: 0.00;
+  -webkit-transform: scale(0.7);
+      -ms-transform: scale(0.7);
+          transform: scale(0.7);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+}
+.modal-anim-leave {
+  opacity: 1;
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+  -webkit-transform: scale(0.7);
+      -ms-transform: scale(0.7);
+          transform: scale(0.7);
+}
+/* End Modal */

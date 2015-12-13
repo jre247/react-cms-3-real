@@ -16,11 +16,11 @@ class CarouselContent extends React.Component {
   }
 
   render() {
-    var propsArray = PropsHelper.convertPropsToArray(this.props);
+    var propsArray = PropsHelper.convertPropsToArray(this.props.photoAlbum);
 
     let images = propsArray.map((image, index) => {
       return (
-        <div className={index == 0 ? 'item active' : 'item'}>
+        <div className={index == this.props.selectedPhoto ? 'item active' : 'item'}>
           <img key={index} src={image.value} />
         </div>
       );
