@@ -71,7 +71,8 @@ insert into wedding_user (first_name, last_name, email, is_active) Values ('Jaso
 
 insert into page(name, description, user_id, date_created, is_active) values ('Venue', 'Venue', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('The Proposal', 'The Proposal', 1, null, true);
-
+insert into page(name, description, user_id, date_created, is_active) values ('Things To Do', 'Things To Do', 1, null, true);
+insert into page(name, description, user_id, date_created, is_active) values ('Photo Album', 'Photo Album', 1, null, true);
 -------------------------------------------------------------------------------------------------------------------
 
 Note: reference this article for concepts used in this app:

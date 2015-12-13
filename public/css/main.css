@@ -7368,17 +7368,58 @@ img.mfp-img {
   font-size: 38px;
   line-height: 1.6em;
 }
+/* End App */
+/* Image */
 .Content-large-image {
-  width: 50%;
-  margin-left: 25%;
+  width: 300px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.Content-large-image-percentage {
+  width: 58%;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.Content-extra-large-image-percentage {
+  width: 68%;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+.Content-image-container {
+  margin-left: 15%;
+}
+.Content-medium-image {
+  width: 200px;
+  margin-right: 30px;
   margin-top: 10px;
 }
 .Content-small-image {
-  width: 15%;
-  margin-left: 11%;
+  width: 150px;
+  margin-right: 30px;
   margin-top: 10px;
 }
-/* End App */
+/* End Image */
+/* Photo Album */
+.Photo {
+  display: inline-block;
+}
+.Photo-album-content {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+/* End Photo Album */
+/* Venue */
+.Venue-image-container {
+  margin-left: 27%;
+}
+/* End Venue */
+/* The Proposal */
+.Proposal-content-image-container {
+  margin-left: 27%;
+}
+/* End The Proposal */
 /* List Collection */
 .List-items {
   text-align: center;

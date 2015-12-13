@@ -1,5 +1,6 @@
 import alt from '../alt';
 import {assign} from 'underscore';
+var pageId = 1;
 
 class VenueActions {
   constructor() {
@@ -20,7 +21,6 @@ class VenueActions {
   }
 
   getVenueData() {
-    var pageId = 1;
     console.log('getting page content for page: ' + pageId);
     $.ajax({
       url: '/api/pages/' + pageId
@@ -35,7 +35,6 @@ class VenueActions {
   }
 
   saveVenueData(contents, history) {
-    var pageId = 1;
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId,

@@ -41,7 +41,9 @@ class TheProposal extends React.Component {
             <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
           </div>
 
-          <img className="Content-large-image" src={this.state.proposal.url} alt="Proposal Image" />
+          <div className="Proposal-content-image-container">
+            <img className="Content-extra-large-image-percentage" src={this.state.proposal.url} alt="Proposal Image" />
+          </div>
 
           <div className="Content-long-description-container">
             <div className="Content-long-description">

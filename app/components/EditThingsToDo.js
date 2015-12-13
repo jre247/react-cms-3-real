@@ -45,7 +45,7 @@ class EditThingsToDo extends React.Component {
 
     this.state.thingsToDo.push(content);
 
-    this.forceUpdate();
+    this.setState({thingsToDo: this.state.thingsToDo})
   }
 
   //TODO: create function to return new content item

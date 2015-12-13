@@ -6,6 +6,7 @@ import Venue from './components/Venue';
 import Accomodations from './components/Accomodations';
 import TheProposal from './components/TheProposal';
 import PhotoAlbum from './components/PhotoAlbum';
+import EditPhotoAlbum from './components/EditPhotoAlbum';
 import EditVenue from './components/EditVenue';
 import EditTheProposal from './components/EditTheProposal';
 import GiftRegistry from './components/GiftRegistry';
@@ -20,6 +21,7 @@ export default (
     <Route path='/venue/edit' component={EditVenue} />
     <Route path='/the-proposal/edit' component={EditTheProposal} />
     <Route path='/photo-album' component={PhotoAlbum} />
+    <Route path='/photo-album/edit' component={EditPhotoAlbum} />
     <Route path='/accomodations' component={Accomodations} />
     <Route path='/gift-registry' component={GiftRegistry} />
     <Route path='/things-to-do' component={ThingsToDo} />

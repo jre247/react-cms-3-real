@@ -62,7 +62,7 @@ class ThingsToDo extends React.Component {
               return (
                 <div key={thingToDo.sort_order} className='container Link-list-item'>
                   <div className='row'>
-                    <div className='col-sm-8'>
+                    <div className='col-sm-6'>
                       <div className="form-group Sub-list-item">
                         <a ref="link" name="link" href={thingToDo.value}>{thingToDo.value}</a>
                       </div>
@@ -78,7 +78,7 @@ class ThingsToDo extends React.Component {
               <div key={thingToDo.sort_order} className={thingToDo.sort_order > 1 ? 'container List-item-group Row-separator' :
                 'container List-item-group'}>
                 <div className='row'>
-                  <div className='col-sm-8'>
+                  <div className='col-sm-6'>
                     <div className="form-group Thing-to-do-title" >
                       <span  ref="description" name="description">
                         {thingToDo.value}

@@ -49,7 +49,9 @@ class Venue extends React.Component {
             <span> {this.state.venue.eventDate} </span>
           </div>
 
-          <img className="Content-large-image" src={this.state.venue.url} alt="Venue Image" />
+          <div className="Venue-image-container">
+            <img className="Content-large-image-percentage" src={this.state.venue.url} alt="Venue Image" />
+          </div>
 
           <div className="List-items">
 
