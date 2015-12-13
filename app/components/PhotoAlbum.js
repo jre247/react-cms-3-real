@@ -1,6 +1,7 @@
 import React from 'react';
 import PhotoAlbumStore from '../stores/PhotoAlbumStore';
 import PhotoAlbumActions from '../actions/PhotoAlbumActions';
+import Carousel from './Carousel/Carousel';
 import {Link} from 'react-router';
 import {_} from 'underscore';
 
@@ -51,10 +52,26 @@ class PhotoAlbum extends React.Component {
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
           </div>
-          <div>
+          <button type="button" className="btn btn-info btn-lg" data-toggle="modal" data-target="#largeCarouselModal">Open Modal</button>
+          <div className="Photo-album-container">
             {photoAlbumNodes}
           </div>
+
+          <div id="largeCarouselModal" className="modal fade" role="dialog">
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div className="modal-body">
+                  <Carousel {...this.state.photoAlbum} />
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
+
       );
     }
   }

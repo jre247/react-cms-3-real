@@ -7396,12 +7396,17 @@ img.mfp-img {
   margin-top: 10px;
 }
 .Content-small-image {
-  width: 150px;
+  width: 130px;
+  height: 137px;
   margin-right: 30px;
   margin-top: 10px;
 }
 /* End Image */
 /* Photo Album */
+.Photo-album-container {
+  margin-left: 13%;
+  width: 80%;
+}
 .Photo {
   display: inline-block;
 }
