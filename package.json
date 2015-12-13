@@ -70,5 +70,9 @@
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "node app",
+    "postinstall": "gulp default"
+  }
 }
