@@ -66,6 +66,10 @@
   "devDependencies": {
 
   },
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "bower install && gulp",
+    "start": "npm run"
+  }
 
 }
