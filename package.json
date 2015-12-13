@@ -68,7 +68,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "postinstall": "bower install && gulp",
+    "postinstall": "bower install && gulp build",
     "start": "npm run"
   }
 
