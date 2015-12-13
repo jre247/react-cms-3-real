@@ -1,9 +1,3 @@
-//
-// if(process.env.NODE_ENV !== 'production'){
-//   // Babel ES6/JSX Compiler
-//   require('babel-core/register');
-// }
-
 require('babel-core/register');
 
 
