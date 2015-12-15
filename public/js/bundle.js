@@ -821,8 +821,8 @@ var EditPhotoAlbum = (function (_React$Component) {
               'div',
               { className: 'col-sm-2' },
               _react2.default.createElement(
-                'button',
-                { type: 'button', className: 'btn btn-default btn-lg', onClick: _this2.removePhoto.bind(_this2, index) },
+                'div',
+                { onClick: _this2.removePhoto.bind(_this2, index) },
                 _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
               )
             )
@@ -1151,6 +1151,41 @@ var EditThingsToDo = (function (_React$Component) {
       return parentIndex;
     }
   }, {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
+      this.state.thingsToDo.splice(index, 1);
+      this.setState({ thingsToDo: this.state.thingsToDo });
+    }
+  }, {
+    key: 'removeContentAndItsSubListItems',
+    value: function removeContentAndItsSubListItems(index, event) {
+      var parentIndex = index;
+      this.removeSubListItemsForParent(parentIndex);
+
+      this.state.thingsToDo.splice(parentIndex, 1);
+      this.setState({ thingsToDo: this.state.thingsToDo });
+    }
+  }, {
+    key: 'removeSubListItemsForParent',
+    value: function removeSubListItemsForParent(parentIndex) {
+      var contentIndexesToRemove = [];
+
+      for (var contentIndex = parentIndex + 1; contentIndex < this.state.thingsToDo.length; contentIndex++) {
+        var contentItem = this.state.thingsToDo[contentIndex];
+        if (!this.isSubListItem(contentItem)) {
+          break;
+        }
+        if (this.isSubListItem(contentItem)) {
+          contentIndexesToRemove.push(contentIndex);
+        }
+      }
+      debugger;
+      var self = this;
+      _underscore._.each(contentIndexesToRemove, function (contentIndexToRemove) {
+        self.state.thingsToDo.splice(contentIndexToRemove, 1);
+      });
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
@@ -1194,6 +1229,15 @@ var EditThingsToDo = (function (_React$Component) {
                     _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
                       value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
                   )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-2' },
+                  _react2.default.createElement(
+                    'div',
+                    { onClick: _this2.removeContent.bind(_this2, index) },
+                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+                  )
                 )
               )
             );
@@ -1212,6 +1256,15 @@ var EditThingsToDo = (function (_React$Component) {
                     { className: 'form-group Sub-list-item Link-list-item' },
                     _react2.default.createElement('input', { ref: 'link', className: 'form-control', name: 'link', placeholder: 'Link',
                       value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-2' },
+                  _react2.default.createElement(
+                    'div',
+                    { onClick: _this2.removeContent.bind(_this2, index) },
+                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
                   )
                 )
               )
@@ -1249,6 +1302,15 @@ var EditThingsToDo = (function (_React$Component) {
                   { className: 'form-group' },
                   _react2.default.createElement('input', { ref: 'title', className: 'form-control', name: 'title', placeholder: 'Title',
                     value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-sm-2' },
+                _react2.default.createElement(
+                  'div',
+                  { onClick: _this2.removeContentAndItsSubListItems.bind(_this2, index) },
+                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
                 )
               )
             )

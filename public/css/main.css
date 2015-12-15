@@ -7363,6 +7363,10 @@ img.mfp-img {
   font-size: 38px;
   line-height: 1.6em;
 }
+.glyphicon-remove {
+  color: #a94442;
+  cursor: pointer;
+}
 /* End App */
 /* Image */
 .Content-large-image {

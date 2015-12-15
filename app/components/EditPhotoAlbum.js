@@ -72,9 +72,9 @@ class EditPhotoAlbum extends React.Component {
               </div>
             </div>
             <div className="col-sm-2">
-            <button type="button" className="btn btn-default btn-lg" onClick={this.removePhoto.bind(this, index)}>
-              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
+              <div onClick={this.removePhoto.bind(this, index)}>
+                <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </div>
             </div>
           </div>
         </div>

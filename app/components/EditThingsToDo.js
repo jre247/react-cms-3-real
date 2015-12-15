@@ -92,6 +92,38 @@ class EditThingsToDo extends React.Component {
     return parentIndex;
   }
 
+  removeContent(index, event){
+    this.state.thingsToDo.splice(index, 1);
+    this.setState({thingsToDo: this.state.thingsToDo});
+  }
+
+  removeContentAndItsSubListItems(index, event){
+    var parentIndex = index;
+    this.removeSubListItemsForParent(parentIndex);
+
+    this.state.thingsToDo.splice(parentIndex, 1);
+    this.setState({thingsToDo: this.state.thingsToDo});
+  }
+
+  removeSubListItemsForParent(parentIndex){
+    var contentIndexesToRemove = [];
+
+    for(var contentIndex = parentIndex +1; contentIndex < this.state.thingsToDo.length; contentIndex++){
+      var contentItem = this.state.thingsToDo[contentIndex];
+      if(!this.isSubListItem(contentItem)){
+        break;
+      }
+      if(this.isSubListItem(contentItem)){
+        contentIndexesToRemove.push(contentIndex);
+      }
+    }
+    debugger;
+    var self = this;
+    _.each(contentIndexesToRemove, function(contentIndexToRemove){
+      self.state.thingsToDo.splice(contentIndexToRemove, 1);
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -122,6 +154,11 @@ class EditThingsToDo extends React.Component {
                       </textarea>
                     </div>
                   </div>
+                  <div className="col-sm-2">
+                    <div onClick={this.removeContent.bind(this, index)}>
+                      <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             );
@@ -134,6 +171,11 @@ class EditThingsToDo extends React.Component {
                     <div className="form-group Sub-list-item Link-list-item">
                       <input ref="link" className='form-control' name="link" placeholder="Link"
                         value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
+                    </div>
+                  </div>
+                  <div className="col-sm-2">
+                    <div onClick={this.removeContent.bind(this, index)}>
+                      <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     </div>
                   </div>
                 </div>
@@ -158,6 +200,11 @@ class EditThingsToDo extends React.Component {
                   <div className="form-group">
                     <input ref="title" className='form-control' name="title" placeholder="Title"
                       value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
+                  </div>
+                </div>
+                <div className="col-sm-2">
+                  <div onClick={this.removeContentAndItsSubListItems.bind(this, index)}>
+                    <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
                   </div>
                 </div>
               </div>
