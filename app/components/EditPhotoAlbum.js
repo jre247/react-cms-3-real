@@ -50,6 +50,11 @@ class EditPhotoAlbum extends React.Component {
     this.setState({photoAlbum: this.state.photoAlbum});
   }
 
+  removePhoto(index, event){
+    this.state.photoAlbum.splice(index, 1);
+    this.setState({photoAlbum: this.state.photoAlbum});
+  }
+
   submit(event){
     PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
   }
@@ -65,6 +70,11 @@ class EditPhotoAlbum extends React.Component {
                 <input ref="url" className='form-control' name="url" placeholder="Url"
                   value={photo.value} onChange={this.updatePhoto.bind(this, index)}/>
               </div>
+            </div>
+            <div className="col-sm-2">
+            <button type="button" className="btn btn-default btn-lg" onClick={this.removePhoto.bind(this, index)}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
             </div>
           </div>
         </div>

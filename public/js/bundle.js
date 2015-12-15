@@ -782,6 +782,12 @@ var EditPhotoAlbum = (function (_React$Component) {
       this.setState({ photoAlbum: this.state.photoAlbum });
     }
   }, {
+    key: 'removePhoto',
+    value: function removePhoto(index, event) {
+      this.state.photoAlbum.splice(index, 1);
+      this.setState({ photoAlbum: this.state.photoAlbum });
+    }
+  }, {
     key: 'submit',
     value: function submit(event) {
       _PhotoAlbumActions2.default.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
@@ -809,6 +815,15 @@ var EditPhotoAlbum = (function (_React$Component) {
                 { className: 'form-group' },
                 _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
                   value: photo.value, onChange: _this2.updatePhoto.bind(_this2, index) })
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-2' },
+              _react2.default.createElement(
+                'button',
+                { type: 'button', className: 'btn btn-default btn-lg', onClick: _this2.removePhoto.bind(_this2, index) },
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
               )
             )
           )
