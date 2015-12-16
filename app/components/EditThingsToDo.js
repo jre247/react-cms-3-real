@@ -99,31 +99,19 @@ class EditThingsToDo extends React.Component {
 
   removeContentAndItsSubListItems(index, event){
     var parentIndex = index + 1;
-  //  this.removeSubListItemsForParent(parentIndex);
 
-    //this.state.thingsToDo.splice(parentIndex, 1);
-    debugger;
     var itemsToRemove = _.filter(this.state.thingsToDo, function(item){
       return item.parent_index === parentIndex || item.sort_order === parentIndex;
     });
-
-    var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
 
     var itemsToKeep = _.filter(this.state.thingsToDo, function(item){
       return item.parent_index != parentIndex && item.sort_order != parentIndex;
     });
 
-    var newParentIndex = lastItemIndexToRemove + 1;
-    _.each(itemsToKeep, function(item){
-      if(item.sort_order > lastItemIndexToRemove){
-        item.sort_order -= lastItemIndexToRemove;
-        item.parent_index = newParentIndex;
-      }
-    });
+    this.saveNewSortOrder(itemsToKeep, itemsToRemove);
 
     //this.state.thingsToDo = [];
     this.state.thingsToDo = itemsToKeep;
-
     this.setState({thingsToDo: this.state.thingsToDo});
 
     //want to always maintain at miniumum one list item on the page
@@ -131,35 +119,34 @@ class EditThingsToDo extends React.Component {
       this.addParentListItem();
     }
   }
-  //
-  // removeSubListItemsForParent(parentIndex){
-  //   var self = this;
-  //   parentIndex += 1;
-  //   var sublistItemsToKeep = _.filter(self.state.thingsToDo, function(item){
-  //     return item.parent_index != parentIndex;
-  //   });
-  //
-  //   var lastItemIndexRemoved = sublistItemsToRemove[sublistItemsToRemove.length - 1].sort_order;
-  //
-  //   _.each(sublistItemsToRemove, function(item){
-  //     if(item.sort_order === )
-  //     self.state.thingsToDo.splice(item.sort_order - 1, 1);
-  //   });
-  //
-  //   this.updateSortOrders(lastItemIndexRemoved);
-  //
-  // }
 
-  // update sort orders for items that have sort order greater than the last sub list
-  // item of the parent item being removed
-  updateSortOrders(lastItemIndexRemoved){
-    _.each(this.state.thingsToDo, function(item){
-      debugger;
-      if(item.sort_order > lastItemIndexRemoved){
-        item.sort_order -= lastItemIndexRemoved;
+  saveNewSortOrder(itemsToKeep, itemsToRemove){
+    var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
+
+    for(var i = 0; i < itemsToKeep.length; i++){
+      var item = itemsToKeep[i];
+
+      //update parent index for only sub list items past the index of the last content item removed
+      if(item.sort_order > lastItemIndexToRemove){
+        if(this.isSubListItem(item)){
+          item.parent_index -= itemsToRemove.length;
+        }
       }
-    });
+
+      item.sort_order = i + 1;
+    }
   }
+
+  // // update sort orders for items that have sort order greater than the last sub list
+  // // item of the parent item being removed
+  // updateSortOrders(lastItemIndexRemoved){
+  //   _.each(this.state.thingsToDo, function(item){
+  //     debugger;
+  //     if(item.sort_order > lastItemIndexRemoved){
+  //       item.sort_order -= lastItemIndexRemoved;
+  //     }
+  //   });
+  // }
 
   handleSubmit(event) {
     event.preventDefault();
