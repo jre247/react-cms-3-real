@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import EmptyContent from '../EmptyContent';
 
 
 class Accomodations extends React.Component {
@@ -29,10 +30,9 @@ class Accomodations extends React.Component {
   }
 
   render() {
+    var emptyContentProps = {editLink: '/accomodations/edit'}
     return (
-      <div>
-        Accomodations 
-      </div>
+      <EmptyContent {...emptyContentProps} />
     );
   }
 }

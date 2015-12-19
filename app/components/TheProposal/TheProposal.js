@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
-import TheProposalStore from '../stores/TheProposalStore';
-import TheProposalActions from '../actions/TheProposalActions';
+import TheProposalStore from '../../stores/TheProposalStore';
+import TheProposalActions from '../../actions/TheProposalActions';
+import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
 
 class TheProposal extends React.Component {
@@ -22,16 +23,9 @@ class TheProposal extends React.Component {
   }
   render() {
     if(_.isEmpty(this.state.proposal)){
+      var emptyContentProps = {editLink: '/the-proposal/edit'}
       return (
-        <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
-          </div>
-
-          <div className="Empty-Page-Content">
-            <span>There is no content yet.</span>
-          </div>
-        </div>
+        <EmptyContent {...emptyContentProps} />
       );
     }
     else {

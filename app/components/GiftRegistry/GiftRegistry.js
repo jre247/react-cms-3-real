@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-
+import EmptyContent from '../EmptyContent';
 
 class GiftRegistry extends React.Component {
   constructor(props) {
@@ -29,10 +29,9 @@ class GiftRegistry extends React.Component {
   }
 
   render() {
+    var emptyContentProps = {editLink: '/gift-registry/edit'}
     return (
-      <div>
-        Gift Registry 
-      </div>
+      <EmptyContent {...emptyContentProps} />
     );
   }
 }

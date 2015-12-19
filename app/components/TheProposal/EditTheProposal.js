@@ -1,6 +1,6 @@
 import React from 'react';
-import TheProposalStore from '../stores/TheProposalStore';
-import TheProposalActions from '../actions/TheProposalActions';
+import TheProposalStore from '../../stores/TheProposalStore';
+import TheProposalActions from '../../actions/TheProposalActions';
 
 class EditTheProposal extends React.Component {
   constructor(props) {

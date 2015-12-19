@@ -1,6 +1,6 @@
 import React from 'react';
-import PhotoAlbumStore from '../stores/PhotoAlbumStore';
-import PhotoAlbumActions from '../actions/PhotoAlbumActions';
+import PhotoAlbumStore from '../../stores/PhotoAlbumStore';
+import PhotoAlbumActions from '../../actions/PhotoAlbumActions';
 import {_} from 'underscore';
 
 class EditPhotoAlbum extends React.Component {

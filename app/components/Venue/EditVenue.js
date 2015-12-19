@@ -1,6 +1,6 @@
 import React from 'react';
-import VenueStore from '../stores/VenueStore';
-import VenueActions from '../actions/VenueActions';
+import VenueStore from '../../stores/VenueStore';
+import VenueActions from '../../actions/VenueActions';
 
 class EditVenue extends React.Component {
   constructor(props) {

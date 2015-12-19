@@ -1,17 +1,17 @@
 import React from 'react';
 import {Route} from 'react-router';
-import App from './components/App';
+import App from './components/app';
 import Home from './components/Home';
-import Venue from './components/Venue';
-import Accomodations from './components/Accomodations';
-import TheProposal from './components/TheProposal';
-import PhotoAlbum from './components/PhotoAlbum';
-import EditPhotoAlbum from './components/EditPhotoAlbum';
-import EditVenue from './components/EditVenue';
-import EditTheProposal from './components/EditTheProposal';
-import GiftRegistry from './components/GiftRegistry';
-import ThingsToDo from './components/ThingsToDo';
-import EditThingsToDo from './components/EditThingsToDo';
+import Venue from './components/Venue/Venue';
+import EditVenue from './components/Venue/EditVenue';
+import Accomodations from './components/Accomodations/Accomodations';
+import TheProposal from './components/TheProposal/TheProposal';
+import EditTheProposal from './components/TheProposal/EditTheProposal';
+import PhotoAlbum from './components/PhotoAlbum/PhotoAlbum';
+import EditPhotoAlbum from './components/PhotoAlbum/EditPhotoAlbum';
+import GiftRegistry from './components/GiftRegistry/GiftRegistry';
+import ThingsToDo from './components/ThingsToDo/ThingsToDo';
+import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
 
 export default (
   <Route component={App}>

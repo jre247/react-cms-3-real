@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
-import VenueStore from '../stores/VenueStore';
-import VenueActions from '../actions/VenueActions';
+import VenueStore from '../../stores/VenueStore';
+import VenueActions from '../../actions/VenueActions';
+import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
 
 class Venue extends React.Component {
@@ -22,16 +23,9 @@ class Venue extends React.Component {
   }
   render() {
     if(_.isEmpty(this.state.venue)){
+      var emptyContentProps = {editLink: '/venue/edit'}
       return (
-        <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/venue/edit">Edit</Link>
-          </div>
-
-          <div className="Empty-Page-Content">
-            <span>There is no content yet.</span>
-          </div>
-        </div>
+        <EmptyContent {...emptyContentProps} />
       );
     }
     else {
@@ -78,7 +72,7 @@ class Venue extends React.Component {
                     {this.state.venue.afterPartyTime}
                 </span>
               </div>
-            </div>    
+            </div>
           </div>
 
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import ThingsToDoStore from '../stores/ThingsToDoStore';
-import ThingsToDoActions from '../actions/ThingsToDoActions';
+import ThingsToDoStore from '../../stores/ThingsToDoStore';
+import ThingsToDoActions from '../../actions/ThingsToDoActions';
 import {_} from 'underscore';
 
 class EditThingsToDo extends React.Component {

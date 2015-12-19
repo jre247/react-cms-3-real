@@ -1,7 +1,8 @@
 import React from 'react';
-import PhotoAlbumStore from '../stores/PhotoAlbumStore';
-import PhotoAlbumActions from '../actions/PhotoAlbumActions';
-import Carousel from './Carousel/Carousel';
+import PhotoAlbumStore from '../../stores/PhotoAlbumStore';
+import PhotoAlbumActions from '../../actions/PhotoAlbumActions';
+import Carousel from '../Carousel/Carousel';
+import EmptyContent from '../EmptyContent';
 import {Link} from 'react-router';
 import {_} from 'underscore';
 //mport Modal from './Modal/Modal';
@@ -50,16 +51,9 @@ class PhotoAlbum extends React.Component {
     });
 
     if(_.isEmpty(this.state.photoAlbum)){
+      var emptyContentProps = {editLink: '/photo-album/edit'}
       return (
-        <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
-          </div>
-
-          <div className="Empty-Page-Content">
-            <span>There is no content yet.</span>
-          </div>
-        </div>
+        <EmptyContent {...emptyContentProps} />
       );
     }
     else {
