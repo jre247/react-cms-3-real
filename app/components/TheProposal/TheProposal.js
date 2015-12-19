@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
+import LongDescription from '../Widgets/LongDescription/LongDescription';
 import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
 
@@ -23,28 +24,26 @@ class TheProposal extends React.Component {
   }
   render() {
     if(_.isEmpty(this.state.proposal)){
-      var emptyContentProps = {editLink: '/the-proposal/edit'}
+      var emptyContentProps = {editLink: '/our-story/edit'}
       return (
         <EmptyContent {...emptyContentProps} />
       );
     }
     else {
+      var longDescriptionProps = { isEdit: false, value: this.state.proposal.description};
+
       return (
         <div className='Content-panel'>
           <div className="Content-container">
             <div className="Edit-Content-Button">
-              <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
+              <Link className="Navigation-link" to="/our-story/edit">Edit</Link>
             </div>
 
             <div className="Content-image-container">
               <img className="Content-extra-large-image-percentage" src={this.state.proposal.url} alt="Proposal Image" />
             </div>
 
-            <div className="Content-long-description-container">
-              <div className="Content-long-description">
-                  {this.state.proposal.description}
-              </div>
-            </div>
+            <LongDescription {...longDescriptionProps} />
           </div>
         </div>
       );

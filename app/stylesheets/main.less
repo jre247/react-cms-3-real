@@ -24,6 +24,9 @@
 @content-description-font-size: 18px;
 @navigation-font-family: 'Calligraffiti';
 @anchor-font-color: white;
+@header-text-color: rgb(126, 61, 16);
+
+
 /* Header */
 
 a {
@@ -38,7 +41,7 @@ a:hover {
 
 .Header {
   background: white;
-  color: rgb(126, 61, 16);
+  color: @header-text-color;
   display:inline;
 }
 
@@ -53,7 +56,7 @@ a:hover {
 }
 
 .Header-brand {
-  color: rgb(126, 61, 16);
+  color: @header-text-color;
   text-decoration: none;
   font-size: 5.5em; /* ~28px */
 }
@@ -112,10 +115,6 @@ a:hover {
   position: relative;
 }
 
-.Home-content{
-  height: 100%;
-  width: 100%;
-}
 
 .Empty-Page-Content{
   text-align: center;
@@ -200,6 +199,15 @@ a:hover {
  /* End App */
 
 
+
+/* Home */
+
+.Home-content{
+  text-align: center;
+  color: @header-text-color;
+}
+
+/* End Home */
 
 
 
@@ -425,7 +433,7 @@ a:hover {
 }
 
 .Sub-list-item{
-  margin-left: 15px;
+  margin-left: 60px;
   margin-bottom: 5px;
 }
 

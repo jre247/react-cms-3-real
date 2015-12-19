@@ -26,7 +26,7 @@ class TheProposalStore {
   }
 
   onSaveProposalDataSuccess(history) {
-    history.pushState(null, '/the-proposal');
+    history.pushState(null, '/our-story');
 
   }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import PropsHelper from '../../helpers/PropsHelper'
+import PropsHelper from '../../../helpers/PropsHelper'
 
 class CarouselContent extends React.Component {
   constructor(props) {

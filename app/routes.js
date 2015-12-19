@@ -16,10 +16,10 @@ import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
 export default (
   <Route component={App}>
     <Route path='/' component={Home} />
-    <Route path='/the-proposal' component={TheProposal} />
+    <Route path='/our-story' component={TheProposal} />
     <Route path='/venue' component={Venue} />
     <Route path='/venue/edit' component={EditVenue} />
-    <Route path='/the-proposal/edit' component={EditTheProposal} />
+    <Route path='/our-story/edit' component={EditTheProposal} />
     <Route path='/photo-album' component={PhotoAlbum} />
     <Route path='/photo-album/edit' component={EditPhotoAlbum} />
     <Route path='/accomodations' component={Accomodations} />

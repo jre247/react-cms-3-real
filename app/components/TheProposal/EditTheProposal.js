@@ -1,6 +1,7 @@
 import React from 'react';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
+import LongDescription from '../Widgets/LongDescription/LongDescription';
 
 class EditTheProposal extends React.Component {
   constructor(props) {
@@ -41,6 +42,9 @@ class EditTheProposal extends React.Component {
     TheProposalActions.saveProposalData(contents, this.props.history);
   }
   render() {
+    var longDescriptionProps = { isEdit: true, value: this.state.proposal.description,
+      onChange: TheProposalActions.updateDescription};
+
     return (
       <div className="Detail">
           <h1 className="Heading Heading--alt">Edit Proposal</h1>
@@ -54,8 +58,7 @@ class EditTheProposal extends React.Component {
                         onChange={TheProposalActions.updateUrl} autoFocus/>
                     </div>
                     <div className="form-group">
-                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
-                        value={this.state.proposal.description} onChange={TheProposalActions.updateDescription}></textarea>
+                      <LongDescription {...longDescriptionProps} />
                     </div>
                     <div className="form-group">
                       <button type='submit' className='btn btn-primary'>Save</button>
