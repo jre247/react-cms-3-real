@@ -4,6 +4,7 @@ import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
 import EmptyContent from '../EmptyContent';
+import ImageWidget from '../Widgets/Image/ImageWidget'
 import {_} from 'underscore';
 
 class TheProposal extends React.Component {
@@ -31,6 +32,7 @@ class TheProposal extends React.Component {
     }
     else {
       var longDescriptionProps = { isEdit: false, value: this.state.proposal.description};
+      var imageProps = {isEdit: false, value: this.state.proposal.url};
 
       return (
         <div className='Content-panel'>
@@ -39,10 +41,7 @@ class TheProposal extends React.Component {
               <Link className="Navigation-link" to="/our-story/edit">Edit</Link>
             </div>
 
-            <div className="Content-image-container">
-              <img className="Content-extra-large-image-percentage" src={this.state.proposal.url} alt="Proposal Image" />
-            </div>
-
+            <ImageWidget {...imageProps} />
             <LongDescription {...longDescriptionProps} />
           </div>
         </div>

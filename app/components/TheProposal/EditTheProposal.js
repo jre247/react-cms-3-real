@@ -2,6 +2,7 @@ import React from 'react';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
+import ImageWidget from '../Widgets/Image/ImageWidget';
 
 class EditTheProposal extends React.Component {
   constructor(props) {
@@ -44,6 +45,8 @@ class EditTheProposal extends React.Component {
   render() {
     var longDescriptionProps = { isEdit: true, value: this.state.proposal.description,
       onChange: TheProposalActions.updateDescription};
+    var imageWidgetProps = {isEdit: true, value: this.state.proposal.url,
+      onChange: TheProposalActions.updateUrl};
 
     return (
       <div className="Detail">
@@ -54,8 +57,7 @@ class EditTheProposal extends React.Component {
                 <div className='row'>
                   <div className='col-sm-8'>
                     <div className="form-group">
-                      <input ref="url" className='form-control' name="url" placeholder="Url" value={this.state.proposal.url}
-                        onChange={TheProposalActions.updateUrl} autoFocus/>
+                      <ImageWidget {...imageWidgetProps} />
                     </div>
                     <div className="form-group">
                       <LongDescription {...longDescriptionProps} />
