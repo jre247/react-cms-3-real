@@ -4,22 +4,37 @@
 @import (less) '../../bower_components/magnific-popup/dist/magnific-popup.css';
 
 @font-face {
-    font-family: 'alex_brushregular';
-    src: url('alexbrush-regular-otf-webfont.eot');
-    src: url('alexbrush-regular-otf-webfont.eot?#iefix') format('embedded-opentype'),
-         url('alexbrush-regular-otf-webfont.woff') format('woff'),
-         url('alexbrush-regular-otf-webfont.ttf') format('truetype');
+    font-family: 'Source Sans Pro';
+    src: url('SourceSansPro-Regular.otf');
     font-weight: normal;
     font-style: normal;
 
 }
 
+@font-face{
+  font-family: 'Calligraffiti';
+  src: url('Calligraffiti.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @content-margin-top: 10px;
 @content-text-color: white;
-@content-text-font-family: 'alex_brushregular';
-@content-description-font-size: 28px;
+@content-text-font-family: 'Source Sans Pro';
+@content-description-font-size: 18px;
+@navigation-font-family: 'Calligraffiti';
+@anchor-font-color: white;
 /* Header */
 
+a {
+    color: @anchor-font-color;
+    text-decoration: none;
+}
+
+a:hover {
+    color: @anchor-font-color;
+    text-decoration: underline;
+}
 
 .Header {
   background: white;
@@ -175,7 +190,7 @@
 }
 
 .Content-container{
-  text-align: center;
+
 }
 
 .glyphicon-remove{
@@ -211,7 +226,7 @@
 }
 
 .Content-image-container{
-  margin-left: 15%;
+    text-align: center;
 }
 
 
@@ -280,9 +295,6 @@
 
 /* The Proposal */
 
-.Proposal-content-image-container{
-  // margin-left: 27%;
-}
 
 /* End The Proposal */
 
@@ -305,6 +317,27 @@
 
 
 
+/* Short Description */
+
+.Content-short-description{
+  color: @content-text-color;
+  font-size: @content-description-font-size;
+  font-family: @content-text-font-family;
+}
+
+// .Content-short-description-container{
+//   width: 67%;
+//   margin-left: 16%;
+//   font-family: @content-text-font-family;
+//   margin-top: @content-margin-top;
+// }
+
+
+/* End Short Description */
+
+
+
+
 
 /* Long Description */
 
@@ -316,6 +349,7 @@
 .Content-long-description-container{
   width: 67%;
   margin-left: 16%;
+  font-family: @content-text-font-family;
   margin-top: @content-margin-top;
 }
 
@@ -339,8 +373,9 @@
 .Navigation-link:active,
 .Navigation-link:visited {
   color: white;
-  border-bottom: 1px solid lightgray;
   margin-right: 16px;
+  font-family: @navigation-font-family;
+  font-size: 22px;
 }
 
 .Navigation-link:visited {
@@ -348,7 +383,7 @@
 }
 
 .Navigation-link:hover {
-
+  font-weight: bold;
 }
 
 .Navigation-link--highlight {
@@ -357,10 +392,12 @@
   border-radius: 3px;
   background: rgba(0, 0, 0, .15);
   color: white;
+  font-weight: bold;
 }
 
 .Navigation-link--highlight:hover {
   background: rgba(0, 0, 0, .3);
+  font-weight: bold;
 }
 
 
@@ -377,7 +414,7 @@
 
 .List-page{
   font-family: @content-text-font-family;
-  font-size: 20px;
+  font-size: @content-description-font-size;
   padding: 20px;
 }
 
@@ -402,7 +439,6 @@
 
 .List-item-group{
   margin-top: 10px;
-  font-size: 20px;
   line-height: 33px;
 }
 

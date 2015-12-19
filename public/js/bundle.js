@@ -2289,7 +2289,7 @@ var TheProposal = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'Proposal-content-image-container' },
+              { className: 'Content-image-container' },
               _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.state.proposal.url, alt: 'Proposal Image' })
             ),
             _react2.default.createElement(
@@ -2653,38 +2653,42 @@ var Venue = (function (_React$Component) {
             { className: 'List-items' },
             _react2.default.createElement(
               'div',
-              null,
+              { className: 'Content-container' },
               _react2.default.createElement(
-                'span',
-                null,
-                this.state.venue.ceremonyTime
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
+                'div',
+                { className: 'Content-short-description' },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.state.venue.ceremonyTime
+                )
+              ),
               _react2.default.createElement(
-                'span',
-                null,
-                this.state.venue.cocktailHourTime
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
+                'div',
+                { className: 'Content-short-description' },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.state.venue.cocktailHourTime
+                )
+              ),
               _react2.default.createElement(
-                'span',
-                null,
-                this.state.venue.receptionTime
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              null,
+                'div',
+                { className: 'Content-short-description' },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.state.venue.receptionTime
+                )
+              ),
               _react2.default.createElement(
-                'span',
-                null,
-                this.state.venue.afterPartyTime
+                'div',
+                { className: 'Content-short-description' },
+                _react2.default.createElement(
+                  'span',
+                  null,
+                  this.state.venue.afterPartyTime
+                )
               )
             )
           )

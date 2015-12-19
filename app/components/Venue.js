@@ -54,31 +54,31 @@ class Venue extends React.Component {
           </div>
 
           <div className="List-items">
+            <div className="Content-container">
+              <div className="Content-short-description">
+                <span>
+                    {this.state.venue.ceremonyTime}
+                 </span>
+              </div>
 
-            <div>
-              <span>
-                  {this.state.venue.ceremonyTime}
-               </span>
-            </div>
+              <div className="Content-short-description">
+                <span>
+                    {this.state.venue.cocktailHourTime}
+                </span>
+              </div>
 
-            <div>
-              <span>
-                  {this.state.venue.cocktailHourTime}
-              </span>
-            </div>
+              <div className="Content-short-description">
+                <span>
+                    {this.state.venue.receptionTime}
+                </span>
+              </div>
 
-            <div>
-              <span>
-                  {this.state.venue.receptionTime}
-              </span>
-            </div>
-
-            <div>
-              <span>
-                  {this.state.venue.afterPartyTime}
-              </span>
-            </div>
-
+              <div className="Content-short-description">
+                <span>
+                    {this.state.venue.afterPartyTime}
+                </span>
+              </div>
+            </div>    
           </div>
 
         </div>
