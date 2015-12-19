@@ -864,6 +864,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _LongDescription = require('../Widgets/LongDescription/LongDescription');
+
+var _LongDescription2 = _interopRequireDefault(_LongDescription);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -899,6 +903,7 @@ var SubListItem = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (this.isDescription(this.props.listItem)) {
+        var longDescriptionProps = { isEdit: false, value: this.props.listItem.value };
         return _react2.default.createElement(
           'div',
           { key: this.props.listItem.sort_order },
@@ -911,13 +916,7 @@ var SubListItem = (function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'form-group Sub-list-item' },
-                _react2.default.createElement(
-                  'span',
-                  { ref: 'description', name: 'description' },
-                  ' ',
-                  this.props.listItem.value,
-                  ' '
-                )
+                _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
               )
             )
           )
@@ -934,11 +933,15 @@ var SubListItem = (function (_React$Component) {
               { className: 'col-sm-6' },
               _react2.default.createElement(
                 'div',
-                { className: 'form-group Sub-list-item' },
+                { className: 'form-group' },
                 _react2.default.createElement(
-                  'a',
-                  { ref: 'link', name: 'link', href: this.props.listItem.value },
-                  this.props.listItem.value
+                  'div',
+                  { className: 'Sub-list-item' },
+                  _react2.default.createElement(
+                    'a',
+                    { ref: 'link', name: 'link', href: this.props.listItem.value },
+                    this.props.listItem.value
+                  )
                 )
               )
             )
@@ -953,7 +956,7 @@ var SubListItem = (function (_React$Component) {
 
 exports.default = SubListItem;
 
-},{"react":"react","react-router":"react-router"}],16:[function(require,module,exports){
+},{"../Widgets/LongDescription/LongDescription":31,"react":"react","react-router":"react-router"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
