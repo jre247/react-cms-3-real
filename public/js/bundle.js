@@ -2277,25 +2277,29 @@ var TheProposal = (function (_React$Component) {
           { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
-            { className: 'Edit-Content-Button' },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'Navigation-link', to: '/the-proposal/edit' },
-              'Edit'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Proposal-content-image-container' },
-            _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.state.proposal.url, alt: 'Proposal Image' })
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-long-description-container' },
+            { className: 'Content-container' },
             _react2.default.createElement(
               'div',
-              { className: 'Content-long-description' },
-              this.state.proposal.description
+              { className: 'Edit-Content-Button' },
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { className: 'Navigation-link', to: '/the-proposal/edit' },
+                'Edit'
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'Proposal-content-image-container' },
+              _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.state.proposal.url, alt: 'Proposal Image' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'Content-long-description-container' },
+              _react2.default.createElement(
+                'div',
+                { className: 'Content-long-description' },
+                this.state.proposal.description
+              )
             )
           )
         );

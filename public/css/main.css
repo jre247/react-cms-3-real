@@ -7406,6 +7406,9 @@ img.mfp-img {
   font-size: 38px;
   line-height: 1.6em;
 }
+.Content-container {
+  text-align: center;
+}
 .glyphicon-remove {
   color: #a94442;
   cursor: pointer;
@@ -7463,9 +7466,6 @@ img.mfp-img {
 }
 /* End Venue */
 /* The Proposal */
-.Proposal-content-image-container {
-  margin-left: 27%;
-}
 /* End The Proposal */
 /* List Collection */
 .List-items {
@@ -7477,7 +7477,7 @@ img.mfp-img {
 /* End List Collection */
 /* Long Description */
 .Content-long-description {
-  color: #7e3d10;
+  color: white;
   font-size: 28px;
 }
 .Content-long-description-container {
@@ -7519,6 +7519,7 @@ img.mfp-img {
 .List-page {
   font-family: 'alex_brushregular';
   font-size: 20px;
+  padding: 20px;
 }
 .List-container {
   margin-top: 10px;

@@ -37,20 +37,21 @@ class TheProposal extends React.Component {
     else {
       return (
         <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
-          </div>
+          <div className="Content-container">
+            <div className="Edit-Content-Button">
+              <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
+            </div>
 
-          <div className="Proposal-content-image-container">
-            <img className="Content-extra-large-image-percentage" src={this.state.proposal.url} alt="Proposal Image" />
-          </div>
+            <div className="Proposal-content-image-container">
+              <img className="Content-extra-large-image-percentage" src={this.state.proposal.url} alt="Proposal Image" />
+            </div>
 
-          <div className="Content-long-description-container">
-            <div className="Content-long-description">
-                {this.state.proposal.description}
+            <div className="Content-long-description-container">
+              <div className="Content-long-description">
+                  {this.state.proposal.description}
+              </div>
             </div>
           </div>
-
         </div>
       );
     }
