@@ -32,19 +32,17 @@ class Header extends React.Component {
     return (
       <div className="Header">
         <div className="Header-container">
-            <a className="Header-brand" href="/" >
-              <span className="Header-brandTxt">JASON & JENNA</span>
-            </a>
+          <div>
+            <Navigation className="Header-nav" history={this.props.history} />
+          </div>
+          <div className="Header-brand" >
+            <span className="Header-brandTxt">JASON & JENNA</span>
+          </div>
 
-            <div className="Header-graphic-separator">
-            </div>
+          <h2 >November 5th, 2016</h2>
+          <h3 >Middletown, CT</h3>
 
-            <div>
-              <Navigation className="Header-nav" history={this.props.history} />
-            </div>
 
-            <div className="Header-graphic-separator">
-            </div>
         </div>
       </div>
     );

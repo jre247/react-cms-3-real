@@ -47,7 +47,7 @@ class ThingsToDo extends React.Component {
           if(this.isSubListItem(thingToDo)){
             if(this.isDescription(thingToDo)){
               return (
-                <div key={thingToDo.sort_order} className='container'>
+                <div key={thingToDo.sort_order} >
                   <div className='row'>
                     <div className='col-sm-8'>
                       <div className="form-group Sub-list-item">
@@ -60,7 +60,7 @@ class ThingsToDo extends React.Component {
             }
             else{
               return (
-                <div key={thingToDo.sort_order} className='container Link-list-item'>
+                <div key={thingToDo.sort_order} className='Link-list-item'>
                   <div className='row'>
                     <div className='col-sm-6'>
                       <div className="form-group Sub-list-item">
@@ -75,8 +75,8 @@ class ThingsToDo extends React.Component {
           }
           else{
             return (
-              <div key={thingToDo.sort_order} className={thingToDo.sort_order > 1 ? 'container List-item-group Row-separator' :
-                'container List-item-group'}>
+              <div key={thingToDo.sort_order} className={thingToDo.sort_order > 1 ? 'List-item-group Row-separator' :
+                'List-item-group'}>
                 <div className='row'>
                   <div className='col-sm-6'>
                     <div className="form-group Thing-to-do-title" >
@@ -93,7 +93,7 @@ class ThingsToDo extends React.Component {
 
       return (
         <div>
-          <div className='container'>
+          <div className='Content-panel'>
             <div className="Edit-Content-Button">
               <Link className="Navigation-link" to="/things-to-do/edit">Edit</Link>
             </div>

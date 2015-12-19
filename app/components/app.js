@@ -5,10 +5,14 @@ import Header from './Header';
 class App extends React.Component {
   render() {
     return (
-      <div className="fixed-container">
+      <div className="App-container">
         <Header />
         {this.props.children}
         <Footer />
+        <div className="Backdrop">
+          <div className="fixed-container">
+          </div>
+        </div>
       </div>
     );
   }

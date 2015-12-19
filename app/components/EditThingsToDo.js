@@ -108,7 +108,7 @@ class EditThingsToDo extends React.Component {
       return item.parent_index != parentIndex && item.sort_order != parentIndex;
     });
 
-    this.saveNewSortOrder(itemsToKeep, itemsToRemove);
+    this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
 
     //this.state.thingsToDo = [];
     this.state.thingsToDo = itemsToKeep;
@@ -120,7 +120,7 @@ class EditThingsToDo extends React.Component {
     }
   }
 
-  saveNewSortOrder(itemsToKeep, itemsToRemove){
+  saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove){
     var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
 
     for(var i = 0; i < itemsToKeep.length; i++){
@@ -136,17 +136,6 @@ class EditThingsToDo extends React.Component {
       item.sort_order = i + 1;
     }
   }
-
-  // // update sort orders for items that have sort order greater than the last sub list
-  // // item of the parent item being removed
-  // updateSortOrders(lastItemIndexRemoved){
-  //   _.each(this.state.thingsToDo, function(item){
-  //     debugger;
-  //     if(item.sort_order > lastItemIndexRemoved){
-  //       item.sort_order -= lastItemIndexRemoved;
-  //     }
-  //   });
-  // }
 
   handleSubmit(event) {
     event.preventDefault();

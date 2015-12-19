@@ -7293,6 +7293,13 @@ img.mfp-img {
   right: 0;
   padding-top: 0;
 }
+@font-face {
+  font-family: 'alex_brushregular';
+  src: url('alexbrush-regular-otf-webfont.eot');
+  src: url('alexbrush-regular-otf-webfont.eot?#iefix') format('embedded-opentype'), url('alexbrush-regular-otf-webfont.woff') format('woff'), url('alexbrush-regular-otf-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* Header */
 .Header {
   background: white;
@@ -7346,6 +7353,15 @@ img.mfp-img {
 }
 /* End Header */
 /* App */
+.App-container {
+  width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+.Home-content {
+  height: 100%;
+  width: 100%;
+}
 .Empty-Page-Content {
   text-align: center;
 }
@@ -7354,12 +7370,39 @@ img.mfp-img {
   margin-right: 4%;
 }
 .fixed-container {
-  background: white url(http://files.nearlyweds.com.s3.amazonaws.com/template_images/4731_46a9925d308d8f286b5de482380cd731d155c224.jpg) no-repeat scroll top left;
+  opacity: 1;
+  background-image: url("https://d25uo7j7o9w973.cloudfront.net/uploads/background/555d389c346439003d580000/52/390bb00ec311e59816270388c96c32/Stephanie_Rob_Engagement-18.jpg");
+  background-position: 0% 50%;
+  background-size: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.Backdrop {
+  z-index: -99999;
+  min-width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  background: #eaecf0;
+}
+.Content-panel {
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  display: block;
+  color: #FFFFFF;
+  padding: 20px;
+  vertical-align: baseline;
 }
 .Content-text {
   text-align: center;
-  color: #7e3d10;
-  font-family: 'Copperplate Gothic Light';
+  font-family: 'alex_brushregular';
   font-size: 38px;
   line-height: 1.6em;
 }
@@ -7427,7 +7470,6 @@ img.mfp-img {
 /* List Collection */
 .List-items {
   text-align: center;
-  color: #7e3d10;
   font-size: 28px;
   line-height: 1.6em;
   margin-top: 10px;
@@ -7455,22 +7497,19 @@ img.mfp-img {
 .Navigation-link,
 .Navigation-link:active,
 .Navigation-link:visited {
-  color: rgba(28, 28, 28, 0.6);
+  color: white;
   border-bottom: 1px solid lightgray;
   margin-right: 16px;
 }
 .Navigation-link:visited {
-  color: gray;
-}
-.Navigation-link:hover {
-  color: #c4c4c4;
+  font-weight: bold;
 }
 .Navigation-link--highlight {
   margin-right: 8px;
   margin-left: 8px;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.15);
-  color: #fff;
+  color: white;
 }
 .Navigation-link--highlight:hover {
   background: rgba(0, 0, 0, 0.3);
@@ -7478,8 +7517,7 @@ img.mfp-img {
 /* End Navigation */
 /* List */
 .List-page {
-  margin-left: 16%;
-  font-family: 'Josefin Sans';
+  font-family: 'alex_brushregular';
   font-size: 20px;
 }
 .List-container {

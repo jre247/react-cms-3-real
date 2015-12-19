@@ -23,7 +23,7 @@ class Venue extends React.Component {
   render() {
     if(_.isEmpty(this.state.venue)){
       return (
-        <div>
+        <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/venue/edit">Edit</Link>
           </div>
@@ -36,7 +36,7 @@ class Venue extends React.Component {
     }
     else {
       return (
-        <div className="Detail">
+      <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/venue/edit">Edit</Link>
           </div>

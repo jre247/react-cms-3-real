@@ -23,7 +23,7 @@ class TheProposal extends React.Component {
   render() {
     if(_.isEmpty(this.state.proposal)){
       return (
-        <div>
+        <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
           </div>
@@ -36,7 +36,7 @@ class TheProposal extends React.Component {
     }
     else {
       return (
-        <div className="Detail">
+        <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/the-proposal/edit">Edit</Link>
           </div>

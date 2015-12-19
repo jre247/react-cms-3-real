@@ -3,9 +3,20 @@
 @import '../../bower_components/toastr/toastr';
 @import (less) '../../bower_components/magnific-popup/dist/magnific-popup.css';
 
+@font-face {
+    font-family: 'alex_brushregular';
+    src: url('alexbrush-regular-otf-webfont.eot');
+    src: url('alexbrush-regular-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('alexbrush-regular-otf-webfont.woff') format('woff'),
+         url('alexbrush-regular-otf-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 @content-margin-top: 10px;
 @content-text-color: #7e3d10;
-@content-text-font-family: 'Josefin Sans';
+@content-text-font-family: 'alex_brushregular';
 @content-description-font-size: 28px;
 /* Header */
 
@@ -80,6 +91,17 @@
 
 /* App */
 
+.App-container{
+  width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.Home-content{
+  height: 100%;
+  width: 100%;
+}
+
 .Empty-Page-Content{
   text-align: center;
 }
@@ -89,19 +111,65 @@
   margin-right: 4%;
 }
 
-.fixed-container{
-   background:
-     white
-     url(http://files.nearlyweds.com.s3.amazonaws.com/template_images/4731_46a9925d308d8f286b5de482380cd731d155c224.jpg)
-     no-repeat
-     scroll
-     top left;
+// .fixed-container{
+//    background:
+//      white
+//      url(http://files.nearlyweds.com.s3.amazonaws.com/template_images/4731_46a9925d308d8f286b5de482380cd731d155c224.jpg)
+//      no-repeat
+//      scroll
+//      top left;
+//  }
+
+ // .fixed-container{
+ //  //  background:
+ //  //   white
+ //  //   url(https://scontent-lga3-1.xx.fbcdn.net/hphotos-xal1/t31.0-8/289173_10100607691118929_2130839311_o.jpg)
+ //  //   no-repeat;
+ //
+ //    background: url(https://scontent-lga3-1.xx.fbcdn.net/hphotos-ash2/v/t1.0-9/10290701_820086228932_3450344794020087774_n.jpg?oh=9db07409248d726300e132aa8290f26d&oe=56D9F7CE)
+ //     no-repeat center center fixed;
+ //      -webkit-background-size: cover;
+ //      -moz-background-size: cover;
+ //      -o-background-size: cover;
+ //      background-size: cover;
+ // }
+
+ .fixed-container{
+    opacity: 1;
+    background-image: url("https://d25uo7j7o9w973.cloudfront.net/uploads/background/555d389c346439003d580000/52/390bb00ec311e59816270388c96c32/Stephanie_Rob_Engagement-18.jpg");
+    background-position: 0% 50%;
+    background-size: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
  }
+
+ .Backdrop{
+    z-index: -99999;
+    min-width: 100%;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease-in-out;
+    background: #eaecf0;
+ }
+
+.Content-panel{
+  background: rgba(0,0,0,0.3);
+  opacity: 1;
+  display: block;
+  color: #FFFFFF;
+  padding: 20px;
+  vertical-align: baseline;
+}
 
  .Content-text{
   text-align: center;
-  color: #7e3d10;
-  font-family: 'Copperplate Gothic Light';
+  font-family: @content-text-font-family;
   font-size: 38px;
   line-height: 1.6em;
 }
@@ -221,7 +289,7 @@
 
 .List-items{
  text-align: center;
- color: @content-text-color;
+ // color: @content-text-color;
  font-size: 28px;
  line-height: 1.6em;
  margin-top: @content-margin-top;
@@ -266,17 +334,17 @@
 .Navigation-link,
 .Navigation-link:active,
 .Navigation-link:visited {
-  color: rgba(28, 28, 28, .6);
+  color: white;
   border-bottom: 1px solid lightgray;
   margin-right: 16px;
 }
 
 .Navigation-link:visited {
-  color: gray;
+  font-weight: bold;
 }
 
 .Navigation-link:hover {
-  color: rgba(196, 196, 196, 1);
+
 }
 
 .Navigation-link--highlight {
@@ -284,7 +352,7 @@
   margin-left: 8px;
   border-radius: 3px;
   background: rgba(0, 0, 0, .15);
-  color: #fff;
+  color: white;
 }
 
 .Navigation-link--highlight:hover {
@@ -301,8 +369,9 @@
 
 /* List */
 
+
+
 .List-page{
-  margin-left: 16%;
   font-family: @content-text-font-family;
   font-size: 20px;
 }

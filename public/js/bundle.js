@@ -456,10 +456,15 @@ var App = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'fixed-container' },
+        { className: 'App-container' },
         _react2.default.createElement(_Header2.default, null),
         this.props.children,
-        _react2.default.createElement(_Footer2.default, null)
+        _react2.default.createElement(_Footer2.default, null),
+        _react2.default.createElement(
+          'div',
+          { className: 'Backdrop' },
+          _react2.default.createElement('div', { className: 'fixed-container' })
+        )
       );
     }
   }]);
@@ -1169,7 +1174,7 @@ var EditThingsToDo = (function (_React$Component) {
         return item.parent_index != parentIndex && item.sort_order != parentIndex;
       });
 
-      this.saveNewSortOrder(itemsToKeep, itemsToRemove);
+      this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
 
       //this.state.thingsToDo = [];
       this.state.thingsToDo = itemsToKeep;
@@ -1181,8 +1186,8 @@ var EditThingsToDo = (function (_React$Component) {
       }
     }
   }, {
-    key: 'saveNewSortOrder',
-    value: function saveNewSortOrder(itemsToKeep, itemsToRemove) {
+    key: 'saveNewSortOrderForAllItems',
+    value: function saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove) {
       var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
 
       for (var i = 0; i < itemsToKeep.length; i++) {
@@ -1198,18 +1203,6 @@ var EditThingsToDo = (function (_React$Component) {
         item.sort_order = i + 1;
       }
     }
-
-    // // update sort orders for items that have sort order greater than the last sub list
-    // // item of the parent item being removed
-    // updateSortOrders(lastItemIndexRemoved){
-    //   _.each(this.state.thingsToDo, function(item){
-    //     debugger;
-    //     if(item.sort_order > lastItemIndexRemoved){
-    //       item.sort_order -= lastItemIndexRemoved;
-    //     }
-    //   });
-    // }
-
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
@@ -1797,21 +1790,29 @@ var Header = (function (_React$Component) {
           'div',
           { className: 'Header-container' },
           _react2.default.createElement(
-            'a',
-            { className: 'Header-brand', href: '/' },
+            'div',
+            null,
+            _react2.default.createElement(_Navigation2.default, { className: 'Header-nav', history: this.props.history })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'Header-brand' },
             _react2.default.createElement(
               'span',
               { className: 'Header-brandTxt' },
               'JASON & JENNA'
             )
           ),
-          _react2.default.createElement('div', { className: 'Header-graphic-separator' }),
           _react2.default.createElement(
-            'div',
+            'h2',
             null,
-            _react2.default.createElement(_Navigation2.default, { className: 'Header-nav', history: this.props.history })
+            'November 5th, 2016'
           ),
-          _react2.default.createElement('div', { className: 'Header-graphic-separator' })
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Middletown, CT'
+          )
         )
       );
     }
@@ -1857,21 +1858,8 @@ var Home = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         "div",
-        null,
-        _react2.default.createElement(
-          "div",
-          { className: "Content-text" },
-          _react2.default.createElement(
-            "span",
-            null,
-            " November 5, 2016 "
-          )
-        ),
-        _react2.default.createElement(
-          "div",
-          null,
-          _react2.default.createElement("img", { className: "Content-large-image", src: "https://scontent-lga3-1.xx.fbcdn.net/hphotos-xfa1/v/t1.0-9/12219352_10205322216999523_2989781224031728729_n.jpg?oh=2ce868d093f34a72a5a333752218e4eb&oe=56E30ABC" })
-        )
+        { className: "Home-content" },
+        " "
       );
     }
   }]);
@@ -2113,7 +2101,7 @@ var PhotoAlbum = (function (_React$Component) {
       if (_underscore._.isEmpty(this.state.photoAlbum)) {
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },
@@ -2136,7 +2124,7 @@ var PhotoAlbum = (function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },
@@ -2263,7 +2251,7 @@ var TheProposal = (function (_React$Component) {
       if (_underscore._.isEmpty(this.state.proposal)) {
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },
@@ -2286,7 +2274,7 @@ var TheProposal = (function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          { className: 'Detail' },
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },
@@ -2430,7 +2418,7 @@ var ThingsToDo = (function (_React$Component) {
             if (_this2.isDescription(thingToDo)) {
               return _react2.default.createElement(
                 'div',
-                { key: thingToDo.sort_order, className: 'container' },
+                { key: thingToDo.sort_order },
                 _react2.default.createElement(
                   'div',
                   { className: 'row' },
@@ -2454,7 +2442,7 @@ var ThingsToDo = (function (_React$Component) {
             } else {
               return _react2.default.createElement(
                 'div',
-                { key: thingToDo.sort_order, className: 'container Link-list-item' },
+                { key: thingToDo.sort_order, className: 'Link-list-item' },
                 _react2.default.createElement(
                   'div',
                   { className: 'row' },
@@ -2477,7 +2465,7 @@ var ThingsToDo = (function (_React$Component) {
           } else {
             return _react2.default.createElement(
               'div',
-              { key: thingToDo.sort_order, className: thingToDo.sort_order > 1 ? 'container List-item-group Row-separator' : 'container List-item-group' },
+              { key: thingToDo.sort_order, className: thingToDo.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
               _react2.default.createElement(
                 'div',
                 { className: 'row' },
@@ -2504,7 +2492,7 @@ var ThingsToDo = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            { className: 'container' },
+            { className: 'Content-panel' },
             _react2.default.createElement(
               'div',
               { className: 'Edit-Content-Button' },
@@ -2598,7 +2586,7 @@ var Venue = (function (_React$Component) {
       if (_underscore._.isEmpty(this.state.venue)) {
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },
@@ -2621,7 +2609,7 @@ var Venue = (function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          { className: 'Detail' },
+          { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
             { className: 'Edit-Content-Button' },

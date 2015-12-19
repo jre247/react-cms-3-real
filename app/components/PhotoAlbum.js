@@ -51,7 +51,7 @@ class PhotoAlbum extends React.Component {
 
     if(_.isEmpty(this.state.photoAlbum)){
       return (
-        <div>
+        <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
           </div>
@@ -64,7 +64,7 @@ class PhotoAlbum extends React.Component {
     }
     else {
       return (
-        <div>
+        <div className='Content-panel'>
           <div className="Edit-Content-Button">
             <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
           </div>
