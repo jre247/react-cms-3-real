@@ -2,6 +2,7 @@ import React from 'react';
 import ThingsToDoStore from '../../stores/ThingsToDoStore';
 import ThingsToDoActions from '../../actions/ThingsToDoActions';
 import SubListItem from '../Widgets/ListItem/SubListItem';
+import ParentListItem from '../Widgets/ListItem/ParentListItem';
 import {_} from 'underscore';
 
 class EditThingsToDo extends React.Component {
@@ -156,6 +157,7 @@ class EditThingsToDo extends React.Component {
   render() {
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
+          //todo: put update list item inside list item module, same with remove content
           var subListItemProps = {listItem: thingToDo, isEdit: true,
             onChange: this.updateListItem.bind(this, index), onRemove: this.removeContent.bind(this, index)};
 
@@ -164,30 +166,15 @@ class EditThingsToDo extends React.Component {
           );
         }
         else{
-          return (
-            <div key={thingToDo.sort_order} className='container List-item-group'>
-              <div className='row'>
-                <div className='col-sm-8 Add-sub-list-item'>
-                  <div className="form-group">
-                    <button className="btn btn-primary" onClick={this.addSublistItem.bind(this, index)}>Add Sub List Item</button>
-                  </div>
-                </div>
-              </div>
+          //todo: put onAddSubListItem inside parent list item module
+          //todo: put update list item inside list item module, same with remove content
+          var parentListItemProps = {isEdit: true, listItem: thingToDo,
+            onAddSubListItem: this.addSublistItem.bind(this, index),
+            onChange: this.updateListItem.bind(this, index),
+            onRemove: this.removeContentAndItsSubListItems.bind(this, index)};
 
-              <div className='row'>
-                <div className='col-sm-8'>
-                  <div className="form-group">
-                    <input ref="title" className='form-control' name="title" placeholder="Title"
-                      value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
-                  </div>
-                </div>
-                <div className="col-sm-2">
-                  <div onClick={this.removeContentAndItsSubListItems.bind(this, index)}>
-                    <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          return (
+            <ParentListItem {...parentListItemProps} />
           );
         }
     });

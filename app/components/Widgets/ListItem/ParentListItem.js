@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
+import ParentListItemEdit from './ParentListItemEdit';
+import ParentListItemReadOnly from './ParentListItemReadOnly';
 
 class ParentListItem extends React.Component {
   constructor(props) {
@@ -15,20 +17,16 @@ class ParentListItem extends React.Component {
   }
 
   render() {
-    return (
-      <div key={this.props.listItem.sort_order} className={this.props.listItem.sort_order > 1 ?
-      'List-item-group Row-separator' : 'List-item-group'}>
-        <div className='row'>
-          <div className='col-sm-6'>
-            <div className="form-group Thing-to-do-title" >
-              <span ref="description" name="description">
-                {this.props.listItem.value}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    if(this.props.isEdit){
+      return (
+        <ParentListItemEdit {...this.props} />
+      );
+    }
+    else{
+      return (
+        <ParentListItemReadOnly {...this.props} />
+      );
+    }
   }
 }
 
