@@ -36,7 +36,7 @@ class TheProposal extends React.Component {
           if(FieldHelper.isDescription(contentItem)){
             var longDescriptionProps = {value: contentItem.value, isEdit: false};
             return (
-              <div key={contentItem.sort_order}>
+              <div className="Content-item-container" key={contentItem.sort_order}>
                 <LongDescription {...longDescriptionProps} />
               </div>
             );
@@ -44,7 +44,7 @@ class TheProposal extends React.Component {
           else{
             var imageProps = {value: contentItem.value, isEdit: false};
             return (
-              <div key={contentItem.sort_order}>
+              <div className="Content-item-container" key={contentItem.sort_order}>
                 <ImageWidget {...imageProps} />
               </div>
             );
@@ -53,7 +53,7 @@ class TheProposal extends React.Component {
 
       return (
         <div className='Content-panel'>
-          <div className="Content-container">
+          <div className="Content-container Content-centered-container">
             <div className="Edit-Content-Button">
               <Link className="Navigation-link" to="/our-story/edit">Edit</Link>
             </div>

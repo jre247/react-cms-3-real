@@ -1632,14 +1632,14 @@ var TheProposal = (function (_React$Component) {
             var longDescriptionProps = { value: contentItem.value, isEdit: false };
             return _react2.default.createElement(
               'div',
-              { key: contentItem.sort_order },
+              { className: 'Content-item-container', key: contentItem.sort_order },
               _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
             );
           } else {
             var imageProps = { value: contentItem.value, isEdit: false };
             return _react2.default.createElement(
               'div',
-              { key: contentItem.sort_order },
+              { className: 'Content-item-container', key: contentItem.sort_order },
               _react2.default.createElement(_ImageWidget2.default, imageProps)
             );
           }
@@ -1650,7 +1650,7 @@ var TheProposal = (function (_React$Component) {
           { className: 'Content-panel' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-container' },
+            { className: 'Content-container Content-centered-container' },
             _react2.default.createElement(
               'div',
               { className: 'Edit-Content-Button' },
