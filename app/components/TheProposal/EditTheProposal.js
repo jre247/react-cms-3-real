@@ -57,11 +57,16 @@ class EditTheProposal extends React.Component {
     this.state.contentList[index].value = event.target.value;
     this.setState({contentList: this.state.contentList});
   }
+  removeContent(index, event){
+    this.state.contentList.splice(index, 1);
+    this.setState({contentList: this.state.contentList});
+  }
   render() {
     let theProposalNodes = this.state.contentList.map((contentItem, index) => {
         if(FieldHelper.isDescription(contentItem)){
           var longDescriptionProps = {value: contentItem.value, isEdit: true,
-            onChange: this.updateContent.bind(this, index)};
+            onChange: this.updateContent.bind(this, index),
+            onRemove: this.removeContent.bind(this, index)};
           return (
             <div key={contentItem.sort_order} className="form-group">
               <LongDescription {...longDescriptionProps} />
@@ -70,7 +75,8 @@ class EditTheProposal extends React.Component {
         }
         else{
           var imageProps = {value: contentItem.value, isEdit: true,
-            onChange: this.updateContent.bind(this, index)};
+            onChange: this.updateContent.bind(this, index),
+            onRemove: this.removeContent.bind(this, index)};
           return (
             <div key={contentItem.sort_order} className="form-group">
               <ImageWidget {...imageProps} />

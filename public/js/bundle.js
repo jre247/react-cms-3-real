@@ -1414,6 +1414,12 @@ var EditTheProposal = (function (_React$Component) {
       this.setState({ contentList: this.state.contentList });
     }
   }, {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
+      this.state.contentList.splice(index, 1);
+      this.setState({ contentList: this.state.contentList });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -1421,7 +1427,8 @@ var EditTheProposal = (function (_React$Component) {
       var theProposalNodes = this.state.contentList.map(function (contentItem, index) {
         if (_FieldHelper2.default.isDescription(contentItem)) {
           var longDescriptionProps = { value: contentItem.value, isEdit: true,
-            onChange: _this2.updateContent.bind(_this2, index) };
+            onChange: _this2.updateContent.bind(_this2, index),
+            onRemove: _this2.removeContent.bind(_this2, index) };
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order, className: 'form-group' },
@@ -1429,7 +1436,8 @@ var EditTheProposal = (function (_React$Component) {
           );
         } else {
           var imageProps = { value: contentItem.value, isEdit: true,
-            onChange: _this2.updateContent.bind(_this2, index) };
+            onChange: _this2.updateContent.bind(_this2, index),
+            onRemove: _this2.removeContent.bind(_this2, index) };
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order, className: 'form-group' },
@@ -2806,8 +2814,29 @@ var ImageWidgetEdit = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
-        onChange: this.props.onChange, autoFocus: true });
+      return _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-8' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
+              onChange: this.props.onChange, autoFocus: true })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-2' },
+          _react2.default.createElement(
+            'div',
+            { onClick: this.props.onRemove },
+            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+          )
+        )
+      );
     }
   }]);
 
@@ -3505,8 +3534,29 @@ var LongDescriptionEdit = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('textarea', { className: 'form-control',
-        value: this.props.value, onChange: this.props.onChange });
+      return _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-8' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement('textarea', { className: 'form-control',
+              value: this.props.value, onChange: this.props.onChange })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-2' },
+          _react2.default.createElement(
+            'div',
+            { onClick: this.props.onRemove },
+            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+          )
+        )
+      );
     }
   }]);
 
