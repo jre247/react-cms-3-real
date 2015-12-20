@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
+import Url from '../Widgets/Url/Url';
 
 class SubListItem extends React.Component {
   constructor(props) {
@@ -36,13 +37,14 @@ class SubListItem extends React.Component {
       );
     }
     else{
+      var urlProps = {isEdit: false, value: this.props.listItem.value};
       return (
         <div key={this.props.listItem.sort_order} className='Link-list-item'>
           <div className='row'>
             <div className='col-sm-6'>
               <div className="form-group">
                 <div className="Sub-list-item">
-                  <a ref="link" name="link" href={this.props.listItem.value}>{this.props.listItem.value}</a>
+                  <Url {...urlProps} />
                 </div>
               </div>
             </div>

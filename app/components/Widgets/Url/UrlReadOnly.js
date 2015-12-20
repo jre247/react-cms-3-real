@@ -16,11 +16,7 @@ class UrlReadOnly extends React.Component {
 
   render() {
     return (
-      <div className="Content-long-description-container">
-        <div className="Content-long-description">
-            {this.props.value}
-        </div>
-      </div>
+      <a ref="link" name="link" href={this.props.value}>{this.props.value}</a>
     );
   }
 }

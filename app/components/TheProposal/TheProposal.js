@@ -4,7 +4,7 @@ import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
 import EmptyContent from '../EmptyContent';
-import ImageWidget from '../Widgets/Image/ImageWidget'
+import ImageWidget from '../Widgets/Image/ImageWidget';
 import {_} from 'underscore';
 
 class TheProposal extends React.Component {

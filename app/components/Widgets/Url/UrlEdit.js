@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-class ShortDescriptionEdit extends React.Component {
+class UrlEdit extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -23,4 +23,4 @@ class ShortDescriptionEdit extends React.Component {
   }
 }
 
-export default ShortDescriptionEdit;
+export default UrlEdit;
