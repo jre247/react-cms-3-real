@@ -1,6 +1,7 @@
 import React from 'react';
 import ThingsToDoStore from '../../stores/ThingsToDoStore';
 import ThingsToDoActions from '../../actions/ThingsToDoActions';
+import SubListItem from '../Widgets/ListItem/SubListItem';
 import {_} from 'underscore';
 
 class EditThingsToDo extends React.Component {
@@ -152,50 +153,15 @@ class EditThingsToDo extends React.Component {
     ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
   }
 
-  //TODO: create field component that will figure out what kind of field to render
   render() {
       let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
-          if(this.isDescription(thingToDo)){
-            return (
-              <div key={thingToDo.sort_order} className='container'>
-                <div className='row'>
-                  <div className='col-sm-8'>
-                    <div className="form-group Sub-list-item">
-                      <textarea ref="description" className='form-control' name="description" placeholder="Description"
-                        value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}>
-                      </textarea>
-                    </div>
-                  </div>
-                  <div className="col-sm-2">
-                    <div onClick={this.removeContent.bind(this, index)}>
-                      <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          }
-          else{
-            return (
-              <div key={thingToDo.sort_order} className='container'>
-                <div className='row'>
-                  <div className='col-sm-8'>
-                    <div className="form-group Sub-list-item Link-list-item">
-                      <input ref="link" className='form-control' name="link" placeholder="Link"
-                        value={thingToDo.value} onChange={this.updateListItem.bind(this, index)}/>
-                    </div>
-                  </div>
-                  <div className="col-sm-2">
-                    <div onClick={this.removeContent.bind(this, index)}>
-                      <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          }
+          var subListItemProps = {listItem: thingToDo, isEdit: true,
+            onChange: this.updateListItem.bind(this, index), onRemove: this.removeContent.bind(this, index)};
 
+          return (
+            <SubListItem {...subListItemProps} />
+          );
         }
         else{
           return (

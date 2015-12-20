@@ -16,8 +16,7 @@ class UrlEdit extends React.Component {
 
   render() {
     return (
-      <input className='form-control' type='text'>
-        value={this.props.value} onChange={this.props.onChange}>
+      <input className='form-control' type='text' value={this.props.value} onChange={this.props.onChange}>
       </input>
     );
   }

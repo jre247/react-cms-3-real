@@ -3,8 +3,8 @@ import {Link} from 'react-router';
 import ThingsToDoStore from '../../stores/ThingsToDoStore';
 import ThingsToDoActions from '../../actions/ThingsToDoActions';
 import EmptyContent from '../EmptyContent';
-import SubListItem from '../ListItem/SubListItem';
-import ParentListItem from '../ListItem/ParentListItem';
+import SubListItem from '../Widgets/ListItem/SubListItem';
+import ParentListItem from '../Widgets/ListItem/ParentListItem';
 import {_} from 'underscore';
 
 class ThingsToDo extends React.Component {
@@ -37,13 +37,13 @@ class ThingsToDo extends React.Component {
     else {
         let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
           if(this.isSubListItem(thingToDo)){
-            var subListItemProps = {listItem: thingToDo};
+            var subListItemProps = {listItem: thingToDo, isEdit: false};
             return (
               <SubListItem {...subListItemProps} />
             );
           }
           else{
-            var listItemProps = {listItem: thingToDo};
+            var listItemProps = {listItem: thingToDo, isEdit: false};
             return (
               <ParentListItem {...listItemProps} />
             );

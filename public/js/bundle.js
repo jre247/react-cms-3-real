@@ -562,7 +562,7 @@ var Footer = (function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":1,"../stores/FooterStore":41,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../stores/FooterStore":43,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -729,7 +729,7 @@ var Header = (function (_React$Component) {
 
 exports.default = Header;
 
-},{"./Navigation":16,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
+},{"./Navigation":14,"react":"react","react-router":"react-router"}],13:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -780,184 +780,6 @@ var Home = (function (_React$Component) {
 exports.default = Home;
 
 },{"react":"react"}],14:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouter = require('react-router');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ParentListItem = (function (_React$Component) {
-  _inherits(ParentListItem, _React$Component);
-
-  function ParentListItem(props) {
-    _classCallCheck(this, ParentListItem);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ParentListItem).call(this, props));
-  }
-
-  _createClass(ParentListItem, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {}
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { key: this.props.listItem.sort_order, className: this.props.listItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
-        _react2.default.createElement(
-          'div',
-          { className: 'row' },
-          _react2.default.createElement(
-            'div',
-            { className: 'col-sm-6' },
-            _react2.default.createElement(
-              'div',
-              { className: 'form-group Thing-to-do-title' },
-              _react2.default.createElement(
-                'span',
-                { ref: 'description', name: 'description' },
-                this.props.listItem.value
-              )
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return ParentListItem;
-})(_react2.default.Component);
-
-exports.default = ParentListItem;
-
-},{"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouter = require('react-router');
-
-var _LongDescription = require('../Widgets/LongDescription/LongDescription');
-
-var _LongDescription2 = _interopRequireDefault(_LongDescription);
-
-var _Url = require('../Widgets/Url/Url');
-
-var _Url2 = _interopRequireDefault(_Url);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SubListItem = (function (_React$Component) {
-  _inherits(SubListItem, _React$Component);
-
-  function SubListItem(props) {
-    _classCallCheck(this, SubListItem);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(SubListItem).call(this, props));
-  }
-
-  _createClass(SubListItem, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {}
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
-
-    //TODO: put in helper
-
-  }, {
-    key: 'isDescription',
-    value: function isDescription(node) {
-      return node.content_type_id == 2;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (this.isDescription(this.props.listItem)) {
-        var longDescriptionProps = { isEdit: false, value: this.props.listItem.value };
-        return _react2.default.createElement(
-          'div',
-          { key: this.props.listItem.sort_order },
-          _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-8' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group Sub-list-item' },
-                _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
-              )
-            )
-          )
-        );
-      } else {
-        var urlProps = { isEdit: false, value: this.props.listItem.value };
-        return _react2.default.createElement(
-          'div',
-          { key: this.props.listItem.sort_order, className: 'Link-list-item' },
-          _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-6' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'Sub-list-item' },
-                  _react2.default.createElement(_Url2.default, urlProps)
-                )
-              )
-            )
-          )
-        );
-      }
-    }
-  }]);
-
-  return SubListItem;
-})(_react2.default.Component);
-
-exports.default = SubListItem;
-
-},{"../Widgets/LongDescription/LongDescription":31,"../Widgets/Url/Url":34,"react":"react","react-router":"react-router"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1085,7 +907,7 @@ var Navbar = (function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":2,"../stores/NavbarStore":42,"react":"react","react-router":"react-router"}],17:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../stores/NavbarStore":44,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1266,7 +1088,7 @@ var EditPhotoAlbum = (function (_React$Component) {
 
 exports.default = EditPhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":43,"react":"react","underscore":"underscore"}],18:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":45,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1436,7 +1258,7 @@ var PhotoAlbum = (function (_React$Component) {
 
 exports.default = PhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":43,"../EmptyContent":9,"../Widgets/Carousel/Carousel":25,"react":"react","react-router":"react-router","underscore":"underscore"}],19:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":45,"../EmptyContent":9,"../Widgets/Carousel/Carousel":23,"react":"react","react-router":"react-router","underscore":"underscore"}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1587,7 +1409,7 @@ var EditTheProposal = (function (_React$Component) {
 
 exports.default = EditTheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":44,"../Widgets/Image/ImageWidget":28,"../Widgets/LongDescription/LongDescription":31,"react":"react"}],20:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":46,"../Widgets/Image/ImageWidget":26,"../Widgets/LongDescription/LongDescription":33,"react":"react"}],18:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1699,7 +1521,7 @@ var TheProposal = (function (_React$Component) {
 
 exports.default = TheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":44,"../EmptyContent":9,"../Widgets/Image/ImageWidget":28,"../Widgets/LongDescription/LongDescription":31,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":46,"../EmptyContent":9,"../Widgets/Image/ImageWidget":26,"../Widgets/LongDescription/LongDescription":33,"react":"react","react-router":"react-router","underscore":"underscore"}],19:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1719,6 +1541,10 @@ var _ThingsToDoStore2 = _interopRequireDefault(_ThingsToDoStore);
 var _ThingsToDoActions = require('../../actions/ThingsToDoActions');
 
 var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
+
+var _SubListItem = require('../Widgets/ListItem/SubListItem');
+
+var _SubListItem2 = _interopRequireDefault(_SubListItem);
 
 var _underscore = require('underscore');
 
@@ -1906,9 +1732,6 @@ var EditThingsToDo = (function (_React$Component) {
     value: function submit(event) {
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.thingsToDo, this.props.history);
     }
-
-    //TODO: create field component that will figure out what kind of field to render
-
   }, {
     key: 'render',
     value: function render() {
@@ -1916,63 +1739,10 @@ var EditThingsToDo = (function (_React$Component) {
 
       var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
         if (_this2.isSubListItem(thingToDo)) {
-          if (_this2.isDescription(thingToDo)) {
-            return _react2.default.createElement(
-              'div',
-              { key: thingToDo.sort_order, className: 'container' },
-              _react2.default.createElement(
-                'div',
-                { className: 'row' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-sm-8' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'form-group Sub-list-item' },
-                    _react2.default.createElement('textarea', { ref: 'description', className: 'form-control', name: 'description', placeholder: 'Description',
-                      value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-sm-2' },
-                  _react2.default.createElement(
-                    'div',
-                    { onClick: _this2.removeContent.bind(_this2, index) },
-                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-                  )
-                )
-              )
-            );
-          } else {
-            return _react2.default.createElement(
-              'div',
-              { key: thingToDo.sort_order, className: 'container' },
-              _react2.default.createElement(
-                'div',
-                { className: 'row' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-sm-8' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'form-group Sub-list-item Link-list-item' },
-                    _react2.default.createElement('input', { ref: 'link', className: 'form-control', name: 'link', placeholder: 'Link',
-                      value: thingToDo.value, onChange: _this2.updateListItem.bind(_this2, index) })
-                  )
-                ),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'col-sm-2' },
-                  _react2.default.createElement(
-                    'div',
-                    { onClick: _this2.removeContent.bind(_this2, index) },
-                    _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-                  )
-                )
-              )
-            );
-          }
+          var subListItemProps = { listItem: thingToDo, isEdit: true,
+            onChange: _this2.updateListItem.bind(_this2, index), onRemove: _this2.removeContent.bind(_this2, index) };
+
+          return _react2.default.createElement(_SubListItem2.default, subListItemProps);
         } else {
           return _react2.default.createElement(
             'div',
@@ -2060,7 +1830,7 @@ var EditThingsToDo = (function (_React$Component) {
 
 exports.default = EditThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":45,"react":"react","underscore":"underscore"}],22:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":47,"../Widgets/ListItem/SubListItem":30,"react":"react","underscore":"underscore"}],20:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2087,11 +1857,11 @@ var _EmptyContent = require('../EmptyContent');
 
 var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
 
-var _SubListItem = require('../ListItem/SubListItem');
+var _SubListItem = require('../Widgets/ListItem/SubListItem');
 
 var _SubListItem2 = _interopRequireDefault(_SubListItem);
 
-var _ParentListItem = require('../ListItem/ParentListItem');
+var _ParentListItem = require('../Widgets/ListItem/ParentListItem');
 
 var _ParentListItem2 = _interopRequireDefault(_ParentListItem);
 
@@ -2152,10 +1922,10 @@ var ThingsToDo = (function (_React$Component) {
       } else {
         var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
           if (_this2.isSubListItem(thingToDo)) {
-            var subListItemProps = { listItem: thingToDo };
+            var subListItemProps = { listItem: thingToDo, isEdit: false };
             return _react2.default.createElement(_SubListItem2.default, subListItemProps);
           } else {
-            var listItemProps = { listItem: thingToDo };
+            var listItemProps = { listItem: thingToDo, isEdit: false };
             return _react2.default.createElement(_ParentListItem2.default, listItemProps);
           }
         });
@@ -2191,7 +1961,7 @@ var ThingsToDo = (function (_React$Component) {
 
 exports.default = ThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":45,"../EmptyContent":9,"../ListItem/ParentListItem":14,"../ListItem/SubListItem":15,"react":"react","react-router":"react-router","underscore":"underscore"}],23:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":47,"../EmptyContent":9,"../Widgets/ListItem/ParentListItem":29,"../Widgets/ListItem/SubListItem":30,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2391,7 +2161,7 @@ var EditVenue = (function (_React$Component) {
 
 exports.default = EditVenue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":46,"react":"react"}],24:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":48,"react":"react"}],22:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2555,7 +2325,7 @@ var Venue = (function (_React$Component) {
 
 exports.default = Venue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":46,"../EmptyContent":9,"react":"react","react-router":"react-router","underscore":"underscore"}],25:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":48,"../EmptyContent":9,"react":"react","react-router":"react-router","underscore":"underscore"}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2638,7 +2408,7 @@ var Carousel = (function (_React$Component) {
 
 exports.default = Carousel;
 
-},{"./CarouselContent":26,"./CarouselIndicators":27,"react":"react","react-router":"react-router"}],26:[function(require,module,exports){
+},{"./CarouselContent":24,"./CarouselIndicators":25,"react":"react","react-router":"react-router"}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2708,7 +2478,7 @@ var CarouselContent = (function (_React$Component) {
 
 exports.default = CarouselContent;
 
-},{"../../../helpers/PropsHelper":38,"react":"react","react-router":"react-router"}],27:[function(require,module,exports){
+},{"../../../helpers/PropsHelper":40,"react":"react","react-router":"react-router"}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2774,7 +2544,7 @@ var CarouselIndicators = (function (_React$Component) {
 
 exports.default = CarouselIndicators;
 
-},{"../../../helpers/PropsHelper":38,"react":"react","react-router":"react-router"}],28:[function(require,module,exports){
+},{"../../../helpers/PropsHelper":40,"react":"react","react-router":"react-router"}],26:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2836,7 +2606,7 @@ var ImageWidget = (function (_React$Component) {
 
 exports.default = ImageWidget;
 
-},{"./ImageWidgetEdit":29,"./ImageWidgetReadOnly":30,"react":"react","react-router":"react-router"}],29:[function(require,module,exports){
+},{"./ImageWidgetEdit":27,"./ImageWidgetReadOnly":28,"react":"react","react-router":"react-router"}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2887,7 +2657,7 @@ var ImageWidgetEdit = (function (_React$Component) {
 
 exports.default = ImageWidgetEdit;
 
-},{"react":"react","react-router":"react-router"}],30:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2941,7 +2711,384 @@ var ImageWidgetReadOnly = (function (_React$Component) {
 
 exports.default = ImageWidgetReadOnly;
 
-},{"react":"react","react-router":"react-router"}],31:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],29:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ParentListItem = (function (_React$Component) {
+  _inherits(ParentListItem, _React$Component);
+
+  function ParentListItem(props) {
+    _classCallCheck(this, ParentListItem);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(ParentListItem).call(this, props));
+  }
+
+  _createClass(ParentListItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { key: this.props.listItem.sort_order, className: this.props.listItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-6' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group Thing-to-do-title' },
+              _react2.default.createElement(
+                'span',
+                { ref: 'description', name: 'description' },
+                this.props.listItem.value
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return ParentListItem;
+})(_react2.default.Component);
+
+exports.default = ParentListItem;
+
+},{"react":"react","react-router":"react-router"}],30:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _LongDescription = require('../LongDescription/LongDescription');
+
+var _LongDescription2 = _interopRequireDefault(_LongDescription);
+
+var _Url = require('../Url/Url');
+
+var _Url2 = _interopRequireDefault(_Url);
+
+var _SubListItemEdit = require('./SubListItemEdit');
+
+var _SubListItemEdit2 = _interopRequireDefault(_SubListItemEdit);
+
+var _SubListItemReadOnly = require('./SubListItemReadOnly');
+
+var _SubListItemReadOnly2 = _interopRequireDefault(_SubListItemReadOnly);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SubListItem = (function (_React$Component) {
+  _inherits(SubListItem, _React$Component);
+
+  function SubListItem(props) {
+    _classCallCheck(this, SubListItem);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(SubListItem).call(this, props));
+  }
+
+  _createClass(SubListItem, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.props.isEdit) {
+        return _react2.default.createElement(_SubListItemEdit2.default, this.props);
+      } else {
+        return _react2.default.createElement(_SubListItemReadOnly2.default, this.props);
+      }
+    }
+  }]);
+
+  return SubListItem;
+})(_react2.default.Component);
+
+exports.default = SubListItem;
+
+},{"../LongDescription/LongDescription":33,"../Url/Url":36,"./SubListItemEdit":31,"./SubListItemReadOnly":32,"react":"react","react-router":"react-router"}],31:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _LongDescription = require('../LongDescription/LongDescription');
+
+var _LongDescription2 = _interopRequireDefault(_LongDescription);
+
+var _Url = require('../Url/Url');
+
+var _Url2 = _interopRequireDefault(_Url);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SubListItemEdit = (function (_React$Component) {
+  _inherits(SubListItemEdit, _React$Component);
+
+  function SubListItemEdit(props) {
+    _classCallCheck(this, SubListItemEdit);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(SubListItemEdit).call(this, props));
+  }
+
+  _createClass(SubListItemEdit, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+
+    //TODO: put in helper
+
+  }, {
+    key: 'isDescription',
+    value: function isDescription(node) {
+      return node.content_type_id == 2;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.isDescription(this.props.listItem)) {
+        //todo: extend instead of redefine parents props on to long desc props
+        var longDescriptionProps = { isEdit: this.props.isEdit, value: this.props.listItem.value,
+          onChange: this.props.onChange, onRemove: this.props.onRemove };
+        return _react2.default.createElement(
+          'div',
+          { key: this.props.listItem.sort_order },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-8' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group Sub-list-item' },
+                _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-2' },
+              _react2.default.createElement(
+                'div',
+                { onClick: this.props.onRemove },
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+              )
+            )
+          )
+        );
+      } else {
+        var urlProps = { isEdit: this.props.isEdit, value: this.props.listItem.value,
+          onChange: this.props.onChange, onRemove: this.props.onRemove };
+        return _react2.default.createElement(
+          'div',
+          { key: this.props.listItem.sort_order, className: 'Link-list-item' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-6' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'Sub-list-item' },
+                  _react2.default.createElement(_Url2.default, urlProps)
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-2' },
+              _react2.default.createElement(
+                'div',
+                { onClick: this.props.onRemove },
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+              )
+            )
+          )
+        );
+      }
+    }
+  }]);
+
+  return SubListItemEdit;
+})(_react2.default.Component);
+
+exports.default = SubListItemEdit;
+
+},{"../LongDescription/LongDescription":33,"../Url/Url":36,"react":"react","react-router":"react-router"}],32:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _LongDescription = require('../LongDescription/LongDescription');
+
+var _LongDescription2 = _interopRequireDefault(_LongDescription);
+
+var _Url = require('../Url/Url');
+
+var _Url2 = _interopRequireDefault(_Url);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SubListItemReadOnly = (function (_React$Component) {
+  _inherits(SubListItemReadOnly, _React$Component);
+
+  function SubListItemReadOnly(props) {
+    _classCallCheck(this, SubListItemReadOnly);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(SubListItemReadOnly).call(this, props));
+  }
+
+  _createClass(SubListItemReadOnly, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
+
+    //TODO: put in helper
+
+  }, {
+    key: 'isDescription',
+    value: function isDescription(node) {
+      return node.content_type_id == 2;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.isDescription(this.props.listItem)) {
+        var longDescriptionProps = { isEdit: this.props.isEdit, value: this.props.listItem.value };
+        return _react2.default.createElement(
+          'div',
+          { key: this.props.listItem.sort_order },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-8' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group Sub-list-item' },
+                _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
+              )
+            )
+          )
+        );
+      } else {
+        var urlProps = { isEdit: this.props.isEdit, value: this.props.listItem.value };
+        return _react2.default.createElement(
+          'div',
+          { key: this.props.listItem.sort_order, className: 'Link-list-item' },
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-6' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'Sub-list-item' },
+                  _react2.default.createElement(_Url2.default, urlProps)
+                )
+              )
+            )
+          )
+        );
+      }
+    }
+  }]);
+
+  return SubListItemReadOnly;
+})(_react2.default.Component);
+
+exports.default = SubListItemReadOnly;
+
+},{"../LongDescription/LongDescription":33,"../Url/Url":36,"react":"react","react-router":"react-router"}],33:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3003,7 +3150,7 @@ var LongDescription = (function (_React$Component) {
 
 exports.default = LongDescription;
 
-},{"./LongDescriptionEdit":32,"./LongDescriptionReadOnly":33,"react":"react","react-router":"react-router"}],32:[function(require,module,exports){
+},{"./LongDescriptionEdit":34,"./LongDescriptionReadOnly":35,"react":"react","react-router":"react-router"}],34:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3054,7 +3201,7 @@ var LongDescriptionEdit = (function (_React$Component) {
 
 exports.default = LongDescriptionEdit;
 
-},{"react":"react","react-router":"react-router"}],33:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3112,7 +3259,7 @@ var LongDescriptionReadOnly = (function (_React$Component) {
 
 exports.default = LongDescriptionReadOnly;
 
-},{"react":"react","react-router":"react-router"}],34:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],36:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3174,7 +3321,7 @@ var Url = (function (_React$Component) {
 
 exports.default = Url;
 
-},{"./UrlEdit":35,"./UrlReadOnly":36,"react":"react","react-router":"react-router"}],35:[function(require,module,exports){
+},{"./UrlEdit":37,"./UrlReadOnly":38,"react":"react","react-router":"react-router"}],37:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3215,15 +3362,7 @@ var UrlEdit = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'input',
-        { className: 'form-control', type: 'text' },
-        'value=',
-        this.props.value,
-        ' onChange=',
-        this.props.onChange,
-        '>'
-      );
+      return _react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.props.value, onChange: this.props.onChange });
     }
   }]);
 
@@ -3232,7 +3371,7 @@ var UrlEdit = (function (_React$Component) {
 
 exports.default = UrlEdit;
 
-},{"react":"react","react-router":"react-router"}],36:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],38:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3286,7 +3425,7 @@ var UrlReadOnly = (function (_React$Component) {
 
 exports.default = UrlReadOnly;
 
-},{"react":"react","react-router":"react-router"}],37:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],39:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3347,7 +3486,7 @@ var App = (function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":10,"./Header":12,"react":"react"}],38:[function(require,module,exports){
+},{"./Footer":10,"./Header":12,"react":"react"}],40:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3383,7 +3522,7 @@ var PropsHelper = (function () {
 
 exports.default = PropsHelper;
 
-},{"underscore":"underscore"}],39:[function(require,module,exports){
+},{"underscore":"underscore"}],41:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -3416,7 +3555,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":40,"history/lib/createBrowserHistory":53,"react":"react","react-dom":"react-dom","react-router":"react-router"}],40:[function(require,module,exports){
+},{"./routes":42,"history/lib/createBrowserHistory":55,"react":"react","react-dom":"react-dom","react-router":"react-router"}],42:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3495,7 +3634,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/things-to-do/edit', component: _EditThingsToDo2.default })
 );
 
-},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":17,"./components/PhotoAlbum/PhotoAlbum":18,"./components/TheProposal/EditTheProposal":19,"./components/TheProposal/TheProposal":20,"./components/ThingsToDo/EditThingsToDo":21,"./components/ThingsToDo/ThingsToDo":22,"./components/Venue/EditVenue":23,"./components/Venue/Venue":24,"./components/app":37,"react":"react","react-router":"react-router"}],41:[function(require,module,exports){
+},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":15,"./components/PhotoAlbum/PhotoAlbum":16,"./components/TheProposal/EditTheProposal":17,"./components/TheProposal/TheProposal":18,"./components/ThingsToDo/EditThingsToDo":19,"./components/ThingsToDo/ThingsToDo":20,"./components/Venue/EditVenue":21,"./components/Venue/Venue":22,"./components/app":39,"react":"react","react-router":"react-router"}],43:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3533,7 +3672,7 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":1,"../alt":7}],42:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../alt":7}],44:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3580,7 +3719,7 @@ var NavbarStore = (function () {
 
 exports.default = _alt2.default.createStore(NavbarStore);
 
-},{"../actions/NavbarActions":2,"../alt":7}],43:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../alt":7}],45:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3649,7 +3788,7 @@ var PhotoAlbumStore = (function () {
 
 exports.default = _alt2.default.createStore(PhotoAlbumStore);
 
-},{"../actions/PhotoAlbumActions":3,"../alt":7}],44:[function(require,module,exports){
+},{"../actions/PhotoAlbumActions":3,"../alt":7}],46:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3735,7 +3874,7 @@ var TheProposalStore = (function () {
 
 exports.default = _alt2.default.createStore(TheProposalStore);
 
-},{"../actions/TheProposalActions":4,"../alt":7}],45:[function(require,module,exports){
+},{"../actions/TheProposalActions":4,"../alt":7}],47:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3810,7 +3949,7 @@ var ThingsToDoStore = (function () {
 
 exports.default = _alt2.default.createStore(ThingsToDoStore);
 
-},{"../actions/ThingsToDoActions":5,"../alt":7}],46:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":5,"../alt":7}],48:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3936,7 +4075,7 @@ var VenueStore = (function () {
 
 exports.default = _alt2.default.createStore(VenueStore);
 
-},{"../actions/VenueActions":6,"../alt":7}],47:[function(require,module,exports){
+},{"../actions/VenueActions":6,"../alt":7}],49:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -4029,7 +4168,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],48:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -4061,7 +4200,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],49:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -4088,7 +4227,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -4159,7 +4298,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":47,"warning":65}],51:[function(require,module,exports){
+},{"_process":49,"warning":67}],53:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4235,13 +4374,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],52:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],53:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4416,7 +4555,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":48,"./DOMStateStorage":50,"./DOMUtils":51,"./ExecutionEnvironment":52,"./createDOMHistory":54,"_process":47,"invariant":64}],54:[function(require,module,exports){
+},{"./Actions":50,"./DOMStateStorage":52,"./DOMUtils":53,"./ExecutionEnvironment":54,"./createDOMHistory":56,"_process":49,"invariant":66}],56:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4459,7 +4598,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":51,"./ExecutionEnvironment":52,"./createHistory":55,"_process":47,"invariant":64}],55:[function(require,module,exports){
+},{"./DOMUtils":53,"./ExecutionEnvironment":54,"./createHistory":57,"_process":49,"invariant":66}],57:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4730,7 +4869,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":48,"./AsyncUtils":49,"./createLocation":56,"./deprecate":57,"./runTransitionHook":60,"deep-equal":61}],56:[function(require,module,exports){
+},{"./Actions":50,"./AsyncUtils":51,"./createLocation":58,"./deprecate":59,"./runTransitionHook":62,"deep-equal":63}],58:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4767,7 +4906,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":48,"./parsePath":59}],57:[function(require,module,exports){
+},{"./Actions":50,"./parsePath":61}],59:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4789,7 +4928,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":47,"warning":65}],58:[function(require,module,exports){
+},{"_process":49,"warning":67}],60:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -4803,7 +4942,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4850,7 +4989,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./extractPath":58,"_process":47,"warning":65}],60:[function(require,module,exports){
+},{"./extractPath":60,"_process":49,"warning":67}],62:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4877,7 +5016,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":47,"warning":65}],61:[function(require,module,exports){
+},{"_process":49,"warning":67}],63:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -4973,7 +5112,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":62,"./lib/keys.js":63}],62:[function(require,module,exports){
+},{"./lib/is_arguments.js":64,"./lib/keys.js":65}],64:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -4995,7 +5134,7 @@ function unsupported(object){
     false;
 };
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -5006,7 +5145,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -5061,7 +5200,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":47}],65:[function(require,module,exports){
+},{"_process":49}],67:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -5125,4 +5264,4 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":47}]},{},[39]);
+},{"_process":49}]},{},[41]);

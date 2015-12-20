@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import LongDescription from '../Widgets/LongDescription/LongDescription';
-import Url from '../Widgets/Url/Url';
+import LongDescription from '../LongDescription/LongDescription';
+import Url from '../Url/Url';
 import SubListItemEdit from './SubListItemEdit';
 import SubListItemReadOnly from './SubListItemReadOnly';
 
