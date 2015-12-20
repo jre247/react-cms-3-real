@@ -3,6 +3,9 @@ import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
+import LongDescriptionFactory from '../Widgets/LongDescription/LongDescriptionFactory';
+import ImageFactory from '../Widgets/Image/ImageFactory';
+import FieldHelper from '../Field/FieldHelper';
 
 class EditTheProposal extends React.Component {
   constructor(props) {
@@ -20,33 +23,90 @@ class EditTheProposal extends React.Component {
   componentWillUnmount() {
     TheProposalStore.unlisten(this.onChange);
   }
+  //todo: move to actions
+  createLongDescription(event){
+    var sortOrder = this.state.contentList.length + 1;
+
+    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'Our Story Description',
+      'Our Story Description');
+    var longDescription = longDescriptionFactory.create();
+
+    this.state.contentList.push(longDescription);
+    this.setState({contentList: this.state.contentList});
+  }
+  //todo: move to actions
+  createImage(event){
+    var sortOrder = this.state.contentList.length + 1;
+
+    var imageFactory = new ImageFactory(sortOrder, 'Our Story Image',
+      'Our Story Image');
+    var image = imageFactory.create();
+
+    this.state.contentList.push(image);
+    this.setState({contentList: this.state.contentList});
+  }
   handleSubmit(event) {
     event.preventDefault();
 
-    var contents = [
-      {
-        name: 'Proposal Image Url',
-        description: 'Proposal Image Url',
-        value: this.state.proposal.url,
-        content_type_id: 1,
-        sort_order: 1
-      },
-      {
-        name: 'Proposal Description',
-        description: 'Proposal Description',
-        value: this.state.proposal.description,
-        content_type_id: 2,
-        sort_order: 2
-      }
-    ];
-
-    TheProposalActions.saveProposalData(contents, this.props.history);
+    //TheProposalActions.saveProposalData(this.state.contentList, this.props.history);
+  }
+  submit(event){
+    TheProposalActions.saveProposalData(this.state.contentList, this.props.history);
+  }
+  updateContent(index, event) {
+    this.state.contentList[index].value = event.target.value;
+    this.setState({contentList: this.state.contentList});
   }
   render() {
-    var longDescriptionProps = { isEdit: true, value: this.state.proposal.description,
-      onChange: TheProposalActions.updateDescription};
-    var imageWidgetProps = {isEdit: true, value: this.state.proposal.url,
-      onChange: TheProposalActions.updateUrl};
+    let theProposalNodes = this.state.contentList.map((contentItem, index) => {
+        if(FieldHelper.isDescription(contentItem)){
+          var longDescriptionProps = {value: contentItem.value, isEdit: true,
+            onChange: this.updateContent.bind(this, index)};
+          return (
+            <div key={contentItem.sort_order} className="form-group">
+              <LongDescription {...longDescriptionProps} />
+            </div>
+          );
+        }
+        else{
+          var imageProps = {value: contentItem.value, isEdit: true,
+            onChange: this.updateContent.bind(this, index)};
+          return (
+            <div key={contentItem.sort_order} className="form-group">
+              <ImageWidget {...imageProps} />
+            </div>
+          );
+        }
+    });
+
+    return (
+      <div className='Content-panel'>
+        <div className="Content-container">
+          <div className='row'>
+            <div className='col-sm-3'>
+              <div className="form-group">
+                <button className="btn btn-primary" onClick={this.createLongDescription.bind(this)}>
+                  Create Long Description
+                </button>
+              </div>
+            </div>
+            <div className='col-sm-3'>
+              <div className="form-group">
+                <button className="btn btn-primary" onClick={this.createImage.bind(this)}>
+                  Create Image
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {theProposalNodes}
+
+          <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
+            <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
+          </div>
+        </div>
+      </div>
+    );
 
     return (
       <div className="Detail">
@@ -56,12 +116,9 @@ class EditTheProposal extends React.Component {
               <div className='container'>
                 <div className='row'>
                   <div className='col-sm-8'>
-                    <div className="form-group">
-                      <ImageWidget {...imageWidgetProps} />
-                    </div>
-                    <div className="form-group">
-                      <LongDescription {...longDescriptionProps} />
-                    </div>
+
+                    {theProposalNodes}
+
                     <div className="form-group">
                       <button type='submit' className='btn btn-primary'>Save</button>
                     </div>

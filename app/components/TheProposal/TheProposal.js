@@ -6,6 +6,7 @@ import LongDescription from '../Widgets/LongDescription/LongDescription';
 import EmptyContent from '../EmptyContent';
 import ImageWidget from '../Widgets/Image/ImageWidget';
 import {_} from 'underscore';
+import FieldHelper from '../Field/FieldHelper';
 
 class TheProposal extends React.Component {
   constructor(props) {
@@ -24,15 +25,31 @@ class TheProposal extends React.Component {
     TheProposalStore.unlisten(this.onChange);
   }
   render() {
-    if(_.isEmpty(this.state.proposal)){
+    if(_.isEmpty(this.state.contentList)){
       var emptyContentProps = {editLink: '/our-story/edit'}
       return (
         <EmptyContent {...emptyContentProps} />
       );
     }
     else {
-      var longDescriptionProps = { isEdit: false, value: this.state.proposal.description};
-      var imageProps = {isEdit: false, value: this.state.proposal.url};
+      let theProposalNodes = this.state.contentList.map((contentItem, index) => {
+          if(FieldHelper.isDescription(contentItem)){
+            var longDescriptionProps = {value: contentItem.value, isEdit: false};
+            return (
+              <div key={contentItem.sort_order}>
+                <LongDescription {...longDescriptionProps} />
+              </div>
+            );
+          }
+          else{
+            var imageProps = {value: contentItem.value, isEdit: false};
+            return (
+              <div key={contentItem.sort_order}>
+                <ImageWidget {...imageProps} />
+              </div>
+            );
+          }
+      });
 
       return (
         <div className='Content-panel'>
@@ -41,8 +58,7 @@ class TheProposal extends React.Component {
               <Link className="Navigation-link" to="/our-story/edit">Edit</Link>
             </div>
 
-            <ImageWidget {...imageProps} />
-            <LongDescription {...longDescriptionProps} />
+            {theProposalNodes}
           </div>
         </div>
       );

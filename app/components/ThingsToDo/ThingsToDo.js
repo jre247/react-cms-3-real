@@ -35,7 +35,7 @@ class ThingsToDo extends React.Component {
       );
     }
     else {
-        let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
+      let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
           if(this.isSubListItem(thingToDo)){
             var subListItemProps = {listItem: thingToDo, isEdit: false};
             return (

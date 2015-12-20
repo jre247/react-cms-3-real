@@ -9,8 +9,8 @@ class TheProposalActions {
       'getProposalDataFail',
       'saveProposalDataSuccess',
       'saveVProposalDataFail',
-      'updateUrl',
-      'updateDescription',
+      //'updateContent',
+      //'updateDescription',
       'updateAjaxAnimation'
     );
   }

@@ -4,19 +4,14 @@ import TheProposalActions from '../actions/TheProposalActions';
 class TheProposalStore {
   constructor() {
     this.bindActions(TheProposalActions);
-    this.proposal = {};
+    this.contentList = [];
     this.ajaxAnimationClass = '';
   }
 
   onGetProposalDataSuccess(data) {
     console.log('onGetProposalDataSuccess');
     if(data && data.length > 0){
-      var contentItems = data;
-      var proposal = {
-        url: contentItems[0].value,
-        description: contentItems[1].value
-      }
-      this.proposal = proposal;
+      this.contentList = data;
     }
   }
 
@@ -30,17 +25,13 @@ class TheProposalStore {
 
   }
 
-  onUpdateUrl(event) {
-    this.proposal.url = event.target.value;
-    this.proposalValidationState = '';
-    this.helpBlock = '';
-  }
 
-  onUpdateDescription(event) {
-    this.proposal.description = event.target.value;
-    this.descriptionValidationState = '';
-    this.helpBlock = '';
-  }
+
+  // onUpdateDescription(event) {
+  //   this.proposal.description = event.target.value;
+  //   //this.descriptionValidationState = '';
+  //   //this.helpBlock = '';
+  // }
 
   onSaveProposalDataFail(jqXhr) {
     onsole.log('onSaveProposalDataFail');
