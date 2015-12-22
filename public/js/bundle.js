@@ -3777,7 +3777,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
-            _react2.default.createElement('input', { className: 'form-control',
+            _react2.default.createElement('input', { className: 'form-control', placeholder: 'Short description',
               value: this.props.value, onChange: this.props.onChange })
           )
         ),
