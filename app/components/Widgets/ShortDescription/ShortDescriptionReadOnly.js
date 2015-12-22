@@ -16,8 +16,8 @@ class ShortDescriptionReadOnly extends React.Component {
 
   render() {
     return (
-      <div className="Content-long-description-container">
-        <div className="Content-long-description">
+      <div className="Content-short-description-container">
+        <div className="Content-short-description">
             {this.props.value}
         </div>
       </div>

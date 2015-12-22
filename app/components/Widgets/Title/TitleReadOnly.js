@@ -16,8 +16,10 @@ class TitleReadOnly extends React.Component {
 
   render() {
     return (
-      <div>
-        <span> {this.props.value} </span>
+      <div className="Content-title-container">
+        <div className="Content-title">
+            {this.props.value}
+        </div>
       </div>
     );
   }

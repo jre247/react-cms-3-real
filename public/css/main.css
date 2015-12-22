@@ -7412,19 +7412,14 @@ a:hover {
   padding: 20px;
   vertical-align: baseline;
 }
-.Content-text {
-  text-align: center;
-  font-family: 'Source Sans Pro';
-  font-size: 38px;
-  line-height: 1.6em;
-}
 .glyphicon-remove {
   color: #a94442;
   cursor: pointer;
 }
 /* End App */
 /* Templates */
-.Content-centered-container .Content-long-description-container {
+.Content-centered-container .Content-long-description-container,
+.Content-centered-container .Content-short-description-container {
   margin: 0 auto;
   text-align: center;
   width: 70%;
@@ -7469,6 +7464,14 @@ a:hover {
   margin-top: 10px;
 }
 /* End Image */
+/* Title */
+.Content-title {
+  text-align: center;
+  font-family: 'Source Sans Pro';
+  font-size: 38px;
+  line-height: 1.6em;
+}
+/* End Title */
 /* Photo Album */
 .Photo-album-container {
   margin-left: 13%;

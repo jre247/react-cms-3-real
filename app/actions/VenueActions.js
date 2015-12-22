@@ -9,12 +9,6 @@ class VenueActions {
       'getVenueDataFail',
       'saveVenueDataSuccess',
       'saveVenueDataFail',
-      'updateName',
-      'updateEventDate',
-      'updateUrl',
-      'updateCeremonyTime',
-      'updateCocktailHourTime',
-      'updateReceptionTime',
       'updateAfterPartyTime',
       'updateAjaxAnimation'
     );

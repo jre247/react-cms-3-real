@@ -4,6 +4,10 @@ import VenueStore from '../../stores/VenueStore';
 import VenueActions from '../../actions/VenueActions';
 import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
+import FieldHelper from '../Field/FieldHelper';
+import ShortDescription from '../Widgets/ShortDescription/ShortDescription';
+import ImageWidget from '../Widgets/Image/ImageWidget';
+import Title from '../Widgets/Title/Title';
 
 class Venue extends React.Component {
   constructor(props) {
@@ -22,59 +26,48 @@ class Venue extends React.Component {
     VenueStore.unlisten(this.onChange);
   }
   render() {
-    if(_.isEmpty(this.state.venue)){
+    if(_.isEmpty(this.state.contentList)){
       var emptyContentProps = {editLink: '/venue/edit'}
       return (
         <EmptyContent {...emptyContentProps} />
       );
     }
     else {
+      let weddingNodes = this.state.contentList.map((contentItem, index) => {
+          var propsData = {value: contentItem.value, isEdit: false};
+
+          if(FieldHelper.isShortDescription(contentItem)){
+            return (
+              <div className="Content-item-container" key={contentItem.sort_order}>
+                <ShortDescription {...propsData} />
+              </div>
+            );
+          }
+          else if(FieldHelper.isImage(contentItem)){
+            return (
+              <div className="Content-item-container" key={contentItem.sort_order}>
+                <ImageWidget {...propsData} />
+              </div>
+            );
+          }
+          else {
+            return (
+              <div className="Content-item-container" key={contentItem.sort_order}>
+                <Title {...propsData} />
+              </div>
+            );
+          }
+      });
+
       return (
-      <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/venue/edit">Edit</Link>
-          </div>
-          <div className="Content-text">
-            <span>
-              {this.state.venue.name}
-            </span>
-          </div>
-          <div className="Content-text">
-            <span> {this.state.venue.eventDate} </span>
-          </div>
-
-          <div className="Venue-image-container">
-            <img className="Content-large-image-percentage" src={this.state.venue.url} alt="Venue Image" />
-          </div>
-
-          <div className="List-items">
-            <div className="Content-container">
-              <div className="Content-short-description">
-                <span>
-                    {this.state.venue.ceremonyTime}
-                 </span>
-              </div>
-
-              <div className="Content-short-description">
-                <span>
-                    {this.state.venue.cocktailHourTime}
-                </span>
-              </div>
-
-              <div className="Content-short-description">
-                <span>
-                    {this.state.venue.receptionTime}
-                </span>
-              </div>
-
-              <div className="Content-short-description">
-                <span>
-                    {this.state.venue.afterPartyTime}
-                </span>
-              </div>
+        <div className='Content-panel'>
+          <div className="Content-container Content-centered-container">
+            <div className="Edit-Content-Button">
+              <Link className="Navigation-link" to="/venue/edit">Edit</Link>
             </div>
-          </div>
 
+            {weddingNodes}
+          </div>
         </div>
       );
     }

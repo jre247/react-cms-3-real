@@ -113,28 +113,6 @@ class EditTheProposal extends React.Component {
         </div>
       </div>
     );
-
-    return (
-      <div className="Detail">
-          <h1 className="Heading Heading--alt">Edit Proposal</h1>
-          <div className="Content padBox">
-            <form onSubmit={this.handleSubmit.bind(this)}>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-sm-8'>
-
-                    {theProposalNodes}
-
-                    <div className="form-group">
-                      <button type='submit' className='btn btn-primary'>Save</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-    );
   }
 }
 
