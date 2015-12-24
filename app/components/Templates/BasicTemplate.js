@@ -7,6 +7,7 @@ import {_} from 'underscore';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
 import Title from '../Widgets/Title/Title';
+import ShortDescription from '../Widgets/ShortDescription/ShortDescription';
 
 class BasicTemplate extends React.Component {
   constructor(props) {
@@ -30,11 +31,11 @@ class BasicTemplate extends React.Component {
     }
     else {
       let nodes = this.props.contentList.map((contentItem, index) => {
+          var propsData = {value: contentItem.value, isEdit: this.props.isEdit};
           if(FieldHelper.isDescription(contentItem)){
-            var longDescriptionProps = {value: contentItem.value, isEdit: false};
             return (
               <div className="Content-item-container" key={contentItem.sort_order}>
-                <LongDescription {...longDescriptionProps} />
+                <LongDescription {...propsData} />
               </div>
             );
           }
@@ -46,10 +47,9 @@ class BasicTemplate extends React.Component {
             );
           }
           else if(FieldHelper.isImage(contentItem)){
-            var imageProps = {value: contentItem.value, isEdit: false};
             return (
               <div className="Content-item-container" key={contentItem.sort_order}>
-                <ImageWidget {...imageProps} />
+                <ImageWidget {...propsData} />
               </div>
             );
           }

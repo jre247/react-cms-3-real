@@ -1302,6 +1302,10 @@ var _Title = require('../Widgets/Title/Title');
 
 var _Title2 = _interopRequireDefault(_Title);
 
+var _ShortDescription = require('../Widgets/ShortDescription/ShortDescription');
+
+var _ShortDescription2 = _interopRequireDefault(_ShortDescription);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1328,30 +1332,31 @@ var BasicTemplate = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       if (_underscore._.isEmpty(this.props.contentList)) {
         var emptyContentProps = { editLink: this.props.editLink };
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
         var nodes = this.props.contentList.map(function (contentItem, index) {
+          var propsData = { value: contentItem.value, isEdit: _this2.props.isEdit };
           if (_FieldHelper2.default.isDescription(contentItem)) {
-            var longDescriptionProps = { value: contentItem.value, isEdit: false };
             return _react2.default.createElement(
               'div',
               { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
+              _react2.default.createElement(_LongDescription2.default, propsData)
             );
           } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
             return _react2.default.createElement(
               'div',
               { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(ShortDescription, propsData)
+              _react2.default.createElement(_ShortDescription2.default, propsData)
             );
           } else if (_FieldHelper2.default.isImage(contentItem)) {
-            var imageProps = { value: contentItem.value, isEdit: false };
             return _react2.default.createElement(
               'div',
               { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(_ImageWidget2.default, imageProps)
+              _react2.default.createElement(_ImageWidget2.default, propsData)
             );
           } else if (_FieldHelper2.default.isTitle(contentItem)) {
             return _react2.default.createElement(
@@ -1389,7 +1394,7 @@ var BasicTemplate = (function (_React$Component) {
 
 exports.default = BasicTemplate;
 
-},{"../EmptyContent":9,"../Widgets/Field/Field":27,"../Widgets/Field/FieldHelper":28,"../Widgets/Image/ImageWidget":30,"../Widgets/LongDescription/LongDescription":39,"../Widgets/Title/Title":47,"react":"react","react-router":"react-router","underscore":"underscore"}],18:[function(require,module,exports){
+},{"../EmptyContent":9,"../Widgets/Field/Field":27,"../Widgets/Field/FieldHelper":28,"../Widgets/Image/ImageWidget":30,"../Widgets/LongDescription/LongDescription":39,"../Widgets/ShortDescription/ShortDescription":43,"../Widgets/Title/Title":47,"react":"react","react-router":"react-router","underscore":"underscore"}],18:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
