@@ -5,7 +5,7 @@ import LongDescription from '../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
 import LongDescriptionFactory from '../Widgets/LongDescription/LongDescriptionFactory';
 import ImageFactory from '../Widgets/Image/ImageFactory';
-import FieldHelper from '../Field/FieldHelper';
+import FieldHelper from '../Widgets/Field/FieldHelper';
 
 class EditTheProposal extends React.Component {
   constructor(props) {

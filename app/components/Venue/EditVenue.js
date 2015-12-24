@@ -4,7 +4,7 @@ import VenueActions from '../../actions/VenueActions';
 import ImageFactory from '../Widgets/Image/ImageFactory';
 import TitleFactory from '../Widgets/Title/TitleFactory';
 import ShortDescriptionFactory from '../Widgets/ShortDescription/ShortDescriptionFactory';
-import FieldHelper from '../Field/FieldHelper';
+import FieldHelper from '../Widgets/Field/FieldHelper';
 import ShortDescription from '../Widgets/ShortDescription/ShortDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
 import Title from '../Widgets/Title/Title';

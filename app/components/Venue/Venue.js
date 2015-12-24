@@ -4,7 +4,7 @@ import VenueStore from '../../stores/VenueStore';
 import VenueActions from '../../actions/VenueActions';
 import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
-import FieldHelper from '../Field/FieldHelper';
+import FieldHelper from '../Widgets/Field/FieldHelper';
 import ShortDescription from '../Widgets/ShortDescription/ShortDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
 import Title from '../Widgets/Title/Title';

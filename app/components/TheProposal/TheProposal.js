@@ -2,11 +2,8 @@ import React from 'react';
 import {Link} from 'react-router';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
-import LongDescription from '../Widgets/LongDescription/LongDescription';
-import EmptyContent from '../EmptyContent';
-import ImageWidget from '../Widgets/Image/ImageWidget';
 import {_} from 'underscore';
-import FieldHelper from '../Field/FieldHelper';
+import BasicTemplate from '../Templates/BasicTemplate';
 
 class TheProposal extends React.Component {
   constructor(props) {
@@ -25,44 +22,10 @@ class TheProposal extends React.Component {
     TheProposalStore.unlisten(this.onChange);
   }
   render() {
-    if(_.isEmpty(this.state.contentList)){
-      var emptyContentProps = {editLink: '/our-story/edit'}
-      return (
-        <EmptyContent {...emptyContentProps} />
-      );
-    }
-    else {
-      let theProposalNodes = this.state.contentList.map((contentItem, index) => {
-          if(FieldHelper.isDescription(contentItem)){
-            var longDescriptionProps = {value: contentItem.value, isEdit: false};
-            return (
-              <div className="Content-item-container" key={contentItem.sort_order}>
-                <LongDescription {...longDescriptionProps} />
-              </div>
-            );
-          }
-          else{
-            var imageProps = {value: contentItem.value, isEdit: false};
-            return (
-              <div className="Content-item-container" key={contentItem.sort_order}>
-                <ImageWidget {...imageProps} />
-              </div>
-            );
-          }
-      });
-
-      return (
-        <div className='Content-panel'>
-          <div className="Content-container Content-centered-container">
-            <div className="Edit-Content-Button">
-              <Link className="Navigation-link" to="/our-story/edit">Edit</Link>
-            </div>
-
-            {theProposalNodes}
-          </div>
-        </div>
-      );
-    }
+    var propsData = {editLink: "/our-story/edit", contentList: this.state.contentList};
+    return (
+      <BasicTemplate {...propsData} />
+    );
   }
 }
 
