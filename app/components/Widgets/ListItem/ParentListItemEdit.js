@@ -20,7 +20,7 @@ class ParentListItemEdit extends React.Component {
         <div className='row'>
           <div className='col-sm-8 Add-sub-list-item'>
             <div className="form-group">
-              <button className="btn btn-primary" onClick={this.props.addSublistItem}>Add Sub List Item</button>
+              <button className="btn btn-primary" onClick={this.props.onAddSubListItem}>Add Sub List Item</button>
             </div>
           </div>
         </div>

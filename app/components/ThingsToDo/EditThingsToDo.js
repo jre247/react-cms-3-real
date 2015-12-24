@@ -52,6 +52,7 @@ class EditThingsToDo extends React.Component {
 
   //TODO: create function to return new content item
   addSublistItem(index, event){
+    debugger;
     var sortOrder = this.state.thingsToDo.length + 1;
 
     var description =
@@ -159,7 +160,8 @@ class EditThingsToDo extends React.Component {
         if(this.isSubListItem(thingToDo)){
           //todo: put update list item inside list item module, same with remove content
           var subListItemProps = {listItem: thingToDo, isEdit: true,
-            onChange: this.updateListItem.bind(this, index), onRemove: this.removeContent.bind(this, index)};
+            onChange: this.updateListItem.bind(this, index),
+            onRemove: this.removeContent.bind(this, index)};
 
           return (
             <SubListItem {...subListItemProps} />

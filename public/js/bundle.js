@@ -1751,6 +1751,7 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'addSublistItem',
     value: function addSublistItem(index, event) {
+      debugger;
       var sortOrder = this.state.thingsToDo.length + 1;
 
       var description = {
@@ -1866,7 +1867,8 @@ var EditThingsToDo = (function (_React$Component) {
         if (_this2.isSubListItem(thingToDo)) {
           //todo: put update list item inside list item module, same with remove content
           var subListItemProps = { listItem: thingToDo, isEdit: true,
-            onChange: _this2.updateListItem.bind(_this2, index), onRemove: _this2.removeContent.bind(_this2, index) };
+            onChange: _this2.updateListItem.bind(_this2, index),
+            onRemove: _this2.removeContent.bind(_this2, index) };
 
           return _react2.default.createElement(_SubListItem2.default, subListItemProps);
         } else {
@@ -3011,7 +3013,7 @@ var ParentListItemEdit = (function (_React$Component) {
               { className: 'form-group' },
               _react2.default.createElement(
                 'button',
-                { className: 'btn btn-primary', onClick: this.props.addSublistItem },
+                { className: 'btn btn-primary', onClick: this.props.onAddSubListItem },
                 'Add Sub List Item'
               )
             )
@@ -3375,8 +3377,8 @@ var SubListItemReadOnly = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var propsData = { isEdit: this.props.isEdit, value: this.props.listItem.value };
       if (this.isDescription(this.props.listItem)) {
-        var longDescriptionProps = { isEdit: this.props.isEdit, value: this.props.listItem.value };
         return _react2.default.createElement(
           'div',
           { key: this.props.listItem.sort_order },
@@ -3389,13 +3391,12 @@ var SubListItemReadOnly = (function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'form-group Sub-list-item' },
-                _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
+                _react2.default.createElement(_LongDescription2.default, propsData)
               )
             )
           )
         );
       } else {
-        var urlProps = { isEdit: this.props.isEdit, value: this.props.listItem.value };
         return _react2.default.createElement(
           'div',
           { key: this.props.listItem.sort_order, className: 'Link-list-item' },
@@ -3411,7 +3412,7 @@ var SubListItemReadOnly = (function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'Sub-list-item' },
-                  _react2.default.createElement(_Url2.default, urlProps)
+                  _react2.default.createElement(_Url2.default, propsData)
                 )
               )
             )
