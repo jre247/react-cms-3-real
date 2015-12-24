@@ -1298,6 +1298,10 @@ var _ImageWidget = require('../Widgets/Image/ImageWidget');
 
 var _ImageWidget2 = _interopRequireDefault(_ImageWidget);
 
+var _Title = require('../Widgets/Title/Title');
+
+var _Title2 = _interopRequireDefault(_Title);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1336,12 +1340,24 @@ var BasicTemplate = (function (_React$Component) {
               { className: 'Content-item-container', key: contentItem.sort_order },
               _react2.default.createElement(_LongDescription2.default, longDescriptionProps)
             );
-          } else {
+          } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'Content-item-container', key: contentItem.sort_order },
+              _react2.default.createElement(ShortDescription, propsData)
+            );
+          } else if (_FieldHelper2.default.isImage(contentItem)) {
             var imageProps = { value: contentItem.value, isEdit: false };
             return _react2.default.createElement(
               'div',
               { className: 'Content-item-container', key: contentItem.sort_order },
               _react2.default.createElement(_ImageWidget2.default, imageProps)
+            );
+          } else if (_FieldHelper2.default.isTitle(contentItem)) {
+            return _react2.default.createElement(
+              'div',
+              { className: 'Content-item-container', key: contentItem.sort_order },
+              _react2.default.createElement(_Title2.default, propsData)
             );
           }
         });
@@ -1373,7 +1389,7 @@ var BasicTemplate = (function (_React$Component) {
 
 exports.default = BasicTemplate;
 
-},{"../EmptyContent":9,"../Widgets/Field/Field":27,"../Widgets/Field/FieldHelper":28,"../Widgets/Image/ImageWidget":30,"../Widgets/LongDescription/LongDescription":39,"react":"react","react-router":"react-router","underscore":"underscore"}],18:[function(require,module,exports){
+},{"../EmptyContent":9,"../Widgets/Field/Field":27,"../Widgets/Field/FieldHelper":28,"../Widgets/Image/ImageWidget":30,"../Widgets/LongDescription/LongDescription":39,"../Widgets/Title/Title":47,"react":"react","react-router":"react-router","underscore":"underscore"}],18:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1653,7 +1669,7 @@ var TheProposal = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var propsData = { editLink: "/our-story/edit", contentList: this.state.contentList };
+      var propsData = { editLink: "/our-story/edit", contentList: this.state.contentList, isEdit: false };
       return _react2.default.createElement(_BasicTemplate2.default, propsData);
     }
   }]);
@@ -2346,27 +2362,11 @@ var _VenueActions = require('../../actions/VenueActions');
 
 var _VenueActions2 = _interopRequireDefault(_VenueActions);
 
-var _EmptyContent = require('../EmptyContent');
-
-var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
-
 var _underscore = require('underscore');
 
-var _FieldHelper = require('../Widgets/Field/FieldHelper');
+var _BasicTemplate = require('../Templates/BasicTemplate');
 
-var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
-
-var _ShortDescription = require('../Widgets/ShortDescription/ShortDescription');
-
-var _ShortDescription2 = _interopRequireDefault(_ShortDescription);
-
-var _ImageWidget = require('../Widgets/Image/ImageWidget');
-
-var _ImageWidget2 = _interopRequireDefault(_ImageWidget);
-
-var _Title = require('../Widgets/Title/Title');
-
-var _Title2 = _interopRequireDefault(_Title);
+var _BasicTemplate2 = _interopRequireDefault(_BasicTemplate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2408,53 +2408,8 @@ var Venue = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (_underscore._.isEmpty(this.state.contentList)) {
-        var emptyContentProps = { editLink: '/venue/edit' };
-        return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
-      } else {
-        var weddingNodes = this.state.contentList.map(function (contentItem, index) {
-          var propsData = { value: contentItem.value, isEdit: false };
-
-          if (_FieldHelper2.default.isShortDescription(contentItem)) {
-            return _react2.default.createElement(
-              'div',
-              { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(_ShortDescription2.default, propsData)
-            );
-          } else if (_FieldHelper2.default.isImage(contentItem)) {
-            return _react2.default.createElement(
-              'div',
-              { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(_ImageWidget2.default, propsData)
-            );
-          } else {
-            return _react2.default.createElement(
-              'div',
-              { className: 'Content-item-container', key: contentItem.sort_order },
-              _react2.default.createElement(_Title2.default, propsData)
-            );
-          }
-        });
-
-        return _react2.default.createElement(
-          'div',
-          { className: 'Content-panel' },
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-container Content-centered-container' },
-            _react2.default.createElement(
-              'div',
-              { className: 'Edit-Content-Button' },
-              _react2.default.createElement(
-                _reactRouter.Link,
-                { className: 'Navigation-link', to: '/venue/edit' },
-                'Edit'
-              )
-            ),
-            weddingNodes
-          )
-        );
-      }
+      var propsData = { editLink: "/venue/edit", contentList: this.state.contentList, isEdit: false };
+      return _react2.default.createElement(_BasicTemplate2.default, propsData);
     }
   }]);
 
@@ -2463,7 +2418,7 @@ var Venue = (function (_React$Component) {
 
 exports.default = Venue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":63,"../EmptyContent":9,"../Widgets/Field/FieldHelper":28,"../Widgets/Image/ImageWidget":30,"../Widgets/ShortDescription/ShortDescription":43,"../Widgets/Title/Title":47,"react":"react","react-router":"react-router","underscore":"underscore"}],24:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":63,"../Templates/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2731,6 +2686,11 @@ var FieldHelper = (function () {
     key: 'isImage',
     value: function isImage(node) {
       return node.content_type_id == 1;
+    }
+  }, {
+    key: 'isTitle',
+    value: function isTitle(node) {
+      return node.content_type_id == 3;
     }
   }]);
 

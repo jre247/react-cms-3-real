@@ -22,7 +22,7 @@ class TheProposal extends React.Component {
     TheProposalStore.unlisten(this.onChange);
   }
   render() {
-    var propsData = {editLink: "/our-story/edit", contentList: this.state.contentList};
+    var propsData = {editLink: "/our-story/edit", contentList: this.state.contentList, isEdit: false};
     return (
       <BasicTemplate {...propsData} />
     );

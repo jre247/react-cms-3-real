@@ -14,6 +14,9 @@ class FieldHelper {
   static isImage(node){
     return node.content_type_id == 1;
   }
+  static isTitle(node){
+    return node.content_type_id == 3;
+  }
 }
 
 export default FieldHelper;

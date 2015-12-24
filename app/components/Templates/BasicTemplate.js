@@ -6,6 +6,7 @@ import EmptyContent from '../EmptyContent';
 import {_} from 'underscore';
 import LongDescription from '../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../Widgets/Image/ImageWidget';
+import Title from '../Widgets/Title/Title';
 
 class BasicTemplate extends React.Component {
   constructor(props) {
@@ -37,11 +38,25 @@ class BasicTemplate extends React.Component {
               </div>
             );
           }
-          else{
+          else if(FieldHelper.isShortDescription(contentItem)){
+            return (
+              <div className="Content-item-container" key={contentItem.sort_order}>
+                <ShortDescription {...propsData} />
+              </div>
+            );
+          }
+          else if(FieldHelper.isImage(contentItem)){
             var imageProps = {value: contentItem.value, isEdit: false};
             return (
               <div className="Content-item-container" key={contentItem.sort_order}>
                 <ImageWidget {...imageProps} />
+              </div>
+            );
+          }
+          else if(FieldHelper.isTitle(contentItem)){
+            return (
+              <div className="Content-item-container" key={contentItem.sort_order}>
+                <Title {...propsData} />
               </div>
             );
           }
