@@ -26,43 +26,6 @@ class PhotoAlbumTemplateEdit extends React.Component {
 
   }
   //todo: move to actions
-  createLongDescription(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'Our Story Description',
-      'Our Story Description');
-    var longDescription = longDescriptionFactory.create();
-    longDescription.template_id = 1;
-
-    this.props.contentList.push(longDescription);
-    this.props.setStateForContentList();
-    //this.setState({contentList: this.props.contentList});
-  }
-  createShortDescription(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var shortDescriptionFactory = new ShortDescriptionFactory(sortOrder, 'The Wedding Description',
-      'The Wedding Description');
-    var shortDescription = shortDescriptionFactory.create();
-    shortDescription.template_id = 1;
-
-    this.props.contentList.push(shortDescription);
-    this.props.setStateForContentList();
-  //  this.setState({contentList: this.state.contentList});
-  }
-  createTitle(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var factory = new TitleFactory(sortOrder, 'The Wedding Title',
-      'The Wedding Title');
-    var title = factory.create();
-    title.template_id = 1;
-
-    this.props.contentList.push(title);
-    this.props.setStateForContentList();
-    //this.setState({contentList: this.state.contentList});
-  }
-  //todo: move to actions
   createImage(event){
     var sortOrder = this.props.contentList.length + 1;
 
@@ -91,33 +54,15 @@ class PhotoAlbumTemplateEdit extends React.Component {
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
 
-        if(FieldHelper.isDescription(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <LongDescription {...propsData} />
-            </div>
-          );
-        }
-        else if(FieldHelper.isShortDescription(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <ShortDescription {...propsData} />
-            </div>
-          );
-        }
-        else if(FieldHelper.isImage(contentItem)){
+        if(FieldHelper.isImage(contentItem)){
           return (
             <div key={contentItem.sort_order} className="form-group">
               <ImageWidget {...propsData} />
             </div>
           );
         }
-        else if(FieldHelper.isTitle(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <Title {...propsData} />
-            </div>
-          );
+        else{
+          throw 'content type should be image.';
         }
     });
 

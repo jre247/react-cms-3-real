@@ -2,6 +2,7 @@ import React from 'react';
 import PhotoAlbumStore from '../../stores/PhotoAlbumStore';
 import PhotoAlbumActions from '../../actions/PhotoAlbumActions';
 import {_} from 'underscore';
+import PhotoAlbumTemplate from '../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate';
 
 class EditPhotoAlbum extends React.Component {
   constructor(props) {
@@ -46,56 +47,27 @@ class EditPhotoAlbum extends React.Component {
     //PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
   }
 
-  updatePhoto(index, event){
+  updateContent(index, event){
     this.state.contentList[index].value = event.target.value;
     this.setState({contentList: this.state.contentList});
   }
 
-  removePhoto(index, event){
+  removeContent(index, event){
     this.state.contentList.splice(index, 1);
     this.setState({contentList: this.state.contentList});
   }
-
+  setStateForContentList(){
+    this.setState({contentList: this.state.contentList})
+  }
   submit(event){
     PhotoAlbumActions.savePhotoAlbumData(this.state.contentList, this.props.history);
   }
 
-  //TODO: create field component that will figure out what kind of field to render
   render() {
-    let nodes = this.state.contentList.map((photo, index) => {
-      return (
-        <div key={photo.sort_order} className='container'>
-          <div className='row'>
-            <div className='col-sm-8'>
-              <div className="form-group">
-                <input ref="url" className='form-control' name="url" placeholder="Url"
-                  value={photo.value} onChange={this.updatePhoto.bind(this, index)}/>
-              </div>
-            </div>
-            <div className="col-sm-2">
-              <div onClick={this.removePhoto.bind(this, index)}>
-                <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-
+    var propsData = {contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, isEdit: true,
+      submit: this.submit.bind(this), setStateForContentList: this.setStateForContentList.bind(this)};
     return (
-      <div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className='container'>
-            <button className="btn btn-primary" onClick={this.addPhoto.bind(this)}>Add</button>
-            <div className='row Photo-album-content'>
-              {nodes}
-            </div>
-            <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
-              <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <PhotoAlbumTemplate {...propsData} />
     );
   }
 }

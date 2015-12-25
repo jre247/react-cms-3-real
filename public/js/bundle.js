@@ -933,6 +933,10 @@ var _PhotoAlbumActions2 = _interopRequireDefault(_PhotoAlbumActions);
 
 var _underscore = require('underscore');
 
+var _PhotoAlbumTemplate = require('../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate');
+
+var _PhotoAlbumTemplate2 = _interopRequireDefault(_PhotoAlbumTemplate);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -999,15 +1003,20 @@ var EditPhotoAlbum = (function (_React$Component) {
       //PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
     }
   }, {
-    key: 'updatePhoto',
-    value: function updatePhoto(index, event) {
+    key: 'updateContent',
+    value: function updateContent(index, event) {
       this.state.contentList[index].value = event.target.value;
       this.setState({ contentList: this.state.contentList });
     }
   }, {
-    key: 'removePhoto',
-    value: function removePhoto(index, event) {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
       this.state.contentList.splice(index, 1);
+      this.setState({ contentList: this.state.contentList });
+    }
+  }, {
+    key: 'setStateForContentList',
+    value: function setStateForContentList() {
       this.setState({ contentList: this.state.contentList });
     }
   }, {
@@ -1015,75 +1024,12 @@ var EditPhotoAlbum = (function (_React$Component) {
     value: function submit(event) {
       _PhotoAlbumActions2.default.savePhotoAlbumData(this.state.contentList, this.props.history);
     }
-
-    //TODO: create field component that will figure out what kind of field to render
-
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      var nodes = this.state.contentList.map(function (photo, index) {
-        return _react2.default.createElement(
-          'div',
-          { key: photo.sort_order, className: 'container' },
-          _react2.default.createElement(
-            'div',
-            { className: 'row' },
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-8' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url',
-                  value: photo.value, onChange: _this2.updatePhoto.bind(_this2, index) })
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-2' },
-              _react2.default.createElement(
-                'div',
-                { onClick: _this2.removePhoto.bind(_this2, index) },
-                _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-              )
-            )
-          )
-        );
-      });
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit.bind(this) },
-          _react2.default.createElement(
-            'div',
-            { className: 'container' },
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-primary', onClick: this.addPhoto.bind(this) },
-              'Add'
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'row Photo-album-content' },
-              nodes
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden' },
-              _react2.default.createElement(
-                'button',
-                { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
-                'Save'
-              )
-            )
-          )
-        )
-      );
+      var propsData = { contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, isEdit: true,
+        submit: this.submit.bind(this), setStateForContentList: this.setStateForContentList.bind(this) };
+      return _react2.default.createElement(_PhotoAlbumTemplate2.default, propsData);
     }
   }]);
 
@@ -1092,7 +1038,7 @@ var EditPhotoAlbum = (function (_React$Component) {
 
 exports.default = EditPhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":65,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":65,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":20,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1161,7 +1107,7 @@ var PhotoAlbum = (function (_React$Component) {
     key: 'render',
     value: function render() {
       var propsData = { contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, editLink: '/photo-album/edit',
-        isEdit: false };
+        isEdit: false, imageSize: 'small' };
       return _react2.default.createElement(_PhotoAlbumTemplate2.default, propsData);
     }
   }]);
@@ -1788,47 +1734,6 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     //todo: move to actions
 
   }, {
-    key: 'createLongDescription',
-    value: function createLongDescription(event) {
-      var sortOrder = this.props.contentList.length + 1;
-
-      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'Our Story Description', 'Our Story Description');
-      var longDescription = longDescriptionFactory.create();
-      longDescription.template_id = 1;
-
-      this.props.contentList.push(longDescription);
-      this.props.setStateForContentList();
-      //this.setState({contentList: this.props.contentList});
-    }
-  }, {
-    key: 'createShortDescription',
-    value: function createShortDescription(event) {
-      var sortOrder = this.props.contentList.length + 1;
-
-      var shortDescriptionFactory = new _ShortDescriptionFactory2.default(sortOrder, 'The Wedding Description', 'The Wedding Description');
-      var shortDescription = shortDescriptionFactory.create();
-      shortDescription.template_id = 1;
-
-      this.props.contentList.push(shortDescription);
-      this.props.setStateForContentList();
-      //  this.setState({contentList: this.state.contentList});
-    }
-  }, {
-    key: 'createTitle',
-    value: function createTitle(event) {
-      var sortOrder = this.props.contentList.length + 1;
-
-      var factory = new _TitleFactory2.default(sortOrder, 'The Wedding Title', 'The Wedding Title');
-      var title = factory.create();
-      title.template_id = 1;
-
-      this.props.contentList.push(title);
-      this.props.setStateForContentList();
-      //this.setState({contentList: this.state.contentList});
-    }
-    //todo: move to actions
-
-  }, {
     key: 'createImage',
     value: function createImage(event) {
       var sortOrder = this.props.contentList.length + 1;
@@ -1865,30 +1770,14 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           onChange: _this2.updateContent.bind(_this2, index),
           onRemove: _this2.removeContent.bind(_this2, index) };
 
-        if (_FieldHelper2.default.isDescription(contentItem)) {
-          return _react2.default.createElement(
-            'div',
-            { key: contentItem.sort_order, className: 'form-group' },
-            _react2.default.createElement(_LongDescription2.default, propsData)
-          );
-        } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
-          return _react2.default.createElement(
-            'div',
-            { key: contentItem.sort_order, className: 'form-group' },
-            _react2.default.createElement(_ShortDescription2.default, propsData)
-          );
-        } else if (_FieldHelper2.default.isImage(contentItem)) {
+        if (_FieldHelper2.default.isImage(contentItem)) {
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order, className: 'form-group' },
             _react2.default.createElement(_ImageWidget2.default, propsData)
           );
-        } else if (_FieldHelper2.default.isTitle(contentItem)) {
-          return _react2.default.createElement(
-            'div',
-            { key: contentItem.sort_order, className: 'form-group' },
-            _react2.default.createElement(_Title2.default, propsData)
-          );
+        } else {
+          throw 'content type should be image.';
         }
       });
 
@@ -2065,13 +1954,14 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var propsData = { contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto };
+      var propsData = { contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto, imageSize: this.props.imageSize };
 
-      var nodes = this.props.contentList.map(function (photo, index) {
+      var nodes = this.props.contentList.map(function (contentItem, index) {
+        var photoProps = { value: contentItem.value, imageSize: _this2.props.imageSize };
         return _react2.default.createElement(
           'div',
-          { key: photo.sort_order, className: 'Photo' },
-          _react2.default.createElement('img', { onClick: _this2.openModal.bind(_this2, index), className: 'Content-small-image', src: photo.value })
+          { key: contentItem.sort_order, className: 'Photo', onClick: _this2.openModal.bind(_this2, index) },
+          _react2.default.createElement(_ImageWidget2.default, photoProps)
         );
       });
 
@@ -3395,11 +3285,19 @@ var ImageWidgetReadOnly = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'Content-image-container' },
-        _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
-      );
+      if (this.props.imageSize == 'small') {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Content-image-container' },
+          _react2.default.createElement('img', { className: 'Content-small-image', src: this.props.value, alt: 'Image' })
+        );
+      } else {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Content-image-container' },
+          _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
+        );
+      }
     }
   }]);
 
