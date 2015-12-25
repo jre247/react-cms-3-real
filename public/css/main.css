@@ -7305,7 +7305,6 @@ img.mfp-img {
   font-weight: normal;
   font-style: normal;
 }
-/* Header */
 a {
   color: white;
   text-decoration: none;
@@ -7364,8 +7363,6 @@ a:hover {
   font-size: 1.25em;
   margin: 0;
 }
-/* End Header */
-/* App */
 .Content-item-container {
   margin-top: 30px;
 }
@@ -7416,22 +7413,16 @@ a:hover {
   color: #a94442;
   cursor: pointer;
 }
-/* End App */
-/* Templates */
 .Content-centered-container .Content-long-description-container,
 .Content-centered-container .Content-short-description-container {
   margin: 0 auto;
   text-align: center;
   width: 70%;
 }
-/* End Templates */
-/* Home */
 .Home-content {
   text-align: center;
   color: #7e3d10;
 }
-/* End Home */
-/* Image */
 .Content-large-image {
   width: 300px;
   margin-right: 30px;
@@ -7463,16 +7454,17 @@ a:hover {
   margin-right: 30px;
   margin-top: 10px;
 }
-/* End Image */
-/* Title */
 .Content-title {
   text-align: center;
   font-family: 'Source Sans Pro';
   font-size: 38px;
   line-height: 1.6em;
 }
-/* End Title */
-/* Photo Album */
+.Content-short-description {
+  color: white;
+  font-size: 18px;
+  font-family: 'Source Sans Pro';
+}
 .Photo-album-container {
   margin-left: 13%;
   width: 80%;
@@ -7484,30 +7476,12 @@ a:hover {
   margin-top: 40px;
   margin-bottom: 40px;
 }
-/* End Photo Album */
-/* Venue */
-.Venue-image-container {
-  margin-left: 27%;
-}
-/* End Venue */
-/* The Proposal */
-/* End The Proposal */
-/* List Collection */
 .List-items {
   text-align: center;
   font-size: 28px;
   line-height: 1.6em;
   margin-top: 10px;
 }
-/* End List Collection */
-/* Short Description */
-.Content-short-description {
-  color: white;
-  font-size: 18px;
-  font-family: 'Source Sans Pro';
-}
-/* End Short Description */
-/* Long Description */
 .Content-long-description {
   color: white;
   font-size: 18px;
@@ -7516,43 +7490,6 @@ a:hover {
   font-family: 'Source Sans Pro';
   margin-top: 10px;
 }
-/* End Long Description */
-/* Navigation */
-.Navigation-link {
-  display: inline-block;
-  padding: 3px 8px;
-  text-decoration: none;
-  font-size: 1.125em;
-  /* ~18px */
-}
-.Navigation-link,
-.Navigation-link:active,
-.Navigation-link:visited {
-  color: white;
-  margin-right: 16px;
-  font-family: 'Calligraffiti';
-  font-size: 22px;
-}
-.Navigation-link:visited {
-  font-weight: bold;
-}
-.Navigation-link:hover {
-  font-weight: bold;
-}
-.Navigation-link--highlight {
-  margin-right: 8px;
-  margin-left: 8px;
-  border-radius: 3px;
-  background: rgba(0, 0, 0, 0.15);
-  color: white;
-  font-weight: bold;
-}
-.Navigation-link--highlight:hover {
-  background: rgba(0, 0, 0, 0.3);
-  font-weight: bold;
-}
-/* End Navigation */
-/* List */
 .List-page {
   font-family: 'Source Sans Pro';
   font-size: 18px;
@@ -7590,30 +7527,36 @@ a:hover {
   margin-top: 25px;
   padding-top: 25px;
 }
-/* End List */
-/* Modal */
-.modal-anim-enter {
-  opacity: 0.00;
-  -webkit-transform: scale(0.7);
-          transform: scale(0.7);
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+.Navigation-link {
+  display: inline-block;
+  padding: 3px 8px;
+  text-decoration: none;
+  font-size: 1.125em;
+  /* ~18px */
 }
-.modal-anim-enter.modal-anim-enter-active {
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+.Navigation-link,
+.Navigation-link:active,
+.Navigation-link:visited {
+  color: white;
+  margin-right: 16px;
+  font-family: 'Calligraffiti';
+  font-size: 22px;
 }
-.modal-anim-leave {
-  opacity: 1;
-  -webkit-transform: scale(1);
-          transform: scale(1);
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+.Navigation-link:visited {
+  font-weight: bold;
 }
-.modal-anim-leave.modal-anim-leave-active {
-  opacity: 0.00;
-  -webkit-transform: scale(0.7);
-          transform: scale(0.7);
+.Navigation-link:hover {
+  font-weight: bold;
 }
-/* End Modal */
+.Navigation-link--highlight {
+  margin-right: 8px;
+  margin-left: 8px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.15);
+  color: white;
+  font-weight: bold;
+}
+.Navigation-link--highlight:hover {
+  background: rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}

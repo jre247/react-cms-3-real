@@ -31,7 +31,8 @@ class EditPhotoAlbum extends React.Component {
       description: 'Photo Album',
       value: '',
       content_type_id: 1,
-      sort_order: sortOrder
+      sort_order: sortOrder,
+      template_id: 3
     };
 
     this.state.photoAlbum.push(content);

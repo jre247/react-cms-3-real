@@ -19,7 +19,7 @@ Windows Install Instructions:
 8) run this script in this query window to give privileges to tables to user jevans:
 		GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 		GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
-		*note: everytime you rerun seed.sql you'll have to rerun these privileges queries
+		*note: everytime you rerun seed.sql you'll have to rerun these privileges queries*
 
 ------------------------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ CREATE USER Jason WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
 GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
 
-6) run seed.sql in postgres to create the database, jevans user, permissions for jevans, tables, data, etc.
+6) run seed.sql in postgres to create tables, data, etc.
 	-you can find seed.sql in the root directory of the project
 
 

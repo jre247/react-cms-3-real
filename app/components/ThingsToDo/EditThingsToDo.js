@@ -42,7 +42,8 @@ class EditThingsToDo extends React.Component {
       description: 'Things To Do Parent List Item',
       value: '',
       content_type_id: 2,
-      sort_order: sortOrder
+      sort_order: sortOrder,
+      template_id: 4
     };
 
     this.state.thingsToDo.push(content);
@@ -62,7 +63,8 @@ class EditThingsToDo extends React.Component {
         value: '',
         content_type_id: 2,
         parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder
+        sort_order: sortOrder,
+        template_id: 4
     };
     this.state.thingsToDo.splice(index + 1, 0, description);
 
@@ -74,7 +76,8 @@ class EditThingsToDo extends React.Component {
         value: '',
         content_type_id: 5,
         parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder
+        sort_order: sortOrder,
+        template_id: 4
     };
     this.state.thingsToDo.splice(index + 2, 0, link);
 
