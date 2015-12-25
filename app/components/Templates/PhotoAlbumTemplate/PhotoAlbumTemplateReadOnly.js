@@ -30,12 +30,12 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   openModal(index) {
   //  this.setState({isModalOpen: true});
   //  this.setState({isModalOpen: true});
-    this.state.selectedPhoto = index || 1;
+    this.props.selectedPhoto = index || 1;
     $('#largeCarouselModal').modal('show');
   }
 
   render() {
-    var props = {photoAlbum: this.props.contentList, selectedPhoto: this.props.selectedPhoto};
+    var propsData = {contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto};
 
     let nodes = this.props.contentList.map((photo, index) => {
       return (
@@ -45,7 +45,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       );
     });
 
-    if(_.isEmpty(this.state.photoAlbum)){
+    if(_.isEmpty(this.props.contentList)){
       var emptyContentProps = {editLink: this.props.editLink}
       return (
         <EmptyContent {...emptyContentProps} />
@@ -69,7 +69,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
                   <button type="button" className="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div className="modal-body">
-                  <Carousel {...props} />
+                  <Carousel {...propsData} />
                 </div>
               </div>
             </div>

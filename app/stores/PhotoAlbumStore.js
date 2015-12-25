@@ -4,7 +4,7 @@ import PhotoAlbumActions from '../actions/PhotoAlbumActions';
 class PhotoAlbumStore {
   constructor() {
     this.bindActions(PhotoAlbumActions);
-    this.photoAlbum = [];
+    this.contentList = [];
     this.isModalOpen = false;
     this.selectedPhoto = 1;
     this.ajaxAnimationClass = '';
@@ -13,7 +13,7 @@ class PhotoAlbumStore {
   onGetPhotoAlbumDataSuccess(data) {
     console.log('onGetPhotoAlbumDataSuccess');
     if(data && data.length > 0){
-      this.photoAlbum = data;
+      this.contentList = data;
     }
   }
 

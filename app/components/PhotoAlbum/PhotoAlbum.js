@@ -1,6 +1,7 @@
 import React from 'react';
 import PhotoAlbumStore from '../../stores/PhotoAlbumStore';
 import PhotoAlbumActions from '../../actions/PhotoAlbumActions';
+import PhotoAlbumTemplate from '../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate';
 
 class PhotoAlbum extends React.Component {
   constructor(props) {
@@ -24,8 +25,9 @@ class PhotoAlbum extends React.Component {
   render() {
     var propsData = {contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, editLink: '/photo-album/edit',
       isEdit: false};
-
-    <PhotoAlbumTemplate {...propsData} />
+    return (
+      <PhotoAlbumTemplate {...propsData} />
+    );
   }
 }
 
