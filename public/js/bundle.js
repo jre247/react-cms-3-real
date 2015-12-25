@@ -1426,7 +1426,6 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'createShortDescription',
     value: function createShortDescription(event) {
-      debugger;
       var sortOrder = this.props.contentList.length + 1;
 
       var shortDescriptionFactory = new _ShortDescriptionFactory2.default(sortOrder, 'The Wedding Description', 'The Wedding Description');

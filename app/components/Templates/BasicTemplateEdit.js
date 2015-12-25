@@ -39,7 +39,6 @@ class BasicTemplateEdit extends React.Component {
     //this.setState({contentList: this.props.contentList});
   }
   createShortDescription(event){
-    debugger;
     var sortOrder = this.props.contentList.length + 1;
 
     var shortDescriptionFactory = new ShortDescriptionFactory(sortOrder, 'The Wedding Description',
