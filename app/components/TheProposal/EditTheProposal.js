@@ -1,7 +1,7 @@
 import React from 'react';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
-import BasicTemplate from '../Templates/BasicTemplate';
+import BasicTemplate from '../Templates/BasicTemplate/BasicTemplate';
 
 class EditTheProposal extends React.Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import TheProposalStore from '../../stores/TheProposalStore';
 import TheProposalActions from '../../actions/TheProposalActions';
 import {_} from 'underscore';
-import BasicTemplate from '../Templates/BasicTemplate';
+import BasicTemplate from '../Templates/BasicTemplate/BasicTemplate';
 
 class TheProposal extends React.Component {
   constructor(props) {

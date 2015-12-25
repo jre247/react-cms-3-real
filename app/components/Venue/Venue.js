@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import VenueStore from '../../stores/VenueStore';
 import VenueActions from '../../actions/VenueActions';
 import {_} from 'underscore';
-import BasicTemplate from '../Templates/BasicTemplate';
+import BasicTemplate from '../Templates/BasicTemplate/BasicTemplate';
 
 class Venue extends React.Component {
   constructor(props) {

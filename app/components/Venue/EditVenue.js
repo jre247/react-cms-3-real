@@ -1,7 +1,7 @@
 import React from 'react';
 import VenueStore from '../../stores/VenueStore';
 import VenueActions from '../../actions/VenueActions';
-import BasicTemplate from '../Templates/BasicTemplate';
+import BasicTemplate from '../Templates/BasicTemplate/BasicTemplate';
 
 class EditVenue extends React.Component {
   constructor(props) {
