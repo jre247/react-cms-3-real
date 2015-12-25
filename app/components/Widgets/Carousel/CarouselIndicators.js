@@ -16,7 +16,7 @@ class CarouselIndicators extends React.Component {
   }
 
   render() {
-    var propsArray = PropsHelper.convertPropsToArray(this.props.photoAlbum);
+    var propsArray = PropsHelper.convertPropsToArray(this.props.contentList);
 
     let indicators = propsArray.map((indicator, index) => {
       return (

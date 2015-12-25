@@ -16,7 +16,7 @@ class CarouselContent extends React.Component {
   }
 
   render() {
-    var propsArray = PropsHelper.convertPropsToArray(this.props.photoAlbum);
+    var propsArray = PropsHelper.convertPropsToArray(this.props.contentList);
 
     let images = propsArray.map((image, index) => {
       return (

@@ -23,7 +23,7 @@ class EditPhotoAlbum extends React.Component {
 
   //TODO: create function to return new content item
   addPhoto(){
-    var sortOrder = this.state.photoAlbum.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
 
     var content =
     {
@@ -35,9 +35,9 @@ class EditPhotoAlbum extends React.Component {
       template_id: 3
     };
 
-    this.state.photoAlbum.push(content);
+    this.state.contentList.push(content);
 
-    this.setState({photoAlbum: this.state.photoAlbum})
+    this.setState({contentList: this.state.contentList})
   }
 
   handleSubmit(event) {
@@ -47,22 +47,22 @@ class EditPhotoAlbum extends React.Component {
   }
 
   updatePhoto(index, event){
-    this.state.photoAlbum[index].value = event.target.value;
-    this.setState({photoAlbum: this.state.photoAlbum});
+    this.state.contentList[index].value = event.target.value;
+    this.setState({contentList: this.state.contentList});
   }
 
   removePhoto(index, event){
-    this.state.photoAlbum.splice(index, 1);
-    this.setState({photoAlbum: this.state.photoAlbum});
+    this.state.contentList.splice(index, 1);
+    this.setState({contentList: this.state.contentList});
   }
 
   submit(event){
-    PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
+    PhotoAlbumActions.savePhotoAlbumData(this.state.contentList, this.props.history);
   }
 
   //TODO: create field component that will figure out what kind of field to render
   render() {
-    let photoAlbumNodes = this.state.photoAlbum.map((photo, index) => {
+    let nodes = this.state.contentList.map((photo, index) => {
       return (
         <div key={photo.sort_order} className='container'>
           <div className='row'>
@@ -88,9 +88,9 @@ class EditPhotoAlbum extends React.Component {
           <div className='container'>
             <button className="btn btn-primary" onClick={this.addPhoto.bind(this)}>Add</button>
             <div className='row Photo-album-content'>
-              {photoAlbumNodes}
+              {nodes}
             </div>
-            <div className={this.state.photoAlbum.length > 0 ? 'form-group' : 'form-group hidden'}>
+            <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
               <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
             </div>
           </div>

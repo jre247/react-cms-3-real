@@ -8,6 +8,7 @@ import LongDescription from '../../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import Title from '../../Widgets/Title/Title';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
+import Carousel from '../../Widgets/Carousel/Carousel';
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   openModal(index) {
   //  this.setState({isModalOpen: true});
   //  this.setState({isModalOpen: true});
-    this.props.selectedPhoto = index || 1;
+    //this.props.selectedPhoto = index || 1;
     $('#largeCarouselModal').modal('show');
   }
 
