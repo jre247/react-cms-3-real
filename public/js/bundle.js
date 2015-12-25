@@ -974,45 +974,12 @@ var EditPhotoAlbum = (function (_React$Component) {
     value: function componentWillUnmount() {
       _PhotoAlbumStore2.default.unlisten(this.onChange);
     }
-
-    //TODO: create function to return new content item
-
-  }, {
-    key: 'addPhoto',
-    value: function addPhoto() {
-      var sortOrder = this.state.contentList.length + 1;
-
-      var content = {
-        name: 'Photo Album',
-        description: 'Photo Album',
-        value: '',
-        content_type_id: 1,
-        sort_order: sortOrder,
-        template_id: 3
-      };
-
-      this.state.contentList.push(content);
-
-      this.setState({ contentList: this.state.contentList });
-    }
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
 
       //PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
-    }
-  }, {
-    key: 'updateContent',
-    value: function updateContent(index, event) {
-      this.state.contentList[index].value = event.target.value;
-      this.setState({ contentList: this.state.contentList });
-    }
-  }, {
-    key: 'removeContent',
-    value: function removeContent(index, event) {
-      this.state.contentList.splice(index, 1);
-      this.setState({ contentList: this.state.contentList });
     }
   }, {
     key: 'setStateForContentList',

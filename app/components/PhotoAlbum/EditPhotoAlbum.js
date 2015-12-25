@@ -22,40 +22,12 @@ class EditPhotoAlbum extends React.Component {
     PhotoAlbumStore.unlisten(this.onChange);
   }
 
-  //TODO: create function to return new content item
-  addPhoto(){
-    var sortOrder = this.state.contentList.length + 1;
-
-    var content =
-    {
-      name: 'Photo Album',
-      description: 'Photo Album',
-      value: '',
-      content_type_id: 1,
-      sort_order: sortOrder,
-      template_id: 3
-    };
-
-    this.state.contentList.push(content);
-
-    this.setState({contentList: this.state.contentList})
-  }
-
   handleSubmit(event) {
     event.preventDefault();
 
     //PhotoAlbumActions.savePhotoAlbumData(this.state.photoAlbum, this.props.history);
   }
 
-  updateContent(index, event){
-    this.state.contentList[index].value = event.target.value;
-    this.setState({contentList: this.state.contentList});
-  }
-
-  removeContent(index, event){
-    this.state.contentList.splice(index, 1);
-    this.setState({contentList: this.state.contentList});
-  }
   setStateForContentList(){
     this.setState({contentList: this.state.contentList})
   }
