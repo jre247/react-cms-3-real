@@ -1798,47 +1798,8 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
                 { className: 'form-group' },
                 _react2.default.createElement(
                   'button',
-                  { className: 'btn btn-primary', onClick: this.createLongDescription.bind(this) },
-                  'Create Long Description'
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-3' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'button',
                   { className: 'btn btn-primary', onClick: this.createImage.bind(this) },
                   'Create Image'
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-3' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'button',
-                  { className: 'btn btn-primary', onClick: this.createTitle.bind(this) },
-                  'Create Title'
-                )
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'col-sm-3' },
-              _react2.default.createElement(
-                'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'button',
-                  { className: 'btn btn-primary', onClick: this.createShortDescription.bind(this) },
-                  'Create Short Description'
                 )
               )
             )

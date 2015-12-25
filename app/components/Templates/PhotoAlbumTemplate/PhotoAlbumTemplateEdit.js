@@ -72,29 +72,8 @@ class PhotoAlbumTemplateEdit extends React.Component {
           <div className='row'>
             <div className='col-sm-3'>
               <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createLongDescription.bind(this)}>
-                  Create Long Description
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
                 <button className="btn btn-primary" onClick={this.createImage.bind(this)}>
                   Create Image
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createTitle.bind(this)}>
-                  Create Title
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createShortDescription.bind(this)}>
-                  Create Short Description
                 </button>
               </div>
             </div>
