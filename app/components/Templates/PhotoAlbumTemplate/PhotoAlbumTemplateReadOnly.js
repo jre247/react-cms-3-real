@@ -39,10 +39,10 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
     var propsData = {contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto, imageSize: this.props.imageSize};
 
     let nodes = this.props.contentList.map((contentItem, index) => {
-      var photoProps = {value: contentItem.value, imageSize: this.props.imageSize}
+      var propsData = {contentItem: contentItem, imageSize: this.props.imageSize}
       return (
         <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
-          <ImageWidget {...photoProps} />
+          <Field {...propsData} />
         </div>
       );
     });

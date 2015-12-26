@@ -50,14 +50,14 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
   render() {
     let nodes = this.props.contentList.map((contentItem, index) => {
-      var propsData = {value: contentItem.value, isEdit: true,
+      var propsData = {contentItem: contentItem, isEdit: true,
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
 
         if(FieldHelper.isImage(contentItem)){
           return (
             <div key={contentItem.sort_order} className="form-group">
-              <ImageWidget {...propsData} />
+              <Field {...propsData} />
             </div>
           );
         }

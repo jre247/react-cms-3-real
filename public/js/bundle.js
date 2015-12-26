@@ -1654,7 +1654,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       var _this2 = this;
 
       var nodes = this.props.contentList.map(function (contentItem, index) {
-        var propsData = { value: contentItem.value, isEdit: true,
+        var propsData = { contentItem: contentItem, isEdit: true,
           onChange: _this2.updateContent.bind(_this2, index),
           onRemove: _this2.removeContent.bind(_this2, index) };
 
@@ -1662,7 +1662,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order, className: 'form-group' },
-            _react2.default.createElement(_ImageWidget2.default, propsData)
+            _react2.default.createElement(_Field2.default, propsData)
           );
         } else {
           throw 'content type should be image.';
@@ -1806,11 +1806,11 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
       var propsData = { contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto, imageSize: this.props.imageSize };
 
       var nodes = this.props.contentList.map(function (contentItem, index) {
-        var photoProps = { value: contentItem.value, imageSize: _this2.props.imageSize };
+        var propsData = { contentItem: contentItem, imageSize: _this2.props.imageSize };
         return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'Photo', onClick: _this2.openModal.bind(_this2, index) },
-          _react2.default.createElement(_ImageWidget2.default, photoProps)
+          _react2.default.createElement(_Field2.default, propsData)
         );
       });
 
@@ -2766,7 +2766,7 @@ var CarouselContent = (function (_React$Component) {
       var images = propsArray.map(function (image, index) {
         return _react2.default.createElement(
           'div',
-          { className: index == _this2.props.selectedPhoto ? 'item active' : 'item' },
+          { key: image.sort_order, className: index == _this2.props.selectedPhoto ? 'item active' : 'item' },
           _react2.default.createElement('img', { key: index, src: image.value })
         );
       });
@@ -2834,7 +2834,7 @@ var CarouselIndicators = (function (_React$Component) {
       var propsArray = _PropsHelper2.default.convertPropsToArray(this.props.contentList);
 
       var indicators = propsArray.map(function (indicator, index) {
-        return _react2.default.createElement('li', { key: index, 'data-target': '#largeCarousel', className: index == _this2.props.selectedPhoto ? 'active' : '', 'data-slide-to': index });
+        return _react2.default.createElement('li', { key: image.sort_order, 'data-target': '#largeCarousel', className: index == _this2.props.selectedPhoto ? 'active' : '', 'data-slide-to': index });
       });
 
       return _react2.default.createElement(

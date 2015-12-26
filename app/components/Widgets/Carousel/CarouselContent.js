@@ -20,7 +20,7 @@ class CarouselContent extends React.Component {
 
     let images = propsArray.map((image, index) => {
       return (
-        <div className={index == this.props.selectedPhoto ? 'item active' : 'item'}>
+        <div key={image.sort_order} className={index == this.props.selectedPhoto ? 'item active' : 'item'}>
           <img key={index} src={image.value} />
         </div>
       );
