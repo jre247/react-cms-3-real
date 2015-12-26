@@ -1546,23 +1546,6 @@ var ListTemplate = (function (_React$Component) {
       this.props.setStateForContentList();
     }
   }, {
-    key: 'addParentListItem',
-    value: function addParentListItem() {
-      var sortOrder = this.props.contentList.length + 1;
-
-      var content = {
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        content_type_id: 2,
-        sort_order: sortOrder,
-        template_id: 4
-      };
-
-      this.props.contentList.push(content);
-      this.props.setStateForContentList();
-    }
-  }, {
     key: 'addSublistItem',
     value: function addSublistItem(index, event) {
       var sortOrder = this.props.contentList.length + 1;
@@ -1613,7 +1596,7 @@ var ListTemplate = (function (_React$Component) {
 
       //want to always maintain at miniumum one list item on the page
       if (this.props.contentList.length == 0) {
-        this.addParentListItem();
+        this.props.addParentListItem();
       }
     }
   }, {
@@ -2356,6 +2339,23 @@ var EditThingsToDo = (function (_React$Component) {
       this.setState({ contentList: this.state.contentList });
     }
   }, {
+    key: 'addParentListItem',
+    value: function addParentListItem() {
+      var sortOrder = this.state.contentList.length + 1;
+
+      var content = {
+        name: 'Things To Do Parent List Item',
+        description: 'Things To Do Parent List Item',
+        value: '',
+        content_type_id: 2,
+        sort_order: sortOrder,
+        template_id: 4
+      };
+
+      this.state.contentList.push(content);
+      this.state.setStateForContentList();
+    }
+  }, {
     key: 'submit',
     value: function submit(event) {
       _ThingsToDoActions2.default.saveThingsToDoData(this.state.contentList, this.props.history);
@@ -2363,12 +2363,8 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      var thingsToDoNodes = this.state.contentList.map(function (thingToDo, index) {
-        var propsData = { isEdit: false, contentList: _this2.state.contentList, editLink: '/things-to-do/edit' };
-        return _react2.default.createElement(_ListTemplate2.default, propsData);
-      });
+      var propsData = { isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit',
+        addParentListItem: this.addParentListItem.bind(this) };
 
       return _react2.default.createElement(
         'div',
@@ -2387,7 +2383,7 @@ var EditThingsToDo = (function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'row List-container' },
-              thingsToDoNodes
+              _react2.default.createElement(_ListTemplate2.default, propsData)
             ),
             _react2.default.createElement(
               'div',
