@@ -26,10 +26,12 @@ class BasicTemplateReadOnly extends React.Component {
     }
     else {
       let nodes = this.props.contentList.map((contentItem, index) => {
-          var propsData = {value: contentItem.value, isEdit: this.props.isEdit};
+          var propsData = {contentItem: contentItem, isEdit: this.props.isEdit};
 
           return (
-            <Field {...propsData} />
+            <div key={contentItem.sort_order}>
+              <Field {...propsData} />
+            </div>
           );
       });
 

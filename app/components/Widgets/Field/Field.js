@@ -1,10 +1,11 @@
 import {_} from 'underscore';
+import React from 'react';
 import FieldEdit from './FieldEdit';
 import FieldReadOnly from './FieldReadOnly';
 
-class Field {
-  constructor() {
-
+class Field extends React.Component {
+  constructor(props) {
+    super(props);
   }
 
   componentDidMount() {
@@ -23,7 +24,7 @@ class Field {
     }
     else{
       return (
-        <FieldeReadOnly {...this.props} />
+        <FieldReadOnly {...this.props} />
       );
     }
   }

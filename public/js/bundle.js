@@ -1286,11 +1286,15 @@ var BasicTemplateEdit = (function (_React$Component) {
       var _this2 = this;
 
       var nodes = this.props.contentList.map(function (contentItem, index) {
-        var propsData = { value: contentItem.value, isEdit: true,
+        var propsData = { contentItem: contentItem, isEdit: true,
           onChange: _this2.updateContent.bind(_this2, index),
           onRemove: _this2.removeContent.bind(_this2, index) };
 
-        return _react2.default.createElement(_Field2.default, propsData);
+        return _react2.default.createElement(
+          'div',
+          { key: contentItem.sort_order },
+          _react2.default.createElement(_Field2.default, propsData)
+        );
       });
 
       return _react2.default.createElement(
@@ -1433,9 +1437,13 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
         var nodes = this.props.contentList.map(function (contentItem, index) {
-          var propsData = { value: contentItem.value, isEdit: _this2.props.isEdit };
+          var propsData = { contentItem: contentItem, isEdit: _this2.props.isEdit };
 
-          return _react2.default.createElement(_Field2.default, propsData);
+          return _react2.default.createElement(
+            'div',
+            { key: contentItem.sort_order },
+            _react2.default.createElement(_Field2.default, propsData)
+          );
         });
 
         return _react2.default.createElement(
@@ -2853,6 +2861,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _underscore = require('underscore');
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _FieldEdit = require('./FieldEdit');
 
 var _FieldEdit2 = _interopRequireDefault(_FieldEdit);
@@ -2865,9 +2877,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Field = (function () {
-  function Field() {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Field = (function (_React$Component) {
+  _inherits(Field, _React$Component);
+
+  function Field(props) {
     _classCallCheck(this, Field);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Field).call(this, props));
   }
 
   _createClass(Field, [{
@@ -2880,19 +2900,19 @@ var Field = (function () {
     key: 'render',
     value: function render() {
       if (this.props.isEdit) {
-        return React.createElement(_FieldEdit2.default, this.props);
+        return _react2.default.createElement(_FieldEdit2.default, this.props);
       } else {
-        return React.createElement(FieldeReadOnly, this.props);
+        return _react2.default.createElement(_FieldReadOnly2.default, this.props);
       }
     }
   }]);
 
   return Field;
-})();
+})(_react2.default.Component);
 
 exports.default = Field;
 
-},{"./FieldEdit":33,"./FieldReadOnly":35,"underscore":"underscore"}],33:[function(require,module,exports){
+},{"./FieldEdit":33,"./FieldReadOnly":35,"react":"react","underscore":"underscore"}],33:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2902,6 +2922,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _underscore = require('underscore');
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
 
 var _FieldHelper = require('../../Widgets/Field/FieldHelper');
 
@@ -2919,52 +2943,67 @@ var _ShortDescription = require('../../Widgets/ShortDescription/ShortDescription
 
 var _ShortDescription2 = _interopRequireDefault(_ShortDescription);
 
+var _LongDescription = require('../../Widgets/LongDescription/LongDescription');
+
+var _LongDescription2 = _interopRequireDefault(_LongDescription);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var FieldEdit = (function () {
-  function FieldEdit() {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FieldEdit = (function (_React$Component) {
+  _inherits(FieldEdit, _React$Component);
+
+  function FieldEdit(props) {
     _classCallCheck(this, FieldEdit);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(FieldEdit).call(this, props));
   }
 
   _createClass(FieldEdit, [{
     key: 'render',
     value: function render() {
+      var contentItem = this.props.contentItem;
+      var propsData = _underscore._.extend({ value: contentItem.value }, this.props);
+
       if (_FieldHelper2.default.isDescription(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'form-group' },
-          React.createElement(LongDescription, propsData)
+          _react2.default.createElement(_LongDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'form-group' },
-          React.createElement(_ShortDescription2.default, propsData)
+          _react2.default.createElement(_ShortDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImage(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'form-group' },
-          React.createElement(_ImageWidget2.default, propsData)
+          _react2.default.createElement(_ImageWidget2.default, propsData)
         );
       } else if (_FieldHelper2.default.isTitle(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'form-group' },
-          React.createElement(_Title2.default, propsData)
+          _react2.default.createElement(_Title2.default, propsData)
         );
       }
     }
   }]);
 
   return FieldEdit;
-})();
+})(_react2.default.Component);
 
 exports.default = FieldEdit;
 
-},{"../../Widgets/Field/FieldHelper":34,"../../Widgets/Image/ImageWidget":37,"../../Widgets/ShortDescription/ShortDescription":50,"../../Widgets/Title/Title":54,"underscore":"underscore"}],34:[function(require,module,exports){
+},{"../../Widgets/Field/FieldHelper":34,"../../Widgets/Image/ImageWidget":37,"../../Widgets/LongDescription/LongDescription":46,"../../Widgets/ShortDescription/ShortDescription":50,"../../Widgets/Title/Title":54,"react":"react","underscore":"underscore"}],34:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3020,6 +3059,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _underscore = require('underscore');
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _LongDescription = require('../../Widgets/LongDescription/LongDescription');
 
 var _LongDescription2 = _interopRequireDefault(_LongDescription);
@@ -3044,9 +3087,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var FieldReadOnly = (function () {
-  function FieldReadOnly() {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FieldReadOnly = (function (_React$Component) {
+  _inherits(FieldReadOnly, _React$Component);
+
+  function FieldReadOnly(props) {
     _classCallCheck(this, FieldReadOnly);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(FieldReadOnly).call(this, props));
   }
 
   _createClass(FieldReadOnly, [{
@@ -3058,40 +3109,43 @@ var FieldReadOnly = (function () {
   }, {
     key: 'render',
     value: function render() {
+      var contentItem = this.props.contentItem;
+      var propsData = _underscore._.extend({ value: contentItem.value }, this.props);
+
       if (_FieldHelper2.default.isDescription(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { className: 'Content-item-container', key: contentItem.sort_order },
-          React.createElement(_LongDescription2.default, this.props)
+          _react2.default.createElement(_LongDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { className: 'Content-item-container', key: contentItem.sort_order },
-          React.createElement(_ShortDescription2.default, this.props)
+          _react2.default.createElement(_ShortDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImage(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { className: 'Content-item-container', key: contentItem.sort_order },
-          React.createElement(_ImageWidget2.default, this.props)
+          _react2.default.createElement(_ImageWidget2.default, propsData)
         );
       } else if (_FieldHelper2.default.isTitle(contentItem)) {
-        return React.createElement(
+        return _react2.default.createElement(
           'div',
           { className: 'Content-item-container', key: contentItem.sort_order },
-          React.createElement(_Title2.default, this.props)
+          _react2.default.createElement(_Title2.default, propsData)
         );
       }
     }
   }]);
 
   return FieldReadOnly;
-})();
+})(_react2.default.Component);
 
 exports.default = FieldReadOnly;
 
-},{"../../Widgets/Field/FieldHelper":34,"../../Widgets/Image/ImageWidget":37,"../../Widgets/LongDescription/LongDescription":46,"../../Widgets/ShortDescription/ShortDescription":50,"../../Widgets/Title/Title":54,"underscore":"underscore"}],36:[function(require,module,exports){
+},{"../../Widgets/Field/FieldHelper":34,"../../Widgets/Image/ImageWidget":37,"../../Widgets/LongDescription/LongDescription":46,"../../Widgets/ShortDescription/ShortDescription":50,"../../Widgets/Title/Title":54,"react":"react","underscore":"underscore"}],36:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
