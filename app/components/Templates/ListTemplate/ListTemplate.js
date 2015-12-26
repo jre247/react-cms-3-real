@@ -141,22 +141,29 @@ class ListTemplate extends React.Component {
     else {
       let nodes = this.props.contentList.map((contentItem, index) => {
         var listItemProps = {
-          contentItem: contentItem, isEdit: this.props.isEdit, isListItem: true,
+          contentItem: contentItem, isEdit: this.props.isEdit,
           onRemove: this.removeContent.bind(this, index),
           onChange: this.updateContent.bind(this, index)
         };
 
         //override onRemove function for list item if lit item is parent list item
-        if(!FieldHelper.isSubListItem(contentItem)){
+        if(FieldHelper.isSubListItem(contentItem)){
+          return(
+            <div key={contentItem.sort_order}>
+              <SubListItem {...listItemProps} />
+            </div>
+          );
+        }
+        else{
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
           listItemProps.onAddSubListItem = this.addSublistItem.bind(this, index);
-        }
 
-        return (
-          <div key={contentItem.sort_order}>
-            <Field {...listItemProps} />
-          </div>
-        )
+          return(
+            <div key={contentItem.sort_order}>
+              <ParentListItem {...listItemProps} />
+            </div>
+          );
+        }
       });
 
       return (

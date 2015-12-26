@@ -2,8 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import LongDescription from '../LongDescription/LongDescription';
 import Url from '../Url/Url';
-import SubListItemEdit from './SubListItemEdit';
-import SubListItemReadOnly from './SubListItemReadOnly';
 
 class SubListItem extends React.Component {
   constructor(props) {
@@ -19,16 +17,23 @@ class SubListItem extends React.Component {
   }
 
   render() {
-    if(this.props.isEdit){
-      return (
-        <SubListItemEdit {...this.props} />
-      );
-    }
-    else{
-      return (
-        <SubListItemReadOnly {...this.props} />
-      );
-    }
+    var propsData = _.extend({value: this.props.contentItem.value }, this.props);
+    return (
+      <div key={this.props.contentItem.sort_order}>
+        <div className='row'>
+          <div className='col-sm-8'>
+            <div className="form-group Sub-list-item">
+              <Field {...propsData} />
+            </div>
+          </div>
+          <div className="col-sm-2">
+            <div onClick={this.props.onRemove}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

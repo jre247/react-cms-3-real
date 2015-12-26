@@ -15,8 +15,10 @@ class ParentListItemEdit extends React.Component {
   }
 
   render() {
+    var propsData = _.extend({value: this.props.contentItem.value }, this.props);
+    
     return (
-      <div key={this.props.listItem.sort_order} className='container List-item-group'>
+      <div key={this.props.contentItem.sort_order} className='container List-item-group'>
         <div className='row'>
           <div className='col-sm-8 Add-sub-list-item'>
             <div className="form-group">
@@ -28,8 +30,7 @@ class ParentListItemEdit extends React.Component {
         <div className='row'>
           <div className='col-sm-8'>
             <div className="form-group">
-              <input ref="title" className='form-control' name="title" placeholder="Title"
-                value={this.props.listItem.value} onChange={this.props.onChange}/>
+              <Field {...propsData} />
             </div>
           </div>
           <div className="col-sm-2">

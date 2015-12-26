@@ -17,25 +17,6 @@ class FieldEdit extends React.Component {
     var contentItem = this.props.contentItem;
     var propsData = _.extend({value: contentItem.value}, this.props);
 
-    //todo: think about why there's code that declare another props data object to pass into list item sub or parent
-    if(this.props.isListItem){
-      var listItemProps = _.extend({listItem: this.props.contentItem, isEdit: this.props.isEdit}, this.props);
-      if(FieldHelper.isSubListItem(contentItem)){
-        return (
-          <div>
-            <SubListItem {...listItemProps} />
-          </div>
-        );
-      }
-      else {
-        return (
-          <div>
-            <ParentListItem {...listItemProps} />
-          </div>
-        );
-      }
-    }
-
     if(FieldHelper.isDescription(contentItem)){
       return (
         <div key={contentItem.sort_order} className="form-group">
