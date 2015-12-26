@@ -1,13 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Field from '../../Widgets/Field/Field';
-import FieldHelper from '../../Widgets/Field/FieldHelper';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
-import LongDescription from '../../Widgets/LongDescription/LongDescription';
-import ImageWidget from '../../Widgets/Image/ImageWidget';
-import Title from '../../Widgets/Title/Title';
-import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
@@ -91,34 +86,9 @@ class BasicTemplateEdit extends React.Component {
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
 
-        if(FieldHelper.isDescription(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <LongDescription {...propsData} />
-            </div>
-          );
-        }
-        else if(FieldHelper.isShortDescription(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <ShortDescription {...propsData} />
-            </div>
-          );
-        }
-        else if(FieldHelper.isImage(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <ImageWidget {...propsData} />
-            </div>
-          );
-        }
-        else if(FieldHelper.isTitle(contentItem)){
-          return (
-            <div key={contentItem.sort_order} className="form-group">
-              <Title {...propsData} />
-            </div>
-          );
-        }
+        return (
+          <Field {...propsData} />
+        );
     });
 
     return (
