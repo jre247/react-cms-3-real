@@ -29,6 +29,23 @@ class ListTemplate extends React.Component {
     this.props.setStateForContentList();
   }
 
+  addParentListItem(){
+    var sortOrder = this.props.contentList.length + 1;
+
+    var content =
+    {
+      name: 'Things To Do Parent List Item',
+      description: 'Things To Do Parent List Item',
+      value: '',
+      content_type_id: 2,
+      sort_order: sortOrder,
+      template_id: 4
+    };
+
+    this.props.contentList.push(content);
+    this.props.setStateForContentList();
+  }
+
   addSublistItem(index, event) {
     var sortOrder = this.props.contentList.length + 1;
 
@@ -79,7 +96,7 @@ class ListTemplate extends React.Component {
 
     //want to always maintain at miniumum one list item on the page
     if(this.props.contentList.length == 0){
-      this.props.addParentListItem();
+      this.addParentListItem();
     }
   }
 
@@ -148,6 +165,9 @@ class ListTemplate extends React.Component {
             <div className="Edit-Content-Button">
               <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
             </div>
+
+            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+
             <div className='row List-page'>
               {nodes}
             </div>
