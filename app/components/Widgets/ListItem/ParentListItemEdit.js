@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
+import {_} from 'underscore';
+import Field from '../../Widgets/Field/Field';
 
 class ParentListItemEdit extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class ParentListItemEdit extends React.Component {
 
   render() {
     var propsData = _.extend({value: this.props.contentItem.value }, this.props);
-    
+
     return (
       <div key={this.props.contentItem.sort_order} className='container List-item-group'>
         <div className='row'>
