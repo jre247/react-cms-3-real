@@ -53,8 +53,8 @@ class EditThingsToDo extends React.Component {
 
 
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit',
-      addParentListItem: this.addParentListItem.bind(this)};
+    var propsData = {isEdit: true, contentList: this.state.contentList, editLink: '/things-to-do/edit',
+      addParentListItem: this.addParentListItem.bind(this), setStateForContentList: this.setStateForContentList.bind(this)};
 
     return (
       <div>
@@ -65,7 +65,7 @@ class EditThingsToDo extends React.Component {
             <div className='row List-container'>
               <ListTemplate {...propsData} />
             </div>
-            
+
             <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
               <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
             </div>

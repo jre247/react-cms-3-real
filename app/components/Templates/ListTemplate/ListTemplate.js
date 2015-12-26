@@ -29,7 +29,7 @@ class ListTemplate extends React.Component {
     this.props.setStateForContentList();
   }
 
-  addSublistItem(index, event){
+  addSublistItem(index, event) {
     var sortOrder = this.props.contentList.length + 1;
 
     var description =
@@ -132,6 +132,7 @@ class ListTemplate extends React.Component {
         //override onRemove function for list item if lit item is parent list item
         if(!FieldHelper.isSubListItem(contentItem)){
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
+          listItemProps.onAddSubListItem = this.addSublistItem.bind(this, index);
         }
 
         return (

@@ -1651,6 +1651,7 @@ var ListTemplate = (function (_React$Component) {
           //override onRemove function for list item if lit item is parent list item
           if (!_FieldHelper2.default.isSubListItem(contentItem)) {
             listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
+            listItemProps.onAddSubListItem = _this2.addSublistItem.bind(_this2, index);
           }
 
           return _react2.default.createElement(
@@ -2363,8 +2364,8 @@ var EditThingsToDo = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var propsData = { isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit',
-        addParentListItem: this.addParentListItem.bind(this) };
+      var propsData = { isEdit: true, contentList: this.state.contentList, editLink: '/things-to-do/edit',
+        addParentListItem: this.addParentListItem.bind(this), setStateForContentList: this.setStateForContentList.bind(this) };
 
       return _react2.default.createElement(
         'div',
@@ -2973,6 +2974,14 @@ var _LongDescription = require('../../Widgets/LongDescription/LongDescription');
 
 var _LongDescription2 = _interopRequireDefault(_LongDescription);
 
+var _SubListItem = require('../../Widgets/ListItem/SubListItem');
+
+var _SubListItem2 = _interopRequireDefault(_SubListItem);
+
+var _ParentListItem = require('../../Widgets/ListItem/ParentListItem');
+
+var _ParentListItem2 = _interopRequireDefault(_ParentListItem);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2995,6 +3004,24 @@ var FieldEdit = (function (_React$Component) {
     value: function render() {
       var contentItem = this.props.contentItem;
       var propsData = _underscore._.extend({ value: contentItem.value }, this.props);
+
+      //todo: think about why there's code that declare another props data object to pass into list item sub or parent
+      if (this.props.isListItem) {
+        var listItemProps = _underscore._.extend({ listItem: this.props.contentItem, isEdit: this.props.isEdit }, this.props);
+        if (_FieldHelper2.default.isSubListItem(contentItem)) {
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_SubListItem2.default, listItemProps)
+          );
+        } else {
+          return _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_ParentListItem2.default, listItemProps)
+          );
+        }
+      }
 
       if (_FieldHelper2.default.isDescription(contentItem)) {
         return _react2.default.createElement(
@@ -3029,7 +3056,7 @@ var FieldEdit = (function (_React$Component) {
 
 exports.default = FieldEdit;
 
-},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/LongDescription/LongDescription":47,"../../Widgets/ShortDescription/ShortDescription":51,"../../Widgets/Title/Title":55,"react":"react","underscore":"underscore"}],35:[function(require,module,exports){
+},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":47,"../../Widgets/ShortDescription/ShortDescription":51,"../../Widgets/Title/Title":55,"react":"react","underscore":"underscore"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
