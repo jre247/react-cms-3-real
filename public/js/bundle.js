@@ -1504,6 +1504,10 @@ var _Field = require('../../Widgets/Field/Field');
 
 var _Field2 = _interopRequireDefault(_Field);
 
+var _FieldHelper = require('../../Widgets/Field/FieldHelper');
+
+var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
+
 var _underscore = require('underscore');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1530,6 +1534,122 @@ var ListTemplate = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'updateContent',
+    value: function updateContent(index, event) {
+      this.props.contentList[index].value = event.target.value;
+      this.props.setStateForContentList();
+    }
+  }, {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
+      this.props.contentList.splice(index, 1);
+      this.props.setStateForContentList();
+    }
+  }, {
+    key: 'addParentListItem',
+    value: function addParentListItem() {
+      var sortOrder = this.props.contentList.length + 1;
+
+      var content = {
+        name: 'Things To Do Parent List Item',
+        description: 'Things To Do Parent List Item',
+        value: '',
+        content_type_id: 2,
+        sort_order: sortOrder,
+        template_id: 4
+      };
+
+      this.props.contentList.push(content);
+      this.props.setStateForContentList();
+    }
+  }, {
+    key: 'addSublistItem',
+    value: function addSublistItem(index, event) {
+      var sortOrder = this.props.contentList.length + 1;
+
+      var description = {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        content_type_id: 2,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder,
+        template_id: 4
+      };
+      this.props.contentList.splice(index + 1, 0, description);
+
+      sortOrder += 1;
+      var link = {
+        name: 'Things To Do Child List Item',
+        description: 'Things To Do Child List Item',
+        value: '',
+        content_type_id: 5,
+        parent_index: this.findParentIndex(sortOrder),
+        sort_order: sortOrder,
+        template_id: 4
+      };
+      this.props.contentList.splice(index + 2, 0, link);
+
+      this.props.setStateForContentList();
+    }
+  }, {
+    key: 'removeContentAndItsSubListItems',
+    value: function removeContentAndItsSubListItems(index, event) {
+      var parentIndex = index + 1;
+
+      var itemsToRemove = _underscore._.filter(this.props.contentList, function (item) {
+        return item.parent_index === parentIndex || item.sort_order === parentIndex;
+      });
+
+      var itemsToKeep = _underscore._.filter(this.props.contentList, function (item) {
+        return item.parent_index != parentIndex && item.sort_order != parentIndex;
+      });
+
+      this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
+
+      //this.props.contentList = [];
+      this.props.contentList = itemsToKeep;
+      this.setState({ thingsToDo: this.props.contentList });
+
+      //want to always maintain at miniumum one list item on the page
+      if (this.props.contentList.length == 0) {
+        this.addParentListItem();
+      }
+    }
+  }, {
+    key: 'saveNewSortOrderForAllItems',
+    value: function saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove) {
+      var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
+
+      for (var i = 0; i < itemsToKeep.length; i++) {
+        var item = itemsToKeep[i];
+
+        //update parent index for only sub list items past the index of the last content item removed
+        if (item.sort_order > lastItemIndexToRemove) {
+          if (_FieldHelper2.default.isSubListItem(item)) {
+            item.parent_index -= itemsToRemove.length;
+          }
+        }
+
+        item.sort_order = i + 1;
+      }
+    }
+  }, {
+    key: 'findParentIndex',
+    value: function findParentIndex(currentIndex) {
+      var parentIndex = 1;
+
+      for (var index = currentIndex - 2; index > 0; index--) {
+        var listItem = this.props.contentList[index];
+        if (!listItem.parent_index) {
+          parentIndex = listItem.sort_order;
+          break;
+        }
+      }
+
+      return parentIndex;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -1539,7 +1659,17 @@ var ListTemplate = (function (_React$Component) {
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
         var nodes = this.props.contentList.map(function (contentItem, index) {
-          var listItemProps = { contentItem: contentItem, isEdit: _this2.props.isEdit, isListItem: true };
+          var listItemProps = {
+            contentItem: contentItem, isEdit: _this2.props.isEdit, isListItem: true,
+            onRemove: _this2.removeContent.bind(_this2, index),
+            onChange: _this2.updateContent.bind(_this2, index)
+          };
+
+          //override onRemove function for list item if lit item is parent list item
+          if (!_FieldHelper2.default.isSubListItem(contentItem)) {
+            listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
+          }
+
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order },
@@ -1578,7 +1708,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EmptyContent":9,"../../Widgets/Field/Field":33,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"../../EmptyContent":9,"../../Widgets/Field/Field":33,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2170,15 +2300,11 @@ var _ThingsToDoActions = require('../../actions/ThingsToDoActions');
 
 var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
 
-var _SubListItem = require('../Widgets/ListItem/SubListItem');
-
-var _SubListItem2 = _interopRequireDefault(_SubListItem);
-
-var _ParentListItem = require('../Widgets/ListItem/ParentListItem');
-
-var _ParentListItem2 = _interopRequireDefault(_ParentListItem);
-
 var _underscore = require('underscore');
+
+var _ListTemplate = require('../Templates/ListTemplate/ListTemplate');
+
+var _ListTemplate2 = _interopRequireDefault(_ListTemplate);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2217,138 +2343,6 @@ var EditThingsToDo = (function (_React$Component) {
     value: function componentWillUnmount() {
       _ThingsToDoStore2.default.unlisten(this.onChange);
     }
-
-    //TODO: put in helper
-
-  }, {
-    key: 'isSubListItem',
-    value: function isSubListItem(node) {
-      return node.parent_index > 0;
-    }
-    //TODO: put in helper
-
-  }, {
-    key: 'isDescription',
-    value: function isDescription(node) {
-      return node.content_type_id == 2;
-    }
-
-    //TODO: create function to return new content item
-
-  }, {
-    key: 'addParentListItem',
-    value: function addParentListItem() {
-      var sortOrder = this.state.contentList.length + 1;
-
-      var content = {
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        content_type_id: 2,
-        sort_order: sortOrder,
-        template_id: 4
-      };
-
-      this.state.contentList.push(content);
-
-      this.setState({ contentList: this.state.contentList });
-    }
-
-    //TODO: create function to return new content item
-
-  }, {
-    key: 'addSublistItem',
-    value: function addSublistItem(index, event) {
-      var sortOrder = this.state.contentList.length + 1;
-
-      var description = {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 2,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-      };
-      this.state.contentList.splice(index + 1, 0, description);
-
-      sortOrder += 1;
-      var link = {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 5,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-      };
-      this.state.contentList.splice(index + 2, 0, link);
-
-      this.setState({ thingsToDo: this.state.contentList });
-    }
-  }, {
-    key: 'findParentIndex',
-    value: function findParentIndex(currentIndex) {
-      var parentIndex = 1;
-
-      for (var index = currentIndex - 2; index > 0; index--) {
-        var listItem = this.state.contentList[index];
-        if (!listItem.parent_index) {
-          parentIndex = listItem.sort_order;
-          break;
-        }
-      }
-
-      return parentIndex;
-    }
-  }, {
-    key: 'removeContent',
-    value: function removeContent(index, event) {
-      this.state.contentList.splice(index, 1);
-      this.setState({ thingsToDo: this.state.contentList });
-    }
-  }, {
-    key: 'removeContentAndItsSubListItems',
-    value: function removeContentAndItsSubListItems(index, event) {
-      var parentIndex = index + 1;
-
-      var itemsToRemove = _underscore._.filter(this.state.contentList, function (item) {
-        return item.parent_index === parentIndex || item.sort_order === parentIndex;
-      });
-
-      var itemsToKeep = _underscore._.filter(this.state.contentList, function (item) {
-        return item.parent_index != parentIndex && item.sort_order != parentIndex;
-      });
-
-      this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
-
-      //this.state.contentList = [];
-      this.state.contentList = itemsToKeep;
-      this.setState({ thingsToDo: this.state.contentList });
-
-      //want to always maintain at miniumum one list item on the page
-      if (this.state.contentList.length == 0) {
-        this.addParentListItem();
-      }
-    }
-  }, {
-    key: 'saveNewSortOrderForAllItems',
-    value: function saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove) {
-      var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
-
-      for (var i = 0; i < itemsToKeep.length; i++) {
-        var item = itemsToKeep[i];
-
-        //update parent index for only sub list items past the index of the last content item removed
-        if (item.sort_order > lastItemIndexToRemove) {
-          if (this.isSubListItem(item)) {
-            item.parent_index -= itemsToRemove.length;
-          }
-        }
-
-        item.sort_order = i + 1;
-      }
-    }
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
@@ -2357,10 +2351,9 @@ var EditThingsToDo = (function (_React$Component) {
       //ThingsToDoActions.saveThingsToDoData(this.state.contentList, this.props.history);
     }
   }, {
-    key: 'updateListItem',
-    value: function updateListItem(index, event) {
-      this.state.contentList[index].value = event.target.value;
-      this.setState({ thingsToDo: this.state.contentList });
+    key: 'setStateForContentList',
+    value: function setStateForContentList() {
+      this.setState({ contentList: this.state.contentList });
     }
   }, {
     key: 'submit',
@@ -2373,23 +2366,8 @@ var EditThingsToDo = (function (_React$Component) {
       var _this2 = this;
 
       var thingsToDoNodes = this.state.contentList.map(function (thingToDo, index) {
-        if (_this2.isSubListItem(thingToDo)) {
-          //todo: put update list item inside list item module, same with remove content
-          var subListItemProps = { listItem: thingToDo, isEdit: true,
-            onChange: _this2.updateListItem.bind(_this2, index),
-            onRemove: _this2.removeContent.bind(_this2, index) };
-
-          return _react2.default.createElement(_SubListItem2.default, subListItemProps);
-        } else {
-          //todo: put onAddSubListItem inside parent list item module
-          //todo: put update list item inside list item module, same with remove content
-          var parentListItemProps = { isEdit: true, listItem: thingToDo,
-            onAddSubListItem: _this2.addSublistItem.bind(_this2, index),
-            onChange: _this2.updateListItem.bind(_this2, index),
-            onRemove: _this2.removeContentAndItsSubListItems.bind(_this2, index) };
-
-          return _react2.default.createElement(_ParentListItem2.default, parentListItemProps);
-        }
+        var propsData = { isEdit: false, contentList: _this2.state.contentList, editLink: '/things-to-do/edit' };
+        return _react2.default.createElement(_ListTemplate2.default, propsData);
       });
 
       return _react2.default.createElement(
@@ -2431,7 +2409,7 @@ var EditThingsToDo = (function (_React$Component) {
 
 exports.default = EditThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":70,"../Widgets/ListItem/ParentListItem":41,"../Widgets/ListItem/SubListItem":44,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":70,"../Templates/ListTemplate/ListTemplate":20,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
