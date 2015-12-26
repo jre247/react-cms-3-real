@@ -34,7 +34,7 @@ class EditThingsToDo extends React.Component {
 
   //TODO: create function to return new content item
   addParentListItem(){
-    var sortOrder = this.state.thingsToDo.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
 
     var content =
     {
@@ -46,15 +46,14 @@ class EditThingsToDo extends React.Component {
       template_id: 4
     };
 
-    this.state.thingsToDo.push(content);
+    this.state.contentList.push(content);
 
-    this.setState({thingsToDo: this.state.thingsToDo})
+    this.setState({contentList: this.state.contentList})
   }
 
   //TODO: create function to return new content item
   addSublistItem(index, event){
-    debugger;
-    var sortOrder = this.state.thingsToDo.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
 
     var description =
     {
@@ -66,7 +65,7 @@ class EditThingsToDo extends React.Component {
         sort_order: sortOrder,
         template_id: 4
     };
-    this.state.thingsToDo.splice(index + 1, 0, description);
+    this.state.contentList.splice(index + 1, 0, description);
 
     sortOrder += 1;
     var link =
@@ -79,16 +78,16 @@ class EditThingsToDo extends React.Component {
         sort_order: sortOrder,
         template_id: 4
     };
-    this.state.thingsToDo.splice(index + 2, 0, link);
+    this.state.contentList.splice(index + 2, 0, link);
 
-    this.setState({thingsToDo: this.state.thingsToDo})
+    this.setState({thingsToDo: this.state.contentList})
   }
 
   findParentIndex(currentIndex){
     var parentIndex = 1;
 
     for(var index = currentIndex - 2; index > 0; index--){
-      var listItem = this.state.thingsToDo[index];
+      var listItem = this.state.contentList[index];
       if(!listItem.parent_index){
         parentIndex = listItem.sort_order;
         break;
@@ -99,29 +98,29 @@ class EditThingsToDo extends React.Component {
   }
 
   removeContent(index, event){
-    this.state.thingsToDo.splice(index, 1);
-    this.setState({thingsToDo: this.state.thingsToDo});
+    this.state.contentList.splice(index, 1);
+    this.setState({thingsToDo: this.state.contentList});
   }
 
   removeContentAndItsSubListItems(index, event){
     var parentIndex = index + 1;
 
-    var itemsToRemove = _.filter(this.state.thingsToDo, function(item){
+    var itemsToRemove = _.filter(this.state.contentList, function(item){
       return item.parent_index === parentIndex || item.sort_order === parentIndex;
     });
 
-    var itemsToKeep = _.filter(this.state.thingsToDo, function(item){
+    var itemsToKeep = _.filter(this.state.contentList, function(item){
       return item.parent_index != parentIndex && item.sort_order != parentIndex;
     });
 
     this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
 
-    //this.state.thingsToDo = [];
-    this.state.thingsToDo = itemsToKeep;
-    this.setState({thingsToDo: this.state.thingsToDo});
+    //this.state.contentList = [];
+    this.state.contentList = itemsToKeep;
+    this.setState({thingsToDo: this.state.contentList});
 
     //want to always maintain at miniumum one list item on the page
-    if(this.state.thingsToDo.length == 0){
+    if(this.state.contentList.length == 0){
       this.addParentListItem();
     }
   }
@@ -146,20 +145,20 @@ class EditThingsToDo extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    //ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
+    //ThingsToDoActions.saveThingsToDoData(this.state.contentList, this.props.history);
   }
 
   updateListItem(index, event){
-    this.state.thingsToDo[index].value = event.target.value;
-    this.setState({thingsToDo: this.state.thingsToDo});
+    this.state.contentList[index].value = event.target.value;
+    this.setState({thingsToDo: this.state.contentList});
   }
 
   submit(event){
-    ThingsToDoActions.saveThingsToDoData(this.state.thingsToDo, this.props.history);
+    ThingsToDoActions.saveThingsToDoData(this.state.contentList, this.props.history);
   }
 
   render() {
-      let thingsToDoNodes = this.state.thingsToDo.map((thingToDo, index) => {
+      let thingsToDoNodes = this.state.contentList.map((thingToDo, index) => {
         if(this.isSubListItem(thingToDo)){
           //todo: put update list item inside list item module, same with remove content
           var subListItemProps = {listItem: thingToDo, isEdit: true,
@@ -192,7 +191,7 @@ class EditThingsToDo extends React.Component {
             <div className='row List-container'>
               {thingsToDoNodes}
             </div>
-            <div className={this.state.thingsToDo.length > 0 ? 'form-group' : 'form-group hidden'}>
+            <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
               <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
             </div>
           </div>

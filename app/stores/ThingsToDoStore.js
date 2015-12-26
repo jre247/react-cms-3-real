@@ -4,14 +4,14 @@ import ThingsToDoActions from '../actions/ThingsToDoActions';
 class ThingsToDoStore {
   constructor() {
     this.bindActions(ThingsToDoActions);
-    this.thingsToDo = [];
+    this.contentList = [];
     this.ajaxAnimationClass = '';
   }
 
   onGetThingsToDoDataSuccess(data) {
     console.log('onGetThingsToDoDataSuccess');
     if(data && data.length > 0){
-      this.thingsToDo = data;
+      this.contentList = data;
     }
   }
 

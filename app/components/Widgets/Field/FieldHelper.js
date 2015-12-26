@@ -17,6 +17,9 @@ class FieldHelper {
   static isTitle(node){
     return node.content_type_id == 3;
   }
+  static isSubListItem(node){
+    return node.parent_index > 0;
+  }
 }
 
 export default FieldHelper;

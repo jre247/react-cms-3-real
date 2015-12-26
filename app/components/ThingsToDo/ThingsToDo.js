@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import ThingsToDoStore from '../../stores/ThingsToDoStore';
 import ThingsToDoActions from '../../actions/ThingsToDoActions';
+import ListTemplate from '../Templates/ListTemplate/ListTemplate';
 import {_} from 'underscore';
 
 class ThingsToDo extends React.Component {
@@ -20,13 +21,10 @@ class ThingsToDo extends React.Component {
   componentWillUnmount() {
     ThingsToDoStore.unlisten(this.onChange);
   }
-  //TODO: put in helper
-  isSubListItem(node){
-    return node.parent_index > 0;
-  }
   render() {
+    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit'};
     return (
-      <ListTemplate {propsData} />
+      <ListTemplate {...propsData} />
     );
   }
 }
