@@ -2350,18 +2350,6 @@ var _ThingsToDoActions = require('../../actions/ThingsToDoActions');
 
 var _ThingsToDoActions2 = _interopRequireDefault(_ThingsToDoActions);
 
-var _EmptyContent = require('../EmptyContent');
-
-var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
-
-var _SubListItem = require('../Widgets/ListItem/SubListItem');
-
-var _SubListItem2 = _interopRequireDefault(_SubListItem);
-
-var _ParentListItem = require('../Widgets/ListItem/ParentListItem');
-
-var _ParentListItem2 = _interopRequireDefault(_ParentListItem);
-
 var _underscore = require('underscore');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2415,15 +2403,15 @@ var ThingsToDo = (function (_React$Component) {
 
       if (_underscore._.isEmpty(this.state.thingsToDo)) {
         var emptyContentProps = { editLink: '/things-to-do/edit' };
-        return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
+        return _react2.default.createElement(EmptyContent, emptyContentProps);
       } else {
         var thingsToDoNodes = this.state.thingsToDo.map(function (thingToDo, index) {
           if (_this2.isSubListItem(thingToDo)) {
             var subListItemProps = { listItem: thingToDo, isEdit: false };
-            return _react2.default.createElement(_SubListItem2.default, subListItemProps);
+            return _react2.default.createElement(SubListItem, subListItemProps);
           } else {
             var listItemProps = { listItem: thingToDo, isEdit: false };
-            return _react2.default.createElement(_ParentListItem2.default, listItemProps);
+            return _react2.default.createElement(ParentListItem, listItemProps);
           }
         });
 
@@ -2458,7 +2446,7 @@ var ThingsToDo = (function (_React$Component) {
 
 exports.default = ThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"../EmptyContent":9,"../Widgets/ListItem/ParentListItem":40,"../Widgets/ListItem/SubListItem":43,"react":"react","react-router":"react-router","underscore":"underscore"}],27:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"react":"react","react-router":"react-router","underscore":"underscore"}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2834,7 +2822,7 @@ var CarouselIndicators = (function (_React$Component) {
       var propsArray = _PropsHelper2.default.convertPropsToArray(this.props.contentList);
 
       var indicators = propsArray.map(function (indicator, index) {
-        return _react2.default.createElement('li', { key: image.sort_order, 'data-target': '#largeCarousel', className: index == _this2.props.selectedPhoto ? 'active' : '', 'data-slide-to': index });
+        return _react2.default.createElement('li', { key: index, 'data-target': '#largeCarousel', className: index == _this2.props.selectedPhoto ? 'active' : '', 'data-slide-to': index });
       });
 
       return _react2.default.createElement(
