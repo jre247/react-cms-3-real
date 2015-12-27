@@ -4,6 +4,7 @@ import EmptyContent from '../../EmptyContent';
 import SubListItem from '../../Widgets/ListItem/SubListItem';
 import ParentListItem from '../../Widgets/ListItem/ParentListItem';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
+import TemplateHelper from '../../../helpers/TemplateHelper';
 import {_} from 'underscore';
 import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
 
@@ -28,7 +29,7 @@ class ListTemplate extends React.Component {
 
   removeContent(index, event){
     this.props.contentList.splice(index, 1);
-    this.setNewSortOrderForAllListItems();
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
   }
 
@@ -62,13 +63,6 @@ class ListTemplate extends React.Component {
     //want to always maintain at miniumum one list item on the page
     if(this.props.contentList.length == 0){
       this.addParentListItem();
-    }
-  }
-
-  setNewSortOrderForAllListItems(){
-    for(var i = 0; i < this.props.contentList.length; i++){
-      var item = this.props.contentList[i];
-      item.sort_order = i + 1;
     }
   }
 

@@ -8,6 +8,7 @@ import ImageFactory from '../../Widgets/Image/ImageFactory';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import ShortDescriptionFactory from '../../Widgets/ShortDescription/ShortDescriptionFactory';
 import UrlFactory from '../../Widgets/Url/UrlFactory';
+import TemplateHelper from '../../../helpers/TemplateHelper';
 
 class ParentListItemEdit extends React.Component {
   constructor(props) {
@@ -24,69 +25,64 @@ class ParentListItemEdit extends React.Component {
   }
 
   createLongDescription(index, event){
-    var sortOrder = this.getSortOrderForNewChild(index);
     var parentIndex = index;
-    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Long Description Sublist Item',
+    var longDescriptionFactory = new LongDescriptionFactory(null, 'List Long Description Sublist Item',
       'List Long Description Sublist Item', this.templateId, parentIndex);
     var longDescription = longDescriptionFactory.create();
 
     this.props.contentList.splice(this.getIndexForNewChild(index), 0, longDescription);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
     //this.setState({contentList: this.props.contentList});
   }
   createShortDescription(index, event){
-    var sortOrder = this.getSortOrderForNewChild(index);
     var parentIndex = index;
-    var shortDescriptionFactory = new ShortDescriptionFactory(sortOrder, 'List Description Sublist Item',
+    var shortDescriptionFactory = new ShortDescriptionFactory(null, 'List Description Sublist Item',
       'List Description Sublist Item', this.templateId, parentIndex);
     var shortDescription = shortDescriptionFactory.create();
 
     this.props.contentList.splice(this.getIndexForNewChild(index), 0, shortDescription);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
   //  this.setState({contentList: this.state.contentList});
   }
   createTitle(index, event){
-    var sortOrder = this.getSortOrderForNewChild(index);
     var parentIndex = index;
-    var factory = new TitleFactory(sortOrder, 'List Title Sublist Item',
+    var factory = new TitleFactory(null, 'List Title Sublist Item',
       'List Title Sublist Item', this.templateId, parentIndex);
     var title = factory.create();
 
     this.props.contentList.splice(this.getIndexForNewChild(index), 0, title);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
     //this.setState({contentList: this.state.contentList});
   }
   //todo: move to actions
   createImage(index, event){
-    var sortOrder = this.getSortOrderForNewChild(index);
     var parentIndex = index;
-    var imageFactory = new ImageFactory(sortOrder, 'List Image Sublist Item',
+    var imageFactory = new ImageFactory(null, 'List Image Sublist Item',
       'List Image Sublist Item', this.templateId, parentIndex);
     var image = imageFactory.create();
 
     this.props.contentList.splice(this.getIndexForNewChild(index), 0, image);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
   //  this.setState({contentList: this.props.contentList});
   }
   createUrl(index, event){
-    var sortOrder = this.getSortOrderForNewChild(index);
     var parentIndex = index;
-    var urlFactory = new UrlFactory(sortOrder, 'List Url Sublist Item',
+    var urlFactory = new UrlFactory(null, 'List Url Sublist Item',
       'List Url Sublist Item', this.templateId, parentIndex);
     var url = urlFactory.create();
 
     this.props.contentList.splice(this.getIndexForNewChild(index), 0, url);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
   //  this.setState({contentList: this.props.contentList});
   }
   getIndexForNewChild(parentIndex){
     var lastChildIndexForParent = this.findLastChildIndexForParent(parentIndex);
     return lastChildIndexForParent + 1;
-  }
-  getSortOrderForNewChild(parentIndex){
-    debugger;
-    var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
-    return lastChildSortOrderForParent + 1;
   }
   findLastChildIndexForParent(parentIndex){
     var lastChildIndex = parentIndex;
@@ -101,22 +97,6 @@ class ParentListItemEdit extends React.Component {
     };
 
     return lastChildIndex;
-  }
-  findLastChildSortOrderForParent(parentIndex){
-    var parentSortOrder = this.props.contentList[parentIndex].sort_order;
-    var lastChildSortOrder = parentSortOrder;
-
-    for(var i = parentIndex + 1; i < this.props.contentList.length; i++){
-      var listItemCompare = this.props.contentList[i];
-      if(FieldHelper.isParentListItem(listItemCompare)){
-        break;
-      }
-      if(listItemCompare.parent_index == parentIndex){
-        lastChildSortOrder = listItemCompare.sort_order;
-      }
-    };
-
-    return lastChildSortOrder;
   }
 
   render() {

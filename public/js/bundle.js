@@ -565,7 +565,7 @@ var Footer = (function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":1,"../stores/FooterStore":65,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../stores/FooterStore":66,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -910,7 +910,7 @@ var Navbar = (function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":2,"../stores/NavbarStore":66,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../stores/NavbarStore":67,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1005,7 +1005,7 @@ var EditPhotoAlbum = (function (_React$Component) {
 
 exports.default = EditPhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":67,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":68,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1084,7 +1084,7 @@ var PhotoAlbum = (function (_React$Component) {
 
 exports.default = PhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":67,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react"}],17:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":68,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react"}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1504,6 +1504,10 @@ var _FieldHelper = require('../../Widgets/Field/FieldHelper');
 
 var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
 
+var _TemplateHelper = require('../../../helpers/TemplateHelper');
+
+var _TemplateHelper2 = _interopRequireDefault(_TemplateHelper);
+
 var _underscore = require('underscore');
 
 var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
@@ -1546,7 +1550,7 @@ var ListTemplate = (function (_React$Component) {
     key: 'removeContent',
     value: function removeContent(index, event) {
       this.props.contentList.splice(index, 1);
-      this.setNewSortOrderForAllListItems();
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
     }
   }, {
@@ -1581,14 +1585,6 @@ var ListTemplate = (function (_React$Component) {
       //want to always maintain at miniumum one list item on the page
       if (this.props.contentList.length == 0) {
         this.addParentListItem();
-      }
-    }
-  }, {
-    key: 'setNewSortOrderForAllListItems',
-    value: function setNewSortOrderForAllListItems() {
-      for (var i = 0; i < this.props.contentList.length; i++) {
-        var item = this.props.contentList[i];
-        item.sort_order = i + 1;
       }
     }
   }, {
@@ -1691,7 +1687,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EmptyContent":9,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescriptionFactory":47,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"../../../helpers/TemplateHelper":63,"../../EmptyContent":9,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescriptionFactory":47,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2183,7 +2179,7 @@ var EditTheProposal = (function (_React$Component) {
 
 exports.default = EditTheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":68,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],25:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":69,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2262,7 +2258,7 @@ var TheProposal = (function (_React$Component) {
 
 exports.default = TheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":68,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],26:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":69,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],26:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2383,7 +2379,7 @@ var EditThingsToDo = (function (_React$Component) {
 
 exports.default = EditThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"../Templates/ListTemplate/ListTemplate":20,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":70,"../Templates/ListTemplate/ListTemplate":20,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2462,7 +2458,7 @@ var ThingsToDo = (function (_React$Component) {
 
 exports.default = ThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"../Templates/ListTemplate/ListTemplate":20,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":70,"../Templates/ListTemplate/ListTemplate":20,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2556,7 +2552,7 @@ var EditVenue = (function (_React$Component) {
 
 exports.default = EditVenue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":70,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],29:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":71,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],29:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2635,7 +2631,7 @@ var Venue = (function (_React$Component) {
 
 exports.default = Venue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":70,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],30:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":71,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],30:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3557,6 +3553,10 @@ var _UrlFactory = require('../../Widgets/Url/UrlFactory');
 
 var _UrlFactory2 = _interopRequireDefault(_UrlFactory);
 
+var _TemplateHelper = require('../../../helpers/TemplateHelper');
+
+var _TemplateHelper2 = _interopRequireDefault(_TemplateHelper);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3586,36 +3586,36 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'createLongDescription',
     value: function createLongDescription(index, event) {
-      var sortOrder = this.getSortOrderForNewChild(index);
       var parentIndex = index;
-      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Long Description Sublist Item', 'List Long Description Sublist Item', this.templateId, parentIndex);
+      var longDescriptionFactory = new _LongDescriptionFactory2.default(null, 'List Long Description Sublist Item', 'List Long Description Sublist Item', this.templateId, parentIndex);
       var longDescription = longDescriptionFactory.create();
 
       this.props.contentList.splice(this.getIndexForNewChild(index), 0, longDescription);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
       //this.setState({contentList: this.props.contentList});
     }
   }, {
     key: 'createShortDescription',
     value: function createShortDescription(index, event) {
-      var sortOrder = this.getSortOrderForNewChild(index);
       var parentIndex = index;
-      var shortDescriptionFactory = new _ShortDescriptionFactory2.default(sortOrder, 'List Description Sublist Item', 'List Description Sublist Item', this.templateId, parentIndex);
+      var shortDescriptionFactory = new _ShortDescriptionFactory2.default(null, 'List Description Sublist Item', 'List Description Sublist Item', this.templateId, parentIndex);
       var shortDescription = shortDescriptionFactory.create();
 
       this.props.contentList.splice(this.getIndexForNewChild(index), 0, shortDescription);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
       //  this.setState({contentList: this.state.contentList});
     }
   }, {
     key: 'createTitle',
     value: function createTitle(index, event) {
-      var sortOrder = this.getSortOrderForNewChild(index);
       var parentIndex = index;
-      var factory = new _TitleFactory2.default(sortOrder, 'List Title Sublist Item', 'List Title Sublist Item', this.templateId, parentIndex);
+      var factory = new _TitleFactory2.default(null, 'List Title Sublist Item', 'List Title Sublist Item', this.templateId, parentIndex);
       var title = factory.create();
 
       this.props.contentList.splice(this.getIndexForNewChild(index), 0, title);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
       //this.setState({contentList: this.state.contentList});
     }
@@ -3624,24 +3624,24 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'createImage',
     value: function createImage(index, event) {
-      var sortOrder = this.getSortOrderForNewChild(index);
       var parentIndex = index;
-      var imageFactory = new _ImageFactory2.default(sortOrder, 'List Image Sublist Item', 'List Image Sublist Item', this.templateId, parentIndex);
+      var imageFactory = new _ImageFactory2.default(null, 'List Image Sublist Item', 'List Image Sublist Item', this.templateId, parentIndex);
       var image = imageFactory.create();
 
       this.props.contentList.splice(this.getIndexForNewChild(index), 0, image);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
       //  this.setState({contentList: this.props.contentList});
     }
   }, {
     key: 'createUrl',
     value: function createUrl(index, event) {
-      var sortOrder = this.getSortOrderForNewChild(index);
       var parentIndex = index;
-      var urlFactory = new _UrlFactory2.default(sortOrder, 'List Url Sublist Item', 'List Url Sublist Item', this.templateId, parentIndex);
+      var urlFactory = new _UrlFactory2.default(null, 'List Url Sublist Item', 'List Url Sublist Item', this.templateId, parentIndex);
       var url = urlFactory.create();
 
       this.props.contentList.splice(this.getIndexForNewChild(index), 0, url);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
       //  this.setState({contentList: this.props.contentList});
     }
@@ -3650,13 +3650,6 @@ var ParentListItemEdit = (function (_React$Component) {
     value: function getIndexForNewChild(parentIndex) {
       var lastChildIndexForParent = this.findLastChildIndexForParent(parentIndex);
       return lastChildIndexForParent + 1;
-    }
-  }, {
-    key: 'getSortOrderForNewChild',
-    value: function getSortOrderForNewChild(parentIndex) {
-      debugger;
-      var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
-      return lastChildSortOrderForParent + 1;
     }
   }, {
     key: 'findLastChildIndexForParent',
@@ -3673,24 +3666,6 @@ var ParentListItemEdit = (function (_React$Component) {
       };
 
       return lastChildIndex;
-    }
-  }, {
-    key: 'findLastChildSortOrderForParent',
-    value: function findLastChildSortOrderForParent(parentIndex) {
-      var parentSortOrder = this.props.contentList[parentIndex].sort_order;
-      var lastChildSortOrder = parentSortOrder;
-
-      for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
-        var listItemCompare = this.props.contentList[i];
-        if (_FieldHelper2.default.isParentListItem(listItemCompare)) {
-          break;
-        }
-        if (listItemCompare.parent_index == parentIndex) {
-          lastChildSortOrder = listItemCompare.sort_order;
-        }
-      };
-
-      return lastChildSortOrder;
     }
   }, {
     key: 'render',
@@ -3791,7 +3766,7 @@ var ParentListItemEdit = (function (_React$Component) {
 
 exports.default = ParentListItemEdit;
 
-},{"../../Widgets/Field/Field":33,"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageFactory":37,"../../Widgets/LongDescription/LongDescriptionFactory":47,"../../Widgets/ShortDescription/ShortDescriptionFactory":51,"../../Widgets/Title/TitleFactory":55,"../../Widgets/Url/UrlFactory":59,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
+},{"../../../helpers/TemplateHelper":63,"../../Widgets/Field/Field":33,"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageFactory":37,"../../Widgets/LongDescription/LongDescriptionFactory":47,"../../Widgets/ShortDescription/ShortDescriptionFactory":51,"../../Widgets/Title/TitleFactory":55,"../../Widgets/Url/UrlFactory":59,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5006,6 +4981,39 @@ exports.default = PropsHelper;
 },{"underscore":"underscore"}],63:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _underscore = require('underscore');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var TemplateHelper = (function () {
+  function TemplateHelper() {
+    _classCallCheck(this, TemplateHelper);
+  }
+
+  _createClass(TemplateHelper, null, [{
+    key: 'setNewSortOrderForAllListItems',
+    value: function setNewSortOrderForAllListItems(contentList) {
+      for (var i = 0; i < contentList.length; i++) {
+        var item = contentList[i];
+        item.sort_order = i + 1;
+      }
+    }
+  }]);
+
+  return TemplateHelper;
+})();
+
+exports.default = TemplateHelper;
+
+},{"underscore":"underscore"}],64:[function(require,module,exports){
+'use strict';
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -5036,7 +5044,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":64,"history/lib/createBrowserHistory":77,"react":"react","react-dom":"react-dom","react-router":"react-router"}],64:[function(require,module,exports){
+},{"./routes":65,"history/lib/createBrowserHistory":78,"react":"react","react-dom":"react-dom","react-router":"react-router"}],65:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5115,7 +5123,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/things-to-do/edit', component: _EditThingsToDo2.default })
 );
 
-},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":15,"./components/PhotoAlbum/PhotoAlbum":16,"./components/TheProposal/EditTheProposal":24,"./components/TheProposal/TheProposal":25,"./components/ThingsToDo/EditThingsToDo":26,"./components/ThingsToDo/ThingsToDo":27,"./components/Venue/EditVenue":28,"./components/Venue/Venue":29,"./components/app":61,"react":"react","react-router":"react-router"}],65:[function(require,module,exports){
+},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":15,"./components/PhotoAlbum/PhotoAlbum":16,"./components/TheProposal/EditTheProposal":24,"./components/TheProposal/TheProposal":25,"./components/ThingsToDo/EditThingsToDo":26,"./components/ThingsToDo/ThingsToDo":27,"./components/Venue/EditVenue":28,"./components/Venue/Venue":29,"./components/app":61,"react":"react","react-router":"react-router"}],66:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -5153,7 +5161,7 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":1,"../alt":7}],66:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../alt":7}],67:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5200,7 +5208,7 @@ var NavbarStore = (function () {
 
 exports.default = _alt2.default.createStore(NavbarStore);
 
-},{"../actions/NavbarActions":2,"../alt":7}],67:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../alt":7}],68:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5269,7 +5277,7 @@ var PhotoAlbumStore = (function () {
 
 exports.default = _alt2.default.createStore(PhotoAlbumStore);
 
-},{"../actions/PhotoAlbumActions":3,"../alt":7}],68:[function(require,module,exports){
+},{"../actions/PhotoAlbumActions":3,"../alt":7}],69:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5343,7 +5351,7 @@ var TheProposalStore = (function () {
 
 exports.default = _alt2.default.createStore(TheProposalStore);
 
-},{"../actions/TheProposalActions":4,"../alt":7}],69:[function(require,module,exports){
+},{"../actions/TheProposalActions":4,"../alt":7}],70:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5418,7 +5426,7 @@ var ThingsToDoStore = (function () {
 
 exports.default = _alt2.default.createStore(ThingsToDoStore);
 
-},{"../actions/ThingsToDoActions":5,"../alt":7}],70:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":5,"../alt":7}],71:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5485,7 +5493,7 @@ var VenueStore = (function () {
 
 exports.default = _alt2.default.createStore(VenueStore);
 
-},{"../actions/VenueActions":6,"../alt":7}],71:[function(require,module,exports){
+},{"../actions/VenueActions":6,"../alt":7}],72:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5578,7 +5586,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -5610,7 +5618,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -5637,7 +5645,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -5708,7 +5716,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":71,"warning":89}],75:[function(require,module,exports){
+},{"_process":72,"warning":90}],76:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5784,13 +5792,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5965,7 +5973,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":72,"./DOMStateStorage":74,"./DOMUtils":75,"./ExecutionEnvironment":76,"./createDOMHistory":78,"_process":71,"invariant":88}],78:[function(require,module,exports){
+},{"./Actions":73,"./DOMStateStorage":75,"./DOMUtils":76,"./ExecutionEnvironment":77,"./createDOMHistory":79,"_process":72,"invariant":89}],79:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6008,7 +6016,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":75,"./ExecutionEnvironment":76,"./createHistory":79,"_process":71,"invariant":88}],79:[function(require,module,exports){
+},{"./DOMUtils":76,"./ExecutionEnvironment":77,"./createHistory":80,"_process":72,"invariant":89}],80:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6279,7 +6287,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":72,"./AsyncUtils":73,"./createLocation":80,"./deprecate":81,"./runTransitionHook":84,"deep-equal":85}],80:[function(require,module,exports){
+},{"./Actions":73,"./AsyncUtils":74,"./createLocation":81,"./deprecate":82,"./runTransitionHook":85,"deep-equal":86}],81:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6316,7 +6324,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":72,"./parsePath":83}],81:[function(require,module,exports){
+},{"./Actions":73,"./parsePath":84}],82:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6338,7 +6346,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":71,"warning":89}],82:[function(require,module,exports){
+},{"_process":72,"warning":90}],83:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -6352,7 +6360,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6399,7 +6407,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./extractPath":82,"_process":71,"warning":89}],84:[function(require,module,exports){
+},{"./extractPath":83,"_process":72,"warning":90}],85:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6426,7 +6434,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":71,"warning":89}],85:[function(require,module,exports){
+},{"_process":72,"warning":90}],86:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -6522,7 +6530,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":86,"./lib/keys.js":87}],86:[function(require,module,exports){
+},{"./lib/is_arguments.js":87,"./lib/keys.js":88}],87:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -6544,7 +6552,7 @@ function unsupported(object){
     false;
 };
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -6555,7 +6563,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],88:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6610,7 +6618,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":71}],89:[function(require,module,exports){
+},{"_process":72}],90:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -6674,4 +6682,4 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":71}]},{},[63]);
+},{"_process":72}]},{},[64]);
