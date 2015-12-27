@@ -1,10 +1,12 @@
 import React from 'react';
 
 class ShortDescriptionFactory {
-  constructor(sortOrder, name, description) {
+  constructor(sortOrder, name, description, templateId, parentIndex) {
     this.sortOrder = sortOrder;
     this.name = name;
     this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
   }
   create() {
 
@@ -14,7 +16,9 @@ class ShortDescriptionFactory {
       description: this.description,
       value: '',
       content_type_id: 4,
-      sort_order: this.sortOrder
+      sort_order: this.sortOrder,
+      template_id: this.templateId,
+      parent_index: this.parentIndex
     };
 
     return content;

@@ -3564,12 +3564,13 @@ var ParentListItemEdit = (function (_React$Component) {
     value: function componentWillUnmount() {}
   }, {
     key: 'findParentIndex',
-    value: function findParentIndex(currentIndex) {
-      var parentIndex = 1;
+    value: function findParentIndex(currentSortOrder) {
+      var parentIndex = 0;
+      var currentIndex = currentSortOrder - 1;
 
-      for (var index = currentIndex - 2; index > 0; index--) {
+      for (var index = currentIndex - 1; index > 0; index--) {
         var listItem = this.props.contentList[index];
-        if (!listItem.parent_index) {
+        if (!listItem.parent_index && listItem.parent_index !== 0) {
           parentIndex = listItem.sort_order;
           break;
         }
@@ -3642,19 +3643,22 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'getIndexForNewChild',
     value: function getIndexForNewChild(parentIndex) {
+      debugger;
       var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
-      return lastChildIndexForParent + 1;
+      return lastChildIndexForParent;
     }
   }, {
     key: 'getSortOrderForNewChild',
     value: function getSortOrderForNewChild(parentIndex) {
+      debugger;
       var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
-      return lastChildIndexForParent + 2;
+      return lastChildIndexForParent + 1;
     }
   }, {
     key: 'findLastChildForParent',
     value: function findLastChildForParent(parentIndex) {
-      var lastChildIndex;
+      debugger;
+      var lastChildIndex = parentIndex + 1;
       for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
         var listItemCompare = this.props.contentList[i];
         if (!listItemCompare.parent_index) {
@@ -4308,12 +4312,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ShortDescriptionFactory = (function () {
-  function ShortDescriptionFactory(sortOrder, name, description) {
+  function ShortDescriptionFactory(sortOrder, name, description, templateId, parentIndex) {
     _classCallCheck(this, ShortDescriptionFactory);
 
     this.sortOrder = sortOrder;
     this.name = name;
     this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
   }
 
   _createClass(ShortDescriptionFactory, [{
@@ -4325,7 +4331,9 @@ var ShortDescriptionFactory = (function () {
         description: this.description,
         value: '',
         content_type_id: 4,
-        sort_order: this.sortOrder
+        sort_order: this.sortOrder,
+        template_id: this.templateId,
+        parent_index: this.parentIndex
       };
 
       return content;

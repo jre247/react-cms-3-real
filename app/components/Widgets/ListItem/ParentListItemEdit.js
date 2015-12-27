@@ -22,12 +22,13 @@ class ParentListItemEdit extends React.Component {
 
   }
 
-  findParentIndex(currentIndex){
-    var parentIndex = 1;
+  findParentIndex(currentSortOrder){
+    var parentIndex = 0;
+    var currentIndex = currentSortOrder - 1;
 
-    for(var index = currentIndex - 2; index > 0; index--){
+    for(var index = currentIndex - 1; index > 0; index--){
       var listItem = this.props.contentList[index];
-      if(!listItem.parent_index){
+      if(!listItem.parent_index && listItem.parent_index !== 0){
         parentIndex = listItem.sort_order;
         break;
       }
@@ -93,15 +94,18 @@ class ParentListItemEdit extends React.Component {
   //  this.setState({contentList: this.props.contentList});
   }
   getIndexForNewChild(parentIndex){
+    debugger;
+    var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
+    return lastChildIndexForParent;
+  }
+  getSortOrderForNewChild(parentIndex){
+    debugger;
     var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
     return lastChildIndexForParent + 1;
   }
-  getSortOrderForNewChild(parentIndex){
-    var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
-    return lastChildIndexForParent + 2;
-  }
   findLastChildForParent(parentIndex){
-    var lastChildIndex;
+    debugger;
+    var lastChildIndex = parentIndex + 1;
     for(var i = parentIndex + 1; i < this.props.contentList.length; i++){
       var listItemCompare = this.props.contentList[i];
       if(!listItemCompare.parent_index){
