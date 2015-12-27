@@ -3,6 +3,7 @@ import React from 'react';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import Title from '../../Widgets/Title/Title';
+import Url from '../../Widgets/Url/Url';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import LongDescription from '../../Widgets/LongDescription/LongDescription';
 import SubListItem from '../../Widgets/ListItem/SubListItem';
@@ -42,6 +43,13 @@ class FieldEdit extends React.Component {
       return (
         <div key={contentItem.sort_order} className="form-group">
           <Title {...propsData} />
+        </div>
+      );
+    }
+    else if(FieldHelper.isUrl(contentItem)){
+      return (
+        <div key={contentItem.sort_order} className="form-group">
+          <Url {...propsData} />
         </div>
       );
     }

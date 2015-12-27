@@ -1692,7 +1692,7 @@ var ListTemplate = (function (_React$Component) {
             { className: 'Content-panel' },
             _react2.default.createElement(
               'div',
-              { className: 'Edit-Content-Button' },
+              { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
               _react2.default.createElement(
                 _reactRouter.Link,
                 { className: 'Navigation-link', to: this.props.editLink },
@@ -2972,6 +2972,10 @@ var _Title = require('../../Widgets/Title/Title');
 
 var _Title2 = _interopRequireDefault(_Title);
 
+var _Url = require('../../Widgets/Url/Url');
+
+var _Url2 = _interopRequireDefault(_Url);
+
 var _ShortDescription = require('../../Widgets/ShortDescription/ShortDescription');
 
 var _ShortDescription2 = _interopRequireDefault(_ShortDescription);
@@ -3035,6 +3039,12 @@ var FieldEdit = (function (_React$Component) {
           { key: contentItem.sort_order, className: 'form-group' },
           _react2.default.createElement(_Title2.default, propsData)
         );
+      } else if (_FieldHelper2.default.isUrl(contentItem)) {
+        return _react2.default.createElement(
+          'div',
+          { key: contentItem.sort_order, className: 'form-group' },
+          _react2.default.createElement(_Url2.default, propsData)
+        );
       }
     }
   }]);
@@ -3044,7 +3054,7 @@ var FieldEdit = (function (_React$Component) {
 
 exports.default = FieldEdit;
 
-},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":45,"../../Widgets/ShortDescription/ShortDescription":49,"../../Widgets/Title/Title":53,"react":"react","underscore":"underscore"}],35:[function(require,module,exports){
+},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":45,"../../Widgets/ShortDescription/ShortDescription":49,"../../Widgets/Title/Title":53,"../../Widgets/Url/Url":57,"react":"react","underscore":"underscore"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3087,6 +3097,11 @@ var FieldHelper = (function () {
     value: function isSubListItem(node) {
       return node.parent_index > 0;
     }
+  }, {
+    key: 'isUrl',
+    value: function isUrl(node) {
+      return node.content_type_id == 5;
+    }
   }]);
 
   return FieldHelper;
@@ -3120,6 +3135,10 @@ var _ImageWidget2 = _interopRequireDefault(_ImageWidget);
 var _Title = require('../../Widgets/Title/Title');
 
 var _Title2 = _interopRequireDefault(_Title);
+
+var _Url = require('../../Widgets/Url/Url');
+
+var _Url2 = _interopRequireDefault(_Url);
 
 var _ShortDescription = require('../../Widgets/ShortDescription/ShortDescription');
 
@@ -3166,24 +3185,6 @@ var FieldReadOnly = (function (_React$Component) {
       var contentItem = this.props.contentItem;
       var propsData = _underscore._.extend({ value: contentItem.value }, this.props);
 
-      //todo: think about why there's code that declare another props data object to pass into list item sub or parent
-      if (this.props.isListItem) {
-        var listItemProps = { listItem: this.props.contentItem, isEdit: this.props.isEdit };
-        if (_FieldHelper2.default.isSubListItem(contentItem)) {
-          return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_SubListItem2.default, listItemProps)
-          );
-        } else {
-          return _react2.default.createElement(
-            'div',
-            null,
-            _react2.default.createElement(_ParentListItem2.default, listItemProps)
-          );
-        }
-      }
-
       if (_FieldHelper2.default.isDescription(contentItem)) {
         return _react2.default.createElement(
           'div',
@@ -3208,6 +3209,12 @@ var FieldReadOnly = (function (_React$Component) {
           { className: 'Content-item-container', key: contentItem.sort_order },
           _react2.default.createElement(_Title2.default, propsData)
         );
+      } else if (_FieldHelper2.default.isUrl(contentItem)) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Content-item-container', key: contentItem.sort_order },
+          _react2.default.createElement(_Url2.default, propsData)
+        );
       }
     }
   }]);
@@ -3217,7 +3224,7 @@ var FieldReadOnly = (function (_React$Component) {
 
 exports.default = FieldReadOnly;
 
-},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":45,"../../Widgets/ShortDescription/ShortDescription":49,"../../Widgets/Title/Title":53,"react":"react","underscore":"underscore"}],37:[function(require,module,exports){
+},{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":45,"../../Widgets/ShortDescription/ShortDescription":49,"../../Widgets/Title/Title":53,"../../Widgets/Url/Url":57,"react":"react","underscore":"underscore"}],37:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3670,7 +3677,7 @@ var ParentListItemReadOnly = (function (_React$Component) {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentItem.value }, this.props);
-
+      debugger;
       return _react2.default.createElement(
         'div',
         { key: this.props.contentItem.sort_order, className: this.props.contentItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },

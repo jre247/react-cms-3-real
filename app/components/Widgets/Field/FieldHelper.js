@@ -20,6 +20,9 @@ class FieldHelper {
   static isSubListItem(node){
     return node.parent_index > 0;
   }
+  static isUrl(node){
+    return node.content_type_id == 5;
+  }
 }
 
 export default FieldHelper;
