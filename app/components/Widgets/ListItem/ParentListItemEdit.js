@@ -85,7 +85,6 @@ class ParentListItemEdit extends React.Component {
   }
   getSortOrderForNewChild(parentIndex){
     var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
-    debugger;
     return lastChildSortOrderForParent + 1;
   }
   findLastChildIndexForParent(parentIndex){

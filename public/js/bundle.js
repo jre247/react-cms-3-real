@@ -1546,6 +1546,7 @@ var ListTemplate = (function (_React$Component) {
     key: 'removeContent',
     value: function removeContent(index, event) {
       this.props.contentList.splice(index, 1);
+      this.setNewSortOrderForAllListItems();
       this.props.setStateForContentList();
     }
   }, {
@@ -1571,7 +1572,7 @@ var ListTemplate = (function (_React$Component) {
         return item.parent_index != parentIndex && item.sort_order != parentIndex;
       });
 
-      this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
+      this.setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove);
 
       //this.props.contentList = [];
       this.props.contentList = itemsToKeep;
@@ -1583,8 +1584,16 @@ var ListTemplate = (function (_React$Component) {
       }
     }
   }, {
-    key: 'saveNewSortOrderForAllItems',
-    value: function saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove) {
+    key: 'setNewSortOrderForAllListItems',
+    value: function setNewSortOrderForAllListItems() {
+      for (var i = 0; i < this.props.contentList.length; i++) {
+        var item = this.props.contentList[i];
+        item.sort_order = i + 1;
+      }
+    }
+  }, {
+    key: 'setNewSortOrderForChildrenForParent',
+    value: function setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove) {
       var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
 
       for (var i = 0; i < itemsToKeep.length; i++) {
@@ -3646,7 +3655,6 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'getSortOrderForNewChild',
     value: function getSortOrderForNewChild(parentIndex) {
       var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
-      debugger;
       return lastChildSortOrderForParent + 1;
     }
   }, {
@@ -4761,7 +4769,29 @@ var UrlEdit = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('input', { className: 'form-control', type: 'text', value: this.props.value, onChange: this.props.onChange });
+      return _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-8' },
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Link', value: this.props.value,
+              onChange: this.props.onChange, autoFocus: true })
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-sm-2' },
+          _react2.default.createElement(
+            'div',
+            { onClick: this.props.onRemove },
+            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+          )
+        )
+      );
     }
   }]);
 

@@ -25,8 +25,10 @@ class ListTemplate extends React.Component {
     this.props.contentList[index].value = event.target.value;
     this.props.setStateForContentList();
   }
+
   removeContent(index, event){
     this.props.contentList.splice(index, 1);
+    this.setNewSortOrderForAllListItems();
     this.props.setStateForContentList();
   }
 
@@ -51,7 +53,7 @@ class ListTemplate extends React.Component {
       return item.parent_index != parentIndex && item.sort_order != parentIndex;
     });
 
-    this.saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove);
+    this.setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove);
 
     //this.props.contentList = [];
     this.props.contentList = itemsToKeep;
@@ -63,7 +65,14 @@ class ListTemplate extends React.Component {
     }
   }
 
-  saveNewSortOrderForAllItems(itemsToKeep, itemsToRemove){
+  setNewSortOrderForAllListItems(){
+    for(var i = 0; i < this.props.contentList.length; i++){
+      var item = this.props.contentList[i];
+      item.sort_order = i + 1;
+    }
+  }
+
+  setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove){
     var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
 
     for(var i = 0; i < itemsToKeep.length; i++){
