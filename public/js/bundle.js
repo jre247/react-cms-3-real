@@ -1672,7 +1672,7 @@ var ListTemplate = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'button',
-              { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+              { className: this.props.isEdit ? "btn btn-primary" : "hidden", onClick: this.addParentListItem.bind(this) },
               'Add'
             ),
             _react2.default.createElement(
@@ -3654,13 +3654,14 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'getSortOrderForNewChild',
     value: function getSortOrderForNewChild(parentIndex) {
+      debugger;
       var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
       return lastChildSortOrderForParent + 1;
     }
   }, {
     key: 'findLastChildIndexForParent',
     value: function findLastChildIndexForParent(parentIndex) {
-      var lastChildIndex = parentIndex + 1;
+      var lastChildIndex = parentIndex;
       for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
         var listItemCompare = this.props.contentList[i];
         if (_FieldHelper2.default.isParentListItem(listItemCompare)) {
@@ -3677,7 +3678,7 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'findLastChildSortOrderForParent',
     value: function findLastChildSortOrderForParent(parentIndex) {
       var parentSortOrder = this.props.contentList[parentIndex].sort_order;
-      var lastChildSortOrder = parentSortOrder + 1;
+      var lastChildSortOrder = parentSortOrder;
 
       for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
         var listItemCompare = this.props.contentList[i];

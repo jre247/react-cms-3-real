@@ -84,11 +84,12 @@ class ParentListItemEdit extends React.Component {
     return lastChildIndexForParent + 1;
   }
   getSortOrderForNewChild(parentIndex){
+    debugger;
     var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
     return lastChildSortOrderForParent + 1;
   }
   findLastChildIndexForParent(parentIndex){
-    var lastChildIndex = parentIndex + 1;
+    var lastChildIndex = parentIndex;
     for(var i = parentIndex + 1; i < this.props.contentList.length; i++){
       var listItemCompare = this.props.contentList[i];
       if(FieldHelper.isParentListItem(listItemCompare)){
@@ -103,7 +104,7 @@ class ParentListItemEdit extends React.Component {
   }
   findLastChildSortOrderForParent(parentIndex){
     var parentSortOrder = this.props.contentList[parentIndex].sort_order;
-    var lastChildSortOrder = parentSortOrder + 1;
+    var lastChildSortOrder = parentSortOrder;
 
     for(var i = parentIndex + 1; i < this.props.contentList.length; i++){
       var listItemCompare = this.props.contentList[i];

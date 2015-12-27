@@ -137,7 +137,9 @@ class ListTemplate extends React.Component {
               <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
             </div>
 
-            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+            <button className={this.props.isEdit ? "btn btn-primary" : "hidden"} onClick={this.addParentListItem.bind(this)}>
+              Add
+            </button>
 
             <div className='row List-page'>
               {nodes}
