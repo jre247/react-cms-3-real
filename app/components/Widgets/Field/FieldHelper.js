@@ -17,9 +17,15 @@ class FieldHelper {
   static isTitle(node){
     return node.content_type_id == 3;
   }
+  //a node is a sub list item if it has its parent index property >= 0
+  //however, javascript is silly and thinks "undefined >= 0" is a true statement
   static isSubListItem(node){
-    return node.parent_index > 0;
+    return typeof node.parent_index == "number";
   }
+  static isParentListItem(node){
+    return typeof node.parent_index !== "number";
+  }
+
   static isUrl(node){
     return node.content_type_id == 5;
   }

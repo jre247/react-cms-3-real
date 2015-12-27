@@ -3017,7 +3017,7 @@ var FieldEdit = (function (_React$Component) {
 exports.default = FieldEdit;
 
 },{"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageWidget":38,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescription":45,"../../Widgets/ShortDescription/ShortDescription":49,"../../Widgets/Title/Title":53,"../../Widgets/Url/Url":57,"react":"react","underscore":"underscore"}],35:[function(require,module,exports){
-'use strict';
+"use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -3025,7 +3025,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _underscore = require('underscore');
+var _underscore = require("underscore");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3035,32 +3035,40 @@ var FieldHelper = (function () {
   }
 
   _createClass(FieldHelper, null, [{
-    key: 'isShortDescription',
+    key: "isShortDescription",
     value: function isShortDescription(node) {
       return node.content_type_id == 4;
     }
   }, {
-    key: 'isDescription',
+    key: "isDescription",
     value: function isDescription(node) {
       return node.content_type_id == 2;
     }
   }, {
-    key: 'isImage',
+    key: "isImage",
     value: function isImage(node) {
       return node.content_type_id == 1;
     }
   }, {
-    key: 'isTitle',
+    key: "isTitle",
     value: function isTitle(node) {
       return node.content_type_id == 3;
     }
+    //a node is a sub list item if it has its parent index property >= 0
+    //however, javascript is silly and thinks "undefined >= 0" is a true statement
+
   }, {
-    key: 'isSubListItem',
+    key: "isSubListItem",
     value: function isSubListItem(node) {
-      return node.parent_index > 0;
+      return typeof node.parent_index == "number";
     }
   }, {
-    key: 'isUrl',
+    key: "isParentListItem",
+    value: function isParentListItem(node) {
+      return typeof node.parent_index !== "number";
+    }
+  }, {
+    key: "isUrl",
     value: function isUrl(node) {
       return node.content_type_id == 5;
     }
@@ -3516,6 +3524,10 @@ var _Field = require('../../Widgets/Field/Field');
 
 var _Field2 = _interopRequireDefault(_Field);
 
+var _FieldHelper = require('../../Widgets/Field/FieldHelper');
+
+var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
+
 var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
 
 var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
@@ -3563,26 +3575,10 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
-    key: 'findParentIndex',
-    value: function findParentIndex(currentSortOrder) {
-      var parentIndex = 0;
-      var currentIndex = currentSortOrder - 1;
-
-      for (var index = currentIndex - 1; index > 0; index--) {
-        var listItem = this.props.contentList[index];
-        if (!listItem.parent_index && listItem.parent_index !== 0) {
-          parentIndex = listItem.sort_order;
-          break;
-        }
-      }
-
-      return parentIndex;
-    }
-  }, {
     key: 'createLongDescription',
     value: function createLongDescription(index, event) {
       var sortOrder = this.getSortOrderForNewChild(index);
-      var parentIndex = this.findParentIndex(sortOrder);
+      var parentIndex = index;
       var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Long Description Sublist Item', 'List Long Description Sublist Item', this.templateId, parentIndex);
       var longDescription = longDescriptionFactory.create();
 
@@ -3594,7 +3590,7 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'createShortDescription',
     value: function createShortDescription(index, event) {
       var sortOrder = this.getSortOrderForNewChild(index);
-      var parentIndex = this.findParentIndex(sortOrder);
+      var parentIndex = index;
       var shortDescriptionFactory = new _ShortDescriptionFactory2.default(sortOrder, 'List Description Sublist Item', 'List Description Sublist Item', this.templateId, parentIndex);
       var shortDescription = shortDescriptionFactory.create();
 
@@ -3606,7 +3602,7 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'createTitle',
     value: function createTitle(index, event) {
       var sortOrder = this.getSortOrderForNewChild(index);
-      var parentIndex = this.findParentIndex(sortOrder);
+      var parentIndex = index;
       var factory = new _TitleFactory2.default(sortOrder, 'List Title Sublist Item', 'List Title Sublist Item', this.templateId, parentIndex);
       var title = factory.create();
 
@@ -3620,7 +3616,7 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'createImage',
     value: function createImage(index, event) {
       var sortOrder = this.getSortOrderForNewChild(index);
-      var parentIndex = this.findParentIndex(sortOrder);
+      var parentIndex = index;
       var imageFactory = new _ImageFactory2.default(sortOrder, 'List Image Sublist Item', 'List Image Sublist Item', this.templateId, parentIndex);
       var image = imageFactory.create();
 
@@ -3632,7 +3628,7 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'createUrl',
     value: function createUrl(index, event) {
       var sortOrder = this.getSortOrderForNewChild(index);
-      var parentIndex = this.findParentIndex(sortOrder);
+      var parentIndex = index;
       var urlFactory = new _UrlFactory2.default(sortOrder, 'List Url Sublist Item', 'List Url Sublist Item', this.templateId, parentIndex);
       var url = urlFactory.create();
 
@@ -3643,25 +3639,23 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'getIndexForNewChild',
     value: function getIndexForNewChild(parentIndex) {
-      debugger;
-      var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
-      return lastChildIndexForParent;
+      var lastChildIndexForParent = this.findLastChildIndexForParent(parentIndex);
+      return lastChildIndexForParent + 1;
     }
   }, {
     key: 'getSortOrderForNewChild',
     value: function getSortOrderForNewChild(parentIndex) {
+      var lastChildSortOrderForParent = this.findLastChildSortOrderForParent(parentIndex);
       debugger;
-      var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
-      return lastChildIndexForParent + 1;
+      return lastChildSortOrderForParent + 1;
     }
   }, {
-    key: 'findLastChildForParent',
-    value: function findLastChildForParent(parentIndex) {
-      debugger;
+    key: 'findLastChildIndexForParent',
+    value: function findLastChildIndexForParent(parentIndex) {
       var lastChildIndex = parentIndex + 1;
       for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
         var listItemCompare = this.props.contentList[i];
-        if (!listItemCompare.parent_index) {
+        if (_FieldHelper2.default.isParentListItem(listItemCompare)) {
           break;
         }
         if (listItemCompare.parent_index == parentIndex) {
@@ -3670,6 +3664,24 @@ var ParentListItemEdit = (function (_React$Component) {
       };
 
       return lastChildIndex;
+    }
+  }, {
+    key: 'findLastChildSortOrderForParent',
+    value: function findLastChildSortOrderForParent(parentIndex) {
+      var parentSortOrder = this.props.contentList[parentIndex].sort_order;
+      var lastChildSortOrder = parentSortOrder + 1;
+
+      for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
+        var listItemCompare = this.props.contentList[i];
+        if (_FieldHelper2.default.isParentListItem(listItemCompare)) {
+          break;
+        }
+        if (listItemCompare.parent_index == parentIndex) {
+          lastChildSortOrder = listItemCompare.sort_order;
+        }
+      };
+
+      return lastChildSortOrder;
     }
   }, {
     key: 'render',
@@ -3770,7 +3782,7 @@ var ParentListItemEdit = (function (_React$Component) {
 
 exports.default = ParentListItemEdit;
 
-},{"../../Widgets/Field/Field":33,"../../Widgets/Image/ImageFactory":37,"../../Widgets/LongDescription/LongDescriptionFactory":47,"../../Widgets/ShortDescription/ShortDescriptionFactory":51,"../../Widgets/Title/TitleFactory":55,"../../Widgets/Url/UrlFactory":59,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
+},{"../../Widgets/Field/Field":33,"../../Widgets/Field/FieldHelper":35,"../../Widgets/Image/ImageFactory":37,"../../Widgets/LongDescription/LongDescriptionFactory":47,"../../Widgets/ShortDescription/ShortDescriptionFactory":51,"../../Widgets/Title/TitleFactory":55,"../../Widgets/Url/UrlFactory":59,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
