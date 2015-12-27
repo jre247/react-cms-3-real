@@ -7524,7 +7524,8 @@ a:hover {
 .Link-list-item {
   margin-bottom: 25px;
 }
-.Thing-to-do-title {
+.Parent-list-item-readonly,
+.Parent-list-item-readonly .Content-long-description {
   font-size: 33px;
   font-weight: bold;
   margin-bottom: 28px;

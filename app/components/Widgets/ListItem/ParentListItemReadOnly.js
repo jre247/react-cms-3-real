@@ -24,7 +24,7 @@ class ParentListItemReadOnly extends React.Component {
       'List-item-group Row-separator' : 'List-item-group'}>
         <div className='row'>
           <div className='col-sm-6'>
-            <div className="form-group Thing-to-do-title" >
+            <div className="form-group Parent-list-item-readonly" >
               <Field {...propsData} />
             </div>
           </div>

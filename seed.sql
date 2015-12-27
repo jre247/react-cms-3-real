@@ -57,7 +57,8 @@ insert into page(name, description, user_id, date_created, is_active) values ('V
 insert into page(name, description, user_id, date_created, is_active) values ('The Proposal', 'The Proposal', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('Things To Do', 'Things To Do', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('Photo Album', 'Photo Album', 1, null, true);
-
+insert into page(name, description, user_id, date_created, is_active) values ('Gift Registry', 'Gift Registry', 1, null, true);
+	
 insert into template(name, is_active) values ('Basic Template', true);
 insert into template(name, is_active) values ('Photo With Description', true);
 insert into template(name, is_active) values ('Photo Gallery', true);

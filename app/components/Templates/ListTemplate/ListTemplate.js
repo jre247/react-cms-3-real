@@ -88,8 +88,9 @@ class ListTemplate extends React.Component {
       var emptyContentProps = {editLink: this.props.editLink};
       return (
         <div>
-          <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
-
+          <div className={!this.props.isEdit ? "hidden" : ""}>
+            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+          </div>
           <EmptyContent {...emptyContentProps} />
         </div>
       );
@@ -131,9 +132,9 @@ class ListTemplate extends React.Component {
               <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
             </div>
 
-            <button className={this.props.isEdit ? "btn btn-primary" : "hidden"} onClick={this.addParentListItem.bind(this)}>
-              Add
-            </button>
+            <div className={!this.props.isEdit ? "hidden" : ""}>
+              <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+            </div>
 
             <div className='row List-page'>
               {nodes}

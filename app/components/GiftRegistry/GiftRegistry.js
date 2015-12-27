@@ -1,37 +1,30 @@
 import React from 'react';
 import {Link} from 'react-router';
-import EmptyContent from '../EmptyContent';
+import GiftRegistryStore from '../../stores/GiftRegistryStore';
+import GiftRegistryActions from '../../actions/GiftRegistryActions';
+import ListTemplate from '../Templates/ListTemplate/ListTemplate';
+import {_} from 'underscore';
 
 class GiftRegistry extends React.Component {
   constructor(props) {
     super(props);
-    //this.state = NavbarStore.getState();
-    //this.onChange = this.onChange.bind(this);
+    this.state = GiftRegistryStore.getState();
+    this.onChange = this.onChange.bind(this);
   }
-
-  componentDidMount() {
-  //  NavbarStore.listen(this.onChange);
-  //  NavbarActions.getCharacterCount();
-
-
-  }
-
-  componentWillUnmount() {
-    //NavbarStore.unlisten(this.onChange);
-  }
-
   onChange(state) {
-  //  this.setState(state);
+    this.setState(state);
   }
-
-  handleSubmit(event) {
-
+  componentDidMount() {
+    GiftRegistryStore.listen(this.onChange);
+    GiftRegistryActions.getContentListData();
   }
-
+  componentWillUnmount() {
+    GiftRegistryStore.unlisten(this.onChange);
+  }
   render() {
-    var emptyContentProps = {editLink: '/gift-registry/edit'}
+    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/gift-registry/edit'};
     return (
-      <EmptyContent {...emptyContentProps} />
+      <ListTemplate {...propsData} />
     );
   }
 }

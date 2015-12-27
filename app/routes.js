@@ -10,6 +10,7 @@ import EditTheProposal from './components/TheProposal/EditTheProposal';
 import PhotoAlbum from './components/PhotoAlbum/PhotoAlbum';
 import EditPhotoAlbum from './components/PhotoAlbum/EditPhotoAlbum';
 import GiftRegistry from './components/GiftRegistry/GiftRegistry';
+import EditGiftRegistry from './components/GiftRegistry/EditGiftRegistry';
 import ThingsToDo from './components/ThingsToDo/ThingsToDo';
 import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
 
@@ -24,6 +25,7 @@ export default (
     <Route path='/photo-album/edit' component={EditPhotoAlbum} />
     <Route path='/accomodations' component={Accomodations} />
     <Route path='/gift-registry' component={GiftRegistry} />
+    <Route path='/gift-registry/edit' component={EditGiftRegistry} />
     <Route path='/things-to-do' component={ThingsToDo} />
     <Route path='/things-to-do/edit' component={EditThingsToDo} />
   </Route>
