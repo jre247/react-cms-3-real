@@ -565,7 +565,7 @@ var Footer = (function (_React$Component) {
 
 exports.default = Footer;
 
-},{"../actions/FooterActions":1,"../stores/FooterStore":64,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../stores/FooterStore":65,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -910,7 +910,7 @@ var Navbar = (function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":2,"../stores/NavbarStore":65,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../stores/NavbarStore":66,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1005,7 +1005,7 @@ var EditPhotoAlbum = (function (_React$Component) {
 
 exports.default = EditPhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":66,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":67,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react","underscore":"underscore"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1084,7 +1084,7 @@ var PhotoAlbum = (function (_React$Component) {
 
 exports.default = PhotoAlbum;
 
-},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":66,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react"}],17:[function(require,module,exports){
+},{"../../actions/PhotoAlbumActions":3,"../../stores/PhotoAlbumStore":67,"../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate":21,"react":"react"}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1506,6 +1506,10 @@ var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
 
 var _underscore = require('underscore');
 
+var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
+
+var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1520,7 +1524,10 @@ var ListTemplate = (function (_React$Component) {
   function ListTemplate(props) {
     _classCallCheck(this, ListTemplate);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
+
+    _this.templateId = 4;
+    return _this;
   }
 
   _createClass(ListTemplate, [{
@@ -1545,47 +1552,10 @@ var ListTemplate = (function (_React$Component) {
     key: 'addParentListItem',
     value: function addParentListItem() {
       var sortOrder = this.props.contentList.length + 1;
+      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
+      var longDescription = longDescriptionFactory.create();
 
-      var content = {
-        name: 'Things To Do Parent List Item',
-        description: 'Things To Do Parent List Item',
-        value: '',
-        content_type_id: 2,
-        sort_order: sortOrder,
-        template_id: 4
-      };
-
-      this.props.contentList.push(content);
-      this.props.setStateForContentList();
-    }
-  }, {
-    key: 'addSublistItem',
-    value: function addSublistItem(index, event) {
-      var sortOrder = this.props.contentList.length + 1;
-
-      var description = {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 2,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-      };
-      this.props.contentList.splice(index + 1, 0, description);
-
-      sortOrder += 1;
-      var link = {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 5,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-      };
-      this.props.contentList.splice(index + 2, 0, link);
-
+      this.props.contentList.push(longDescription);
       this.props.setStateForContentList();
     }
   }, {
@@ -1631,35 +1601,32 @@ var ListTemplate = (function (_React$Component) {
       }
     }
   }, {
-    key: 'findParentIndex',
-    value: function findParentIndex(currentIndex) {
-      var parentIndex = 1;
-
-      for (var index = currentIndex - 2; index > 0; index--) {
-        var listItem = this.props.contentList[index];
-        if (!listItem.parent_index) {
-          parentIndex = listItem.sort_order;
-          break;
-        }
-      }
-
-      return parentIndex;
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       if (_underscore._.isEmpty(this.props.contentList)) {
         var emptyContentProps = { editLink: this.props.editLink };
-        return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+            'Add'
+          ),
+          _react2.default.createElement(_EmptyContent2.default, emptyContentProps)
+        );
       } else {
         var nodes = this.props.contentList.map(function (contentItem, index) {
-          var listItemProps = {
+          var propsData = {
             contentItem: contentItem, isEdit: _this2.props.isEdit,
             onRemove: _this2.removeContent.bind(_this2, index),
-            onChange: _this2.updateContent.bind(_this2, index)
+            onChange: _this2.updateContent.bind(_this2, index),
+            templateId: _this2.templateId,
+            index: index
           };
+          var listItemProps = _underscore._.extend(propsData, _this2.props);
 
           //override onRemove function for list item if lit item is parent list item
           if (_FieldHelper2.default.isSubListItem(contentItem)) {
@@ -1670,7 +1637,6 @@ var ListTemplate = (function (_React$Component) {
             );
           } else {
             listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
-            listItemProps.onAddSubListItem = _this2.addSublistItem.bind(_this2, index);
 
             return _react2.default.createElement(
               'div',
@@ -1685,7 +1651,7 @@ var ListTemplate = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            { className: 'Content-panel' },
+            { className: 'Content-panel List-template' },
             _react2.default.createElement(
               'div',
               { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
@@ -1716,7 +1682,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EmptyContent":9,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"../../EmptyContent":9,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"../../Widgets/LongDescription/LongDescriptionFactory":47,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2208,7 +2174,7 @@ var EditTheProposal = (function (_React$Component) {
 
 exports.default = EditTheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":67,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],25:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":68,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],25:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2287,7 +2253,7 @@ var TheProposal = (function (_React$Component) {
 
 exports.default = TheProposal;
 
-},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":67,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],26:[function(require,module,exports){
+},{"../../actions/TheProposalActions":4,"../../stores/TheProposalStore":68,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],26:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2408,7 +2374,7 @@ var EditThingsToDo = (function (_React$Component) {
 
 exports.default = EditThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":68,"../Templates/ListTemplate/ListTemplate":20,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"../Templates/ListTemplate/ListTemplate":20,"react":"react","underscore":"underscore"}],27:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2487,7 +2453,7 @@ var ThingsToDo = (function (_React$Component) {
 
 exports.default = ThingsToDo;
 
-},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":68,"../Templates/ListTemplate/ListTemplate":20,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
+},{"../../actions/ThingsToDoActions":5,"../../stores/ThingsToDoStore":69,"../Templates/ListTemplate/ListTemplate":20,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2581,7 +2547,7 @@ var EditVenue = (function (_React$Component) {
 
 exports.default = EditVenue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":69,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],29:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":70,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react"}],29:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2660,7 +2626,7 @@ var Venue = (function (_React$Component) {
 
 exports.default = Venue;
 
-},{"../../actions/VenueActions":6,"../../stores/VenueStore":69,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],30:[function(require,module,exports){
+},{"../../actions/VenueActions":6,"../../stores/VenueStore":70,"../Templates/BasicTemplate/BasicTemplate":17,"react":"react","react-router":"react-router","underscore":"underscore"}],30:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2813,7 +2779,7 @@ var CarouselContent = (function (_React$Component) {
 
 exports.default = CarouselContent;
 
-},{"../../../helpers/PropsHelper":61,"react":"react","react-router":"react-router"}],32:[function(require,module,exports){
+},{"../../../helpers/PropsHelper":62,"react":"react","react-router":"react-router"}],32:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2879,7 +2845,7 @@ var CarouselIndicators = (function (_React$Component) {
 
 exports.default = CarouselIndicators;
 
-},{"../../../helpers/PropsHelper":61,"react":"react","react-router":"react-router"}],33:[function(require,module,exports){
+},{"../../../helpers/PropsHelper":62,"react":"react","react-router":"react-router"}],33:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3238,12 +3204,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ImageFactory = (function () {
-  function ImageFactory(sortOrder, name, description) {
+  function ImageFactory(sortOrder, name, description, templateId, parentIndex) {
     _classCallCheck(this, ImageFactory);
 
     this.sortOrder = sortOrder;
     this.name = name;
     this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
   }
 
   _createClass(ImageFactory, [{
@@ -3255,7 +3223,9 @@ var ImageFactory = (function () {
         description: this.description,
         value: '',
         content_type_id: 1,
-        sort_order: this.sortOrder
+        sort_order: this.sortOrder,
+        template_id: this.templateId,
+        parent_index: this.parentIndex
       };
 
       return content;
@@ -3546,6 +3516,26 @@ var _Field = require('../../Widgets/Field/Field');
 
 var _Field2 = _interopRequireDefault(_Field);
 
+var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
+
+var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
+
+var _ImageFactory = require('../../Widgets/Image/ImageFactory');
+
+var _ImageFactory2 = _interopRequireDefault(_ImageFactory);
+
+var _TitleFactory = require('../../Widgets/Title/TitleFactory');
+
+var _TitleFactory2 = _interopRequireDefault(_TitleFactory);
+
+var _ShortDescriptionFactory = require('../../Widgets/ShortDescription/ShortDescriptionFactory');
+
+var _ShortDescriptionFactory2 = _interopRequireDefault(_ShortDescriptionFactory);
+
+var _UrlFactory = require('../../Widgets/Url/UrlFactory');
+
+var _UrlFactory2 = _interopRequireDefault(_UrlFactory);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3560,7 +3550,10 @@ var ParentListItemEdit = (function (_React$Component) {
   function ParentListItemEdit(props) {
     _classCallCheck(this, ParentListItemEdit);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ParentListItemEdit).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ParentListItemEdit).call(this, props));
+
+    _this.templateId = _this.props.templateId;
+    return _this;
   }
 
   _createClass(ParentListItemEdit, [{
@@ -3569,6 +3562,111 @@ var ParentListItemEdit = (function (_React$Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
+  }, {
+    key: 'findParentIndex',
+    value: function findParentIndex(currentIndex) {
+      var parentIndex = 1;
+
+      for (var index = currentIndex - 2; index > 0; index--) {
+        var listItem = this.props.contentList[index];
+        if (!listItem.parent_index) {
+          parentIndex = listItem.sort_order;
+          break;
+        }
+      }
+
+      return parentIndex;
+    }
+  }, {
+    key: 'createLongDescription',
+    value: function createLongDescription(index, event) {
+      var sortOrder = this.getSortOrderForNewChild(index);
+      var parentIndex = this.findParentIndex(sortOrder);
+      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Long Description Sublist Item', 'List Long Description Sublist Item', this.templateId, parentIndex);
+      var longDescription = longDescriptionFactory.create();
+
+      this.props.contentList.splice(this.getIndexForNewChild(index), 0, longDescription);
+      this.props.setStateForContentList();
+      //this.setState({contentList: this.props.contentList});
+    }
+  }, {
+    key: 'createShortDescription',
+    value: function createShortDescription(index, event) {
+      var sortOrder = this.getSortOrderForNewChild(index);
+      var parentIndex = this.findParentIndex(sortOrder);
+      var shortDescriptionFactory = new _ShortDescriptionFactory2.default(sortOrder, 'List Description Sublist Item', 'List Description Sublist Item', this.templateId, parentIndex);
+      var shortDescription = shortDescriptionFactory.create();
+
+      this.props.contentList.splice(this.getIndexForNewChild(index), 0, shortDescription);
+      this.props.setStateForContentList();
+      //  this.setState({contentList: this.state.contentList});
+    }
+  }, {
+    key: 'createTitle',
+    value: function createTitle(index, event) {
+      var sortOrder = this.getSortOrderForNewChild(index);
+      var parentIndex = this.findParentIndex(sortOrder);
+      var factory = new _TitleFactory2.default(sortOrder, 'List Title Sublist Item', 'List Title Sublist Item', this.templateId, parentIndex);
+      var title = factory.create();
+
+      this.props.contentList.splice(this.getIndexForNewChild(index), 0, title);
+      this.props.setStateForContentList();
+      //this.setState({contentList: this.state.contentList});
+    }
+    //todo: move to actions
+
+  }, {
+    key: 'createImage',
+    value: function createImage(index, event) {
+      var sortOrder = this.getSortOrderForNewChild(index);
+      var parentIndex = this.findParentIndex(sortOrder);
+      var imageFactory = new _ImageFactory2.default(sortOrder, 'List Image Sublist Item', 'List Image Sublist Item', this.templateId, parentIndex);
+      var image = imageFactory.create();
+
+      this.props.contentList.splice(this.getIndexForNewChild(index), 0, image);
+      this.props.setStateForContentList();
+      //  this.setState({contentList: this.props.contentList});
+    }
+  }, {
+    key: 'createUrl',
+    value: function createUrl(index, event) {
+      var sortOrder = this.getSortOrderForNewChild(index);
+      var parentIndex = this.findParentIndex(sortOrder);
+      var urlFactory = new _UrlFactory2.default(sortOrder, 'List Url Sublist Item', 'List Url Sublist Item', this.templateId, parentIndex);
+      var url = urlFactory.create();
+
+      this.props.contentList.splice(this.getIndexForNewChild(index), 0, url);
+      this.props.setStateForContentList();
+      //  this.setState({contentList: this.props.contentList});
+    }
+  }, {
+    key: 'getIndexForNewChild',
+    value: function getIndexForNewChild(parentIndex) {
+      var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
+      return lastChildIndexForParent + 1;
+    }
+  }, {
+    key: 'getSortOrderForNewChild',
+    value: function getSortOrderForNewChild(parentIndex) {
+      var lastChildIndexForParent = this.findLastChildForParent(parentIndex);
+      return lastChildIndexForParent + 2;
+    }
+  }, {
+    key: 'findLastChildForParent',
+    value: function findLastChildForParent(parentIndex) {
+      var lastChildIndex;
+      for (var i = parentIndex + 1; i < this.props.contentList.length; i++) {
+        var listItemCompare = this.props.contentList[i];
+        if (!listItemCompare.parent_index) {
+          break;
+        }
+        if (listItemCompare.parent_index == parentIndex) {
+          lastChildIndex = i;
+        }
+      };
+
+      return lastChildIndex;
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -3582,14 +3680,66 @@ var ParentListItemEdit = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-8 Add-sub-list-item' },
+            { className: 'col-sm-2' },
             _react2.default.createElement(
               'div',
               { className: 'form-group' },
               _react2.default.createElement(
                 'button',
-                { className: 'btn btn-primary', onClick: this.props.onAddSubListItem },
-                'Add Sub List Item'
+                { className: 'btn btn-primary', onClick: this.createLongDescription.bind(this, this.props.index) },
+                'Create Long Description'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-2' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.createImage.bind(this, this.props.index) },
+                'Create Image'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-2' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.createTitle.bind(this, this.props.index) },
+                'Create Title'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-2' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.createUrl.bind(this, this.props.index) },
+                'Create Url'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-2' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.createShortDescription.bind(this, this.props.index) },
+                'Create Short Description'
               )
             )
           )
@@ -3605,15 +3755,6 @@ var ParentListItemEdit = (function (_React$Component) {
               { className: 'form-group' },
               _react2.default.createElement(_Field2.default, propsData)
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-sm-2' },
-            _react2.default.createElement(
-              'div',
-              { onClick: this.props.onRemove },
-              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-            )
           )
         )
       );
@@ -3625,7 +3766,7 @@ var ParentListItemEdit = (function (_React$Component) {
 
 exports.default = ParentListItemEdit;
 
-},{"../../Widgets/Field/Field":33,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
+},{"../../Widgets/Field/Field":33,"../../Widgets/Image/ImageFactory":37,"../../Widgets/LongDescription/LongDescriptionFactory":47,"../../Widgets/ShortDescription/ShortDescriptionFactory":51,"../../Widgets/Title/TitleFactory":55,"../../Widgets/Url/UrlFactory":59,"react":"react","react-router":"react-router","underscore":"underscore"}],43:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3760,15 +3901,6 @@ var SubListItem = (function (_React$Component) {
               'div',
               { className: 'form-group Sub-list-item' },
               _react2.default.createElement(_Field2.default, propsData)
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-sm-2' },
-            _react2.default.createElement(
-              'div',
-              { onClick: this.props.onRemove },
-              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
             )
           )
         )
@@ -3933,12 +4065,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var LongDescriptionFactory = (function () {
-  function LongDescriptionFactory(sortOrder, name, description) {
+  function LongDescriptionFactory(sortOrder, name, description, templateId, parentIndex) {
     _classCallCheck(this, LongDescriptionFactory);
 
     this.sortOrder = sortOrder;
     this.name = name;
     this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
   }
 
   _createClass(LongDescriptionFactory, [{
@@ -3950,7 +4084,9 @@ var LongDescriptionFactory = (function () {
         description: this.description,
         value: '',
         content_type_id: 2,
-        sort_order: this.sortOrder
+        sort_order: this.sortOrder,
+        template_id: this.templateId,
+        parent_index: this.parentIndex
       };
 
       return content;
@@ -4411,12 +4547,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TitleFactory = (function () {
-  function TitleFactory(sortOrder, name, description) {
+  function TitleFactory(sortOrder, name, description, templateId, parentIndex) {
     _classCallCheck(this, TitleFactory);
 
     this.sortOrder = sortOrder;
     this.name = name;
     this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
   }
 
   _createClass(TitleFactory, [{
@@ -4428,7 +4566,9 @@ var TitleFactory = (function () {
         description: this.description,
         value: '',
         content_type_id: 3,
-        sort_order: this.sortOrder
+        sort_order: this.sortOrder,
+        template_id: this.templateId,
+        parent_index: this.parentIndex
       };
 
       return content;
@@ -4560,7 +4700,7 @@ var Url = (function (_React$Component) {
 
 exports.default = Url;
 
-},{"./UrlEdit":58,"./UrlReadOnly":59,"react":"react","react-router":"react-router"}],58:[function(require,module,exports){
+},{"./UrlEdit":58,"./UrlReadOnly":60,"react":"react","react-router":"react-router"}],58:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4623,6 +4763,57 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UrlFactory = (function () {
+  function UrlFactory(sortOrder, name, description, templateId, parentIndex) {
+    _classCallCheck(this, UrlFactory);
+
+    this.sortOrder = sortOrder;
+    this.name = name;
+    this.description = description;
+    this.templateId = templateId;
+    this.parentIndex = parentIndex;
+  }
+
+  _createClass(UrlFactory, [{
+    key: 'create',
+    value: function create() {
+
+      var content = {
+        name: this.name,
+        description: this.description,
+        value: '',
+        content_type_id: 5,
+        sort_order: this.sortOrder,
+        template_id: this.templateId,
+        parent_index: this.parentIndex
+      };
+
+      return content;
+    }
+  }]);
+
+  return UrlFactory;
+})();
+
+exports.default = UrlFactory;
+
+},{"react":"react"}],60:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _reactRouter = require('react-router');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -4664,7 +4855,7 @@ var UrlReadOnly = (function (_React$Component) {
 
 exports.default = UrlReadOnly;
 
-},{"react":"react","react-router":"react-router"}],60:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],61:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4725,7 +4916,7 @@ var App = (function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":10,"./Header":12,"react":"react"}],61:[function(require,module,exports){
+},{"./Footer":10,"./Header":12,"react":"react"}],62:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4761,7 +4952,7 @@ var PropsHelper = (function () {
 
 exports.default = PropsHelper;
 
-},{"underscore":"underscore"}],62:[function(require,module,exports){
+},{"underscore":"underscore"}],63:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -4794,7 +4985,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _routes2.default
 ), document.getElementById('app'));
 
-},{"./routes":63,"history/lib/createBrowserHistory":76,"react":"react","react-dom":"react-dom","react-router":"react-router"}],63:[function(require,module,exports){
+},{"./routes":64,"history/lib/createBrowserHistory":77,"react":"react","react-dom":"react-dom","react-router":"react-router"}],64:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4873,7 +5064,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/things-to-do/edit', component: _EditThingsToDo2.default })
 );
 
-},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":15,"./components/PhotoAlbum/PhotoAlbum":16,"./components/TheProposal/EditTheProposal":24,"./components/TheProposal/TheProposal":25,"./components/ThingsToDo/EditThingsToDo":26,"./components/ThingsToDo/ThingsToDo":27,"./components/Venue/EditVenue":28,"./components/Venue/Venue":29,"./components/app":60,"react":"react","react-router":"react-router"}],64:[function(require,module,exports){
+},{"./components/Accomodations/Accomodations":8,"./components/GiftRegistry/GiftRegistry":11,"./components/Home":13,"./components/PhotoAlbum/EditPhotoAlbum":15,"./components/PhotoAlbum/PhotoAlbum":16,"./components/TheProposal/EditTheProposal":24,"./components/TheProposal/TheProposal":25,"./components/ThingsToDo/EditThingsToDo":26,"./components/ThingsToDo/ThingsToDo":27,"./components/Venue/EditVenue":28,"./components/Venue/Venue":29,"./components/app":61,"react":"react","react-router":"react-router"}],65:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -4911,7 +5102,7 @@ var FooterStore = function FooterStore() {
 
 exports.default = _alt2.default.createStore(FooterStore);
 
-},{"../actions/FooterActions":1,"../alt":7}],65:[function(require,module,exports){
+},{"../actions/FooterActions":1,"../alt":7}],66:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4958,7 +5149,7 @@ var NavbarStore = (function () {
 
 exports.default = _alt2.default.createStore(NavbarStore);
 
-},{"../actions/NavbarActions":2,"../alt":7}],66:[function(require,module,exports){
+},{"../actions/NavbarActions":2,"../alt":7}],67:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5027,7 +5218,7 @@ var PhotoAlbumStore = (function () {
 
 exports.default = _alt2.default.createStore(PhotoAlbumStore);
 
-},{"../actions/PhotoAlbumActions":3,"../alt":7}],67:[function(require,module,exports){
+},{"../actions/PhotoAlbumActions":3,"../alt":7}],68:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5101,7 +5292,7 @@ var TheProposalStore = (function () {
 
 exports.default = _alt2.default.createStore(TheProposalStore);
 
-},{"../actions/TheProposalActions":4,"../alt":7}],68:[function(require,module,exports){
+},{"../actions/TheProposalActions":4,"../alt":7}],69:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5176,7 +5367,7 @@ var ThingsToDoStore = (function () {
 
 exports.default = _alt2.default.createStore(ThingsToDoStore);
 
-},{"../actions/ThingsToDoActions":5,"../alt":7}],69:[function(require,module,exports){
+},{"../actions/ThingsToDoActions":5,"../alt":7}],70:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5243,7 +5434,7 @@ var VenueStore = (function () {
 
 exports.default = _alt2.default.createStore(VenueStore);
 
-},{"../actions/VenueActions":6,"../alt":7}],70:[function(require,module,exports){
+},{"../actions/VenueActions":6,"../alt":7}],71:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5336,7 +5527,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],71:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -5368,7 +5559,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -5395,7 +5586,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -5466,7 +5657,7 @@ function readState(key) {
   return null;
 }
 }).call(this,require('_process'))
-},{"_process":70,"warning":88}],74:[function(require,module,exports){
+},{"_process":71,"warning":89}],75:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -5542,13 +5733,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],76:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5723,7 +5914,7 @@ function createBrowserHistory() {
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./Actions":71,"./DOMStateStorage":73,"./DOMUtils":74,"./ExecutionEnvironment":75,"./createDOMHistory":77,"_process":70,"invariant":87}],77:[function(require,module,exports){
+},{"./Actions":72,"./DOMStateStorage":74,"./DOMUtils":75,"./ExecutionEnvironment":76,"./createDOMHistory":78,"_process":71,"invariant":88}],78:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -5766,7 +5957,7 @@ function createDOMHistory(options) {
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./DOMUtils":74,"./ExecutionEnvironment":75,"./createHistory":78,"_process":70,"invariant":87}],78:[function(require,module,exports){
+},{"./DOMUtils":75,"./ExecutionEnvironment":76,"./createHistory":79,"_process":71,"invariant":88}],79:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6037,7 +6228,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":71,"./AsyncUtils":72,"./createLocation":79,"./deprecate":80,"./runTransitionHook":83,"deep-equal":84}],79:[function(require,module,exports){
+},{"./Actions":72,"./AsyncUtils":73,"./createLocation":80,"./deprecate":81,"./runTransitionHook":84,"deep-equal":85}],80:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -6074,7 +6265,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":71,"./parsePath":82}],80:[function(require,module,exports){
+},{"./Actions":72,"./parsePath":83}],81:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6096,7 +6287,7 @@ function deprecate(fn, message) {
 exports['default'] = deprecate;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":70,"warning":88}],81:[function(require,module,exports){
+},{"_process":71,"warning":89}],82:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -6110,7 +6301,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6157,7 +6348,7 @@ function parsePath(path) {
 exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./extractPath":81,"_process":70,"warning":88}],83:[function(require,module,exports){
+},{"./extractPath":82,"_process":71,"warning":89}],84:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -6184,7 +6375,7 @@ function runTransitionHook(hook, location, callback) {
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":70,"warning":88}],84:[function(require,module,exports){
+},{"_process":71,"warning":89}],85:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -6280,7 +6471,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":85,"./lib/keys.js":86}],85:[function(require,module,exports){
+},{"./lib/is_arguments.js":86,"./lib/keys.js":87}],86:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -6302,7 +6493,7 @@ function unsupported(object){
     false;
 };
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -6313,7 +6504,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],87:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -6368,7 +6559,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":70}],88:[function(require,module,exports){
+},{"_process":71}],89:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -6432,4 +6623,4 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":70}]},{},[62]);
+},{"_process":71}]},{},[63]);

@@ -5,10 +5,12 @@ import SubListItem from '../../Widgets/ListItem/SubListItem';
 import ParentListItem from '../../Widgets/ListItem/ParentListItem';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import {_} from 'underscore';
+import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
 
 class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
+    this.templateId = 4;
   }
 
   componentDidMount() {
@@ -30,49 +32,11 @@ class ListTemplate extends React.Component {
 
   addParentListItem(){
     var sortOrder = this.props.contentList.length + 1;
+    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Parent Item',
+      'List Parent Item', this.templateId);
+    var longDescription = longDescriptionFactory.create();
 
-    var content =
-    {
-      name: 'Things To Do Parent List Item',
-      description: 'Things To Do Parent List Item',
-      value: '',
-      content_type_id: 2,
-      sort_order: sortOrder,
-      template_id: 4
-    };
-
-    this.props.contentList.push(content);
-    this.props.setStateForContentList();
-  }
-
-  addSublistItem(index, event) {
-    var sortOrder = this.props.contentList.length + 1;
-
-    var description =
-    {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 2,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-    };
-    this.props.contentList.splice(index + 1, 0, description);
-
-    sortOrder += 1;
-    var link =
-    {
-        name: 'Things To Do Child List Item',
-        description: 'Things To Do Child List Item',
-        value: '',
-        content_type_id: 5,
-        parent_index: this.findParentIndex(sortOrder),
-        sort_order: sortOrder,
-        template_id: 4
-    };
-    this.props.contentList.splice(index + 2, 0, link);
-
+    this.props.contentList.push(longDescription);
     this.props.setStateForContentList();
   }
 
@@ -116,34 +80,27 @@ class ListTemplate extends React.Component {
     }
   }
 
-  findParentIndex(currentIndex){
-    var parentIndex = 1;
-
-    for(var index = currentIndex - 2; index > 0; index--){
-      var listItem = this.props.contentList[index];
-      if(!listItem.parent_index){
-        parentIndex = listItem.sort_order;
-        break;
-      }
-    }
-
-    return parentIndex;
-  }
-
   render() {
     if(_.isEmpty(this.props.contentList)){
       var emptyContentProps = {editLink: this.props.editLink};
       return (
-        <EmptyContent {...emptyContentProps} />
+        <div>
+          <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+
+          <EmptyContent {...emptyContentProps} />
+        </div>
       );
     }
     else {
       let nodes = this.props.contentList.map((contentItem, index) => {
-        var listItemProps = {
+        var propsData = {
           contentItem: contentItem, isEdit: this.props.isEdit,
           onRemove: this.removeContent.bind(this, index),
-          onChange: this.updateContent.bind(this, index)
+          onChange: this.updateContent.bind(this, index),
+          templateId: this.templateId,
+          index: index
         };
+        var listItemProps = _.extend(propsData, this.props);
 
         //override onRemove function for list item if lit item is parent list item
         if(FieldHelper.isSubListItem(contentItem)){
@@ -155,7 +112,6 @@ class ListTemplate extends React.Component {
         }
         else{
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
-          listItemProps.onAddSubListItem = this.addSublistItem.bind(this, index);
 
           return(
             <div key={contentItem.sort_order}>
@@ -167,7 +123,7 @@ class ListTemplate extends React.Component {
 
       return (
         <div>
-          <div className='Content-panel'>
+          <div className='Content-panel List-template'>
             <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
               <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
             </div>

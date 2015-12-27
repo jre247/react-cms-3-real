@@ -7482,6 +7482,13 @@ a:hover {
   line-height: 1.6em;
   margin-top: 10px;
 }
+.List-template .Content-image-container,
+.List-template .Content-title {
+  text-align: left;
+}
+.List-template .Content-extra-large-image-percentage {
+  margin-left: 0px;
+}
 .Content-long-description {
   color: white;
   font-size: 18px;

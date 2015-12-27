@@ -26,11 +26,6 @@ class SubListItem extends React.Component {
               <Field {...propsData} />
             </div>
           </div>
-          <div className="col-sm-2">
-            <div onClick={this.props.onRemove}>
-              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </div>
-          </div>
         </div>
       </div>
     );

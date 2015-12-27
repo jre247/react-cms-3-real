@@ -1,6 +1,6 @@
 import React from 'react';
 
-class LongDescriptionFactory {
+class UrlFactory {
   constructor(sortOrder, name, description, templateId, parentIndex) {
     this.sortOrder = sortOrder;
     this.name = name;
@@ -15,7 +15,7 @@ class LongDescriptionFactory {
       name: this.name,
       description: this.description,
       value: '',
-      content_type_id: 2,
+      content_type_id: 5,
       sort_order: this.sortOrder,
       template_id: this.templateId,
       parent_index: this.parentIndex
@@ -26,4 +26,4 @@ class LongDescriptionFactory {
 
 }
 
-export default LongDescriptionFactory;
+export default UrlFactory;
