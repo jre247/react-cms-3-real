@@ -94,7 +94,7 @@ class ParentListItemEdit extends React.Component {
       if(FieldHelper.isParentListItem(listItemCompare)){
         break;
       }
-      if(listItemCompare.parent_index == parentIndex){
+      if(listItemCompare.parent_index === parentIndex){
         lastChildIndex = i;
       }
     };

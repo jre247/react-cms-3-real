@@ -1641,7 +1641,7 @@ var ListTemplate = (function (_React$Component) {
           if (_FieldHelper2.default.isSubListItem(contentItem)) {
             return _react2.default.createElement(
               'div',
-              { key: contentItem.sort_order },
+              { key: index },
               _react2.default.createElement(_SubListItem2.default, listItemProps)
             );
           } else {
@@ -1649,7 +1649,7 @@ var ListTemplate = (function (_React$Component) {
 
             return _react2.default.createElement(
               'div',
-              { key: contentItem.sort_order },
+              { key: index },
               _react2.default.createElement(_ParentListItem2.default, listItemProps)
             );
           }
@@ -3666,7 +3666,7 @@ var ParentListItemEdit = (function (_React$Component) {
         if (_FieldHelper2.default.isParentListItem(listItemCompare)) {
           break;
         }
-        if (listItemCompare.parent_index == parentIndex) {
+        if (listItemCompare.parent_index === parentIndex) {
           lastChildIndex = i;
         }
       };

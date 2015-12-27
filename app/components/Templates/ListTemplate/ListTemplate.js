@@ -114,7 +114,7 @@ class ListTemplate extends React.Component {
         //override onRemove function for list item if lit item is parent list item
         if(FieldHelper.isSubListItem(contentItem)){
           return(
-            <div key={contentItem.sort_order}>
+            <div key={index}>
               <SubListItem {...listItemProps} />
             </div>
           );
@@ -123,7 +123,7 @@ class ListTemplate extends React.Component {
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
 
           return(
-            <div key={contentItem.sort_order}>
+            <div key={index}>
               <ParentListItem {...listItemProps} />
             </div>
           );
