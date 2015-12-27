@@ -1,7 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router';
-import LongDescription from '../LongDescription/LongDescription';
-import Url from '../Url/Url';
 import {_} from 'underscore';
 import Field from '../../Widgets/Field/Field';
 

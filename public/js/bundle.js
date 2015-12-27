@@ -1500,10 +1500,6 @@ var _ParentListItem = require('../../Widgets/ListItem/ParentListItem');
 
 var _ParentListItem2 = _interopRequireDefault(_ParentListItem);
 
-var _Field = require('../../Widgets/Field/Field');
-
-var _Field2 = _interopRequireDefault(_Field);
-
 var _FieldHelper = require('../../Widgets/Field/FieldHelper');
 
 var _FieldHelper2 = _interopRequireDefault(_FieldHelper);
@@ -1720,7 +1716,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EmptyContent":9,"../../Widgets/Field/Field":33,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"../../EmptyContent":9,"../../Widgets/Field/FieldHelper":35,"../../Widgets/ListItem/ParentListItem":41,"../../Widgets/ListItem/SubListItem":44,"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3677,7 +3673,7 @@ var ParentListItemReadOnly = (function (_React$Component) {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentItem.value }, this.props);
-      debugger;
+
       return _react2.default.createElement(
         'div',
         { key: this.props.contentItem.sort_order, className: this.props.contentItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
@@ -3717,14 +3713,6 @@ var _react = require('react');
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
-
-var _LongDescription = require('../LongDescription/LongDescription');
-
-var _LongDescription2 = _interopRequireDefault(_LongDescription);
-
-var _Url = require('../Url/Url');
-
-var _Url2 = _interopRequireDefault(_Url);
 
 var _underscore = require('underscore');
 
@@ -3793,7 +3781,7 @@ var SubListItem = (function (_React$Component) {
 
 exports.default = SubListItem;
 
-},{"../../Widgets/Field/Field":33,"../LongDescription/LongDescription":45,"../Url/Url":57,"react":"react","react-router":"react-router","underscore":"underscore"}],45:[function(require,module,exports){
+},{"../../Widgets/Field/Field":33,"react":"react","react-router":"react-router","underscore":"underscore"}],45:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

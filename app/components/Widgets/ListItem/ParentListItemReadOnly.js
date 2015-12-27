@@ -18,7 +18,7 @@ class ParentListItemReadOnly extends React.Component {
 
   render() {
     var propsData = _.extend({value: this.props.contentItem.value }, this.props);
-    debugger;
+
     return (
       <div key={this.props.contentItem.sort_order} className={this.props.contentItem.sort_order > 1 ?
       'List-item-group Row-separator' : 'List-item-group'}>
