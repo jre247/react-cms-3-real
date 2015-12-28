@@ -50,6 +50,7 @@ insert into content_type (name, description, is_active) values ('Description', '
 insert into content_type (name, description, is_active) values ('Title', 'Title', true);
 insert into content_type (name, description, is_active) values ('ShortDescription', 'ShortDescription', true);
 insert into content_type (name, description, is_active) values ('Link', 'Link', true);
+insert into content_type (name, description, is_active) values ('Iframe', 'Iframe', true);
 
 insert into wedding_user (first_name, last_name, email, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
 
@@ -58,7 +59,8 @@ insert into page(name, description, user_id, date_created, is_active) values ('T
 insert into page(name, description, user_id, date_created, is_active) values ('Things To Do', 'Things To Do', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('Photo Album', 'Photo Album', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('Gift Registry', 'Gift Registry', 1, null, true);
-	
+insert into page(name, description, user_id, date_created, is_active) values ('How To Get There', 'How To Get There', 1, null, true);
+
 insert into template(name, is_active) values ('Basic Template', true);
 insert into template(name, is_active) values ('Photo With Description', true);
 insert into template(name, is_active) values ('Photo Gallery', true);

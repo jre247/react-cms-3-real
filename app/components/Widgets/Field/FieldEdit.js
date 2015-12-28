@@ -6,8 +6,7 @@ import Title from '../../Widgets/Title/Title';
 import Url from '../../Widgets/Url/Url';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import LongDescription from '../../Widgets/LongDescription/LongDescription';
-import SubListItem from '../../Widgets/ListItem/SubListItem';
-import ParentListItem from '../../Widgets/ListItem/ParentListItem';
+import Iframe from '../../Widgets/Iframe/Iframe';
 
 class FieldEdit extends React.Component {
   constructor(props) {
@@ -52,6 +51,16 @@ class FieldEdit extends React.Component {
           <Url {...propsData} />
         </div>
       );
+    }
+    else if(FieldHelper.isIframe(contentItem)){
+      return (
+        <div key={contentItem.sort_order} className="form-group">
+          <Iframe {...propsData} />
+        </div>
+      );
+    }
+    else{
+      throw "There is no Field that matches the content item.";
     }
   }
 }

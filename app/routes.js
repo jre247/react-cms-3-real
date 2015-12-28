@@ -13,6 +13,8 @@ import GiftRegistry from './components/GiftRegistry/GiftRegistry';
 import EditGiftRegistry from './components/GiftRegistry/EditGiftRegistry';
 import ThingsToDo from './components/ThingsToDo/ThingsToDo';
 import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
+import HowToGetThere from './components/HowToGetThere/HowToGetThere';
+import EditHowToGetThere from './components/HowToGetThere/EditHowToGetThere';
 
 export default (
   <Route component={App}>
@@ -28,5 +30,7 @@ export default (
     <Route path='/gift-registry/edit' component={EditGiftRegistry} />
     <Route path='/things-to-do' component={ThingsToDo} />
     <Route path='/things-to-do/edit' component={EditThingsToDo} />
+    <Route path='/how-to-get-there' component={HowToGetThere} />
+    <Route path='/how-to-get-there/edit' component={EditHowToGetThere} />
   </Route>
 );

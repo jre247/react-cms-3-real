@@ -6,8 +6,7 @@ import Title from '../../Widgets/Title/Title';
 import Url from '../../Widgets/Url/Url';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
-import SubListItem from '../../Widgets/ListItem/SubListItem';
-import ParentListItem from '../../Widgets/ListItem/ParentListItem';
+import Iframe from '../../Widgets/Iframe/Iframe';
 
 class FieldReadOnly extends React.Component {
   constructor(props) {
@@ -60,6 +59,16 @@ class FieldReadOnly extends React.Component {
           <Url {...propsData} />
         </div>
       );
+    }
+    else if(FieldHelper.isIframe(contentItem)){
+      return (
+        <div className="Content-item-container" key={contentItem.sort_order}>
+          <Iframe {...propsData} />
+        </div>
+      );
+    }
+    else{
+      throw "There is no Field that matches the content item.";
     }
 
 

@@ -3,14 +3,13 @@ import {Link} from 'react-router';
 import Field from '../../Widgets/Field/Field';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
-import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
-import ImageFactory from '../../Widgets/Image/ImageFactory';
-import TitleFactory from '../../Widgets/Title/TitleFactory';
-import ShortDescriptionFactory from '../../Widgets/ShortDescription/ShortDescriptionFactory';
+import WidgetSelectList from '../../Widgets/WidgetSelectList';
+import TemplateHelper from '../../../helpers/TemplateHelper';
 
 class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
+    this.templateId = 1;
   }
 
   componentDidMount() {
@@ -20,67 +19,22 @@ class BasicTemplateEdit extends React.Component {
   componentWillUnmount() {
 
   }
-  //todo: move to actions
-  createLongDescription(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'Our Story Description',
-      'Our Story Description');
-    var longDescription = longDescriptionFactory.create();
-    longDescription.template_id = 1;
-
-    this.props.contentList.push(longDescription);
+  onAddWidgetToContentList(factoryInstance){
+    this.props.contentList.push(factoryInstance);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
-    //this.setState({contentList: this.props.contentList});
-  }
-  createShortDescription(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var shortDescriptionFactory = new ShortDescriptionFactory(sortOrder, 'The Wedding Description',
-      'The Wedding Description');
-    var shortDescription = shortDescriptionFactory.create();
-    shortDescription.template_id = 1;
-
-    this.props.contentList.push(shortDescription);
-    this.props.setStateForContentList();
-  //  this.setState({contentList: this.state.contentList});
-  }
-  createTitle(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var factory = new TitleFactory(sortOrder, 'The Wedding Title',
-      'The Wedding Title');
-    var title = factory.create();
-    title.template_id = 1;
-
-    this.props.contentList.push(title);
-    this.props.setStateForContentList();
-    //this.setState({contentList: this.state.contentList});
-  }
-  //todo: move to actions
-  createImage(event){
-    var sortOrder = this.props.contentList.length + 1;
-
-    var imageFactory = new ImageFactory(sortOrder, 'Our Story Image',
-      'Our Story Image');
-    var image = imageFactory.create();
-    image.template_id = 1;
-
-    this.props.contentList.push(image);
-    this.props.setStateForContentList();
-  //  this.setState({contentList: this.props.contentList});
   }
   updateContent(index, event) {
     this.props.contentList[index].value = event.target.value;
     this.props.setStateForContentList();
-    //this.setState({contentList: this.state.contentList});
   }
   removeContent(index, event){
     this.props.contentList.splice(index, 1);
     this.props.setStateForContentList();
-    //this.setState({contentList: this.state.contentList});
   }
   render() {
+    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this), templateId: this.templateId};
+
     let nodes = this.props.contentList.map((contentItem, index) => {
       var propsData = {contentItem: contentItem, isEdit: true,
         onChange:  this.updateContent.bind(this, index),
@@ -96,36 +50,7 @@ class BasicTemplateEdit extends React.Component {
     return (
       <div className='Content-panel'>
         <div className="Content-container">
-          <div className='row'>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createLongDescription.bind(this)}>
-                  Create Long Description
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createImage.bind(this)}>
-                  Create Image
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createTitle.bind(this)}>
-                  Create Title
-                </button>
-              </div>
-            </div>
-            <div className='col-sm-3'>
-              <div className="form-group">
-                <button className="btn btn-primary" onClick={this.createShortDescription.bind(this)}>
-                  Create Short Description
-                </button>
-              </div>
-            </div>
-          </div>
+          <WidgetSelectList {...widgetListPropsData} />
 
           {nodes}
 

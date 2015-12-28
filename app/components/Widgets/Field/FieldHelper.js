@@ -29,6 +29,9 @@ class FieldHelper {
   static isUrl(node){
     return node.content_type_id == 5;
   }
+  static isIframe(node){
+    return node.content_type_id == 6;
+  }
 }
 
 export default FieldHelper;

@@ -1,25 +1,23 @@
 import React from 'react';
-import GiftRegistryStore from '../../stores/GiftRegistryStore';
-import GiftRegistryActions from '../../actions/GiftRegistryActions';
 import {_} from 'underscore';
 import ListTemplate from '../Templates/ListTemplate/ListTemplate';
+import API from '../../API';
 
-class EditGiftRegistry extends React.Component {
+class EditHowToGetThere extends React.Component {
   constructor(props) {
     super(props);
-    this.state = GiftRegistryStore.getState();
-    this.onChange = this.onChange.bind(this);
-  }
-  onChange(state) {
-    this.setState(state);
+    this.state = {contentList: []};
+    this.pageId = 6;
   }
 
   componentDidMount() {
-    GiftRegistryStore.listen(this.onChange);
-    GiftRegistryActions.getContentListData();
+    var self = this;
+    API.getContentListForPage(this.pageId).then(function(contentList){
+      self.setState({contentList: contentList});
+    });
   }
   componentWillUnmount() {
-    GiftRegistryStore.unlisten(this.onChange);
+
   }
 
   handleSubmit(event) {
@@ -30,12 +28,12 @@ class EditGiftRegistry extends React.Component {
   }
 
   submit(event){
-    GiftRegistryActions.saveContentListData(this.state.contentList, this.props.history);
+    API.saveContentListForPage(this.state.contentList, this.pageId, this.props.history);
   }
 
 
   render() {
-    var propsData = {isEdit: true, contentList: this.state.contentList, editLink: '/gift-registry/edit',
+    var propsData = {isEdit: true, contentList: this.state.contentList, editLink: '/how-to-get-there/edit',
        setStateForContentList: this.setStateForContentList.bind(this)};
 
     return (
@@ -56,4 +54,4 @@ class EditGiftRegistry extends React.Component {
   }
 }
 
-export default EditGiftRegistry;
+export default EditHowToGetThere;
