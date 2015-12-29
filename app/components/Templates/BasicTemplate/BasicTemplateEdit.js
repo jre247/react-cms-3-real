@@ -4,7 +4,7 @@ import Field from '../../Widgets/Field/Field';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
-import TemplateHelper from '../../../helpers/TemplateHelper';
+import TemplateHelper from '../TemplateHelper';
 
 class BasicTemplateEdit extends React.Component {
   constructor(props) {

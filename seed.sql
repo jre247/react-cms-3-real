@@ -40,6 +40,8 @@ CREATE TABLE content
 	template_id INTEGER NOT NULL references template(id),
 	sort_order INTEGER NULL,
 	parent_index INTEGER NULL,
+	row_number INTEGER NOT NULL,
+	column_number INTEGER NOT NULL,
 	date_created TIMESTAMP null,
 	is_active BOOLEAN
 );
@@ -65,3 +67,4 @@ insert into template(name, is_active) values ('Basic Template', true);
 insert into template(name, is_active) values ('Photo With Description', true);
 insert into template(name, is_active) values ('Photo Gallery', true);
 insert into template(name, is_active) values ('List', true);
+insert into template(name, is_active) values ('ListGrid', true);

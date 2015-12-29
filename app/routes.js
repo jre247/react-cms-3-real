@@ -15,6 +15,8 @@ import ThingsToDo from './components/ThingsToDo/ThingsToDo';
 import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
 import HowToGetThere from './components/HowToGetThere/HowToGetThere';
 import EditHowToGetThere from './components/HowToGetThere/EditHowToGetThere';
+import BridalParty from './components/BridalParty/BridalParty';
+import EditBridalParty from './components/HowToGetThere/EditBridalParty';
 
 export default (
   <Route component={App}>
@@ -32,5 +34,7 @@ export default (
     <Route path='/things-to-do/edit' component={EditThingsToDo} />
     <Route path='/how-to-get-there' component={HowToGetThere} />
     <Route path='/how-to-get-there/edit' component={EditHowToGetThere} />
+    <Route path='/bridal-party' component={BridalParty} />
+    <Route path='/bridal-party/edit' component={EditBridalParty} />
   </Route>
 );

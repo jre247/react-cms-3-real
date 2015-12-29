@@ -12,22 +12,6 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-
-    // let socket = io.connect();
-    //
-    // socket.on('onlineUsers', (data) => {
-    //   NavbarActions.updateOnlineUsers(data);
-    // });
-    //
-    // $(document).ajaxStart(() => {
-    //   NavbarActions.updateAjaxAnimation('fadeIn');
-    // });
-    //
-    // $(document).ajaxComplete(() => {
-    //   setTimeout(() => {
-    //     NavbarActions.updateAjaxAnimation('fadeOut');
-    //   }, 750);
-    // });
   }
 
   componentWillUnmount() {
@@ -54,6 +38,7 @@ class Navbar extends React.Component {
           <Link className="Navigation-link" to="/things-to-do">Things To Do</Link>
           <Link className="Navigation-link" to="/gift-registry">Gift Registry</Link>
           <Link className="Navigation-link" to="/how-to-get-there">How to get there</Link>
+          <Link className="Navigation-link" to="/bridal-party">Bridal Party</Link>
       </div>
     );
   }

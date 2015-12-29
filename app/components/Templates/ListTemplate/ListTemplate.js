@@ -4,7 +4,7 @@ import EmptyContent from '../../EmptyContent';
 import SubListItem from '../../Widgets/ListItem/SubListItem';
 import ParentListItem from '../../Widgets/ListItem/ParentListItem';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
-import TemplateHelper from '../../../helpers/TemplateHelper';
+import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
 
