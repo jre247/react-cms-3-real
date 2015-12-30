@@ -2068,14 +2068,12 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'setStateForContentGroupList',
     value: function setStateForContentGroupList() {
-      debugger;
       var newContentList = [];
 
       _underscore._.each(this.state.contentGroupList, function (group, index) {
         _underscore._.each(group.rows, function (row, index) {
           _underscore._.each(row.columns, function (column, index) {
             _underscore._.each(column.contentList, function (contentItem, index) {
-              debugger;
               newContentList.push(contentItem);
             });
           });
@@ -4647,7 +4645,6 @@ var ListGridGroupColumn = (function (_React$Component) {
   }, {
     key: 'onAddWidgetToContentList',
     value: function onAddWidgetToContentList(factoryInstance) {
-      debugger;
       var column = this.props.column;
       var contentListLength = column.contentList.length;
       this.props.column.contentList.splice(contentListLength + 1, 0, factoryInstance);
@@ -4668,7 +4665,7 @@ var ListGridGroupColumn = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { key: index, className: 'List-Grid-Group-Column-Content-Item' },
+          { key: index, className: 'List-Grid-Group-Column-Content-Item col-md-12' },
           _react2.default.createElement(_Field2.default, propsData)
         );
       });
@@ -4682,7 +4679,7 @@ var ListGridGroupColumn = (function (_React$Component) {
           _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData),
           _react2.default.createElement(
             'div',
-            { className: 'row Sub-list-item' },
+            { className: 'row' },
             nodes
           )
         )

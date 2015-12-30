@@ -45,14 +45,12 @@ class ListGridTemplate extends React.Component {
   }
 
   setStateForContentGroupList(){
-    debugger;
     var newContentList = [];
 
     _.each(this.state.contentGroupList, function(group, index){
       _.each(group.rows, function(row, index){
         _.each(row.columns, function(column, index){
           _.each(column.contentList, function(contentItem, index){
-            debugger;
             newContentList.push(contentItem);
           });
         });

@@ -7491,6 +7491,7 @@ a:hover {
 }
 .List-Grid-Group-Column {
   display: inline-block;
+  vertical-align: top;
   width: 50%;
 }
 .Content-long-description {

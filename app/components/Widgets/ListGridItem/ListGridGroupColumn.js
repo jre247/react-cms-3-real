@@ -21,7 +21,6 @@ class ListGridGroupColumn extends React.Component {
   }
 
   onAddWidgetToContentList(factoryInstance){
-    debugger;
     var column = this.props.column;
     var contentListLength = column.contentList.length;
     this.props.column.contentList.splice(contentListLength + 1, 0, factoryInstance);
@@ -38,7 +37,7 @@ class ListGridGroupColumn extends React.Component {
       var propsData = _.extend({value: contentItem.value, contentItem: contentItem }, this.props);
 
       return(
-        <div key={index} className="List-Grid-Group-Column-Content-Item">
+        <div key={index} className="List-Grid-Group-Column-Content-Item col-md-12">
           <Field {...propsData} />
         </div>
       );
@@ -49,7 +48,7 @@ class ListGridGroupColumn extends React.Component {
         <div>
           <WidgetSelectList {...widgetListPropsData} />
 
-          <div className='row Sub-list-item'>
+          <div className='row'>
             {nodes}
           </div>
         </div>
