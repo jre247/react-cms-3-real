@@ -2042,19 +2042,6 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
-    key: 'updateContent',
-    value: function updateContent(index, event) {
-      this.props.contentList[index].value = event.target.value;
-      this.props.setStateForContentList();
-    }
-  }, {
-    key: 'removeContent',
-    value: function removeContent(index, event) {
-      this.props.contentList.splice(index, 1);
-      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
-      this.props.setStateForContentList();
-    }
-  }, {
     key: 'addParentListItem',
     value: function addParentListItem() {
       var sortOrder = this.props.contentList.length + 1;
@@ -2107,6 +2094,7 @@ var ListGridTemplate = (function (_React$Component) {
       } else {
         var nodes = this.state.contentGroupList.map(function (contentGroupItem, index) {
           var propsData = {
+            contentGroupList: _this2.state.contentGroupList,
             contentGroupItem: contentGroupItem, isEdit: _this2.props.isEdit,
             setStateForContentGroupList: _this2.setStateForContentGroupList.bind(_this2, index),
             templateId: _this2.templateId,
@@ -4517,15 +4505,14 @@ var ListGridGroup = (function (_React$Component) {
     }
   }, {
     key: 'updateContent',
-    value: function updateContent(index, event) {
-      this.props.group.parentListItem[index].value = event.target.value;
+    value: function updateContent(event) {
+      this.props.contentGroupItem.parentListItem.value = event.target.value;
       this.props.setStateForContentGroupList();
     }
   }, {
     key: 'removeContent',
-    value: function removeContent(index, event) {
-      this.props.group.parentListItem.splice(index, 1);
-      this.props.contentGroups.splice(this.props.groupIndex, 1);
+    value: function removeContent(event) {
+      this.props.contentGroupList.splice(this.props.contentGroupIndex, 1);
 
       _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
       this.props.setStateForContentList();
@@ -4538,8 +4525,8 @@ var ListGridGroup = (function (_React$Component) {
       var parentListItem = this.props.contentGroupItem.parentListItem;
       var propsData = {
         contentItem: parentListItem,
-        onRemove: this.removeContent.bind(this, index),
-        onChange: this.updateContent.bind(this, index)
+        onRemove: this.removeContent.bind(this),
+        onChange: this.updateContent.bind(this)
       };
       var parentListGridItemProps = _underscore._.extend(propsData, this.props);
 

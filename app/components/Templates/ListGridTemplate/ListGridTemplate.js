@@ -22,17 +22,6 @@ class ListGridTemplate extends React.Component {
 
   }
 
-  updateContent(index, event) {
-    this.props.contentList[index].value = event.target.value;
-    this.props.setStateForContentList();
-  }
-
-  removeContent(index, event){
-    this.props.contentList.splice(index, 1);
-    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentList();
-  }
-
   addParentListItem(){
     var sortOrder = this.props.contentList.length + 1;
     var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Parent Item',
@@ -76,6 +65,7 @@ class ListGridTemplate extends React.Component {
     else {
       let nodes = this.state.contentGroupList.map((contentGroupItem, index) => {
         var propsData = {
+          contentGroupList: this.state.contentGroupList,
           contentGroupItem: contentGroupItem, isEdit: this.props.isEdit,
           setStateForContentGroupList: this.setStateForContentGroupList.bind(this, index),
           templateId: this.templateId,

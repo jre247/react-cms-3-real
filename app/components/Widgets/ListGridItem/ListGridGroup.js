@@ -34,15 +34,14 @@ class ListGridGroup extends React.Component {
     this.props.setStateForContentGroupList();
   }
 
-  updateContent(index, event) {
-    this.props.group.parentListItem[index].value = event.target.value;
+  updateContent(event) {
+    this.props.contentGroupItem.parentListItem.value = event.target.value;
     this.props.setStateForContentGroupList();
   }
 
-  removeContent(index, event){
-    this.props.group.parentListItem.splice(index, 1);
-    this.props.contentGroups.splice(this.props.groupIndex, 1);
-    
+  removeContent(event){
+    this.props.contentGroupList.splice(this.props.contentGroupIndex, 1);
+
     TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentList();
   }
@@ -51,8 +50,8 @@ class ListGridGroup extends React.Component {
     var parentListItem = this.props.contentGroupItem.parentListItem;
     var propsData = {
       contentItem: parentListItem,
-      onRemove: this.removeContent.bind(this, index),
-      onChange: this.updateContent.bind(this, index)
+      onRemove: this.removeContent.bind(this),
+      onChange: this.updateContent.bind(this)
     };
     var parentListGridItemProps = _.extend(propsData, this.props);
 
