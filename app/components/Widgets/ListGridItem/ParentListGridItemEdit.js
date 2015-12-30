@@ -3,7 +3,6 @@ import {Link} from 'react-router';
 import {_} from 'underscore';
 import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
-import TemplateHelper from '../../../helpers/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 
 class ParentListGridItemEdit extends React.Component {

@@ -16,7 +16,7 @@ import EditThingsToDo from './components/ThingsToDo/EditThingsToDo';
 import HowToGetThere from './components/HowToGetThere/HowToGetThere';
 import EditHowToGetThere from './components/HowToGetThere/EditHowToGetThere';
 import BridalParty from './components/BridalParty/BridalParty';
-import EditBridalParty from './components/HowToGetThere/EditBridalParty';
+import EditBridalParty from './components/BridalParty/EditBridalParty';
 
 export default (
   <Route component={App}>

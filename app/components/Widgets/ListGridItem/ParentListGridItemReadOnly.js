@@ -20,7 +20,7 @@ class ParentListGridItemReadOnly extends React.Component {
     var propsData = _.extend({value: this.props.contentItem.value }, this.props);
 
     return (
-      <div key={this.props.contentItem.sort_order} className={this.props.contentItem.sort_order > 1 ?
+      <div key={this.props.contentItem.sort_order} className={this.props.contentGroupItem.parentListItem.sort_order > 1 ?
       'List-item-group Row-separator' : 'List-item-group'}>
         <div className='row'>
           <div className='col-sm-6'>
