@@ -6,7 +6,7 @@ import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../../../helpers/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 
-class ParentListGridItemEdit extends React.Component {
+class ListGridGroupRow extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = this.props.templateId;
@@ -34,19 +34,32 @@ class ParentListGridItemEdit extends React.Component {
 
 
   render() {
-    var propsData = _.extend({value: this.props.contentGroupItem.parentListItem.value }, this.props);
+    var propsData = {
+      contentItem: this.props.contentGroupItem.parentListItem
+    };
+
+    let nodes = this.props.row.columns.map((column, index) => {
+      var propsData = {
+        column: column
+      };
+      var columnProps = _.extend(propsData, this.props);
+
+      return(
+        <div key={index} className="List-Grid-Group-Column">
+          <ListGridGroupColumn {...columnProps} />
+        </div>
+      );
+    });
 
     return (
-      <div key={this.props.contentItem.sort_order} className='container List-item-group'>
-        <div>
-          <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
-        </div>
+      <div>
+        <div className='Content-panel List-template'>
+          <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
+            <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+          </div>
 
-        <div className='row'>
-          <div className='col-sm-8'>
-            <div className="form-group">
-              <Field {...propsData} />
-            </div>
+          <div className='row List-page Sub-list-item'>
+            {nodes}
           </div>
         </div>
       </div>
@@ -54,4 +67,4 @@ class ParentListGridItemEdit extends React.Component {
   }
 }
 
-export default ParentListGridItemEdit;
+export default ListGridGroupRow;
