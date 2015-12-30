@@ -85,7 +85,7 @@ class ListTemplate extends React.Component {
 
   render() {
     if(_.isEmpty(this.props.contentList)){
-      var emptyContentProps = {editLink: this.props.editLink};
+      var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
       return (
         <div>
           <div className={!this.props.isEdit ? "hidden" : ""}>

@@ -21,23 +21,38 @@ class ListGridGroupColumn extends React.Component {
   }
 
   onAddWidgetToContentList(factoryInstance){
+    debugger;
     var column = this.props.column;
     var contentListLength = column.contentList.length;
-    this.props.contentList.splice(contentListLength + 1, 0, factoryInstance);
+    this.props.column.contentList.splice(contentListLength + 1, 0, factoryInstance);
+
     TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
     this.props.setStateForContentGroupList();
   }
 
   render() {
-  var propsData = _.extend({value: this.props.contentItem.value }, this.props);
-  var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-    parentIndex: this.props.contentGroupIndex, templateId: this.templateId};
+    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+      parentIndex: this.props.contentGroupIndex, templateId: this.templateId};
 
-    return(
-      <WidgetSelectList {...widgetListPropsData} />
+    let nodes = this.props.column.contentList.map((contentItem, index) => {
+      var propsData = _.extend({value: contentItem.value, contentItem: contentItem }, this.props);
 
-      <div key={index} className="List-Grid-Group-Column-Content-Item">
-        <Field {...propsData} />
+      return(
+        <div key={index} className="List-Grid-Group-Column-Content-Item">
+          <Field {...propsData} />
+        </div>
+      );
+    });
+
+    return (
+      <div>
+        <div>
+          <WidgetSelectList {...widgetListPropsData} />
+
+          <div className='row Sub-list-item'>
+            {nodes}
+          </div>
+        </div>
       </div>
     );
   }

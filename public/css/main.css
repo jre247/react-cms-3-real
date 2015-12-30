@@ -7489,6 +7489,10 @@ a:hover {
 .List-template .Content-extra-large-image-percentage {
   margin-left: 0px;
 }
+.List-Grid-Group-Column {
+  display: inline-block;
+  width: 50%;
+}
 .Content-long-description {
   color: white;
   font-size: 18px;

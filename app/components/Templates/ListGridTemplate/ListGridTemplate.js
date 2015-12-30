@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import EmptyContent from '../../EmptyContent';
 import ListGridGroup from '../../Widgets/ListGridItem/ListGridGroup';
-import ParentListGridItem from '../../Widgets/ListGridItem/ParentListGridItem';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
@@ -11,8 +10,8 @@ import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptio
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state.contentGroupList = [];
-    this.templateId = 4;
+    this.state = {contentGroupList: []};
+    this.templateId = 5;
   }
 
   componentDidMount() {
@@ -42,18 +41,31 @@ class ListGridTemplate extends React.Component {
 
     var newGroup = {parentListItem: longDescription, columns: [], rows: []};
     this.state.contentGroupList.push(newGroup);
-    this.setState({contentGroupList: contentGroupList});
+    this.setStateForContentGroupList();
   }
 
   setStateForContentGroupList(){
+    debugger;
     var newContentList = [];
-    this.props.contentList = newContentList;
-    this.props.setStateForContentList();
+
+    _.each(this.state.contentGroupList, function(group, index){
+      _.each(group.rows, function(row, index){
+        _.each(row.columns, function(column, index){
+          _.each(column.contentList, function(contentItem, index){
+            debugger;
+            newContentList.push(contentItem);
+          });
+        });
+      });
+    });
+
+    this.setState({contentGroupList: this.state.contentGroupList});
+    this.props.setStateForContentList(newContentList);
   }
 
   render() {
-    if(_.isEmpty(this.props.contentList)){
-      var emptyContentProps = {editLink: this.props.editLink};
+    if(_.isEmpty(this.state.contentGroupList)){
+      var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
       return (
         <div>
           <div className={!this.props.isEdit ? "hidden" : ""}>

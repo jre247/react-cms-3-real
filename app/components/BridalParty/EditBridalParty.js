@@ -23,8 +23,8 @@ class EditBridalParty extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
   }
-  setStateForContentList(){
-    this.setState({contentList: this.state.contentList})
+  setStateForContentList(newContentList){
+    this.setState({contentList: newContentList})
   }
 
   submit(event){

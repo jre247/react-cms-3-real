@@ -5,6 +5,8 @@ import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../../Templates/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
+import ParentListGridItem from '../../Widgets/ListGridItem/ParentListGridItem';
+import ListGridGroupRow from '../../Widgets/ListGridItem/ListGridGroupRow';
 
 class ListGridGroup extends React.Component {
   constructor(props) {
@@ -55,20 +57,20 @@ class ListGridGroup extends React.Component {
 
     return (
       <div>
-        <div className='Content-panel List-template'>
+        <div className='List-template'>
           <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
             <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
           </div>
 
           <div className={!this.props.isEdit ? "hidden" : ""}>
-            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+            <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
           </div>
 
-          <div key={index}>
+          <div>
             <ParentListGridItem {...parentListGridItemProps} />
           </div>
 
-          <div className='row List-page'>
+          <div className='row'>
             {nodes}
           </div>
         </div>

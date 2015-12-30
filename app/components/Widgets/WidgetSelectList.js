@@ -26,7 +26,6 @@ class WidgetSelectList extends React.Component {
     var factory = new WidgetFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex);
     var factoryInstance = factory.create();
 
-    debugger;
     this.props.onAddWidgetToContentList(factoryInstance);
   }
 
@@ -34,14 +33,14 @@ class WidgetSelectList extends React.Component {
     return (
 
       <div className='row'>
-        <div className='col-sm-2'>
+        <div className='col-sm-3'>
           <div className="form-group">
             <button className="btn btn-primary" onClick={this.onAddWidget.bind(this)}>
               Add Widget
             </button>
           </div>
         </div>
-        <div className='col-sm-2'>
+        <div className='col-sm-3'>
           <div className="form-group">
             <div onChange={this.onWidgetListChange.bind(this)}>
               <select className='form-control'>
