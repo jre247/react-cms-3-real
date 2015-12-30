@@ -20,6 +20,17 @@ class ListGridGroupColumn extends React.Component {
 
   }
 
+  updateContent(index, event) {
+    this.props.column.contentList[index].value = event.target.value;
+    this.props.setStateForContentGroupList();
+  }
+
+  removeContent(index, event){
+    this.props.column.contentList.splice(index, 1);
+    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
+    this.props.setStateForContentList();
+  }
+
   onAddWidgetToContentList(factoryInstance){
     var column = this.props.column;
     var contentListLength = column.contentList.length;
@@ -34,11 +45,17 @@ class ListGridGroupColumn extends React.Component {
       parentIndex: this.props.contentGroupIndex, templateId: this.templateId};
 
     let nodes = this.props.column.contentList.map((contentItem, index) => {
-      var propsData = _.extend({value: contentItem.value, contentItem: contentItem }, this.props);
+      var propsData = {
+        value: contentItem.value,
+        contentItem: contentItem,
+        onRemove: this.removeContent.bind(this, index),
+        onChange: this.updateContent.bind(this, index)
+      };
+      var fieldPropsData = _.extend(propsData, this.props);
 
       return(
         <div key={index} className="List-Grid-Group-Column-Content-Item col-md-12">
-          <Field {...propsData} />
+          <Field {...fieldPropsData} />
         </div>
       );
     });

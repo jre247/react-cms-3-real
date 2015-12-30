@@ -4516,13 +4516,30 @@ var ListGridGroup = (function (_React$Component) {
       this.props.setStateForContentGroupList();
     }
   }, {
+    key: 'updateContent',
+    value: function updateContent(index, event) {
+      this.props.group.parentListItem[index].value = event.target.value;
+      this.props.setStateForContentGroupList();
+    }
+  }, {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
+      this.props.group.parentListItem.splice(index, 1);
+      this.props.contentGroups.splice(this.props.groupIndex, 1);
+
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
+      this.props.setStateForContentList();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
       var parentListItem = this.props.contentGroupItem.parentListItem;
       var propsData = {
-        contentItem: parentListItem
+        contentItem: parentListItem,
+        onRemove: this.removeContent.bind(this, index),
+        onChange: this.updateContent.bind(this, index)
       };
       var parentListGridItemProps = _underscore._.extend(propsData, this.props);
 
@@ -4643,6 +4660,19 @@ var ListGridGroupColumn = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'updateContent',
+    value: function updateContent(index, event) {
+      this.props.column.contentList[index].value = event.target.value;
+      this.props.setStateForContentGroupList();
+    }
+  }, {
+    key: 'removeContent',
+    value: function removeContent(index, event) {
+      this.props.column.contentList.splice(index, 1);
+      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
+      this.props.setStateForContentList();
+    }
+  }, {
     key: 'onAddWidgetToContentList',
     value: function onAddWidgetToContentList(factoryInstance) {
       var column = this.props.column;
@@ -4661,12 +4691,18 @@ var ListGridGroupColumn = (function (_React$Component) {
         parentIndex: this.props.contentGroupIndex, templateId: this.templateId };
 
       var nodes = this.props.column.contentList.map(function (contentItem, index) {
-        var propsData = _underscore._.extend({ value: contentItem.value, contentItem: contentItem }, _this2.props);
+        var propsData = {
+          value: contentItem.value,
+          contentItem: contentItem,
+          onRemove: _this2.removeContent.bind(_this2, index),
+          onChange: _this2.updateContent.bind(_this2, index)
+        };
+        var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
         return _react2.default.createElement(
           'div',
           { key: index, className: 'List-Grid-Group-Column-Content-Item col-md-12' },
-          _react2.default.createElement(_Field2.default, propsData)
+          _react2.default.createElement(_Field2.default, fieldPropsData)
         );
       });
 
