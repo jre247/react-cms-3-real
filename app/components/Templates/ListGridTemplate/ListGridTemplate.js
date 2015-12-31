@@ -7,42 +7,67 @@ import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
+import API from '../../../API';
 
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: []};
+    this.state = {contentGroupList: [], contentList: []};
     this.templateId = 5;
   }
 
   componentDidMount() {
-    this.buildContentGroupList();
+    var self = this;
+    API.getContentListForPage(this.props.pageId).then(function(contentList){
+      self.setState({contentList: contentList});
+      self.buildContentGroupList();
+    });
   }
 
   componentWillUnmount() {
 
   }
+  setStateForContentList(newContentList){
+    this.setState({contentList: newContentList})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  submit(event){
+    debugger;
+    API.saveContentListForPage(this.state.contentList, this.props.pageId, this.props.history);
+  }
 
   buildContentGroupList(){
-    var contentGroupIndex = 0;
+    var self = this;
+    var contentGroupIndex;
     debugger;
-    _.each(this.props.contentList, function(contentItem, index){
+    _.each(this.state.contentList, function(contentItem, index){
       if(FieldHelper.isParentListItem(contentItem)){
         var factory = new ListGridGroupFactory(contentItem);
         var contentGroup = factory.create();
-        this.state.contentGroupList.push(contentGroup);
+        self.state.contentGroupList.push(contentGroup);
 
-        contentGroupIndex++;
+        // want to initialize group index to be 0 for the first parent list item, and then increment
+        // for subsequent parent list items
+        if(typeof contentGroupIndex === 'number'){
+          contentGroupIndex++;
+        }
+        else{
+          contentGroupIndex = 0;
+        }
       }
       else{
-        var contentGroup = this.state.contentGroupList[contentGroupIndex];
+        var contentGroup = self.state.contentGroupList[contentGroupIndex];
         contentGroup.rows[contentItem.row_number].columns[contentItem.column_number] = contentItem;
       }
     });
   }
 
   addParentListItem(){
-    var sortOrder = this.props.contentList.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
     var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Parent Item',
       'List Parent Item', this.templateId);
     var longDescription = longDescriptionFactory.create();
@@ -55,6 +80,13 @@ class ListGridTemplate extends React.Component {
   }
 
   setStateForContentGroupList(){
+    var newContentList = this.buildContentList();
+
+    this.setState({contentGroupList: this.state.contentGroupList});
+    this.setStateForContentList(newContentList);
+  }
+
+  buildContentList(){
     var newContentList = [];
 
     _.each(this.state.contentGroupList, function(group, index){
@@ -70,8 +102,7 @@ class ListGridTemplate extends React.Component {
       });
     });
 
-    this.setState({contentGroupList: this.state.contentGroupList});
-    this.props.setStateForContentList(newContentList);
+    return newContentList;
   }
 
   render() {
@@ -93,7 +124,9 @@ class ListGridTemplate extends React.Component {
           contentGroupItem: contentGroupItem, isEdit: this.props.isEdit,
           setStateForContentGroupList: this.setStateForContentGroupList.bind(this, index),
           templateId: this.templateId,
-          contentGroupIndex: index
+          contentGroupIndex: index,
+          contentList: this.state.contentList,
+          setStateForContentList: this.setStateForContentList.bind(this)
         };
         var listItemProps = _.extend(propsData, this.props);
 
@@ -105,21 +138,33 @@ class ListGridTemplate extends React.Component {
       });
 
       return (
-        <div>
-          <div className='Content-panel List-template'>
-            <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-              <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
-            </div>
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <div className='container List-page'>
+            <div className='row List-container'>
+              <div>
+                <div className='Content-panel List-template'>
+                  <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
+                    <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+                  </div>
 
-            <div className={!this.props.isEdit ? "hidden" : ""}>
-              <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
-            </div>
+                  <div className={!this.props.isEdit ? "hidden" : ""}>
+                    <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+                  </div>
 
-            <div className='row List-page'>
-              {nodes}
+                  <div className='row List-page'>
+                    {nodes}
+                  </div>
+
+                  <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
+                    <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </form>
+
+
       );
     }
   }

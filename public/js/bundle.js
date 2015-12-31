@@ -638,10 +638,6 @@ var _ListGridTemplate = require('../Templates/ListGridTemplate/ListGridTemplate'
 
 var _ListGridTemplate2 = _interopRequireDefault(_ListGridTemplate);
 
-var _API = require('../../API');
-
-var _API2 = _interopRequireDefault(_API);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -658,71 +654,22 @@ var EditBridalParty = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EditBridalParty).call(this, props));
 
-    _this.state = { contentList: [] };
     _this.pageId = 7;
     return _this;
   }
 
   _createClass(EditBridalParty, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      var self = this;
-      _API2.default.getContentListForPage(this.pageId).then(function (contentList) {
-        debugger;
-        self.setState({ contentList: contentList });
-      });
-    }
+    value: function componentDidMount() {}
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
-    key: 'handleSubmit',
-    value: function handleSubmit(event) {
-      event.preventDefault();
-    }
-  }, {
-    key: 'setStateForContentList',
-    value: function setStateForContentList(newContentList) {
-      this.setState({ contentList: newContentList });
-    }
-  }, {
-    key: 'submit',
-    value: function submit(event) {
-      debugger;
-      _API2.default.saveContentListForPage(this.state.contentList, this.pageId, this.props.history);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var propsData = { isEdit: true, contentList: this.state.contentList, editLink: '/bridal-party/edit',
-        setStateForContentList: this.setStateForContentList.bind(this) };
+      var propsData = { isEdit: true, editLink: '/bridal-party/edit', pageId: this.pageId };
 
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleSubmit.bind(this) },
-          _react2.default.createElement(
-            'div',
-            { className: 'container List-page' },
-            _react2.default.createElement(
-              'div',
-              { className: 'row List-container' },
-              _react2.default.createElement(_ListGridTemplate2.default, propsData)
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden' },
-              _react2.default.createElement(
-                'button',
-                { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
-                'Save'
-              )
-            )
-          )
-        )
-      );
+      return _react2.default.createElement(_ListGridTemplate2.default, propsData);
     }
   }]);
 
@@ -731,7 +678,7 @@ var EditBridalParty = (function (_React$Component) {
 
 exports.default = EditBridalParty;
 
-},{"../../API":1,"../Templates/ListGridTemplate/ListGridTemplate":27,"react":"react","underscore":"underscore"}],13:[function(require,module,exports){
+},{"../Templates/ListGridTemplate/ListGridTemplate":27,"react":"react","underscore":"underscore"}],13:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2020,6 +1967,10 @@ var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescrip
 
 var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
 
+var _API = require('../../../API');
+
+var _API2 = _interopRequireDefault(_API);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2036,7 +1987,7 @@ var ListGridTemplate = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridTemplate).call(this, props));
 
-    _this.state = { contentGroupList: [] };
+    _this.state = { contentGroupList: [], contentList: [] };
     _this.templateId = 5;
     return _this;
   }
@@ -2044,25 +1995,52 @@ var ListGridTemplate = (function (_React$Component) {
   _createClass(ListGridTemplate, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.buildContentGroupList();
+      var self = this;
+      _API2.default.getContentListForPage(this.props.pageId).then(function (contentList) {
+        self.setState({ contentList: contentList });
+        self.buildContentGroupList();
+      });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'setStateForContentList',
+    value: function setStateForContentList(newContentList) {
+      this.setState({ contentList: newContentList });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+    }
+  }, {
+    key: 'submit',
+    value: function submit(event) {
+      debugger;
+      _API2.default.saveContentListForPage(this.state.contentList, this.props.pageId, this.props.history);
+    }
+  }, {
     key: 'buildContentGroupList',
     value: function buildContentGroupList() {
-      var contentGroupIndex = 0;
+      var self = this;
+      var contentGroupIndex;
       debugger;
-      _underscore._.each(this.props.contentList, function (contentItem, index) {
+      _underscore._.each(this.state.contentList, function (contentItem, index) {
         if (_FieldHelper2.default.isParentListItem(contentItem)) {
           var factory = new _ListGridGroupFactory2.default(contentItem);
           var contentGroup = factory.create();
-          this.state.contentGroupList.push(contentGroup);
+          self.state.contentGroupList.push(contentGroup);
 
-          contentGroupIndex++;
+          // want to initialize group index to be 0 for the first parent list item, and then increment
+          // for subsequent parent list items
+          if (typeof contentGroupIndex === 'number') {
+            contentGroupIndex++;
+          } else {
+            contentGroupIndex = 0;
+          }
         } else {
-          var contentGroup = this.state.contentGroupList[contentGroupIndex];
+          var contentGroup = self.state.contentGroupList[contentGroupIndex];
           contentGroup.rows[contentItem.row_number].columns[contentItem.column_number] = contentItem;
         }
       });
@@ -2070,7 +2048,7 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'addParentListItem',
     value: function addParentListItem() {
-      var sortOrder = this.props.contentList.length + 1;
+      var sortOrder = this.state.contentList.length + 1;
       var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
       var longDescription = longDescriptionFactory.create();
 
@@ -2083,6 +2061,14 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'setStateForContentGroupList',
     value: function setStateForContentGroupList() {
+      var newContentList = this.buildContentList();
+
+      this.setState({ contentGroupList: this.state.contentGroupList });
+      this.setStateForContentList(newContentList);
+    }
+  }, {
+    key: 'buildContentList',
+    value: function buildContentList() {
       var newContentList = [];
 
       _underscore._.each(this.state.contentGroupList, function (group, index) {
@@ -2098,8 +2084,7 @@ var ListGridTemplate = (function (_React$Component) {
         });
       });
 
-      this.setState({ contentGroupList: this.state.contentGroupList });
-      this.props.setStateForContentList(newContentList);
+      return newContentList;
     }
   }, {
     key: 'render',
@@ -2129,7 +2114,9 @@ var ListGridTemplate = (function (_React$Component) {
             contentGroupItem: contentGroupItem, isEdit: _this2.props.isEdit,
             setStateForContentGroupList: _this2.setStateForContentGroupList.bind(_this2, index),
             templateId: _this2.templateId,
-            contentGroupIndex: index
+            contentGroupIndex: index,
+            contentList: _this2.state.contentList,
+            setStateForContentList: _this2.setStateForContentList.bind(_this2)
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
 
@@ -2141,33 +2128,54 @@ var ListGridTemplate = (function (_React$Component) {
         });
 
         return _react2.default.createElement(
-          'div',
-          null,
+          'form',
+          { onSubmit: this.handleSubmit.bind(this) },
           _react2.default.createElement(
             'div',
-            { className: 'Content-panel List-template' },
+            { className: 'container List-page' },
             _react2.default.createElement(
               'div',
-              { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
+              { className: 'row List-container' },
               _react2.default.createElement(
-                _reactRouter.Link,
-                { className: 'Navigation-link', to: this.props.editLink },
-                'Edit'
+                'div',
+                null,
+                _react2.default.createElement(
+                  'div',
+                  { className: 'Content-panel List-template' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
+                    _react2.default.createElement(
+                      _reactRouter.Link,
+                      { className: 'Navigation-link', to: this.props.editLink },
+                      'Edit'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: !this.props.isEdit ? "hidden" : "" },
+                    _react2.default.createElement(
+                      'button',
+                      { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+                      'Add'
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'row List-page' },
+                    nodes
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden' },
+                    _react2.default.createElement(
+                      'button',
+                      { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
+                      'Save'
+                    )
+                  )
+                )
               )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: !this.props.isEdit ? "hidden" : "" },
-              _react2.default.createElement(
-                'button',
-                { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
-                'Add'
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'row List-page' },
-              nodes
             )
           )
         );
@@ -2180,7 +2188,7 @@ var ListGridTemplate = (function (_React$Component) {
 
 exports.default = ListGridTemplate;
 
-},{"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListGridItem/ListGridGroup":54,"../../Widgets/ListGridItem/ListGridGroupFactory":56,"../../Widgets/LongDescription/LongDescriptionFactory":67,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListGridItem/ListGridGroup":54,"../../Widgets/ListGridItem/ListGridGroupFactory":56,"../../Widgets/LongDescription/LongDescriptionFactory":67,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
