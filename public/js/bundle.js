@@ -2028,7 +2028,7 @@ var ListGridTemplate = (function (_React$Component) {
     value: function buildContentGroupList() {
       var self = this;
       var contentGroupIndex;
-      debugger;
+
       _underscore._.each(this.state.contentList, function (contentItem, index) {
         if (_FieldHelper2.default.isParentListItem(contentItem)) {
           var factory = new _ListGridGroupFactory2.default(contentItem);
@@ -2152,7 +2152,7 @@ var ListGridTemplate = (function (_React$Component) {
                 null,
                 _react2.default.createElement(
                   'div',
-                  { className: 'Content-panel List-template' },
+                  { className: 'Content-panel List-Grid-Template' },
                   _react2.default.createElement(
                     'div',
                     { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
@@ -4487,6 +4487,12 @@ var ImageWidgetReadOnly = (function (_React$Component) {
           { className: 'Content-image-container' },
           _react2.default.createElement('img', { className: 'Content-small-image', src: this.props.value, alt: 'Image' })
         );
+      } else if (this.props.imageSize == 'medium') {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Content-image-container' },
+          _react2.default.createElement('img', { className: 'Content-medium-image', src: this.props.value, alt: 'Image' })
+        );
       } else {
         return _react2.default.createElement(
           'div',
@@ -4754,7 +4760,8 @@ var ListGridGroupColumn = (function (_React$Component) {
           value: contentItem.value,
           contentItem: contentItem,
           onRemove: _this2.removeContent.bind(_this2, index),
-          onChange: _this2.updateContent.bind(_this2, index)
+          onChange: _this2.updateContent.bind(_this2, index),
+          imageSize: 'medium'
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
@@ -5139,7 +5146,7 @@ var ParentListGridItemReadOnly = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-6' },
+            null,
             _react2.default.createElement(
               'div',
               { className: 'form-group Parent-list-item-readonly' },

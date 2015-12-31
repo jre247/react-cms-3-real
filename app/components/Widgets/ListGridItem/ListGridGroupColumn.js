@@ -50,7 +50,8 @@ class ListGridGroupColumn extends React.Component {
         value: contentItem.value,
         contentItem: contentItem,
         onRemove: this.removeContent.bind(this, index),
-        onChange: this.updateContent.bind(this, index)
+        onChange: this.updateContent.bind(this, index),
+        imageSize: 'medium'
       };
       var fieldPropsData = _.extend(propsData, this.props);
 
@@ -67,7 +68,7 @@ class ListGridGroupColumn extends React.Component {
           <div className={!this.props.isEdit ? "hidden" : ""}>
             <WidgetSelectList {...widgetListPropsData} />
           </div>
-          
+
           <div className='row'>
             {nodes}
           </div>

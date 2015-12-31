@@ -50,7 +50,7 @@ class ListGridTemplate extends React.Component {
   buildContentGroupList(){
     var self = this;
     var contentGroupIndex;
-    debugger;
+
     _.each(this.state.contentList, function(contentItem, index){
       if(FieldHelper.isParentListItem(contentItem)){
         var factory = new ListGridGroupFactory(contentItem);
@@ -157,7 +157,7 @@ class ListGridTemplate extends React.Component {
           <div className='container List-page'>
             <div className='row List-container'>
               <div>
-                <div className='Content-panel List-template'>
+                <div className='Content-panel List-Grid-Template'>
                   <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
                     <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
                   </div>

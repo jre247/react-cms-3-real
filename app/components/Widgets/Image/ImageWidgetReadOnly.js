@@ -22,6 +22,13 @@ class ImageWidgetReadOnly extends React.Component {
         </div>
       );
     }
+    else if(this.props.imageSize == 'medium'){
+      return (
+        <div className="Content-image-container">
+          <img className="Content-medium-image" src={this.props.value} alt="Image" />
+        </div>
+      );
+    }
     else{
       return (
         <div className="Content-image-container">
