@@ -12,9 +12,14 @@ class TemplateHelper {
     }
   }
 
-  static setNewSortOrderForGridRowsAndColumns(groups){
+  static setSortOrderAndRowAndColumnForContentGroups(groups){
+    var sortOrder = 0;
+
     for(var groupIndex = 0; groupIndex < groups.length; groupIndex++){
       var group = groups[groupIndex];
+      var parentListItem = group.parentListItem;
+      parentListItem.sort_order = sortOrder;
+      sortOrder++;
 
       for(var rowIndex = 0; rowIndex < group.rows.length; rowIndex++){
         var row = group.rows[rowIndex];
@@ -26,6 +31,9 @@ class TemplateHelper {
             var contentItem = column.contentList[contentIndex];
             contentItem.row_number = rowIndex;
             contentItem.column_number = columnIndex;
+            contentItem.sort_order = sortOrder;
+
+            sortOrder++;
           }
         }
       }

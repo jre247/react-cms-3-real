@@ -28,6 +28,7 @@ class EditBridalParty extends React.Component {
   }
 
   submit(event){
+    debugger;
     API.saveContentListForPage(this.state.contentList, this.pageId, this.props.history);
   }
 

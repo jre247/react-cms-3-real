@@ -5,10 +5,10 @@ class ListGridGroupFactory {
     this.parentListItem = parentListItem;
   }
 
-  static create(node){
+  create(){
     var newGroup = {
       rows: [],
-      parentListItem: parentListItem
+      parentListItem: this.parentListItem
     };
 
     return newGroup;

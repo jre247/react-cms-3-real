@@ -687,6 +687,7 @@ var EditBridalParty = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
+      debugger;
       _API2.default.saveContentListForPage(this.state.contentList, this.pageId, this.props.history);
     }
   }, {
@@ -2054,7 +2055,7 @@ var ListGridTemplate = (function (_React$Component) {
       debugger;
       _underscore._.each(this.props.contentList, function (contentItem, index) {
         if (_FieldHelper2.default.isParentListItem(contentItem)) {
-          var factory = new _ListGridGroupFactory2.default(parentListItem);
+          var factory = new _ListGridGroupFactory2.default(contentItem);
           var contentGroup = factory.create();
           this.state.contentGroupList.push(contentGroup);
 
@@ -2825,10 +2826,15 @@ var TemplateHelper = (function () {
       }
     }
   }, {
-    key: 'setNewSortOrderForGridRowsAndColumns',
-    value: function setNewSortOrderForGridRowsAndColumns(groups) {
+    key: 'setSortOrderAndRowAndColumnForContentGroups',
+    value: function setSortOrderAndRowAndColumnForContentGroups(groups) {
+      var sortOrder = 0;
+
       for (var groupIndex = 0; groupIndex < groups.length; groupIndex++) {
         var group = groups[groupIndex];
+        var parentListItem = group.parentListItem;
+        parentListItem.sort_order = sortOrder;
+        sortOrder++;
 
         for (var rowIndex = 0; rowIndex < group.rows.length; rowIndex++) {
           var row = group.rows[rowIndex];
@@ -2840,6 +2846,9 @@ var TemplateHelper = (function () {
               var contentItem = column.contentList[contentIndex];
               contentItem.row_number = rowIndex;
               contentItem.column_number = columnIndex;
+              contentItem.sort_order = sortOrder;
+
+              sortOrder++;
             }
           }
         }
@@ -4707,8 +4716,7 @@ var ListGridGroupColumn = (function (_React$Component) {
     key: 'removeContent',
     value: function removeContent(index, event) {
       this.props.column.contentList.splice(index, 1);
-      _TemplateHelper2.default.setNewSortOrderForGridRowsAndColumns(this.props.contentGroupList);
-      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
+      _TemplateHelper2.default.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
       this.props.setStateForContentGroupList();
     }
   }, {
@@ -4718,7 +4726,7 @@ var ListGridGroupColumn = (function (_React$Component) {
       var contentListLength = column.contentList.length;
       this.props.column.contentList.splice(contentListLength + 1, 0, factoryInstance);
 
-      _TemplateHelper2.default.setNewSortOrderForAllListItems(this.props.contentList);
+      _TemplateHelper2.default.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
       this.props.setStateForContentGroupList();
     }
   }, {
@@ -4788,12 +4796,12 @@ var ListGridGroupFactory = (function () {
     this.parentListItem = parentListItem;
   }
 
-  _createClass(ListGridGroupFactory, null, [{
+  _createClass(ListGridGroupFactory, [{
     key: 'create',
-    value: function create(node) {
+    value: function create() {
       var newGroup = {
         rows: [],
-        parentListItem: parentListItem
+        parentListItem: this.parentListItem
       };
 
       return newGroup;

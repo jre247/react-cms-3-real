@@ -27,9 +27,8 @@ class ListGridGroupColumn extends React.Component {
 
   removeContent(index, event){
     this.props.column.contentList.splice(index, 1);
-    TemplateHelper.setNewSortOrderForGridRowsAndColumns(this.props.contentGroupList);
-    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentGroupList();  
+    TemplateHelper.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
+    this.props.setStateForContentGroupList();
   }
 
   onAddWidgetToContentList(factoryInstance){
@@ -37,7 +36,7 @@ class ListGridGroupColumn extends React.Component {
     var contentListLength = column.contentList.length;
     this.props.column.contentList.splice(contentListLength + 1, 0, factoryInstance);
 
-    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
+    TemplateHelper.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
     this.props.setStateForContentGroupList();
   }
 

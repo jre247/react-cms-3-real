@@ -28,7 +28,7 @@ class ListGridTemplate extends React.Component {
     debugger;
     _.each(this.props.contentList, function(contentItem, index){
       if(FieldHelper.isParentListItem(contentItem)){
-        var factory = new ListGridGroupFactory(parentListItem);
+        var factory = new ListGridGroupFactory(contentItem);
         var contentGroup = factory.create();
         this.state.contentGroupList.push(contentGroup);
 
