@@ -7,21 +7,19 @@ import API from '../../API';
 class BridalParty extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentList: []};
     this.pageId = 7;
   }
 
   componentDidMount() {
-    var self = this;
-    API.getContentListForPage(this.pageId).then(function(contentList){
-      self.setState({contentList: contentList});
-    });
+
   }
   componentWillUnmount() {
 
   }
+
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/bridal-party/edit'};
+    var propsData = {isEdit: false, editLink: '/bridal-party/edit', pageId: this.pageId};
+
     return (
       <ListGridTemplate {...propsData} />
     );

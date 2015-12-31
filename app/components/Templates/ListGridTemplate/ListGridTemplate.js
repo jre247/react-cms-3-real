@@ -21,6 +21,7 @@ class ListGridTemplate extends React.Component {
     API.getContentListForPage(this.props.pageId).then(function(contentList){
       self.setState({contentList: contentList});
       self.buildContentGroupList();
+      self.setStateForContentGroupList();
     });
   }
 
@@ -29,6 +30,13 @@ class ListGridTemplate extends React.Component {
   }
   setStateForContentList(newContentList){
     this.setState({contentList: newContentList})
+  }
+
+  setStateForContentGroupList(){
+    var newContentList = this.buildContentList();
+
+    this.setState({contentGroupList: this.state.contentGroupList});
+    this.setStateForContentList(newContentList);
   }
 
   handleSubmit(event) {
@@ -61,9 +69,25 @@ class ListGridTemplate extends React.Component {
       }
       else{
         var contentGroup = self.state.contentGroupList[contentGroupIndex];
-        contentGroup.rows[contentItem.row_number].columns[contentItem.column_number] = contentItem;
+        self.buildRowsAndColumnsForGroup(contentGroup, contentItem);
+        contentGroup.rows[contentItem.row_number].columns[contentItem.column_number].contentList.push(contentItem);
       }
     });
+  }
+
+  buildRowsAndColumnsForGroup(contentGroup, contentItem){
+    var row = contentGroup.rows[contentItem.row_number];
+    if(!row){
+      var newRow = {columns: []};
+      contentGroup.rows.push(newRow);
+    }
+
+    var column = contentGroup.rows[contentItem.row_number].columns[contentItem.column_number];
+    if(!column){
+      var newColumn = {contentList: []};
+      newColumn.contentList.push(contentItem);
+      contentGroup.rows[contentItem.row_number].columns.push(newColumn);
+    }
   }
 
   addParentListItem(){
@@ -77,13 +101,6 @@ class ListGridTemplate extends React.Component {
     this.state.contentGroupList.push(contentGroup);
 
     this.setStateForContentGroupList();
-  }
-
-  setStateForContentGroupList(){
-    var newContentList = this.buildContentList();
-
-    this.setState({contentGroupList: this.state.contentGroupList});
-    this.setStateForContentList(newContentList);
   }
 
   buildContentList(){

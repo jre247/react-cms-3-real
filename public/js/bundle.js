@@ -590,26 +590,21 @@ var BridalParty = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BridalParty).call(this, props));
 
-    _this.state = { contentList: [] };
     _this.pageId = 7;
     return _this;
   }
 
   _createClass(BridalParty, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {
-      var self = this;
-      _API2.default.getContentListForPage(this.pageId).then(function (contentList) {
-        self.setState({ contentList: contentList });
-      });
-    }
+    value: function componentDidMount() {}
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
     key: 'render',
     value: function render() {
-      var propsData = { isEdit: false, contentList: this.state.contentList, editLink: '/bridal-party/edit' };
+      var propsData = { isEdit: false, editLink: '/bridal-party/edit', pageId: this.pageId };
+
       return _react2.default.createElement(_ListGridTemplate2.default, propsData);
     }
   }]);
@@ -1999,6 +1994,7 @@ var ListGridTemplate = (function (_React$Component) {
       _API2.default.getContentListForPage(this.props.pageId).then(function (contentList) {
         self.setState({ contentList: contentList });
         self.buildContentGroupList();
+        self.setStateForContentGroupList();
       });
     }
   }, {
@@ -2008,6 +2004,14 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
       this.setState({ contentList: newContentList });
+    }
+  }, {
+    key: 'setStateForContentGroupList',
+    value: function setStateForContentGroupList() {
+      var newContentList = this.buildContentList();
+
+      this.setState({ contentGroupList: this.state.contentGroupList });
+      this.setStateForContentList(newContentList);
     }
   }, {
     key: 'handleSubmit',
@@ -2041,9 +2045,26 @@ var ListGridTemplate = (function (_React$Component) {
           }
         } else {
           var contentGroup = self.state.contentGroupList[contentGroupIndex];
-          contentGroup.rows[contentItem.row_number].columns[contentItem.column_number] = contentItem;
+          self.buildRowsAndColumnsForGroup(contentGroup, contentItem);
+          contentGroup.rows[contentItem.row_number].columns[contentItem.column_number].contentList.push(contentItem);
         }
       });
+    }
+  }, {
+    key: 'buildRowsAndColumnsForGroup',
+    value: function buildRowsAndColumnsForGroup(contentGroup, contentItem) {
+      var row = contentGroup.rows[contentItem.row_number];
+      if (!row) {
+        var newRow = { columns: [] };
+        contentGroup.rows.push(newRow);
+      }
+
+      var column = contentGroup.rows[contentItem.row_number].columns[contentItem.column_number];
+      if (!column) {
+        var newColumn = { contentList: [] };
+        newColumn.contentList.push(contentItem);
+        contentGroup.rows[contentItem.row_number].columns.push(newColumn);
+      }
     }
   }, {
     key: 'addParentListItem',
@@ -2057,14 +2078,6 @@ var ListGridTemplate = (function (_React$Component) {
       this.state.contentGroupList.push(contentGroup);
 
       this.setStateForContentGroupList();
-    }
-  }, {
-    key: 'setStateForContentGroupList',
-    value: function setStateForContentGroupList() {
-      var newContentList = this.buildContentList();
-
-      this.setState({ contentGroupList: this.state.contentGroupList });
-      this.setStateForContentList(newContentList);
     }
   }, {
     key: 'buildContentList',

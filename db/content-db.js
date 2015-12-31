@@ -50,13 +50,13 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(row.parent_index == "" ? null : row.parent_index);
         valueClause.push('$' + params.length);
-        params.push(row.row_number);
-        valueClause.push('$' + params.length);
-        params.push(row.column_number);
-        valueClause.push('$' + params.length);
         params.push(new Date());
         valueClause.push('$' + params.length);
         params.push(true);
+        valueClause.push('$' + params.length);
+        params.push(row.row_number);
+        valueClause.push('$' + params.length);
+        params.push(row.column_number);
         valueClause.push('$' + params.length);
         chunks.push('(' + valueClause.join(', ') + ')');
     });
