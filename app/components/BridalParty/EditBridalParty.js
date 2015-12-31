@@ -13,6 +13,7 @@ class EditBridalParty extends React.Component {
   componentDidMount() {
     var self = this;
     API.getContentListForPage(this.pageId).then(function(contentList){
+      debugger;
       self.setState({contentList: contentList});
     });
   }

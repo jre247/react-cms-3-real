@@ -668,6 +668,7 @@ var EditBridalParty = (function (_React$Component) {
     value: function componentDidMount() {
       var self = this;
       _API2.default.getContentListForPage(this.pageId).then(function (contentList) {
+        debugger;
         self.setState({ contentList: contentList });
       });
     }
