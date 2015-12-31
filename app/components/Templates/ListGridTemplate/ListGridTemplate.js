@@ -172,7 +172,7 @@ class ListGridTemplate extends React.Component {
                     {nodes}
                   </div>
 
-                  <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
+                  <div className={this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden'}>
                     <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
                   </div>
                 </div>

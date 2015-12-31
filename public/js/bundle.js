@@ -2180,7 +2180,7 @@ var ListGridTemplate = (function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden' },
+                    { className: this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden' },
                     _react2.default.createElement(
                       'button',
                       { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
@@ -4633,15 +4633,6 @@ var ListGridGroup = (function (_React$Component) {
           { className: 'List-template' },
           _react2.default.createElement(
             'div',
-            { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'Navigation-link', to: this.props.editLink },
-              'Edit'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
             { className: !this.props.isEdit ? "hidden" : "" },
             _react2.default.createElement(
               'button',
@@ -4782,7 +4773,11 @@ var ListGridGroupColumn = (function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData),
+          _react2.default.createElement(
+            'div',
+            { className: !this.props.isEdit ? "hidden" : "" },
+            _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData)
+          ),
           _react2.default.createElement(
             'div',
             { className: 'row' },

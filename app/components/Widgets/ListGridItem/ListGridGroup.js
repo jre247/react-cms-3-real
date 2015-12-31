@@ -72,10 +72,6 @@ class ListGridGroup extends React.Component {
     return (
       <div>
         <div className='List-template'>
-          <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-            <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
-          </div>
-
           <div className={!this.props.isEdit ? "hidden" : ""}>
             <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
           </div>

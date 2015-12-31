@@ -64,8 +64,10 @@ class ListGridGroupColumn extends React.Component {
     return (
       <div>
         <div>
-          <WidgetSelectList {...widgetListPropsData} />
-
+          <div className={!this.props.isEdit ? "hidden" : ""}>
+            <WidgetSelectList {...widgetListPropsData} />
+          </div>
+          
           <div className='row'>
             {nodes}
           </div>
