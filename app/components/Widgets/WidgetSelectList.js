@@ -23,7 +23,8 @@ class WidgetSelectList extends React.Component {
   onAddWidget(event){
     var selectedWidget = this.state.selectedWidget;
     var parentIndex = this.props.parentIndex;
-    var factory = new WidgetFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex);
+    var factory = new WidgetFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex, this.props.row_number,
+      this.props.column_number);
     var factoryInstance = factory.create();
 
     this.props.onAddWidgetToContentList(factoryInstance);

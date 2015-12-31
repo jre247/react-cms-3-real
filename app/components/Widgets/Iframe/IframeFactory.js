@@ -7,7 +7,7 @@ class IframeFactory {
     this.description = description;
     this.templateId = templateId;
     this.parentIndex = parentIndex;
-    this.row_number = row_number || 1;
+    this.row_number = row_number;
     this.column_number = column_number || 1;
   }
   create() {

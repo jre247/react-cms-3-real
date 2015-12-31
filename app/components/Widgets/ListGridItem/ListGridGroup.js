@@ -57,7 +57,8 @@ class ListGridGroup extends React.Component {
 
     let nodes = this.props.contentGroupItem.rows.map((row, index) => {
       var propsData = {
-        row: row
+        row: row,
+        row_number: index
       };
       var rowProps = _.extend(propsData, this.props);
 

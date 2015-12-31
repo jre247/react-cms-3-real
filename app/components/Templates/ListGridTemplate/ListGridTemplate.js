@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import EmptyContent from '../../EmptyContent';
 import ListGridGroup from '../../Widgets/ListGridItem/ListGridGroup';
+import ListGridGroupFactory from '../../Widgets/ListGridItem/ListGridGroupFactory';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
@@ -15,11 +16,29 @@ class ListGridTemplate extends React.Component {
   }
 
   componentDidMount() {
-
+    this.buildContentGroupList();
   }
 
   componentWillUnmount() {
 
+  }
+
+  buildContentGroupList(){
+    var contentGroupIndex = 0;
+    debugger;
+    _.each(this.props.contentList, function(contentItem, index){
+      if(FieldHelper.isParentListItem(contentItem)){
+        var factory = new ListGridGroupFactory(parentListItem);
+        var contentGroup = factory.create();
+        this.state.contentGroupList.push(contentGroup);
+
+        contentGroupIndex++;
+      }
+      else{
+        var contentGroup = this.state.contentGroupList[contentGroupIndex];
+        contentGroup.rows[contentItem.row_number].columns[contentItem.column_number] = contentItem;
+      }
+    });
   }
 
   addParentListItem(){
@@ -28,8 +47,10 @@ class ListGridTemplate extends React.Component {
       'List Parent Item', this.templateId);
     var longDescription = longDescriptionFactory.create();
 
-    var newGroup = {parentListItem: longDescription, columns: [], rows: []};
-    this.state.contentGroupList.push(newGroup);
+    var factory = new ListGridGroupFactory(longDescription);
+    var contentGroup = factory.create();
+    this.state.contentGroupList.push(contentGroup);
+
     this.setStateForContentGroupList();
   }
 
@@ -37,10 +58,13 @@ class ListGridTemplate extends React.Component {
     var newContentList = [];
 
     _.each(this.state.contentGroupList, function(group, index){
+      var parentListItem = group.parentListItem;
+      newContentList.push(parentListItem);
+
       _.each(group.rows, function(row, index){
         _.each(row.columns, function(column, index){
-          _.each(column.contentList, function(contentItem, index){
-            newContentList.push(contentItem);
+          _.each(column.contentList, function(childContentItem, index){
+            newContentList.push(childContentItem);
           });
         });
       });

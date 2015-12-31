@@ -27,8 +27,9 @@ class ListGridGroupColumn extends React.Component {
 
   removeContent(index, event){
     this.props.column.contentList.splice(index, 1);
+    TemplateHelper.setNewSortOrderForGridRowsAndColumns(this.props.contentGroupList);
     TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentList();
+    this.props.setStateForContentGroupList();  
   }
 
   onAddWidgetToContentList(factoryInstance){
@@ -42,7 +43,8 @@ class ListGridGroupColumn extends React.Component {
 
   render() {
     var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-      parentIndex: this.props.contentGroupIndex, templateId: this.templateId};
+      parentIndex: this.props.contentGroupIndex, templateId: this.templateId, row_number: this.props.row_number,
+      column_number: this.props.column_number};
 
     let nodes = this.props.column.contentList.map((contentItem, index) => {
       var propsData = {

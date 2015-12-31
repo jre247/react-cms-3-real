@@ -28,7 +28,8 @@ class ListGridGroupRow extends React.Component {
 
     let nodes = this.props.row.columns.map((column, index) => {
       var propsData = {
-        column: column
+        column: column,
+        column_number: index
       };
       var columnProps = _.extend(propsData, this.props);
 
