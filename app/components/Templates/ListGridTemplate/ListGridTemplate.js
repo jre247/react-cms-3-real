@@ -85,7 +85,6 @@ class ListGridTemplate extends React.Component {
     var column = contentGroup.rows[contentItem.row_number].columns[contentItem.column_number];
     if(!column){
       var newColumn = {contentList: []};
-      newColumn.contentList.push(contentItem);
       contentGroup.rows[contentItem.row_number].columns.push(newColumn);
     }
   }
