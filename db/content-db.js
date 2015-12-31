@@ -54,9 +54,9 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(true);
         valueClause.push('$' + params.length);
-        params.push(row.row_number);
+        params.push(row.row_number == "" ? null : row.row_number);
         valueClause.push('$' + params.length);
-        params.push(row.column_number);
+        params.push(row.column_number == "" ? null : row.column_number);
         valueClause.push('$' + params.length);
         chunks.push('(' + valueClause.join(', ') + ')');
     });

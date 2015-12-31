@@ -44,7 +44,6 @@ class ListGridTemplate extends React.Component {
   }
 
   submit(event){
-    debugger;
     API.saveContentListForPage(this.state.contentList, this.props.pageId, this.props.history);
   }
 

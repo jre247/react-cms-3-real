@@ -2021,7 +2021,6 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      debugger;
       _API2.default.saveContentListForPage(this.state.contentList, this.props.pageId, this.props.history);
     }
   }, {
