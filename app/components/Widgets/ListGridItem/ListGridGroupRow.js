@@ -43,7 +43,7 @@ class ListGridGroupRow extends React.Component {
     return (
       <div>
         <div>
-          <div className='row Sub-list-item'>
+          <div className='row'>
             {nodes}
           </div>
         </div>

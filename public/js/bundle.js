@@ -4929,7 +4929,7 @@ var ListGridGroupRow = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            { className: 'row Sub-list-item' },
+            { className: 'row' },
             nodes
           )
         )
