@@ -16,19 +16,22 @@ class ShortDescriptionEdit extends React.Component {
 
   render() {
     return (
-      <div className='row'>
-        <div className='col-sm-6 col-md-offset-3'>
-          <div className="form-group">
-            <input className='form-control' placeholder="Short description"
+      <div>
+
+        <div className="Content-short-description-container">
+          <div className="Content-short-description">
+            <input className='form-control Short-Description-Widget-Input' placeholder="Short description"
               value={this.props.value} onChange={this.props.onChange}>
             </input>
           </div>
-        </div>
-        <div className="col-sm-2">
-          <div onClick={this.props.onRemove}>
-            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <div className="Widget-Remove-Button-Container">
+            <div onClick={this.props.onRemove}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
+
+
       </div>
     );
   }

@@ -7437,6 +7437,19 @@ a:hover {
 .Content-medium-image {
   width: 45%;
 }
+.Content-image-container {
+  margin: 0 auto;
+  text-align: center;
+  width: 70%;
+}
+.Content-Image-Input {
+  display: inline-block;
+  width: 90%;
+}
+.Content-image-container input {
+  text-align: center;
+  width: 50%;
+}
 .Content-extra-large-image-percentage {
   width: 68%;
   margin-right: 15px;
@@ -7457,6 +7470,16 @@ a:hover {
   margin-right: 30px;
   margin-top: 10px;
 }
+.Content-Image-Edit-Button {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 15px;
+}
+.Content-Image {
+  display: inline-block;
+  width: 47%;
+  text-align: center;
+}
 .Content-title,
 .Content-title > input {
   text-align: center;
@@ -7468,9 +7491,15 @@ a:hover {
   height: 62px;
 }
 .Content-short-description {
+  display: inline-block;
+  width: 47%;
+  text-align: center;
   color: white;
   font-size: 18px;
   font-family: 'Source Sans Pro';
+}
+.Short-Description-Widget-Input {
+  text-align: center;
 }
 .Photo-album-container {
   margin-left: 13%;
@@ -7616,4 +7645,8 @@ a:hover {
 .Widget-Select-Input {
   display: inline-block;
   margin-right: 20px;
+}
+.Widget-Remove-Button-Container {
+  display: inline-block;
+  margin-left: 10px;
 }

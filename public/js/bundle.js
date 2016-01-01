@@ -4397,7 +4397,10 @@ var ImageWidgetEdit = (function (_React$Component) {
   function ImageWidgetEdit(props) {
     _classCallCheck(this, ImageWidgetEdit);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ImageWidgetEdit).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageWidgetEdit).call(this, props));
+
+    _this.state = { isImageEditable: false };
+    return _this;
   }
 
   _createClass(ImageWidgetEdit, [{
@@ -4407,27 +4410,50 @@ var ImageWidgetEdit = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'editImage',
+    value: function editImage() {
+      this.setState({ isImageEditable: true });
+    }
+  }, {
+    key: 'saveImage',
+    value: function saveImage() {
+      this.setState({ isImageEditable: false });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'Content-image-container' },
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          null,
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-6 col-md-offset-3' },
+            { className: 'Content-Image-Input' },
             _react2.default.createElement(
               'div',
-              { className: 'form-group' },
-              _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
-                onChange: this.props.onChange, autoFocus: true })
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: !this.state.isImageEditable ? 'hidden' : '' },
+                _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
+                  onChange: this.props.onChange, autoFocus: true })
+              )
             )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-2' },
+            { className: 'Content-Image-Edit-Button' },
+            _react2.default.createElement(
+              'div',
+              { className: !this.state.isImageEditable ? 'hidden' : '', onClick: this.saveImage.bind(this) },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'Widget-Remove-Button-Container' },
             _react2.default.createElement(
               'div',
               { onClick: this.props.onRemove },
@@ -4438,7 +4464,24 @@ var ImageWidgetEdit = (function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'Content-image-container' },
-          _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-Image' },
+            _react2.default.createElement(
+              'div',
+              { className: this.state.isImageEditable ? 'hidden' : '' },
+              _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-Image-Edit-Button' },
+            _react2.default.createElement(
+              'div',
+              { className: this.state.isImageEditable ? 'hidden' : '', onClick: this.editImage.bind(this) },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+            )
+          )
         )
       );
     }
@@ -5854,24 +5897,24 @@ var ShortDescriptionEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-6 col-md-offset-3' },
+          { className: 'Content-short-description-container' },
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
-            _react2.default.createElement('input', { className: 'form-control', placeholder: 'Short description',
+            { className: 'Content-short-description' },
+            _react2.default.createElement('input', { className: 'form-control Short-Description-Widget-Input', placeholder: 'Short description',
               value: this.props.value, onChange: this.props.onChange })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-2' },
+          ),
           _react2.default.createElement(
             'div',
-            { onClick: this.props.onRemove },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            { className: 'Widget-Remove-Button-Container' },
+            _react2.default.createElement(
+              'div',
+              { onClick: this.props.onRemove },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            )
           )
         )
       );
