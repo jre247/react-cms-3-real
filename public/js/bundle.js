@@ -4430,7 +4430,7 @@ var ImageWidgetEdit = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            { className: 'Content-Image-Input' },
+            { className: 'Content-image-input-container' },
             _react2.default.createElement(
               'div',
               null,
@@ -4441,45 +4441,47 @@ var ImageWidgetEdit = (function (_React$Component) {
                   onChange: this.props.onChange, autoFocus: true })
               )
             )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-Image-Edit-Button' },
-            _react2.default.createElement(
-              'div',
-              { className: !this.state.isImageEditable ? 'hidden' : '', onClick: this.saveImage.bind(this) },
-              _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Widget-Remove-Button-Container' },
-            _react2.default.createElement(
-              'div',
-              { onClick: this.props.onRemove },
-              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-            )
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'Content-image-container' },
+          null,
           _react2.default.createElement(
             'div',
             { className: 'Content-Image' },
             _react2.default.createElement(
               'div',
               { className: this.state.isImageEditable ? 'hidden' : '' },
-              _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Content-Image-Edit-Button' },
-            _react2.default.createElement(
-              'div',
-              { className: this.state.isImageEditable ? 'hidden' : '', onClick: this.editImage.bind(this) },
-              _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+              _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' }),
+              _react2.default.createElement(
+                'div',
+                { className: 'Content-Image-Edit-Button' },
+                _react2.default.createElement(
+                  'div',
+                  { className: !this.state.isImageEditable ? 'edit-content-button hidden' : 'edit-content-button ',
+                    onClick: this.saveImage.bind(this) },
+                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'Content-Image-Edit-Button' },
+                _react2.default.createElement(
+                  'div',
+                  { className: this.state.isImageEditable ? 'edit-content-button hidden' : 'edit-content-button',
+                    onClick: this.editImage.bind(this) },
+                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'Widget-Remove-Button-Container' },
+                _react2.default.createElement(
+                  'div',
+                  { onClick: this.props.onRemove },
+                  _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+                )
+              )
             )
           )
         )

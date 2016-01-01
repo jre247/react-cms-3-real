@@ -7378,6 +7378,9 @@ a:hover {
   text-align: right;
   margin-right: 4%;
 }
+.edit-content-button {
+  cursor: pointer;
+}
 .fixed-container {
   opacity: 1;
   background-image: url("https://d25uo7j7o9w973.cloudfront.net/uploads/background/555d389c346439003d580000/52/390bb00ec311e59816270388c96c32/Stephanie_Rob_Engagement-18.jpg");
@@ -7434,21 +7437,18 @@ a:hover {
   margin-left: 15px;
   margin-top: 10px;
 }
-.Content-medium-image {
-  width: 45%;
-}
 .Content-image-container {
   margin: 0 auto;
   text-align: center;
-  width: 70%;
 }
-.Content-Image-Input {
+.Content-image-input-container {
   display: inline-block;
-  width: 90%;
+  width: 71%;
 }
 .Content-image-container input {
   text-align: center;
-  width: 50%;
+  width: 90%;
+  display: inline-block;
 }
 .Content-extra-large-image-percentage {
   width: 68%;
@@ -7477,7 +7477,6 @@ a:hover {
 }
 .Content-Image {
   display: inline-block;
-  width: 47%;
   text-align: center;
 }
 .Content-title,
@@ -7649,4 +7648,5 @@ a:hover {
 .Widget-Remove-Button-Container {
   display: inline-block;
   margin-left: 10px;
+  vertical-align: top;
 }
