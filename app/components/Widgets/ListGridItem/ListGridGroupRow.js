@@ -34,7 +34,7 @@ class ListGridGroupRow extends React.Component {
       var columnProps = _.extend(propsData, this.props);
 
       return(
-        <div key={index} className="List-Grid-Group-Column">
+        <div key={index} className={index === 0 && !this.props.isEdit ? 'List-Grid-Group-Column-Small' : 'List-Grid-Group-Column'}>
           <ListGridGroupColumn {...columnProps} />
         </div>
       );
@@ -43,7 +43,7 @@ class ListGridGroupRow extends React.Component {
     return (
       <div>
         <div>
-          <div className='row'>
+          <div>
             {nodes}
           </div>
         </div>

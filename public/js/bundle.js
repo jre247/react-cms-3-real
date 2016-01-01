@@ -4624,7 +4624,7 @@ var ListGridGroup = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { key: index },
+          { key: index, className: !_this2.props.isEdit ? 'Read-Only' : '' },
           _react2.default.createElement(_ListGridGroupRow2.default, rowProps)
         );
       });
@@ -4651,7 +4651,7 @@ var ListGridGroup = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            { className: 'Sub-List-Items' },
             nodes
           )
         )
@@ -4761,13 +4761,13 @@ var ListGridGroupColumn = (function (_React$Component) {
           contentItem: contentItem,
           onRemove: _this2.removeContent.bind(_this2, index),
           onChange: _this2.updateContent.bind(_this2, index),
-          imageSize: 'medium'
+          imageSize: 'small'
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
         return _react2.default.createElement(
           'div',
-          { key: index, className: 'List-Grid-Group-Column-Content-Item col-md-12' },
+          { key: index, className: 'List-Grid-Group-Column-Content-Item' },
           _react2.default.createElement(_Field2.default, fieldPropsData)
         );
       });
@@ -4916,7 +4916,7 @@ var ListGridGroupRow = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { key: index, className: 'List-Grid-Group-Column' },
+          { key: index, className: index === 0 && !_this2.props.isEdit ? 'List-Grid-Group-Column-Small' : 'List-Grid-Group-Column' },
           _react2.default.createElement(_ListGridGroupColumn2.default, columnProps)
         );
       });
@@ -4929,7 +4929,7 @@ var ListGridGroupRow = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            null,
             nodes
           )
         )
@@ -6643,10 +6643,10 @@ var WidgetSelectList = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-3' },
+          { className: 'Widget-Select-Input' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -6659,7 +6659,7 @@ var WidgetSelectList = (function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-3' },
+          { className: 'Widget-Select-Input' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },

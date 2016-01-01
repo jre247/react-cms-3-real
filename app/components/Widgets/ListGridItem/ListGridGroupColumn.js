@@ -51,12 +51,12 @@ class ListGridGroupColumn extends React.Component {
         contentItem: contentItem,
         onRemove: this.removeContent.bind(this, index),
         onChange: this.updateContent.bind(this, index),
-        imageSize: 'medium'
+        imageSize: 'small'
       };
       var fieldPropsData = _.extend(propsData, this.props);
 
       return(
-        <div key={index} className="List-Grid-Group-Column-Content-Item col-md-12">
+        <div key={index} className="List-Grid-Group-Column-Content-Item">
           <Field {...fieldPropsData} />
         </div>
       );

@@ -33,15 +33,15 @@ class WidgetSelectList extends React.Component {
   render() {
     return (
 
-      <div className='row'>
-        <div className='col-sm-3'>
+      <div>
+        <div className='Widget-Select-Input'>
           <div className="form-group">
             <button className="btn btn-primary" onClick={this.onAddWidget.bind(this)}>
               Add Widget
             </button>
           </div>
         </div>
-        <div className='col-sm-3'>
+        <div className='Widget-Select-Input'>
           <div className="form-group">
             <div onChange={this.onWidgetListChange.bind(this)}>
               <select className='form-control'>

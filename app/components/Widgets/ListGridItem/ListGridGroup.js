@@ -63,7 +63,7 @@ class ListGridGroup extends React.Component {
       var rowProps = _.extend(propsData, this.props);
 
       return(
-        <div key={index}>
+        <div key={index} className={!this.props.isEdit ? 'Read-Only' : ''}>
           <ListGridGroupRow {...rowProps} />
         </div>
       );
@@ -80,7 +80,7 @@ class ListGridGroup extends React.Component {
             <ParentListGridItem {...parentListGridItemProps} />
           </div>
 
-          <div className='row'>
+          <div className='Sub-List-Items'>
             {nodes}
           </div>
         </div>
