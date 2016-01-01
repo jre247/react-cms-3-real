@@ -17,7 +17,7 @@ class ShortDescriptionEdit extends React.Component {
   render() {
     return (
       <div className='row'>
-        <div className='col-sm-8'>
+        <div className='col-sm-6 col-md-offset-3'>
           <div className="form-group">
             <input className='form-control' placeholder="Short description"
               value={this.props.value} onChange={this.props.onChange}>

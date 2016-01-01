@@ -49,7 +49,7 @@ class BasicTemplateEdit extends React.Component {
 
     return (
       <div className='Content-panel'>
-        <div className="Content-container">
+        <div className="Content-container Content-centered-container">
           <WidgetSelectList {...widgetListPropsData} />
 
           {nodes}

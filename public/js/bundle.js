@@ -1805,7 +1805,7 @@ var BasicTemplateEdit = (function (_React$Component) {
         { className: 'Content-panel' },
         _react2.default.createElement(
           'div',
-          { className: 'Content-container' },
+          { className: 'Content-container Content-centered-container' },
           _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData),
           nodes,
           _react2.default.createElement(
@@ -2173,7 +2173,7 @@ var ListGridTemplate = (function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'List-page' },
+                    { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
                     nodes
                   ),
                   _react2.default.createElement(
@@ -4411,25 +4411,34 @@ var ImageWidgetEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
+          { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
-            _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
-              onChange: this.props.onChange, autoFocus: true })
+            { className: 'col-sm-6 col-md-offset-3' },
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
+                onChange: this.props.onChange, autoFocus: true })
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-sm-2' },
+            _react2.default.createElement(
+              'div',
+              { onClick: this.props.onRemove },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            )
           )
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-2' },
-          _react2.default.createElement(
-            'div',
-            { onClick: this.props.onRemove },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
-          )
+          { className: 'Content-image-container' },
+          _react2.default.createElement('img', { className: 'Content-extra-large-image-percentage', src: this.props.value, alt: 'Image' })
         )
       );
     }
@@ -5601,7 +5610,7 @@ var LongDescriptionEdit = (function (_React$Component) {
         { className: 'row' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
+          { className: 'col-sm-6 col-md-offset-3' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -5848,7 +5857,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
         { className: 'row' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
+          { className: 'col-sm-6 col-md-offset-3' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -6095,12 +6104,20 @@ var TitleEdit = (function (_React$Component) {
         { className: 'row' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
+          { className: 'col-sm-6 col-md-offset-3' },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
-            _react2.default.createElement('input', { className: 'form-control', placeholder: 'Title', value: this.props.value,
-              onChange: this.props.onChange, autoFocus: true })
+            _react2.default.createElement(
+              'div',
+              { className: 'Content-title-container' },
+              _react2.default.createElement(
+                'div',
+                { className: 'Content-title' },
+                _react2.default.createElement('input', { className: 'form-control', placeholder: 'Title', value: this.props.value,
+                  onChange: this.props.onChange })
+              )
+            )
           )
         ),
         _react2.default.createElement(

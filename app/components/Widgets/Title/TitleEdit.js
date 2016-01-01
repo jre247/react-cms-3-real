@@ -17,10 +17,14 @@
     render() {
       return (
         <div className='row'>
-          <div className='col-sm-8'>
+          <div className='col-sm-6 col-md-offset-3'>
             <div className="form-group">
-              <input className='form-control' placeholder="Title" value={this.props.value}
-                onChange={this.props.onChange} autoFocus/>
+              <div className="Content-title-container">
+                <div className="Content-title">
+                  <input className='form-control' placeholder="Title" value={this.props.value}
+                    onChange={this.props.onChange} />
+                </div>
+              </div>
             </div>
           </div>
           <div className="col-sm-2">

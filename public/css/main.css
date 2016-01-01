@@ -7457,11 +7457,15 @@ a:hover {
   margin-right: 30px;
   margin-top: 10px;
 }
-.Content-title {
+.Content-title,
+.Content-title > input {
   text-align: center;
   font-family: 'Source Sans Pro';
   font-size: 38px;
   line-height: 1.6em;
+}
+.Content-title > input {
+  height: 62px;
 }
 .Content-short-description {
   color: white;
@@ -7495,7 +7499,7 @@ a:hover {
 .List-Grid-Group-Column {
   display: inline-block;
   vertical-align: top;
-  width: 55%;
+  width: 50%;
 }
 .List-Grid-Group-Column-Small {
   width: 33%;
@@ -7526,7 +7530,7 @@ a:hover {
 .List-Grid-Template .row .Read-Only {
   text-align: center;
 }
-.List-Grid-Template .List-page {
+.List-Grid-Template .List-Page-Read-Only {
   margin: 0 auto;
   width: 60%;
 }

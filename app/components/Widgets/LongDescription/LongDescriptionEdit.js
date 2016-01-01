@@ -17,7 +17,7 @@ class LongDescriptionEdit extends React.Component {
   render() {
     return (
       <div className='row'>
-        <div className='col-sm-8'>
+        <div className='col-sm-6 col-md-offset-3'>
           <div className="form-group">
             <textarea className='form-control'
               value={this.props.value} onChange={this.props.onChange}>
