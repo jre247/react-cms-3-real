@@ -166,7 +166,7 @@ class ListGridTemplate extends React.Component {
                     <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
                   </div>
 
-                  <div className='row List-page'>
+                  <div className='List-page'>
                     {nodes}
                   </div>
 

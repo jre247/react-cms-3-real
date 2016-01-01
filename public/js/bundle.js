@@ -2173,7 +2173,7 @@ var ListGridTemplate = (function (_React$Component) {
                   ),
                   _react2.default.createElement(
                     'div',
-                    { className: 'row List-page' },
+                    { className: 'List-page' },
                     nodes
                   ),
                   _react2.default.createElement(
@@ -4929,7 +4929,7 @@ var ListGridGroupRow = (function (_React$Component) {
           null,
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'List-Grid-Row' },
             nodes
           )
         )

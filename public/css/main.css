@@ -7508,6 +7508,24 @@ a:hover {
 .Sub-List-Items {
   padding-left: 10%;
 }
+.List-Grid-Group-Column .Content-title {
+  font-size: 27px;
+}
+.List-Grid-Template .Parent-list-item-readonly .Content-long-description {
+  font-size: 36px;
+}
+.List-Grid-Template .Content-item-container {
+  margin-top: 1px;
+}
+.List-Grid-Row {
+  margin-bottom: 35px;
+}
+.List-Grid-Template .List-Grid-Group-Column-Content-Item {
+  text-align: left;
+}
+.List-Grid-Template .row .Read-Only {
+  text-align: center;
+}
 .Content-long-description {
   color: white;
   font-size: 18px;
