@@ -7495,10 +7495,10 @@ a:hover {
 .List-Grid-Group-Column {
   display: inline-block;
   vertical-align: top;
-  width: 35%;
+  width: 55%;
 }
 .List-Grid-Group-Column-Small {
-  width: 16%;
+  width: 33%;
   display: inline-block;
   vertical-align: top;
 }
@@ -7525,6 +7525,10 @@ a:hover {
 }
 .List-Grid-Template .row .Read-Only {
   text-align: center;
+}
+.List-Grid-Template .List-page {
+  margin: 0 auto;
+  width: 60%;
 }
 .Content-long-description {
   color: white;
