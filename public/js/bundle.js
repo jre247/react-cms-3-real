@@ -5581,7 +5581,7 @@ var SubListItem = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-8 col-md-offset-2' },
+            { className: this.props.isEdit ? 'col-sm-8 col-md-offset-3' : 'col-sm-8 col-md-offset-2' },
             _react2.default.createElement(
               'div',
               { className: 'form-group Sub-list-item' },
