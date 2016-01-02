@@ -2642,7 +2642,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'Photo-album-container' },
+            { className: 'Photo-album-container-edit' },
             nodes
           ),
           _react2.default.createElement(
@@ -2784,7 +2784,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'Photo-album-container' },
+            { className: 'Photo-album-container-read-only' },
             nodes
           ),
           _react2.default.createElement(

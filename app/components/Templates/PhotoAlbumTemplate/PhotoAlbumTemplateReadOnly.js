@@ -60,7 +60,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
             <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
           </div>
 
-          <div className="Photo-album-container">
+          <div className="Photo-album-container-read-only">
             {nodes}
           </div>
 

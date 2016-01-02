@@ -79,7 +79,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
             </div>
           </div>
 
-          <div className="Photo-album-container">
+          <div className="Photo-album-container-edit">
             {nodes}
           </div>
 
