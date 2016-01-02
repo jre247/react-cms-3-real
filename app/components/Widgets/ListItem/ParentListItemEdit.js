@@ -51,13 +51,17 @@ class ParentListItemEdit extends React.Component {
       parentIndex: this.props.index, templateId: this.templateId};
 
     return (
-      <div key={this.props.contentItem.sort_order} className='container List-item-group'>
-        <WidgetSelectList {...widgetListPropsData} />
-
-        <div className='row'>
-          <div className='col-sm-8'>
-            <div className="form-group">
-              <Field {...propsData} />
+      <div>
+        <div key={this.props.contentItem.sort_order} className={this.props.contentItem.sort_order > 1 ?
+        'List-item-group Row-separator' : 'List-item-group'}>
+          <div className="Sub-list-item-widget-select-area">
+            <WidgetSelectList {...widgetListPropsData} />
+          </div>
+          <div className='row'>
+            <div className='col-sm-6 col-md-offset-2'>
+              <div className="form-group">
+                <Field {...propsData} />
+              </div>
             </div>
           </div>
         </div>

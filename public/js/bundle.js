@@ -2149,41 +2149,37 @@ var ListGridTemplate = (function (_React$Component) {
               { className: 'row List-container' },
               _react2.default.createElement(
                 'div',
-                null,
+                { className: 'Content-panel List-Grid-Template' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'Content-panel List-Grid-Template' },
+                  { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
                   _react2.default.createElement(
-                    'div',
-                    { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
-                    _react2.default.createElement(
-                      _reactRouter.Link,
-                      { className: 'Navigation-link', to: this.props.editLink },
-                      'Edit'
-                    )
-                  ),
+                    _reactRouter.Link,
+                    { className: 'Navigation-link', to: this.props.editLink },
+                    'Edit'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: !this.props.isEdit ? "hidden" : "" },
                   _react2.default.createElement(
-                    'div',
-                    { className: !this.props.isEdit ? "hidden" : "" },
-                    _react2.default.createElement(
-                      'button',
-                      { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
-                      'Add Group'
-                    )
-                  ),
+                    'button',
+                    { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+                    'Add Group'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
+                  nodes
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden' },
                   _react2.default.createElement(
-                    'div',
-                    { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
-                    nodes
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden' },
-                    _react2.default.createElement(
-                      'button',
-                      { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
-                      'Save'
-                    )
+                    'button',
+                    { type: 'submit', onClick: this.submit.bind(this), className: 'btn btn-primary' },
+                    'Save'
                   )
                 )
               )
@@ -2383,32 +2379,36 @@ var ListTemplate = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          null,
+          { className: 'container List-page' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-panel List-template' },
+            { className: 'row List-container' },
             _react2.default.createElement(
               'div',
-              { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
+              { className: 'Content-panel List-Grid-Template' },
               _react2.default.createElement(
-                _reactRouter.Link,
-                { className: 'Navigation-link', to: this.props.editLink },
-                'Edit'
-              )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: !this.props.isEdit ? "hidden" : "" },
+                'div',
+                { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
+                _react2.default.createElement(
+                  _reactRouter.Link,
+                  { className: 'Navigation-link', to: this.props.editLink },
+                  'Edit'
+                )
+              ),
               _react2.default.createElement(
-                'button',
-                { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
-                'Add'
+                'div',
+                { className: !this.props.isEdit ? "hidden" : "" },
+                _react2.default.createElement(
+                  'button',
+                  { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
+                  'Add Group'
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
+                nodes
               )
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'row List-page' },
-              nodes
             )
           )
         );
@@ -5419,18 +5419,26 @@ var ParentListItemEdit = (function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { key: this.props.contentItem.sort_order, className: 'container List-item-group' },
-        _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData),
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { key: this.props.contentItem.sort_order, className: this.props.contentItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-8' },
+            { className: 'Sub-list-item-widget-select-area' },
+            _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData)
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'row' },
             _react2.default.createElement(
               'div',
-              { className: 'form-group' },
-              _react2.default.createElement(_Field2.default, propsData)
+              { className: 'col-sm-6 col-md-offset-2' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(_Field2.default, propsData)
+              )
             )
           )
         )
@@ -5500,7 +5508,7 @@ var ParentListItemReadOnly = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-6' },
+            null,
             _react2.default.createElement(
               'div',
               { className: 'form-group Parent-list-item-readonly' },
@@ -5573,7 +5581,7 @@ var SubListItem = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-8' },
+            { className: 'col-sm-8 col-md-offset-2' },
             _react2.default.createElement(
               'div',
               { className: 'form-group Sub-list-item' },

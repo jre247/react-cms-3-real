@@ -156,23 +156,21 @@ class ListGridTemplate extends React.Component {
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className='container List-page'>
             <div className='row List-container'>
-              <div>
-                <div className='Content-panel List-Grid-Template'>
-                  <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-                    <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
-                  </div>
+              <div className='Content-panel List-Grid-Template'>
+                <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
+                  <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+                </div>
 
-                  <div className={!this.props.isEdit ? "hidden" : ""}>
-                    <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
-                  </div>
+                <div className={!this.props.isEdit ? "hidden" : ""}>
+                  <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
+                </div>
 
-                  <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
-                    {nodes}
-                  </div>
+                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
+                  {nodes}
+                </div>
 
-                  <div className={this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden'}>
-                    <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
-                  </div>
+                <div className={this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' : 'form-group hidden'}>
+                  <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
                 </div>
               </div>
             </div>

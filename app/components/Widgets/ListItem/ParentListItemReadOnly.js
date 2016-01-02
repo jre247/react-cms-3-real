@@ -21,14 +21,14 @@ class ParentListItemReadOnly extends React.Component {
 
     return (
       <div key={this.props.contentItem.sort_order} className={this.props.contentItem.sort_order > 1 ?
-      'List-item-group Row-separator' : 'List-item-group'}>
-        <div className='row'>
-          <div className='col-sm-6'>
-            <div className="form-group Parent-list-item-readonly" >
-              <Field {...propsData} />
+        'List-item-group Row-separator' : 'List-item-group'}>
+          <div className='row'>
+            <div>
+              <div className="form-group Parent-list-item-readonly" >
+                <Field {...propsData} />
+              </div>
             </div>
           </div>
-        </div>
       </div>
     );
   }

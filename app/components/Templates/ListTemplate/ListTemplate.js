@@ -126,18 +126,20 @@ class ListTemplate extends React.Component {
       });
 
       return (
-        <div>
-          <div className='Content-panel List-template'>
-            <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-              <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
-            </div>
+        <div className='container List-page'>
+          <div className='row List-container'>
+            <div className='Content-panel List-Grid-Template'>
+              <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
+                <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+              </div>
 
-            <div className={!this.props.isEdit ? "hidden" : ""}>
-              <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
-            </div>
+              <div className={!this.props.isEdit ? "hidden" : ""}>
+                <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
+              </div>
 
-            <div className='row List-page'>
-              {nodes}
+              <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
+                {nodes}
+              </div>
             </div>
           </div>
         </div>
