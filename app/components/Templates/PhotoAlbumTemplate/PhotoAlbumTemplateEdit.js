@@ -50,13 +50,13 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
   render() {
     let nodes = this.props.contentList.map((contentItem, index) => {
-      var propsData = {contentItem: contentItem, isEdit: true,
+      var propsData = {contentItem: contentItem, isEdit: true, imageSize: 'small',
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
 
         if(FieldHelper.isImage(contentItem)){
           return (
-            <div key={contentItem.sort_order} className="form-group">
+            <div key={contentItem.sort_order} className="Photo">
               <Field {...propsData} />
             </div>
           );
@@ -67,7 +67,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
     });
 
     return (
-      <div className='Content-panel'>
+      <div className='Content-panel Photo-album-template'>
         <div className="Content-container">
           <div className='row'>
             <div className='col-sm-3'>
@@ -79,7 +79,9 @@ class PhotoAlbumTemplateEdit extends React.Component {
             </div>
           </div>
 
-          {nodes}
+          <div className="Photo-album-container">
+            {nodes}
+          </div>
 
           <div className={this.props.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
             <button type='submit' onClick={this.props.submit} className='btn btn-primary'>Save</button>

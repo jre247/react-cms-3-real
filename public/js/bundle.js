@@ -2602,14 +2602,14 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       var _this2 = this;
 
       var nodes = this.props.contentList.map(function (contentItem, index) {
-        var propsData = { contentItem: contentItem, isEdit: true,
+        var propsData = { contentItem: contentItem, isEdit: true, imageSize: 'small',
           onChange: _this2.updateContent.bind(_this2, index),
           onRemove: _this2.removeContent.bind(_this2, index) };
 
         if (_FieldHelper2.default.isImage(contentItem)) {
           return _react2.default.createElement(
             'div',
-            { key: contentItem.sort_order, className: 'form-group' },
+            { key: contentItem.sort_order, className: 'Photo' },
             _react2.default.createElement(_Field2.default, propsData)
           );
         } else {
@@ -2619,7 +2619,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'Content-panel' },
+        { className: 'Content-panel Photo-album-template' },
         _react2.default.createElement(
           'div',
           { className: 'Content-container' },
@@ -2640,7 +2640,11 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
               )
             )
           ),
-          nodes,
+          _react2.default.createElement(
+            'div',
+            { className: 'Photo-album-container' },
+            nodes
+          ),
           _react2.default.createElement(
             'div',
             { className: this.props.contentList.length > 0 ? 'form-group' : 'form-group hidden' },
