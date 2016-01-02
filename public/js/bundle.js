@@ -2168,7 +2168,7 @@ var ListGridTemplate = (function (_React$Component) {
                     _react2.default.createElement(
                       'button',
                       { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
-                      'Add'
+                      'Add Group'
                     )
                   ),
                   _react2.default.createElement(
@@ -5146,26 +5146,30 @@ var ParentListGridItemEdit = (function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { key: this.props.contentItem.sort_order, className: 'container List-item-group' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'row' },
+          { key: this.props.contentItem.sort_order, className: this.props.contentGroupItem.parentListItem.sort_order > 1 ? 'List-item-group Row-separator' : 'List-item-group' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-6 col-md-offset-2' },
+            { className: 'row' },
             _react2.default.createElement(
               'div',
-              { className: 'form-group' },
-              _react2.default.createElement(_Field2.default, propsData)
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: !this.props.isEdit ? "hidden" : "col-sm-2" },
+              { className: 'col-sm-6 col-md-offset-2' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(_Field2.default, propsData)
+              )
+            ),
             _react2.default.createElement(
-              'button',
-              { className: 'btn btn-primary', onClick: this.onAddRow.bind(this) },
-              'Add Row'
+              'div',
+              { className: !this.props.isEdit ? "hidden" : "col-sm-2" },
+              _react2.default.createElement(
+                'button',
+                { className: 'btn btn-primary', onClick: this.onAddRow.bind(this) },
+                'Add Row'
+              )
             )
           )
         )

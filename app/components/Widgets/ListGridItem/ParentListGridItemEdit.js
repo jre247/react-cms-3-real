@@ -35,15 +35,18 @@ class ParentListGridItemEdit extends React.Component {
     var propsData = _.extend({value: this.props.contentGroupItem.parentListItem.value }, this.props);
 
     return (
-      <div key={this.props.contentItem.sort_order} className='container List-item-group'>
-        <div className='row'>
-          <div className='col-sm-6 col-md-offset-2'>
-            <div className="form-group">
-              <Field {...propsData} />
+      <div>
+        <div key={this.props.contentItem.sort_order} className={this.props.contentGroupItem.parentListItem.sort_order > 1 ?
+        'List-item-group Row-separator' : 'List-item-group'}>
+          <div className='row'>
+            <div className='col-sm-6 col-md-offset-2'>
+              <div className="form-group">
+                <Field {...propsData} />
+              </div>
             </div>
-          </div>
-          <div className={!this.props.isEdit ? "hidden" : "col-sm-2"}>
-            <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
+            <div className={!this.props.isEdit ? "hidden" : "col-sm-2"}>
+              <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
+            </div>
           </div>
         </div>
       </div>
