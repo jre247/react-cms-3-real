@@ -96,6 +96,7 @@ class ListTemplate extends React.Component {
       );
     }
     else {
+      var subListItemIndex = 0;
       let nodes = this.props.contentList.map((contentItem, index) => {
         var propsData = {
           contentItem: contentItem, isEdit: this.props.isEdit,
@@ -108,15 +109,18 @@ class ListTemplate extends React.Component {
 
         //override onRemove function for list item if lit item is parent list item
         if(FieldHelper.isSubListItem(contentItem)){
+          subListItemIndex++;
+          listItemProps.subListItemIndex = subListItemIndex;
           return(
             <div key={index}>
               <SubListItem {...listItemProps} />
             </div>
           );
+          debugger;
         }
         else{
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
-
+          subListItemIndex = 0;
           return(
             <div key={index}>
               <ParentListItem {...listItemProps} />

@@ -2349,6 +2349,7 @@ var ListTemplate = (function (_React$Component) {
           _react2.default.createElement(_EmptyContent2.default, emptyContentProps)
         );
       } else {
+        var subListItemIndex = 0;
         var nodes = this.props.contentList.map(function (contentItem, index) {
           var propsData = {
             contentItem: contentItem, isEdit: _this2.props.isEdit,
@@ -2361,14 +2362,17 @@ var ListTemplate = (function (_React$Component) {
 
           //override onRemove function for list item if lit item is parent list item
           if (_FieldHelper2.default.isSubListItem(contentItem)) {
+            subListItemIndex++;
+            listItemProps.subListItemIndex = subListItemIndex;
             return _react2.default.createElement(
               'div',
               { key: index },
               _react2.default.createElement(_SubListItem2.default, listItemProps)
             );
+            debugger;
           } else {
             listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
-
+            subListItemIndex = 0;
             return _react2.default.createElement(
               'div',
               { key: index },
@@ -5570,6 +5574,12 @@ var SubListItem = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'isSublistGroupBorder',
+    value: function isSublistGroupBorder() {
+      debugger;
+      return this.props.subListItemIndex % 2 === 0 && this.props.subListItemIndex > 0;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentItem.value }, this.props);
@@ -5585,7 +5595,11 @@ var SubListItem = (function (_React$Component) {
             _react2.default.createElement(
               'div',
               { className: 'form-group Sub-list-item' },
-              _react2.default.createElement(_Field2.default, propsData)
+              _react2.default.createElement(
+                'div',
+                { className: this.isSublistGroupBorder() ? 'Sub-list-item-group-border' : '' },
+                _react2.default.createElement(_Field2.default, propsData)
+              )
             )
           )
         )
