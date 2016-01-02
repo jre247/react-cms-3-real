@@ -33,11 +33,20 @@ class ListGridGroupRow extends React.Component {
       };
       var columnProps = _.extend(propsData, this.props);
 
-      return(
-        <div key={index} className={this.props.isEdit ? 'List-Grid-Group-Column-Small-Edit' : 'List-Grid-Group-Column-Small'}>
-          <ListGridGroupColumn {...columnProps} />
-        </div>
-      );
+      if(this.props.isEdit){
+        return(
+          <div key={index} className={index === 0 ? 'List-Grid-Group-Column-Small-Edit' : 'List-Grid-Group-Column-Edit'}>
+            <ListGridGroupColumn {...columnProps} />
+          </div>
+        );
+      }
+      else{
+        return (
+          <div key={index} className={index === 0 ? 'List-Grid-Group-Column-Small' : 'List-Grid-Group-Column'}>
+            <ListGridGroupColumn {...columnProps} />
+          </div>
+        );
+      }
     });
 
     return (

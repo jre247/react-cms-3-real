@@ -1958,9 +1958,9 @@ var _TemplateHelper2 = _interopRequireDefault(_TemplateHelper);
 
 var _underscore = require('underscore');
 
-var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
+var _TitleFactory = require('../../Widgets/Title/TitleFactory');
 
-var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
+var _TitleFactory2 = _interopRequireDefault(_TitleFactory);
 
 var _API = require('../../../API');
 
@@ -2068,11 +2068,11 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'addParentListItem',
     value: function addParentListItem() {
       var sortOrder = this.state.contentList.length + 1;
-      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
-      var longDescription = longDescriptionFactory.create();
+      var factory = new _TitleFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
+      var widget = factory.create();
 
-      var factory = new _ListGridGroupFactory2.default(longDescription);
-      var contentGroup = factory.create();
+      var listGridGroupFactory = new _ListGridGroupFactory2.default(widget);
+      var contentGroup = listGridGroupFactory.create();
       this.state.contentGroupList.push(contentGroup);
 
       this.setStateForContentGroupList();
@@ -2113,7 +2113,7 @@ var ListGridTemplate = (function (_React$Component) {
             _react2.default.createElement(
               'button',
               { className: 'btn btn-primary', onClick: this.addParentListItem.bind(this) },
-              'Add'
+              'Add Group'
             )
           ),
           _react2.default.createElement(_EmptyContent2.default, emptyContentProps)
@@ -2199,7 +2199,7 @@ var ListGridTemplate = (function (_React$Component) {
 
 exports.default = ListGridTemplate;
 
-},{"../../../API":1,"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListGridItem/ListGridGroup":55,"../../Widgets/ListGridItem/ListGridGroupFactory":57,"../../Widgets/LongDescription/LongDescriptionFactory":68,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListGridItem/ListGridGroup":55,"../../Widgets/ListGridItem/ListGridGroupFactory":57,"../../Widgets/Title/TitleFactory":76,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4657,19 +4657,6 @@ var ListGridGroup = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
-    key: 'onAddRow',
-    value: function onAddRow() {
-      var contentGroupItem = this.props.contentGroupItem;
-      var newRow = { columns: [] };
-      var column = { contentList: [] };
-      var column2 = { contentList: [] };
-      newRow.columns.push(column);
-      newRow.columns.push(column2);
-      contentGroupItem.rows.push(newRow);
-
-      this.props.setStateForContentGroupList();
-    }
-  }, {
     key: 'updateContent',
     value: function updateContent(event) {
       this.props.contentGroupItem.parentListItem.value = event.target.value;
@@ -4716,15 +4703,6 @@ var ListGridGroup = (function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'List-template' },
-          _react2.default.createElement(
-            'div',
-            { className: !this.props.isEdit ? "hidden" : "" },
-            _react2.default.createElement(
-              'button',
-              { className: 'btn btn-primary', onClick: this.onAddRow.bind(this) },
-              'Add Row'
-            )
-          ),
           _react2.default.createElement(
             'div',
             null,
@@ -4995,11 +4973,19 @@ var ListGridGroupRow = (function (_React$Component) {
         };
         var columnProps = _underscore._.extend(propsData, _this2.props);
 
-        return _react2.default.createElement(
-          'div',
-          { key: index, className: _this2.props.isEdit ? 'List-Grid-Group-Column-Small-Edit' : 'List-Grid-Group-Column-Small' },
-          _react2.default.createElement(_ListGridGroupColumn2.default, columnProps)
-        );
+        if (_this2.props.isEdit) {
+          return _react2.default.createElement(
+            'div',
+            { key: index, className: index === 0 ? 'List-Grid-Group-Column-Small-Edit' : 'List-Grid-Group-Column-Edit' },
+            _react2.default.createElement(_ListGridGroupColumn2.default, columnProps)
+          );
+        } else {
+          return _react2.default.createElement(
+            'div',
+            { key: index, className: index === 0 ? 'List-Grid-Group-Column-Small' : 'List-Grid-Group-Column' },
+            _react2.default.createElement(_ListGridGroupColumn2.default, columnProps)
+          );
+        }
       });
 
       return _react2.default.createElement(
@@ -5141,6 +5127,19 @@ var ParentListGridItemEdit = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
+    key: 'onAddRow',
+    value: function onAddRow() {
+      var contentGroupItem = this.props.contentGroupItem;
+      var newRow = { columns: [] };
+      var column = { contentList: [] };
+      var column2 = { contentList: [] };
+      newRow.columns.push(column);
+      newRow.columns.push(column2);
+      contentGroupItem.rows.push(newRow);
+
+      this.props.setStateForContentGroupList();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentGroupItem.parentListItem.value }, this.props);
@@ -5153,11 +5152,20 @@ var ParentListGridItemEdit = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: 'col-sm-8' },
+            { className: 'col-sm-6 col-md-offset-2' },
             _react2.default.createElement(
               'div',
               { className: 'form-group' },
               _react2.default.createElement(_Field2.default, propsData)
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: !this.props.isEdit ? "hidden" : "col-sm-2" },
+            _react2.default.createElement(
+              'button',
+              { className: 'btn btn-primary', onClick: this.onAddRow.bind(this) },
+              'Add Row'
             )
           )
         )
@@ -5679,24 +5687,24 @@ var LongDescriptionEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-6 col-md-offset-3' },
+          { className: 'Content-long-description-container' },
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
-            _react2.default.createElement('textarea', { className: 'form-control',
+            { className: 'Content-long-description' },
+            _react2.default.createElement('textarea', { className: 'form-control Widget-input', placeholder: 'Long Description',
               value: this.props.value, onChange: this.props.onChange })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-sm-2' },
+          ),
           _react2.default.createElement(
             'div',
-            { onClick: this.props.onRemove },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            { className: 'Widget-Remove-Button-Container' },
+            _react2.default.createElement(
+              'div',
+              { onClick: this.props.onRemove },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            )
           )
         )
       );
@@ -5933,7 +5941,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'Content-short-description' },
-            _react2.default.createElement('input', { className: 'form-control Short-Description-Widget-Input', placeholder: 'Short description',
+            _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Short description',
               value: this.props.value, onChange: this.props.onChange })
           ),
           _react2.default.createElement(
@@ -6173,28 +6181,16 @@ var TitleEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        { className: 'Content-item-container' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-6 col-md-offset-3' },
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement(
-              'div',
-              { className: 'Content-title-container' },
-              _react2.default.createElement(
-                'div',
-                { className: 'Content-title' },
-                _react2.default.createElement('input', { className: 'form-control', placeholder: 'Title', value: this.props.value,
-                  onChange: this.props.onChange })
-              )
-            )
-          )
+          { className: 'Content-title' },
+          _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Title', value: this.props.value,
+            onChange: this.props.onChange })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-2' },
+          { className: 'Widget-Remove-Button-Container' },
           _react2.default.createElement(
             'div',
             { onClick: this.props.onRemove },

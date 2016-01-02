@@ -22,18 +22,6 @@ class ListGridGroup extends React.Component {
 
   }
 
-  onAddRow(){
-    var contentGroupItem = this.props.contentGroupItem;
-    var newRow = {columns: []};
-    var column = {contentList: []};
-    var column2 = {contentList: []};
-    newRow.columns.push(column);
-    newRow.columns.push(column2);
-    contentGroupItem.rows.push(newRow);
-
-    this.props.setStateForContentGroupList();
-  }
-
   updateContent(event) {
     this.props.contentGroupItem.parentListItem.value = event.target.value;
     this.props.setStateForContentGroupList();
@@ -72,10 +60,6 @@ class ListGridGroup extends React.Component {
     return (
       <div>
         <div className='List-template'>
-          <div className={!this.props.isEdit ? "hidden" : ""}>
-            <button className="btn btn-primary" onClick={this.onAddRow.bind(this)}>Add Row</button>
-          </div>
-
           <div>
             <ParentListGridItem {...parentListGridItemProps} />
           </div>

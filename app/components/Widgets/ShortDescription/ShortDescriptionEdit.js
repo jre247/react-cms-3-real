@@ -17,10 +17,9 @@ class ShortDescriptionEdit extends React.Component {
   render() {
     return (
       <div>
-
         <div className="Content-short-description-container">
           <div className="Content-short-description">
-            <input className='form-control Short-Description-Widget-Input' placeholder="Short description"
+            <input className='form-control Widget-input' placeholder="Short description"
               value={this.props.value} onChange={this.props.onChange}>
             </input>
           </div>
@@ -30,8 +29,6 @@ class ShortDescriptionEdit extends React.Component {
             </div>
           </div>
         </div>
-
-
       </div>
     );
   }

@@ -1,29 +1,31 @@
 .List-Grid-Group-Column{
-  display: inline-block;
-  vertical-align: top;
-  width: 50%;
-  // text-align: center;
+  width: 65%;
 }
 
+.List-Grid-Group-Column,
+.List-Grid-Group-Column-Edit,
+.List-Grid-Group-Column-Small,
+.List-Grid-Group-Column-Small-Edit{
+  display: inline-block;
+  vertical-align: top;
+}
 .List-Grid-Group-Column-Small{
   width:33%;
-  display: inline-block;
-  vertical-align: top;
 }
 
-.List-Grid-Template .Parent-list-item-readonly .Content-long-description{
-  font-size: 45px;
+.List-Grid-Template input,
+.List-Grid-Template textarea{
+  text-align: left;
+}
+
+.List-Grid-Group-Column-Small-Edit {
+  width: 37%;
 }
 
 .List-Grid-Row-Edit{
   padding-left: 12%;
 }
 
-.List-Grid-Group-Column-Small-Edit {
-    width: 37%;
-    display: inline-block;
-    vertical-align: top;
-}
 
 .Sub-List-Items{
   padding-left: 10%;
@@ -39,6 +41,7 @@
 
 .List-Grid-Template .Content-item-container{
   margin-top: 1px;
+  text-align: left;
 }
 
 .List-Grid-Row{
@@ -57,4 +60,8 @@
 .List-Grid-Template .List-Page-Read-Only{
   margin: 0 auto;
   width: 60%;
+}
+
+.Add-row-button{
+  display: inline-block;
 }

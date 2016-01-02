@@ -6,7 +6,7 @@ import ListGridGroupFactory from '../../Widgets/ListGridItem/ListGridGroupFactor
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
-import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
+import TitleFactory from '../../Widgets/Title/TitleFactory';
 import API from '../../../API';
 
 class ListGridTemplate extends React.Component {
@@ -90,12 +90,12 @@ class ListGridTemplate extends React.Component {
 
   addParentListItem(){
     var sortOrder = this.state.contentList.length + 1;
-    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Parent Item',
+    var factory = new TitleFactory(sortOrder, 'List Parent Item',
       'List Parent Item', this.templateId);
-    var longDescription = longDescriptionFactory.create();
+    var widget = factory.create();
 
-    var factory = new ListGridGroupFactory(longDescription);
-    var contentGroup = factory.create();
+    var listGridGroupFactory = new ListGridGroupFactory(widget);
+    var contentGroup = listGridGroupFactory.create();
     this.state.contentGroupList.push(contentGroup);
 
     this.setStateForContentGroupList();
@@ -126,7 +126,7 @@ class ListGridTemplate extends React.Component {
       return (
         <div>
           <div className={!this.props.isEdit ? "hidden" : ""}>
-            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add</button>
+            <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
           </div>
           <EmptyContent {...emptyContentProps} />
         </div>

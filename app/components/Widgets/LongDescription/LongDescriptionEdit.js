@@ -16,17 +16,17 @@ class LongDescriptionEdit extends React.Component {
 
   render() {
     return (
-      <div className='row'>
-        <div className='col-sm-6 col-md-offset-3'>
-          <div className="form-group">
-            <textarea className='form-control'
+      <div>
+        <div className="Content-long-description-container">
+          <div className="Content-long-description">
+            <textarea className='form-control Widget-input' placeholder="Long Description"
               value={this.props.value} onChange={this.props.onChange}>
             </textarea>
           </div>
-        </div>
-        <div className="col-sm-2">
-          <div onClick={this.props.onRemove}>
-            <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <div className="Widget-Remove-Button-Container">
+            <div onClick={this.props.onRemove}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
       </div>
