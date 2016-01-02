@@ -1,10 +1,17 @@
   import React from 'react';
   import {Link} from 'react-router';
+  import Image from './Image';
 
   class ImageWidgetEdit extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {isImageEditable: false};
+      if(!this.props.value){
+        this.state = {isImageEditable: true};
+      }
+      else{
+        this.state = {isImageEditable: false};
+      }
+
     }
 
     componentDidMount() {
@@ -23,54 +30,36 @@
     }
 
     render() {
-      return (
-        <div className="Content-image-container">
-          <div>
+      if(this.state.isImageEditable){
+        return (
+          <div className="Content-image-container">
             <div className="Content-image-input-container">
-              <div>
-                <div className={!this.state.isImageEditable ? 'hidden' : ''}>
-                  <input ref="url" className='form-control' name="url" placeholder="Url" value={this.props.value}
-                    onChange={this.props.onChange} autoFocus/>
-                </div>
-              </div>
+                <input ref="url" className='form-control' name="url" placeholder="Url" value={this.props.value}
+                  onChange={this.props.onChange} autoFocus/>
+            </div>
+            <div className="Content-Image-Edit-Button edit-content-button" onClick={this.saveImage.bind(this)}>
+              <span className="glyphicon glyphicon-ok" />
+            </div>
+            <div className="Widget-Remove-Button-Container" onClick={this.props.onRemove}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </div>
           </div>
-          <div>
-            <div className="Content-Image">
-              <div className={this.state.isImageEditable ? 'hidden' : ''}>
-                <img className="Content-extra-large-image-percentage" src={this.props.value} alt="Image" />
+        )
+      }
+      else{
+        return (
+          <div className="Content-image-container">
+            <Image {...this.props} />
 
-                <div className="Content-Image-Edit-Button">
-                  <div className={!this.state.isImageEditable ? 'edit-content-button hidden' : 'edit-content-button '}
-                    onClick={this.saveImage.bind(this)}>
-                      <span className="glyphicon glyphicon-ok" />
-                  </div>
-                </div>
-                <div className="Content-Image-Edit-Button">
-                  <div className={this.state.isImageEditable ? 'edit-content-button hidden' : 'edit-content-button'}
-                    onClick={this.editImage.bind(this)}>
-                      <span className="glyphicon glyphicon-pencil" />
-                  </div>
-                </div>
-                <div className="Widget-Remove-Button-Container">
-                  <div onClick={this.props.onRemove}>
-                    <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                  </div>
-                </div>
-              </div>
+            <div className="Content-Image-Edit-Button edit-content-button" onClick={this.editImage.bind(this)}>
+              <span className="glyphicon glyphicon-pencil" />
             </div>
-
-
-
-
-
-
+            <div className="Widget-Remove-Button-Container" onClick={this.props.onRemove}>
+              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </div>
           </div>
-
-        </div>
-
-
-      );
+        );
+      }
     }
   }
 

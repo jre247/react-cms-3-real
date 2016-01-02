@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Image from './Image';
 
 class ImageWidgetReadOnly extends React.Component {
   constructor(props) {
@@ -15,27 +16,11 @@ class ImageWidgetReadOnly extends React.Component {
   }
 
   render() {
-    if(this.props.imageSize == 'small'){
-      return (
-        <div className="Content-image-container">
-          <img className="Content-small-image" src={this.props.value} alt="Image" />
-        </div>
-      );
-    }
-    else if(this.props.imageSize == 'medium'){
-      return (
-        <div className="Content-image-container">
-          <img className="Content-medium-image" src={this.props.value} alt="Image" />
-        </div>
-      );
-    }
-    else{
-      return (
-        <div className="Content-image-container">
-          <img className="Content-extra-large-image-percentage" src={this.props.value} alt="Image" />
-        </div>
-      );
-    }
+    return (
+      <div className="Content-image-container">
+        <Image {...this.props} />
+      </div>
+    )
   }
 }
 
