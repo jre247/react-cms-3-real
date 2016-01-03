@@ -7542,6 +7542,7 @@ a:hover {
 .List-template .Content-item {
   text-align: left;
   width: 90%;
+  display: inline-block;
 }
 .List-template .Content-extra-large-image-percentage {
   width: 42%;

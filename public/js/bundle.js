@@ -4120,20 +4120,16 @@ var IframeEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group Content-item' },
-            _react2.default.createElement('input', { className: 'form-control', placeholder: 'Iframe Src',
-              value: this.props.value, onChange: this.props.onChange })
-          )
+          { className: 'form-group Content-item' },
+          _react2.default.createElement('input', { className: 'form-control', placeholder: 'Iframe Src',
+            value: this.props.value, onChange: this.props.onChange })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-2' },
+          { className: 'Widget-Remove-Button-Container' },
           _react2.default.createElement(
             'div',
             { onClick: this.props.onRemove },
@@ -4498,7 +4494,7 @@ var ImageWidgetEdit = (function (_React$Component) {
           { className: 'Content-image-container' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-image-input-container Content-item' },
+            { className: 'Content-image-input-container' },
             _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
               onChange: this.props.onChange, autoFocus: true })
           ),

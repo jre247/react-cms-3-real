@@ -16,15 +16,14 @@ class IframeEdit extends React.Component {
 
   render() {
     return (
-      <div className='row'>
-        <div className='col-sm-8'>
-          <div className="form-group Content-item">
-            <input className='form-control' placeholder="Iframe Src"
-              value={this.props.value} onChange={this.props.onChange}>
-            </input>
-          </div>
+      <div>
+        <div className="form-group Content-item">
+          <input className='form-control' placeholder="Iframe Src"
+            value={this.props.value} onChange={this.props.onChange}>
+          </input>
         </div>
-        <div className="col-sm-2">
+
+        <div className="Widget-Remove-Button-Container">
           <div onClick={this.props.onRemove}>
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </div>

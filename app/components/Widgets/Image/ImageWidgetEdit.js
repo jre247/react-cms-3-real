@@ -33,7 +33,7 @@
       if(this.state.isImageEditable){
         return (
           <div className="Content-image-container">
-            <div className="Content-image-input-container Content-item">
+            <div className="Content-image-input-container">
                 <input ref="url" className='form-control' name="url" placeholder="Url" value={this.props.value}
                   onChange={this.props.onChange} autoFocus/>
             </div>
