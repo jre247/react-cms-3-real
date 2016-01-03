@@ -7530,8 +7530,7 @@ a:hover {
   line-height: 1.6em;
   margin-top: 10px;
 }
-.List-template .Content-image-container,
-.List-template .Content-title {
+.List-template .Content-image-container {
   text-align: left;
 }
 .List-template .Content-extra-large-image-percentage {
@@ -7539,6 +7538,13 @@ a:hover {
 }
 .Sub-list-item-widget-select-area {
   float: right;
+}
+.List-template .Content-item {
+  text-align: left;
+  width: 90%;
+}
+.List-template .Content-extra-large-image-percentage {
+  width: 42%;
 }
 .List-Grid-Group-Column {
   width: 65%;

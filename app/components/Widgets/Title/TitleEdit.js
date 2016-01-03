@@ -17,7 +17,7 @@
     render() {
       return (
         <div className="Content-item-container">
-          <div className="Content-title">
+          <div className="Content-title Content-item">
             <input className='form-control Widget-input' placeholder="Title" value={this.props.value}
               onChange={this.props.onChange} />
           </div>

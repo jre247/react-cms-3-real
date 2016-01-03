@@ -116,7 +116,6 @@ class ListTemplate extends React.Component {
               <SubListItem {...listItemProps} />
             </div>
           );
-          debugger;
         }
         else{
           listItemProps.onRemove = this.removeContentAndItsSubListItems.bind(this, index);
@@ -132,7 +131,7 @@ class ListTemplate extends React.Component {
       return (
         <div className='container List-page'>
           <div className='row List-container'>
-            <div className='Content-panel List-Grid-Template'>
+            <div className='Content-panel List-Grid-Template List-template'>
               <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
                 <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
               </div>

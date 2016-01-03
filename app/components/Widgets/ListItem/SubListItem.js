@@ -17,7 +17,6 @@ class SubListItem extends React.Component {
   }
 
   isSublistGroupBorder(){
-    debugger;
     return this.props.subListItemIndex % 2 === 0 && this.props.subListItemIndex > 0;
   }
   render() {

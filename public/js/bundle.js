@@ -2369,7 +2369,6 @@ var ListTemplate = (function (_React$Component) {
               { key: index },
               _react2.default.createElement(_SubListItem2.default, listItemProps)
             );
-            debugger;
           } else {
             listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
             subListItemIndex = 0;
@@ -2389,7 +2388,7 @@ var ListTemplate = (function (_React$Component) {
             { className: 'row List-container' },
             _react2.default.createElement(
               'div',
-              { className: 'Content-panel List-Grid-Template' },
+              { className: 'Content-panel List-Grid-Template List-template' },
               _react2.default.createElement(
                 'div',
                 { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
@@ -4127,7 +4126,7 @@ var IframeEdit = (function (_React$Component) {
           { className: 'col-sm-8' },
           _react2.default.createElement(
             'div',
-            { className: 'form-group' },
+            { className: 'form-group Content-item' },
             _react2.default.createElement('input', { className: 'form-control', placeholder: 'Iframe Src',
               value: this.props.value, onChange: this.props.onChange })
           )
@@ -4499,7 +4498,7 @@ var ImageWidgetEdit = (function (_React$Component) {
           { className: 'Content-image-container' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-image-input-container' },
+            { className: 'Content-image-input-container Content-item' },
             _react2.default.createElement('input', { ref: 'url', className: 'form-control', name: 'url', placeholder: 'Url', value: this.props.value,
               onChange: this.props.onChange, autoFocus: true })
           ),
@@ -5576,7 +5575,6 @@ var SubListItem = (function (_React$Component) {
   }, {
     key: 'isSublistGroupBorder',
     value: function isSublistGroupBorder() {
-      debugger;
       return this.props.subListItemIndex % 2 === 0 && this.props.subListItemIndex > 0;
     }
   }, {
@@ -5723,7 +5721,7 @@ var LongDescriptionEdit = (function (_React$Component) {
           { className: 'Content-long-description-container' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-long-description' },
+            { className: 'Content-long-description Content-item' },
             _react2.default.createElement('textarea', { className: 'form-control Widget-input', placeholder: 'Long Description',
               value: this.props.value, onChange: this.props.onChange })
           ),
@@ -5970,7 +5968,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
           { className: 'Content-short-description-container' },
           _react2.default.createElement(
             'div',
-            { className: 'Content-short-description' },
+            { className: 'Content-short-description Content-item' },
             _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Short description',
               value: this.props.value, onChange: this.props.onChange })
           ),
@@ -6214,7 +6212,7 @@ var TitleEdit = (function (_React$Component) {
         { className: 'Content-item-container' },
         _react2.default.createElement(
           'div',
-          { className: 'Content-title' },
+          { className: 'Content-title Content-item' },
           _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Title', value: this.props.value,
             onChange: this.props.onChange })
         ),
@@ -6454,20 +6452,16 @@ var UrlEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row' },
+        null,
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-8' },
-          _react2.default.createElement(
-            'div',
-            { className: 'form-group' },
-            _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Link', value: this.props.value,
-              onChange: this.props.onChange, autoFocus: true })
-          )
+          { className: 'form-group Content-item' },
+          _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Link', value: this.props.value,
+            onChange: this.props.onChange, autoFocus: true })
         ),
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-2' },
+          { className: 'Widget-Remove-Button-Container' },
           _react2.default.createElement(
             'div',
             { onClick: this.props.onRemove },

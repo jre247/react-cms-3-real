@@ -18,7 +18,7 @@ class IframeEdit extends React.Component {
     return (
       <div className='row'>
         <div className='col-sm-8'>
-          <div className="form-group">
+          <div className="form-group Content-item">
             <input className='form-control' placeholder="Iframe Src"
               value={this.props.value} onChange={this.props.onChange}>
             </input>

@@ -16,14 +16,12 @@ class UrlEdit extends React.Component {
 
   render() {
     return (
-      <div className='row'>
-        <div className='col-sm-8'>
-          <div className="form-group">
-            <input className='form-control' type='text' placeholder="Link" value={this.props.value}
-              onChange={this.props.onChange} autoFocus/>
-          </div>
+      <div>
+        <div className="form-group Content-item">
+          <input className='form-control' type='text' placeholder="Link" value={this.props.value}
+            onChange={this.props.onChange} autoFocus/>
         </div>
-        <div className="col-sm-2">
+        <div className="Widget-Remove-Button-Container">
           <div onClick={this.props.onRemove}>
             <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </div>
