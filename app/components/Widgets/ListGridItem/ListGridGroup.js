@@ -39,7 +39,9 @@ class ListGridGroup extends React.Component {
     var propsData = {
       contentItem: parentListItem,
       onRemove: this.removeContent.bind(this),
-      onChange: this.updateContent.bind(this)
+      onChange: this.updateContent.bind(this),
+      row_number: 1,
+      column_number: 1
     };
     var parentListGridItemProps = _.extend(propsData, this.props);
 

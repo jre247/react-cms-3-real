@@ -39,9 +39,9 @@ Mac OSX install instructions:
 
 Run the following script in psql to create the database and necessary tables:
 
-CREATE USER Jason WITH PASSWORD 'jj1108jj';
+CREATE USER jevans WITH PASSWORD 'jj1108jj';
 CREATE DATABASE Wedding;
-GRANT ALL PRIVILEGES ON DATABASE Wedding to Jason;
+GRANT ALL PRIVILEGES ON DATABASE Wedding to jevans;
 
 6) run seed.sql in postgres to create tables, data, etc.
 	-you can find seed.sql in the root directory of the project

@@ -6,7 +6,7 @@ import ParentListItem from '../../Widgets/ListItem/ParentListItem';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
-import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
+import TitleFactory from '../../Widgets/Title/TitleFactory';
 
 class ListTemplate extends React.Component {
   constructor(props) {
@@ -35,11 +35,11 @@ class ListTemplate extends React.Component {
 
   addParentListItem(){
     var sortOrder = this.props.contentList.length + 1;
-    var longDescriptionFactory = new LongDescriptionFactory(sortOrder, 'List Parent Item',
-      'List Parent Item', this.templateId);
-    var longDescription = longDescriptionFactory.create();
+    var factory = new TitleFactory(sortOrder, 'List Parent Item',
+      'List Parent Item', this.templateId, null, 1, 1);
+    var widget = factory.create();
 
-    this.props.contentList.push(longDescription);
+    this.props.contentList.push(widget);
     this.props.setStateForContentList();
   }
 

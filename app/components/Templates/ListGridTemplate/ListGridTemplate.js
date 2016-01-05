@@ -90,8 +90,10 @@ class ListGridTemplate extends React.Component {
 
   addParentListItem(){
     var sortOrder = this.state.contentList.length + 1;
+    var parentIndex = null;
+    var row_number = 1, column_number = 1;
     var factory = new TitleFactory(sortOrder, 'List Parent Item',
-      'List Parent Item', this.templateId);
+      'List Parent Item', this.templateId, parentIndex, row_number, column_number);
     var widget = factory.create();
 
     var listGridGroupFactory = new ListGridGroupFactory(widget);

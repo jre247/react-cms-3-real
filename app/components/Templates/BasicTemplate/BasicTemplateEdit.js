@@ -33,7 +33,8 @@ class BasicTemplateEdit extends React.Component {
     this.props.setStateForContentList();
   }
   render() {
-    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this), templateId: this.templateId};
+    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+      templateId: this.templateId, row_number: 1, column_number: 1};
 
     let nodes = this.props.contentList.map((contentItem, index) => {
       var propsData = {contentItem: contentItem, isEdit: true,

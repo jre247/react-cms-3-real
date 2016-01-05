@@ -47,8 +47,10 @@ class ParentListItemEdit extends React.Component {
 
   render() {
     var propsData = _.extend({value: this.props.contentItem.value }, this.props);
+    var column_number = 1;
+    var row_number = this.props.index;
     var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-      parentIndex: this.props.index, templateId: this.templateId};
+      parentIndex: this.props.index, templateId: this.templateId, row_number, column_number};
 
     return (
       <div>

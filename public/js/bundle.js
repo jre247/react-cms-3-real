@@ -1786,7 +1786,8 @@ var BasicTemplateEdit = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var widgetListPropsData = { onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this), templateId: this.templateId };
+      var widgetListPropsData = { onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+        templateId: this.templateId, row_number: 1, column_number: 1 };
 
       var nodes = this.props.contentList.map(function (contentItem, index) {
         var propsData = { contentItem: contentItem, isEdit: true,
@@ -2068,7 +2069,10 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'addParentListItem',
     value: function addParentListItem() {
       var sortOrder = this.state.contentList.length + 1;
-      var factory = new _TitleFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
+      var parentIndex = null;
+      var row_number = 1,
+          column_number = 1;
+      var factory = new _TitleFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId, parentIndex, row_number, column_number);
       var widget = factory.create();
 
       var listGridGroupFactory = new _ListGridGroupFactory2.default(widget);
@@ -2232,9 +2236,9 @@ var _TemplateHelper2 = _interopRequireDefault(_TemplateHelper);
 
 var _underscore = require('underscore');
 
-var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
+var _TitleFactory = require('../../Widgets/Title/TitleFactory');
 
-var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
+var _TitleFactory2 = _interopRequireDefault(_TitleFactory);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2279,10 +2283,10 @@ var ListTemplate = (function (_React$Component) {
     key: 'addParentListItem',
     value: function addParentListItem() {
       var sortOrder = this.props.contentList.length + 1;
-      var longDescriptionFactory = new _LongDescriptionFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId);
-      var longDescription = longDescriptionFactory.create();
+      var factory = new _TitleFactory2.default(sortOrder, 'List Parent Item', 'List Parent Item', this.templateId, null, 1, 1);
+      var widget = factory.create();
 
-      this.props.contentList.push(longDescription);
+      this.props.contentList.push(widget);
       this.props.setStateForContentList();
     }
   }, {
@@ -2424,7 +2428,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListItem/ParentListItem":62,"../../Widgets/ListItem/SubListItem":65,"../../Widgets/LongDescription/LongDescriptionFactory":68,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],29:[function(require,module,exports){
+},{"../../EmptyContent":13,"../../Widgets/Field/FieldHelper":44,"../../Widgets/ListItem/ParentListItem":62,"../../Widgets/ListItem/SubListItem":65,"../../Widgets/Title/TitleFactory":76,"../TemplateHelper":32,"react":"react","react-router":"react-router","underscore":"underscore"}],29:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4682,7 +4686,9 @@ var ListGridGroup = (function (_React$Component) {
       var propsData = {
         contentItem: parentListItem,
         onRemove: this.removeContent.bind(this),
-        onChange: this.updateContent.bind(this)
+        onChange: this.updateContent.bind(this),
+        row_number: 1,
+        column_number: 1
       };
       var parentListGridItemProps = _underscore._.extend(propsData, this.props);
 
@@ -5413,8 +5419,10 @@ var ParentListItemEdit = (function (_React$Component) {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentItem.value }, this.props);
+      var column_number = 1;
+      var row_number = this.props.index;
       var widgetListPropsData = { onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-        parentIndex: this.props.index, templateId: this.templateId };
+        parentIndex: this.props.index, templateId: this.templateId, row_number: row_number, column_number: column_number };
 
       return _react2.default.createElement(
         'div',
