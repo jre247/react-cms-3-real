@@ -63,6 +63,7 @@ insert into page(name, description, user_id, date_created, is_active) values ('P
 insert into page(name, description, user_id, date_created, is_active) values ('Gift Registry', 'Gift Registry', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('How To Get There', 'How To Get There', 1, null, true);
 insert into page(name, description, user_id, date_created, is_active) values ('Bridal Party', 'Bridal Party', 1, null, true);
+insert into page(name, description, user_id, date_created, is_active) values ('Accomodations', 'Accomodations', 1, null, true);
 
 insert into template(name, is_active) values ('Basic Template', true);
 insert into template(name, is_active) values ('Photo With Description', true);

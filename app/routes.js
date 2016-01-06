@@ -17,6 +17,7 @@ import HowToGetThere from './components/HowToGetThere/HowToGetThere';
 import EditHowToGetThere from './components/HowToGetThere/EditHowToGetThere';
 import BridalParty from './components/BridalParty/BridalParty';
 import EditBridalParty from './components/BridalParty/EditBridalParty';
+import EditAccomodations from './components/Accomodations/EditAccomodations';
 
 export default (
   <Route component={App}>
@@ -28,6 +29,7 @@ export default (
     <Route path='/photo-album' component={PhotoAlbum} />
     <Route path='/photo-album/edit' component={EditPhotoAlbum} />
     <Route path='/accomodations' component={Accomodations} />
+    <Route path='/accomodations/edit' component={EditAccomodations} />
     <Route path='/gift-registry' component={GiftRegistry} />
     <Route path='/gift-registry/edit' component={EditGiftRegistry} />
     <Route path='/things-to-do' component={ThingsToDo} />

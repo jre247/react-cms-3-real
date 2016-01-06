@@ -1,38 +1,29 @@
 import React from 'react';
 import {Link} from 'react-router';
-import EmptyContent from '../EmptyContent';
-
+import ListTemplate from '../Templates/ListTemplate/ListTemplate';
+import {_} from 'underscore';
+import API from '../../API';
 
 class Accomodations extends React.Component {
   constructor(props) {
     super(props);
-    //this.state = NavbarStore.getState();
-    //this.onChange = this.onChange.bind(this);
+    this.state = {contentList: []};
+    this.pageId = 8;
   }
 
   componentDidMount() {
-  //  NavbarStore.listen(this.onChange);
-  //  NavbarActions.getCharacterCount();
-
-
+    var self = this;
+    API.getContentListForPage(this.pageId).then(function(contentList){
+      self.setState({contentList: contentList});
+    });
   }
-
   componentWillUnmount() {
-    //NavbarStore.unlisten(this.onChange);
-  }
-
-  onChange(state) {
-  //  this.setState(state);
-  }
-
-  handleSubmit(event) {
 
   }
-
   render() {
-    var emptyContentProps = {editLink: '/accomodations/edit'}
+    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/accomodations/edit'};
     return (
-      <EmptyContent {...emptyContentProps} />
+      <ListTemplate {...propsData} />
     );
   }
 }
