@@ -18,6 +18,7 @@ import EditHowToGetThere from './components/HowToGetThere/EditHowToGetThere';
 import BridalParty from './components/BridalParty/BridalParty';
 import EditBridalParty from './components/BridalParty/EditBridalParty';
 import EditAccomodations from './components/Accomodations/EditAccomodations';
+import Signup from './components/Signup/Signup';
 
 export default (
   <Route component={App}>
@@ -38,5 +39,6 @@ export default (
     <Route path='/how-to-get-there/edit' component={EditHowToGetThere} />
     <Route path='/bridal-party' component={BridalParty} />
     <Route path='/bridal-party/edit' component={EditBridalParty} />
+    <Route path='/signup' component={Signup} />
   </Route>
 );

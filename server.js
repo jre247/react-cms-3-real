@@ -6,6 +6,9 @@ var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var routes = require('./app/routes');
+var flash    = require('connect-flash');
+var passport = require("passport");
+var session      = require('express-session');
 
 var express = require('express');
 var path = require('path');
@@ -13,6 +16,8 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 
 var app = express();
+
+//app.set('view engine', 'ejs');
 
 app.set('port', process.env.PORT || 4400);
 app.use(logger('dev'));
@@ -67,6 +72,15 @@ io.sockets.on('connection', function(socket) {
     io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
   });
 });
+
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+// server routes ======================================================================
+//require('./config/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
+
 
 
 app.listen(app.get('port'), function() {
