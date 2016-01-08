@@ -7,20 +7,26 @@ class AuthStore {
     this.bindActions(AuthActions);
     this.auth = {isAuthenticated: false, userRoles: []};
     this.isPublisher = false;
+    this.isAdmin = false;
     this.ajaxAnimationClass = '';
   }
 
   getUserAuthenticationDataSuccess(authData) {
-    debugger;
     this.auth = authData;
 
     //TODO: put in utility
     //publisher roles are either "publisher" or "admin"
     var publisherRoles = [1, 2];
+    var adminRoles = [2];
 
     var publisherRolesForUser = _.intersection(this.auth.userRoles, publisherRoles);
     if(publisherRolesForUser.length > 0){
       this.isPublisher = true;
+    }
+    debugger;
+    var adminRolesForUser = _.intersection(this.auth.userRoles, adminRoles);
+    if(adminRolesForUser.length > 0){
+      this.isAdmin = true;
     }
   }
 

@@ -20,6 +20,7 @@ import EditBridalParty from './components/BridalParty/EditBridalParty';
 import EditAccomodations from './components/Accomodations/EditAccomodations';
 import Signup from './components/Auth/Signup';
 import Login from './components/Auth/Login';
+import RoleManager from './components/Auth/RoleManager';
 
 export default (
   <Route component={App}>
@@ -42,5 +43,6 @@ export default (
     <Route path='/bridal-party/edit' component={EditBridalParty} />
     <Route path='/signup' component={Signup} />
     <Route path='/login' component={Login} />
+    <Route path='/role-manager' component={RoleManager} />
   </Route>
 );

@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import NavbarStore from '../stores/NavbarStore';
 import NavbarActions from '../actions/NavbarActions';
+import AuthLinks from './AuthLinks';
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -39,6 +40,8 @@ class Navbar extends React.Component {
           <Link className="Navigation-link" to="/gift-registry">Gift Registry</Link>
           <Link className="Navigation-link" to="/how-to-get-there">How to get there</Link>
           <Link className="Navigation-link" to="/bridal-party">Bridal Party</Link>
+
+          <AuthLinks />
       </div>
     );
   }
