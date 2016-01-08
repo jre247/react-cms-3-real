@@ -2422,7 +2422,8 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var self = this;
-      _API2.default.getContentListForPage(this.pageId).then(function (viewmodel) {
+      _API2.default.getContentListForPage(this.props.pageId).then(function (viewmodel) {
+        debugger;
         self.setState({ isAuthenticated: viewmodel.isAuthenticated });
         self.setState({ contentList: viewmodel.contentList });
 
