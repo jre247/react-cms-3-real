@@ -21,9 +21,8 @@ exports.findById = function(userId){
             });
 
             query.on('end', function() {
-                var user = processQueryEnd(done, results);
-
-                promise.resolve(user);
+                done();
+                promise.resolve(results[0]);
             });
         });
     }

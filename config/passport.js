@@ -91,8 +91,8 @@ module.exports = function(passport) {
                     var lastName = "test last name";
                     var newUser = new User(firstName, lastName, email, password);
 
-                    UserDb.createUser(newUser).then(function(){
-                        return done(null, newUser);
+                    UserDb.createUser(newUser).then(function(newUserFromDb){
+                        return done(null, newUserFromDb);
                     });
 
                     //// save the user
