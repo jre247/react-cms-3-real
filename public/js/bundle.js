@@ -713,34 +713,34 @@ var Login = (function (_React$Component) {
             'h1',
             null,
             _react2.default.createElement('span', { className: 'fa fa-sign-in' }),
-            ' Signup'
+            ' Login'
           ),
           _react2.default.createElement(
             'form',
             { action: '/login', method: 'post' },
             _react2.default.createElement(
               'div',
-              { 'class': 'form-group' },
+              { className: 'form-group' },
               _react2.default.createElement(
                 'label',
                 null,
                 'Email'
               ),
-              _react2.default.createElement('input', { type: 'text', 'class': 'form-control', name: 'email' })
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })
             ),
             _react2.default.createElement(
               'div',
-              { 'class': 'form-group' },
+              { className: 'form-group' },
               _react2.default.createElement(
                 'label',
                 null,
                 'Password'
               ),
-              _react2.default.createElement('input', { type: 'password', 'class': 'form-control', name: 'password' })
+              _react2.default.createElement('input', { type: 'password', className: 'form-control', name: 'password' })
             ),
             _react2.default.createElement(
               'button',
-              { type: 'submit', 'class': 'btn btn-warning btn-lg' },
+              { type: 'submit', className: 'btn btn-warning btn-lg' },
               'Login'
             )
           ),

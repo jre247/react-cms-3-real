@@ -25,23 +25,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-var contentDb = require('./db/content-db');
-app.get('/api/pages/:id', function(req, res, next) {
-  var pageId = req.params.id;
-  var userId = req.params.userId || 1;
-  contentDb.get(pageId, userId).then(function(data){
-    res.status(200).send(data);
-  });
-});
-app.post('/api/pages/:id', function(req, res, next) {
-  var pageId = req.params.id;
-  var contents = req.body.contents;
-  var userId = req.params.userId || 1;
-  contentDb.save(pageId, userId, contents).then(function(data){
-    res.status(200).send(data);
-  });
-});
-
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 app.use(passport.initialize());

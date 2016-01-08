@@ -1,6 +1,7 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var UserDb = require('../db/user-db');
 var User = require('../models/user');
+var UserHelper = require('../helpers/user-helper');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -18,7 +19,8 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        UserDb.findById(id, function(err, user) {
+        UserDb.findById(id).then(function(user) {
+            var err = null; //TODO: catch error
             done(err, user);
         });
     });
@@ -40,17 +42,17 @@ module.exports = function(passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        UserDb.findByEmail(email, function(err, user) {
+        UserDb.findByEmail(email).then(function(user) {
             // if there are any errors, return the error before anything else
-            if (err)
-                return done(err);
+            //if (err)
+             //   return done(err);
 
             // if no user is found, return the message
             if (!user)
                 return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
 
             // if the user is found but the password is wrong
-            if (!user.validPassword(password))
+            if (!UserHelper.validPassword(password, user.password))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
             // all is well, return successful user
@@ -94,13 +96,6 @@ module.exports = function(passport) {
                     UserDb.createUser(newUser).then(function(newUserFromDb){
                         return done(null, newUserFromDb);
                     });
-
-                    //// save the user
-                    //newUser.save(function(err) {
-                    //    if (err)
-                    //        throw err;
-                    //    return done(null, newUser);
-                    //});
                 }
         });
     }));

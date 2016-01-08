@@ -1,3 +1,5 @@
+var contentDb = require('../db/content-db');
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -18,6 +20,22 @@ module.exports = function(app, passport) {
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
+    });
+
+    app.get('/api/pages/:id', function(req, res, next) {
+        var pageId = req.params.id;
+        var userId = req.params.userId || 1;
+        contentDb.get(pageId, userId).then(function(data){
+            res.status(200).send(data);
+        });
+    });
+    app.post('/api/pages/:id', isLoggedIn, function(req, res, next) {
+        var pageId = req.params.id;
+        var contents = req.body.contents;
+        var userId = req.params.userId || 1;
+        contentDb.save(pageId, userId, contents).then(function(data){
+            res.status(200).send(data);
+        });
     });
 
     //
