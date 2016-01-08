@@ -16,6 +16,12 @@ Windows Install Instructions:
 5) you should see a message saying the server has started
 6) open postgres admin
 7) open new query window in postgres admin
+8) run this script in this query window to give privileges to tables to user jevans:
+		GRANT ALL PRIVILEGES ON TABLE content TO jevans;
+		GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
+		GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
+		GRANT USAGE, SELECT ON SEQUENCE wedding_user_id_seq TO jevans
+		*note: everytime you rerun seed.sql you'll have to rerun these privileges queries*
 
 ------------------------------------------------------------------------------------------------
 

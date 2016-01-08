@@ -22,6 +22,14 @@ class Signup extends React.Component {
             <h1><span className="fa fa-sign-in"></span> Signup</h1>
 
             <form action="/signup" method="post">
+              <div className="form-group">
+                  <label>First Name</label>
+                  <input type="text" className="form-control" name="firstName" />
+              </div>
+              <div className="form-group">
+                  <label>Last Name</label>
+                  <input type="text" className="form-control" name="lastName" />
+              </div>
                 <div className="form-group">
                     <label>Email</label>
                     <input type="text" className="form-control" name="email" />

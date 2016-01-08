@@ -840,6 +840,26 @@ var Signup = (function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
+                'First Name'
+              ),
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'firstName' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'Last Name'
+              ),
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'lastName' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                null,
                 'Email'
               ),
               _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email' })

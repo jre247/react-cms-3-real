@@ -73,20 +73,14 @@ exports.createUser = function(newUser){
                 processError(done, err);
             }
 
-            userId = parseInt(userId);
-            var query = client.query("insert into wedding_user(email, password) values ($1, $2)",
-                [newUser.email, newUser.password]);
+            var query = client.query("insert into wedding_user(first_name, last_name, email, password) values ($1, $2)",
+                [newUser.firstName, newUser.lastName, newUser.email, newUser.password]);
 
-            // Stream results back one row at a time
-            query.on('row', function(row) {
-                results.push(row);
-            });
+            client.query(query);
 
-            query.on('end', function() {
-                var user = processQueryEnd(done, results);
+            done();
 
-                promise.resolve(user);
-            });
+            promise.resolve(newUser);
         });
     }
     catch(ex){

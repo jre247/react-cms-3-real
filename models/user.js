@@ -1,7 +1,9 @@
 var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
-var User = function(email, password){
+var User = function(firstName, lastName, email, password){
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.password = generateHash(password);
 }
