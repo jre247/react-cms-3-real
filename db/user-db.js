@@ -73,8 +73,8 @@ exports.createUser = function(newUser){
                 processError(done, err);
             }
 
-            var query = client.query("insert into wedding_user(first_name, last_name, email, password) values ($1, $2)",
-                [newUser.firstName, newUser.lastName, newUser.email, newUser.password]);
+            var query = client.query("insert into wedding_user(first_name, last_name, email, password, is_active) values ($1, $2, $3, $4, $5)",
+                [newUser.firstName, newUser.lastName, newUser.email, newUser.password, true]);
 
             client.query(query);
 

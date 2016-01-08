@@ -71,7 +71,7 @@ module.exports = function(passport) {
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, firstName, lastName, email, password, done) {
+    function(req, email, password, done) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
         UserDb.findByEmail(email)
@@ -87,13 +87,11 @@ module.exports = function(passport) {
 
                     // if there is no user with that email
                     // create the user
+                    var firstName = "test first name";
+                    var lastName = "test last name";
                     var newUser = new User(firstName, lastName, email, password);
 
-                    // set the user's local credentials
-                    //newUser.email = email;
-                   // newUser.password = User.generateHash(password);
-
-                    UserDb.createUser(newUser, function(){
+                    UserDb.createUser(newUser).then(function(){
                         return done(null, newUser);
                     });
 

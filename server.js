@@ -101,12 +101,13 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-require('./config/passport')(passport);
-
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+require('./config/passport')(passport);
+
 
 
 app.listen(app.get('port'), function() {
