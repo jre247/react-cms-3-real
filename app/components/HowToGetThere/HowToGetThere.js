@@ -13,8 +13,9 @@ class HowToGetThere extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.pageId).then(function(contentList){
-      self.setState({contentList: contentList});
+    API.getContentListForPage(this.pageId).then(function(viewmodel){
+      self.setState({isAuthenticated: viewmodel.isAuthenticated});
+      self.setState({contentList: viewmodel.contentList});
     });
   }
   componentWillUnmount() {

@@ -10,11 +10,13 @@ class PhotoAlbumStore {
     this.ajaxAnimationClass = '';
   }
 
-  onGetPhotoAlbumDataSuccess(data) {
-    console.log('onGetPhotoAlbumDataSuccess');
-    if(data && data.length > 0){
-      this.contentList = data;
+  onGetPhotoAlbumDataSuccess(viewmodel) {
+    var contentList = viewmodel.contentList;
+    if(contentList && contentList.length > 0){
+      this.contentList = contentList;
     }
+
+    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetPhotoAlbumDataFail(jqXhr) {

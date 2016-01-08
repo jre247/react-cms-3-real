@@ -12,14 +12,16 @@ import API from '../../../API';
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: [], contentList: []};
+    this.state = {contentGroupList: [], contentList: [], isAuthenticated: false};
     this.templateId = 5;
   }
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.props.pageId).then(function(contentList){
-      self.setState({contentList: contentList});
+    API.getContentListForPage(this.pageId).then(function(viewmodel){
+      self.setState({isAuthenticated: viewmodel.isAuthenticated});
+      self.setState({contentList: viewmodel.contentList});
+
       self.buildContentGroupList();
       self.setStateForContentGroupList();
     });
@@ -124,7 +126,9 @@ class ListGridTemplate extends React.Component {
 
   render() {
     if(_.isEmpty(this.state.contentGroupList)){
-      var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
+      var emptyContentProps = _.extend({isAuthenticated: this.state.isAuthenticated,
+        editLink: this.props.editLink}, this.props);
+
       return (
         <div>
           <div className={!this.props.isEdit ? "hidden" : ""}>
@@ -137,6 +141,7 @@ class ListGridTemplate extends React.Component {
     else {
       let nodes = this.state.contentGroupList.map((contentGroupItem, index) => {
         var propsData = {
+          isAuthenticated: this.state.isAuthenticated,
           contentGroupList: this.state.contentGroupList,
           contentGroupItem: contentGroupItem, isEdit: this.props.isEdit,
           setStateForContentGroupList: this.setStateForContentGroupList.bind(this, index),
@@ -160,7 +165,7 @@ class ListGridTemplate extends React.Component {
             <div className='row List-container'>
               <div className='Content-panel List-Grid-Template'>
                 <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-                  <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+                  <EditLink {...this.props} />
                 </div>
 
                 <div className={!this.props.isEdit ? "hidden" : ""}>

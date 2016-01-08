@@ -23,7 +23,8 @@ class PhotoAlbum extends React.Component {
 
   //TODO: create field component that will figure out what kind of field to render
   render() {
-    var propsData = {contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, editLink: '/photo-album/edit',
+    var propsData = {isAuthenticated: this.state.isAuthenticated,
+      contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto, editLink: '/photo-album/edit',
       isEdit: false, imageSize: 'small'};
     return (
       <PhotoAlbumTemplate {...propsData} />

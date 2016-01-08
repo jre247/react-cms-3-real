@@ -22,7 +22,9 @@ class GiftRegistry extends React.Component {
     GiftRegistryStore.unlisten(this.onChange);
   }
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/gift-registry/edit'};
+    var propsData = {isAuthenticated: this.state.isAuthenticated, isEdit: false,
+      contentList: this.state.contentList, editLink: '/gift-registry/edit'};
+      
     return (
       <ListTemplate {...propsData} />
     );

@@ -7,6 +7,7 @@ import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
+import EditLink from '../../EditLink';
 
 class ListTemplate extends React.Component {
   constructor(props) {
@@ -133,7 +134,7 @@ class ListTemplate extends React.Component {
           <div className='row List-container'>
             <div className='Content-panel List-Grid-Template List-template'>
               <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-                <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+                <EditLink {...this.props} />
               </div>
 
               <div className={!this.props.isEdit ? "hidden" : ""}>

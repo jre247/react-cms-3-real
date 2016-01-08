@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-
-
+import EditLink from './EditLink';
 
 class EmptyContent extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class EmptyContent extends React.Component {
     return (
       <div>
         <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-          <Link className="Navigation-link" to={this.props.editLink}>Edit</Link>
+          <EditLink {...this.props} />
         </div>
 
         <div className="Empty-Page-Content">

@@ -8,11 +8,13 @@ class GiftRegistryStore {
     this.ajaxAnimationClass = '';
   }
 
-  onGetContentListDataSuccess(data) {
-    console.log('onGetContentDataSuccess');
-    if(data && data.length > 0){
-      this.contentList = data;
+  onGetContentListDataSuccess(viewmodel) {
+    var contentList = viewmodel.contentList;
+    if(contentList && contentList.length > 0){
+      this.contentList = contentList;
     }
+
+    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetContenteListDataFail(jqXhr) {

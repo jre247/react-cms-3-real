@@ -36,28 +36,28 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   render() {
-    var propsData = {contentList: this.props.contentList, selectedPhoto: this.props.selectedPhoto, imageSize: this.props.imageSize};
+    var propsData = _.extend({selectedPhoto: this.props.selectedPhoto,
+      imageSize: this.props.imageSize}, this.props);
 
     let nodes = this.props.contentList.map((contentItem, index) => {
-      var propsData = {contentItem: contentItem, imageSize: this.props.imageSize}
+      var fieldPropsData = _.extend({contentItem: contentItem}, propsData);
       return (
         <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
-          <Field {...propsData} />
+          <Field {...fieldPropsData} />
         </div>
       );
     });
 
     if(_.isEmpty(this.props.contentList)){
-      var emptyContentProps = {editLink: this.props.editLink}
       return (
-        <EmptyContent {...emptyContentProps} />
+        <EmptyContent {...propsData} />
       );
     }
     else {
       return (
         <div className='Content-panel'>
           <div className="Edit-Content-Button">
-            <Link className="Navigation-link" to="/photo-album/edit">Edit</Link>
+            <EditLink {...this.props} />
           </div>
 
           <div className="Photo-album-container-read-only">

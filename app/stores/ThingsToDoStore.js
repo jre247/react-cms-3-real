@@ -8,11 +8,13 @@ class ThingsToDoStore {
     this.ajaxAnimationClass = '';
   }
 
-  onGetThingsToDoDataSuccess(data) {
-    console.log('onGetThingsToDoDataSuccess');
-    if(data && data.length > 0){
-      this.contentList = data;
+  onGetThingsToDoDataSuccess(viewmodel) {
+    var contentList = viewmodel.contentList;
+    if(contentList && contentList.length > 0){
+      this.contentList = contentList;
     }
+
+    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetThingsToDoDataFail(jqXhr) {

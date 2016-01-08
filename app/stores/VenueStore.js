@@ -9,10 +9,12 @@ class VenueStore {
   }
 
   onGetVenueDataSuccess(data) {
-    console.log('onGetVenueDataSuccess');
-    if(data && data.length > 0){
-      this.contentList = data;
+    var contentList = viewmodel.contentList;
+    if(contentList && contentList.length > 0){
+      this.contentList = contentList;
     }
+
+    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetVenueDataFail(jqXhr) {

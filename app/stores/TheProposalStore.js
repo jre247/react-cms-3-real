@@ -5,14 +5,17 @@ class TheProposalStore {
   constructor() {
     this.bindActions(TheProposalActions);
     this.contentList = [];
+    this.isAuthenticated = false;
     this.ajaxAnimationClass = '';
   }
 
-  onGetProposalDataSuccess(data) {
-    console.log('onGetProposalDataSuccess');
-    if(data && data.length > 0){
-      this.contentList = data;
+  onGetProposalDataSuccess(viewmodel) {
+    var contentList = viewmodel.contentList;
+    if(contentList && contentList.length > 0){
+      this.contentList = contentList;
     }
+
+    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetProposalDataFail(jqXhr) {
