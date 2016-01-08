@@ -4,34 +4,34 @@ var Promise = require("node-promise").Promise;
 var connectionString = process.env.DATABASE_URL || 'postgres://jevans:jj1108jj@localhost:5432/wedding';
 
 exports.findById = function(userId){
-  var results = [];
-  var promise = new Promise();
+    var results = [];
+    var promise = new Promise();
 
-  try{
-    pg.connect(connectionString, function(err, client, done) {
-        if(err) {
-          processError(done, err);
-        }
+    try{
+        pg.connect(connectionString, function(err, client, done) {
+            if(err) {
+                processError(done, err);
+            }
 
-        userId = parseInt(userId);
-        var query = client.query("select * from wedding_user where is_active = true And id = $1", [userId]);
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
+            userId = parseInt(userId);
+            var query = client.query("select * from wedding_user where is_active = true And id = $1", [userId]);
+            // Stream results back one row at a time
+            query.on('row', function(row) {
+                results.push(row);
+            });
+
+            query.on('end', function() {
+                var user = processQueryEnd(done, results);
+
+                promise.resolve(user);
+            });
         });
+    }
+    catch(ex){
+        console.log('Exception running query with psql: ' + ex);
+    }
 
-        query.on('end', function() {
-          var user = processQueryEnd(done, results);
-
-          promise.resolve(user);
-        });
-    });
-  }
-  catch(ex){
-    console.log('Exception running query with psql: ' + ex);
-  }
-
-  return promise;
+    return promise;
 }
 
 exports.findByEmail = function(email){
@@ -51,9 +51,8 @@ exports.findByEmail = function(email){
         });
 
         query.on('end', function() {
-          var user = processQueryEnd(done, results);
-
-          promise.resolve(user);
+            done();
+            promise.resolve(results[0]);
         });
     });
   }
@@ -63,6 +62,40 @@ exports.findByEmail = function(email){
 
   return promise;
 }
+
+exports.createUser = function(newUser){
+    var results = [];
+    var promise = new Promise();
+
+    try{
+        pg.connect(connectionString, function(err, client, done) {
+            if(err) {
+                processError(done, err);
+            }
+
+            userId = parseInt(userId);
+            var query = client.query("insert into wedding_user(email, password) values ($1, $2)",
+                [newUser.email, newUser.password]);
+
+            // Stream results back one row at a time
+            query.on('row', function(row) {
+                results.push(row);
+            });
+
+            query.on('end', function() {
+                var user = processQueryEnd(done, results);
+
+                promise.resolve(user);
+            });
+        });
+    }
+    catch(ex){
+        console.log('Exception running query with psql: ' + ex);
+    }
+
+    return promise;
+}
+
 
 var processQueryEnd = function(done, results){
   done();

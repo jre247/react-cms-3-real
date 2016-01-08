@@ -5,7 +5,6 @@ import {_} from 'underscore';
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   componentDidMount() {
@@ -14,6 +13,8 @@ class Signup extends React.Component {
   componentWillUnmount() {
 
   }
+
+
   render() {
     return (
       <div className="container">
@@ -31,6 +32,7 @@ class Signup extends React.Component {
                 </div>
 
                 <button type="submit" className="btn btn-warning btn-lg">Signup</button>
+
             </form>
 
             <hr />

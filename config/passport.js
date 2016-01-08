@@ -1,5 +1,5 @@
 var LocalStrategy   = require('passport-local').Strategy;
-var UserDb = require('./db.user-db');
+var UserDb = require('../db/user-db');
 var User = require('../models/user');
 
 // expose this function to our app using module.exports
@@ -18,7 +18,7 @@ module.exports = function(passport) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-        User.findById(id, function(err, user) {
+        UserDb.findById(id, function(err, user) {
             done(err, user);
         });
     });
@@ -74,31 +74,36 @@ module.exports = function(passport) {
     function(req, email, password, done) {
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        UserDb.findByEmail(email, function(err, user) {
-            // if there are any errors, return the error
-            if (err)
-                return done(err);
+        UserDb.findByEmail(email)
+            .then(function(user) {
+                // if there are any errors, return the error
+               // if (err)
+                  //  return done(err);
 
-            // check to see if theres already a user with that email
-            if (user) {
-                return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            } else {
+                // check to see if theres already a user with that email
+                if (user) {
+                    return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+                } else {
 
-                // if there is no user with that email
-                // create the user
-                var newUser            = new User();
+                    // if there is no user with that email
+                    // create the user
+                    var newUser = new User(email, password);
 
-                // set the user's local credentials
-                newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password);
+                    // set the user's local credentials
+                    //newUser.email = email;
+                    newUser.password = newUser.generateHash(password);
 
-                // save the user
-                newUser.save(function(err) {
-                    if (err)
-                        throw err;
-                    return done(null, newUser);
-                });
-            }
+                    UserDb.createUser(newUser, function(){
+                        return done(null, newUser);
+                    });
+
+                    //// save the user
+                    //newUser.save(function(err) {
+                    //    if (err)
+                    //        throw err;
+                    //    return done(null, newUser);
+                    //});
+                }
         });
     }));
 };

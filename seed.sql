@@ -4,7 +4,15 @@ drop table content_type;
 drop table wedding_user_role;
 drop table wedding_role;
 drop table wedding_user;
-CREATE TABLE wedding_user (id SERIAL PRIMARY KEY, first_name VARCHAR(40) not null, last_name VARCHAR(40) not null, email VARCHAR(40), is_active BOOLEAN);
+CREATE TABLE wedding_user
+(
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(40) not null,
+	last_name VARCHAR(40) not null,
+	email VARCHAR(40),
+	password VARCHAR(340),
+	is_active BOOLEAN
+);
 CREATE TABLE wedding_role (id SERIAL PRIMARY KEY, name VARCHAR(40) not null, is_active BOOLEAN);
 CREATE TABLE wedding_user_role(id SERIAL PRIMARY KEY, user_id INTEGER not null references wedding_user(id), role_id INTEGER not null references wedding_role (id), is_active BOOLEAN);
 CREATE TABLE page
@@ -70,3 +78,8 @@ insert into template(name, is_active) values ('Photo With Description', true);
 insert into template(name, is_active) values ('Photo Gallery', true);
 insert into template(name, is_active) values ('List', true);
 insert into template(name, is_active) values ('ListGrid', true);
+
+GRANT ALL PRIVILEGES ON TABLE content TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE wedding_user_id_seq TO jevans
