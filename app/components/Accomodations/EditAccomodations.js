@@ -14,8 +14,8 @@ class EditAccomodations extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.pageId).then(function(contentList){
-      self.setState({contentList: contentList});
+    API.getContentListForPage(this.pageId).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList});
     });
   }
   componentWillUnmount() {

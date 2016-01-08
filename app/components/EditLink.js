@@ -1,21 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router';
+import AuthStore from '../stores/AuthStore';
 
 class EditLink extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
+    this.authState = AuthStore.getState();
   }
 
   render() {
-    if(!this.props.isAuthenticated){
+    if(!this.authState.isAuthenticated){
       return(
         <span/>
       );

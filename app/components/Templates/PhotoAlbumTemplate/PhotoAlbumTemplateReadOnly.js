@@ -9,6 +9,7 @@ import ImageWidget from '../../Widgets/Image/ImageWidget';
 import Title from '../../Widgets/Title/Title';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import Carousel from '../../Widgets/Carousel/Carousel';
+import EditLink from '../../EditLink';
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
   constructor(props) {
@@ -56,9 +57,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
     else {
       return (
         <div className='Content-panel'>
-          <div className="Edit-Content-Button">
-            <EditLink {...this.props} />
-          </div>
+          <EditLink {...this.props} />
 
           <div className="Photo-album-container-read-only">
             {nodes}

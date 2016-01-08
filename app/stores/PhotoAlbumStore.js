@@ -15,8 +15,6 @@ class PhotoAlbumStore {
     if(contentList && contentList.length > 0){
       this.contentList = contentList;
     }
-
-    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetPhotoAlbumDataFail(jqXhr) {

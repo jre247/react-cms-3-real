@@ -22,15 +22,21 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
+    app.get('/api/user/auth', function(req, res) {
+        var viewmodel = {isAuthenticated: false};
+
+        if(req.isAuthenticated()){
+            viewmodel.isAuthenticated = true;
+        }
+
+        res.status(200).send(viewmodel);
+    });
+
     app.get('/api/pages/:id', function(req, res, next) {
         var pageId = req.params.id;
         var userId = req.params.userId || 1;
         contentDb.get(pageId, userId).then(function(data){
-            var viewmodel = {contentList: data, isAuthenticated: false};
-
-            if(req.isAuthenticated()){
-                viewmodel.isAuthenticated = true;
-            }
+            var viewmodel = {contentList: data,};
 
             res.status(200).send(viewmodel);
         });

@@ -13,8 +13,6 @@ class ThingsToDoStore {
     if(contentList && contentList.length > 0){
       this.contentList = contentList;
     }
-
-    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetThingsToDoDataFail(jqXhr) {
@@ -26,15 +24,7 @@ class ThingsToDoStore {
     history.pushState(null, '/things-to-do');
 
   }
-
-  // onUpdateListItem(index, event) {
-  //   debugger;
-  //   this.thingsToDo[index].value = event.target.value;
-  //   this.pthingsToDoValidationState = '';
-  //   this.helpBlock = '';
-  // }
-
-
+  
   onSaveThingsToDoDataFail(jqXhr) {
     onsole.log('onSaveThingsToDoDataFail');
     toastr.error(jqXhr.responseJSON.message);

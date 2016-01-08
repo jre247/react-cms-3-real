@@ -18,9 +18,7 @@ class EmptyContent extends React.Component {
   render() {
     return (
       <div>
-        <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-          <EditLink {...this.props} />
-        </div>
+        <EditLink {...this.props} />
 
         <div className="Empty-Page-Content">
           <span>There is no content yet.</span>

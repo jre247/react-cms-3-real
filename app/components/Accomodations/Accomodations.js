@@ -13,8 +13,8 @@ class Accomodations extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.pageId).then(function(contentList){
-      self.setState({contentList: contentList});
+    API.getContentListForPage(this.pageId).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList});
     });
   }
   componentWillUnmount() {
@@ -22,6 +22,7 @@ class Accomodations extends React.Component {
   }
   render() {
     var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/accomodations/edit'};
+
     return (
       <ListTemplate {...propsData} />
     );

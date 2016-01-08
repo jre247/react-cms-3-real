@@ -37,8 +37,7 @@ class EditThingsToDo extends React.Component {
 
 
   render() {
-    var propsData = {isAuthenticated: this.state.isAuthenticated, isEdit: true,
-      contentList: this.state.contentList, editLink: '/things-to-do/edit',
+    var propsData = {isEdit: true, contentList: this.state.contentList, editLink: '/things-to-do/edit',
       setStateForContentList: this.setStateForContentList.bind(this)};
 
     return (

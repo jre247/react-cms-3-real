@@ -5,7 +5,6 @@ class TheProposalStore {
   constructor() {
     this.bindActions(TheProposalActions);
     this.contentList = [];
-    this.isAuthenticated = false;
     this.ajaxAnimationClass = '';
   }
 
@@ -14,8 +13,6 @@ class TheProposalStore {
     if(contentList && contentList.length > 0){
       this.contentList = contentList;
     }
-
-    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetProposalDataFail(jqXhr) {

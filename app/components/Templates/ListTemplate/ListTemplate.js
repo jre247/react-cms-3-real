@@ -133,9 +133,7 @@ class ListTemplate extends React.Component {
         <div className='container List-page'>
           <div className='row List-container'>
             <div className='Content-panel List-Grid-Template List-template'>
-              <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-                <EditLink {...this.props} />
-              </div>
+              <EditLink {...this.props} />
 
               <div className={!this.props.isEdit ? "hidden" : ""}>
                 <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>

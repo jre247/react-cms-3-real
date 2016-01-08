@@ -8,13 +8,11 @@ class VenueStore {
     this.ajaxAnimationClass = '';
   }
 
-  onGetVenueDataSuccess(data) {
+  onGetVenueDataSuccess(viewmodel) {
     var contentList = viewmodel.contentList;
     if(contentList && contentList.length > 0){
       this.contentList = contentList;
     }
-
-    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetVenueDataFail(jqXhr) {

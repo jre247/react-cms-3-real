@@ -13,8 +13,6 @@ class GiftRegistryStore {
     if(contentList && contentList.length > 0){
       this.contentList = contentList;
     }
-
-    this.isAuthenticated = viewmodel.isAuthenticated;
   }
 
   onGetContenteListDataFail(jqXhr) {

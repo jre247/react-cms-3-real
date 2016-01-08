@@ -8,19 +8,18 @@ import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import API from '../../../API';
+import EditLink from '../../EditLink';
 
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: [], contentList: [], isAuthenticated: false};
+    this.state = {contentGroupList: [], contentList: []};
     this.templateId = 5;
   }
 
   componentDidMount() {
     var self = this;
     API.getContentListForPage(this.props.pageId).then(function(viewmodel){
-      debugger;
-      self.setState({isAuthenticated: viewmodel.isAuthenticated});
       self.setState({contentList: viewmodel.contentList});
 
       self.buildContentGroupList();
@@ -127,8 +126,7 @@ class ListGridTemplate extends React.Component {
 
   render() {
     if(_.isEmpty(this.state.contentGroupList)){
-      var emptyContentProps = _.extend({isAuthenticated: this.state.isAuthenticated,
-        editLink: this.props.editLink}, this.props);
+      var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
 
       return (
         <div>
@@ -142,7 +140,6 @@ class ListGridTemplate extends React.Component {
     else {
       let nodes = this.state.contentGroupList.map((contentGroupItem, index) => {
         var propsData = {
-          isAuthenticated: this.state.isAuthenticated,
           contentGroupList: this.state.contentGroupList,
           contentGroupItem: contentGroupItem, isEdit: this.props.isEdit,
           setStateForContentGroupList: this.setStateForContentGroupList.bind(this, index),
@@ -165,9 +162,7 @@ class ListGridTemplate extends React.Component {
           <div className='container List-page'>
             <div className='row List-container'>
               <div className='Content-panel List-Grid-Template'>
-                <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-                  <EditLink {...this.props} />
-                </div>
+                <EditLink {...this.props} />
 
                 <div className={!this.props.isEdit ? "hidden" : ""}>
                   <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>

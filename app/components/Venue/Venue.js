@@ -23,6 +23,7 @@ class Venue extends React.Component {
   }
   render() {
     var propsData = {editLink: "/venue/edit", contentList: this.state.contentList, isEdit: false};
+
     return (
       <BasicTemplate {...propsData} />
     );

@@ -22,8 +22,7 @@ class ThingsToDo extends React.Component {
     ThingsToDoStore.unlisten(this.onChange);
   }
   render() {
-    var propsData = {isAuthenticated: this.state.isAuthenticated, isEdit: false,
-      contentList: this.state.contentList, editLink: '/things-to-do/edit'};
+    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit'};
     return (
       <ListTemplate {...propsData} />
     );
