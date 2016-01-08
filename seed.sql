@@ -13,8 +13,6 @@ CREATE TABLE wedding_user
 	password VARCHAR(340),
 	is_active BOOLEAN
 );
-CREATE TABLE wedding_role (id SERIAL PRIMARY KEY, name VARCHAR(40) not null, is_active BOOLEAN);
-CREATE TABLE wedding_user_role(id SERIAL PRIMARY KEY, user_id INTEGER not null references wedding_user(id), role_id INTEGER not null references wedding_role (id), is_active BOOLEAN);
 CREATE TABLE page
 (
 	id SERIAL PRIMARY KEY,
@@ -55,6 +53,28 @@ CREATE TABLE content
 );
 CREATE INDEX conect_page_idx ON content (page_id, is_active);
 
+CREATE TABLE wedding_role
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	description VARCHAR(240) not null,
+	is_active BOOLEAN
+);
+
+CREATE TABLE wedding_user_role
+(
+	id SERIAL PRIMARY KEY,
+	user_id INTEGER NOT NULL references wedding_user(id),
+	role_id INTEGER NOT NULL references wedding_role(id),
+	is_active BOOLEAN
+);
+CREATE INDEX conect_user_permission_idx ON wedding_user_role (user_id);
+
+insert into wedding_role (name, description, is_active) values ('Publisher', 'Publish Content', true);
+insert into wedding_role (name, description, is_active) values ('Admin', 'Full control', true);
+
+insert into wedding_user_role (user_id, role_id, is_active) values (18, 2, true);
+
 insert into content_type (name, description, is_active) values ('Image', 'Url for an Image', true);
 insert into content_type (name, description, is_active) values ('Description', 'Description', true);
 insert into content_type (name, description, is_active) values ('Title', 'Title', true);
@@ -83,3 +103,5 @@ GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE wedding_user_id_seq TO jevans
+GRANT ALL PRIVILEGES ON TABLE wedding_user_role TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE wedding_user_role_id_seq TO jevans;

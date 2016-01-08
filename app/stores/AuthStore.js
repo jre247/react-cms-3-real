@@ -1,15 +1,27 @@
 import alt from '../alt';
 import AuthActions from '../actions/AuthActions';
+import {_} from 'underscore';
 
 class AuthStore {
   constructor() {
     this.bindActions(AuthActions);
-    this.isAuthenticated = false;
+    this.auth = {isAuthenticated: false, userRoles: []};
+    this.isPublisher = false;
     this.ajaxAnimationClass = '';
   }
 
   getUserAuthenticationDataSuccess(authData) {
-    this.isAuthenticated = authData.isAuthenticated;
+    debugger;
+    this.auth = authData;
+
+    //TODO: put in utility
+    //publisher roles are either "publisher" or "admin"
+    var publisherRoles = [1, 2];
+
+    var publisherRolesForUser = _.intersection(this.auth.userRoles, publisherRoles);
+    if(publisherRolesForUser.length > 0){
+      this.isPublisher = true;
+    }
   }
 
   getUserAuthenticationDataFail(jqXhr){

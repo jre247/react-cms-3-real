@@ -1,4 +1,6 @@
 var contentDb = require('../db/content-db');
+var authDb = require('../db/auth-db');
+var _ = require('underscore-node');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -23,13 +25,28 @@ module.exports = function(app, passport) {
     });
 
     app.get('/api/user/auth', function(req, res) {
-        var viewmodel = {isAuthenticated: false};
+        var viewmodel = {isAuthenticated: false, userRoles: []};
 
         if(req.isAuthenticated()){
-            viewmodel.isAuthenticated = true;
+          viewmodel.isAuthenticated = true;
+          viewmodel.email = req.user.email;
+          viewmodel.firstName = req.user.first_name;
+          viewmodel.lastName = req.user.last_name;
+            viewmodel.userRoles = [];
+
+          var userId = req.user.id;
+
+          authDb.getUserRoles(userId).then(function(userRoles){
+              var userRoleIds = _.each(userRoles, function(userRole){
+                  viewmodel.userRoles.push(userRole.role_id);
+              });
+              res.status(200).send(viewmodel);
+          });
+        }
+        else{
+            res.status(200).send(viewmodel);
         }
 
-        res.status(200).send(viewmodel);
     });
 
     app.get('/api/pages/:id', function(req, res, next) {

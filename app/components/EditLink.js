@@ -9,7 +9,7 @@ class EditLink extends React.Component {
   }
 
   render() {
-    if(!this.authState.isAuthenticated){
+    if(!this.authState.isPublisher){
       return(
         <span/>
       );

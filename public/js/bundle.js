@@ -978,12 +978,6 @@ var _ListGridTemplate = require('../Templates/ListGridTemplate/ListGridTemplate'
 
 var _ListGridTemplate2 = _interopRequireDefault(_ListGridTemplate);
 
-var _underscore = require('underscore');
-
-var _API = require('../../API');
-
-var _API2 = _interopRequireDefault(_API);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1024,7 +1018,7 @@ var BridalParty = (function (_React$Component) {
 
 exports.default = BridalParty;
 
-},{"../../API":1,"../Templates/ListGridTemplate/ListGridTemplate":32,"react":"react","react-router":"react-router","underscore":"underscore"}],16:[function(require,module,exports){
+},{"../Templates/ListGridTemplate/ListGridTemplate":32,"react":"react","react-router":"react-router"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1125,7 +1119,7 @@ var EditLink = (function (_React$Component) {
   _createClass(EditLink, [{
     key: 'render',
     value: function render() {
-      if (!this.authState.isAuthenticated) {
+      if (!this.authState.isPublisher) {
         return _react2.default.createElement('span', null);
       } else {
         return _react2.default.createElement(
@@ -7578,6 +7572,8 @@ var _AuthActions = require('../actions/AuthActions');
 
 var _AuthActions2 = _interopRequireDefault(_AuthActions);
 
+var _underscore = require('underscore');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7587,14 +7583,25 @@ var AuthStore = (function () {
     _classCallCheck(this, AuthStore);
 
     this.bindActions(_AuthActions2.default);
-    this.isAuthenticated = false;
+    this.auth = { isAuthenticated: false, userRoles: [] };
+    this.isPublisher = false;
     this.ajaxAnimationClass = '';
   }
 
   _createClass(AuthStore, [{
     key: 'getUserAuthenticationDataSuccess',
     value: function getUserAuthenticationDataSuccess(authData) {
-      this.isAuthenticated = authData.isAuthenticated;
+      debugger;
+      this.auth = authData;
+
+      //TODO: put in utility
+      //publisher roles are either "publisher" or "admin"
+      var publisherRoles = [1, 2];
+
+      var publisherRolesForUser = _underscore._.intersection(this.auth.userRoles, publisherRoles);
+      if (publisherRolesForUser.length > 0) {
+        this.isPublisher = true;
+      }
     }
   }, {
     key: 'getUserAuthenticationDataFail',
@@ -7609,7 +7616,7 @@ var AuthStore = (function () {
 
 exports.default = _alt2.default.createStore(AuthStore);
 
-},{"../actions/AuthActions":2,"../alt":10}],94:[function(require,module,exports){
+},{"../actions/AuthActions":2,"../alt":10,"underscore":"underscore"}],94:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
