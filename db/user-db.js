@@ -64,7 +64,6 @@ exports.findByEmail = function(email){
 }
 
 exports.createUser = function(newUser){
-    var results = [];
     var promise = new Promise();
 
     try{
@@ -73,14 +72,22 @@ exports.createUser = function(newUser){
                 processError(done, err);
             }
 
-            var query = client.query("insert into wedding_user(first_name, last_name, email, password, is_active) values ($1, $2, $3, $4, $5)",
-                [newUser.firstName, newUser.lastName, newUser.email, newUser.password, true]);
+            var queryText = "insert into wedding_user(first_name, last_name, email, password, is_active) values ($1, $2, $3, $4, $5) RETURNING *";
+            var queryParams = [newUser.firstName, newUser.lastName, newUser.email, newUser.password, true];
 
-            client.query(query);
+            client.query(queryText, queryParams, function(err, result) {
+                if(err){
+                    promise.reject(err);
+                }
+                else {
+                    var newUserFromDb = result.rows[0];
+                    done();
 
-            done();
+                    promise.resolve(newUserFromDb);
+                }
+            });
 
-            promise.resolve(newUser);
+
         });
     }
     catch(ex){
