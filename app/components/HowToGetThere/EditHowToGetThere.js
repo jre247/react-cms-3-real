@@ -12,7 +12,7 @@ class EditHowToGetThere extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.pageId).then(function(viewmodel){
+    API.getContentListForPage(this.pageId, true).then(function(viewmodel){
       self.setState({isAuthenticated: viewmodel.isAuthenticated});
       self.setState({contentList: viewmodel.contentList});
     });

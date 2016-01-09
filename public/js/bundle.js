@@ -23,9 +23,27 @@ var API = (function () {
       toastr.error(jqXhr.responseJSON.message);
     }
   }], [{
+    key: 'getRoleManagerViewmodel',
+    value: function getRoleManagerViewmodel(history) {
+      var _this = this;
+
+      var promise = $.Deferred();
+
+      $.ajax({
+        type: 'GET',
+        url: '/api/role-manager/'
+      }).done(function (data) {
+        promise.resolve(data);
+      }).fail(function (jqXhr) {
+        promise.reject(_this.onFail(jqXhr.responseJSON.message));
+      });
+
+      return promise.promise();
+    }
+  }, {
     key: 'saveContentListForPage',
     value: function saveContentListForPage(contentList, pageId, history) {
-      var _this = this;
+      var _this2 = this;
 
       var promise = $.Deferred();
 
@@ -36,24 +54,29 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this2.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
     }
   }, {
     key: 'getContentListForPage',
-    value: function getContentListForPage(pageId) {
-      var _this2 = this;
+    value: function getContentListForPage(pageId, isEdit) {
+      var _this3 = this;
 
+      debugger;
       var promise = $.Deferred();
+      var baseUrl = '/api/pages/';
+      if (isEdit) {
+        baseUrl = baseUrl + 'edit/';
+      }
 
       $.ajax({
-        url: '/api/pages/' + pageId
+        url: baseUrl + pageId
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this2.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this3.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -645,7 +668,7 @@ var EditAccomodations = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var self = this;
-      _API2.default.getContentListForPage(this.pageId).then(function (viewmodel) {
+      _API2.default.getContentListForPage(this.pageId, true).then(function (viewmodel) {
         self.setState({ contentList: viewmodel.contentList });
       });
     }
@@ -852,12 +875,19 @@ var RoleManager = (function (_React$Component) {
   function RoleManager(props) {
     _classCallCheck(this, RoleManager);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(RoleManager).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RoleManager).call(this, props));
+
+    _this.state = { roles: [], users: [] };
+    return _this;
   }
 
   _createClass(RoleManager, [{
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      API.getRoleManagerViewmodel().then(function (viewmodel) {
+        this.setState({ roles: viewmodel.roles, users: viewmodel.users });
+      });
+    }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
@@ -1810,7 +1840,7 @@ var EditHowToGetThere = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var self = this;
-      _API2.default.getContentListForPage(this.pageId).then(function (viewmodel) {
+      _API2.default.getContentListForPage(this.pageId, true).then(function (viewmodel) {
         self.setState({ isAuthenticated: viewmodel.isAuthenticated });
         self.setState({ contentList: viewmodel.contentList });
       });
@@ -2595,7 +2625,7 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var self = this;
-      _API2.default.getContentListForPage(this.props.pageId).then(function (viewmodel) {
+      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
         self.setState({ contentList: viewmodel.contentList });
 
         self.buildContentGroupList();
@@ -7725,9 +7755,10 @@ var AuthStore = (function () {
     _classCallCheck(this, AuthStore);
 
     this.bindActions(_AuthActions2.default);
-    this.auth = { isAuthenticated: false, userRoles: [] };
+    this.auth = { isAuthenticated: false, userRoles: [], allRoles: [] };
     this.isPublisher = false;
     this.isAdmin = false;
+    this.allRoles = [];
     this.ajaxAnimationClass = '';
   }
 
@@ -7735,7 +7766,7 @@ var AuthStore = (function () {
     key: 'getUserAuthenticationDataSuccess',
     value: function getUserAuthenticationDataSuccess(authData) {
       this.auth = authData;
-      window.authData = authData;
+      this.allRoles = authData.allRoles;
 
       //TODO: put in utility
       //publisher roles are either "publisher" or "admin"

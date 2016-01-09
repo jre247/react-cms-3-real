@@ -1,6 +1,8 @@
-var contentDb = require('../db/content-db');
-var authDb = require('../db/auth-db');
+var ContentDb = require('../db/content-db');
+var AuthDb = require('../db/auth-db');
+var UserDb = require('../db/user-db');
 var _ = require('underscore-node');
+var AuthSession = require('./auth-session');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -24,7 +26,21 @@ module.exports = function(app, passport) {
         res.redirect('/');
     });
 
-    app.get('/api/user/auth', function(req, res) {
+    app.get('/api/role-manager', isAdmin, function(req, res) {
+        UserDb.getAllUsers()
+          .then(function(users){
+            res.status(200).send(users);
+          });
+    });
+
+    app.post('/api/role-manager', isAdmin, function(req, res) {
+        UserDb.saveUser()
+          .then(function(users){
+            res.status(200).send(users);
+          });
+    });
+
+    app.get('/api/user/auth', isLoggedIn, function(req, res) {
         var viewmodel = {isAuthenticated: false, userRoles: []};
 
         if(req.isAuthenticated()){
@@ -36,7 +52,7 @@ module.exports = function(app, passport) {
 
           var userId = req.user.id;
 
-          authDb.getUserRoles(userId).then(function(userRoles){
+          AuthDb.getUserRoles(userId).then(function(userRoles){
               var userRoleIds = _.each(userRoles, function(userRole){
                   viewmodel.userRoles.push(userRole.role_id);
               });
@@ -49,24 +65,33 @@ module.exports = function(app, passport) {
 
     });
 
-    app.get('/api/pages/:id', function(req, res, next) {
-        var pageId = req.params.id;
-        var userId = req.params.userId || 1;
-        contentDb.get(pageId, userId).then(function(data){
-            var viewmodel = {contentList: data,};
-
-            res.status(200).send(viewmodel);
-        });
+    app.get('/api/pages/edit/:id', isPublisher, function(req, res, next) {
+        getPage(req, res, next);
     });
-    app.post('/api/pages/:id', isLoggedIn, function(req, res, next) {
-        var pageId = req.params.id;
-        var contents = req.body.contents;
-        var userId = req.params.userId || 1;
-        contentDb.save(pageId, userId, contents).then(function(data){
-            res.status(200).send(data);
-        });
+
+    app.get('/api/pages/:id/', function(req, res, next) {
+      getPage(req, res, next);
+    });
+
+    app.post('/api/pages/:id', isPublisher, function(req, res, next) {
+      var pageId = req.params.id;
+      var contents = req.body.contents;
+      var userId = req.params.userId || 1;
+      ContentDb.save(pageId, userId, contents).then(function(data){
+          res.status(200).send(data);
+      });
     });
 };
+
+var getPage = function(req, res, next){
+  var pageId = req.params.id;
+  var userId = req.params.userId || 1;
+  ContentDb.get(pageId, userId).then(function(data){
+      var viewmodel = {contentList: data,};
+
+      res.status(200).send(viewmodel);
+  });
+}
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -77,4 +102,39 @@ function isLoggedIn(req, res, next) {
 
     // if they aren't redirect them to the home page
     res.redirect('/');
+}
+
+function isAdmin(req, res, next) {
+  var userRoles = AuthSession.getLoggedInUserRoles();
+  var isUserAdminRole = false;
+  var adminRoles = [2];
+  var adminRolesForUser = _.intersection(userRoles, adminRoles);
+  if(adminRolesForUser.length > 0){
+    isUserAdminRole = true;
+  }
+
+  // if user is authenticated in the session and has an admin role, carry on
+  if (req.isAuthenticated() && isUserAdminRole)
+      return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
+}
+
+function isPublisher(req, res, next) {
+  var userRoles = AuthSession.getLoggedInUserRoles();
+  var isPublisher = false;
+  var publisherRoles = [1, 2];
+
+  var publisherRolesForUser = _.intersection(userRoles, publisherRoles);
+  if(publisherRolesForUser.length > 0){
+    isPublisher = true;
+  }
+
+  // if user is authenticated in the session and has an admin role, carry on
+  if (req.isAuthenticated() && isPublisher)
+      return next();
+
+  // if they aren't redirect them to the home page
+  res.redirect('/');
 }

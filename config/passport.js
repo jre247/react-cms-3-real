@@ -1,7 +1,10 @@
 var LocalStrategy   = require('passport-local').Strategy;
 var UserDb = require('../db/user-db');
+var AuthDb = require('../db/auth-db');
 var User = require('../models/user');
 var UserHelper = require('../helpers/user-helper');
+var AuthSession = require('./auth-session');
+var _ = require('underscore-node');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -55,8 +58,18 @@ module.exports = function(passport) {
             if (!UserHelper.validPassword(password, user.password))
                 return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
-            // all is well, return successful user
-            return done(null, user);
+            //TODO: do a join with user instead of another db call
+            var loggedInUserRoles = [];
+            AuthDb.getUserRoles(user.id).then(function(userRoles){
+                var userRoleIds = _.each(userRoles, function(userRole){
+                    loggedInUserRoles.push(userRole.role_id);
+                });
+                AuthSession.setLoggedInUserRoles = loggedInUserRoles;
+                // all is well, return successful user
+                return done(null, user);
+            });
+
+
         });
 
     }));

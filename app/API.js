@@ -5,6 +5,23 @@ class API {
 
   }
 
+  static getRoleManagerViewmodel(history) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'GET',
+        url: '/api/role-manager/'
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveContentListForPage(contentList, pageId, history) {
     var promise = $.Deferred();
 
@@ -23,11 +40,16 @@ class API {
     return promise.promise();
   }
 
-  static getContentListForPage(pageId) {
+  static getContentListForPage(pageId, isEdit) {
+    debugger;
     var promise = $.Deferred();
+    var baseUrl = '/api/pages/';
+    if(isEdit){
+      baseUrl = baseUrl + 'edit/';
+    }
 
     $.ajax({
-      url: '/api/pages/' + pageId
+      url: baseUrl + pageId
     })
       .done((data) => {
         promise.resolve(data);

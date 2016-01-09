@@ -5,16 +5,17 @@ import {_} from 'underscore';
 class AuthStore {
   constructor() {
     this.bindActions(AuthActions);
-    this.auth = {isAuthenticated: false, userRoles: []};
+    this.auth = {isAuthenticated: false, userRoles: [], allRoles: []};
     this.isPublisher = false;
     this.isAdmin = false;
+    this.allRoles = [];
     this.ajaxAnimationClass = '';
   }
 
   getUserAuthenticationDataSuccess(authData) {
     this.auth = authData;
-    window.authData = authData;
-
+    this.allRoles = authData.allRoles;
+    
     //TODO: put in utility
     //publisher roles are either "publisher" or "admin"
     var publisherRoles = [1, 2];

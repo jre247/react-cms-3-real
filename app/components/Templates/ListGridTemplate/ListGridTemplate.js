@@ -19,7 +19,7 @@ class ListGridTemplate extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getContentListForPage(this.props.pageId).then(function(viewmodel){
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
       self.setState({contentList: viewmodel.contentList});
 
       self.buildContentGroupList();
