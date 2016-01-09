@@ -2,7 +2,6 @@ var ContentDb = require('../db/content-db');
 var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
 var _ = require('underscore-node');
-var AuthSession = require('./auth-session');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -29,14 +28,7 @@ module.exports = function(app, passport) {
     app.get('/api/users', isAdmin, function(req, res) {
         UserDb.getAllUsers()
           .then(function(users){
-            var viewmodel = {users: users}
             res.status(200).send(users);
-          })
-          .then(function(){
-            AuthDb.getUserRolesForUsers(userIds)
-              .then(function(userRoles){
-
-              });
           });
     });
 

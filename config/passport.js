@@ -3,7 +3,6 @@ var UserDb = require('../db/user-db');
 var AuthDb = require('../db/auth-db');
 var User = require('../models/user');
 var UserHelper = require('../helpers/user-helper');
-var AuthSession = require('./auth-session');
 var _ = require('underscore-node');
 
 // expose this function to our app using module.exports

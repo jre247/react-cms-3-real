@@ -22,7 +22,7 @@ class API {
     return promise.promise();
   }
 
-  static getUserData(userId, history) {
+  static getUser(userId, history) {
     var promise = $.Deferred();
 
     $.ajax({
@@ -44,7 +44,7 @@ class API {
 
     $.ajax({
         type: 'POST',
-        url: '/api/role-manager/'
+        url: '/api/users/' + userViewmodel.id,
         data: {userViewmodel: userViewmodel}
       })
         .done((data) => {

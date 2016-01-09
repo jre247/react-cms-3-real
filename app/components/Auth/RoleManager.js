@@ -1,14 +1,13 @@
 import React from 'react';
 import {_} from 'underscore';
 import API from '../../API';
-import AuthStore from '../stores/AuthStore';
-import AuthHelper from '../helpers/AuthHelper';
+import AuthHelper from '../../helpers/AuthHelper';
+var transitionTo = Router.transitionTo;
 
 class RoleManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = {roles: [], users: []};
-    this.authState = AuthStore.getState();
   }
 
   componentDidMount() {
@@ -20,34 +19,47 @@ class RoleManager extends React.Component {
   componentWillUnmount() {
 
   }
-  render() {
-    debugger;
-    let nodes = this.state.users.map((user, index) => {
-      return (
-        <tr>
-          <td>{user.first_name}</td>
-          <td>{user.last_name}</td>
-          <td>{user.email}</td>
-        </tr>
-      );
-    });
+  selectUser(user){
+    var self = this;
 
-    return (
-      <div className="table-responsive">
-        <table className="table">
-        <thead>
-          <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Email</th>
+  }
+
+  render() {
+    if(this.state.users.length == 0){
+      return(
+        <span />
+      );
+    }
+    else{
+      let nodes = this.state.users.map((user, index) => {
+        return (
+          <tr onClick={this.selectUser.bind(user, this)}>
+            <td>{user.first_name}</td>
+            <td>{user.last_name}</td>
+            <td>{user.email}</td>
           </tr>
-        </thead>
-        <tbody>
-          {nodes}
-        </tbody>
-        </table>
-      </div>
-    );
+        );
+      });
+
+      return (
+        <div className='Content-panel'>
+          <div className="table-responsive">
+            <table className="table table-hover">
+            <thead>
+              <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {nodes}
+            </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
   }
 }
 
