@@ -5,12 +5,24 @@ import AuthStore from '../stores/AuthStore';
 class AuthLinks extends React.Component {
   constructor(props) {
     super(props);
-    this.authState = AuthStore.getState();
+    this.state = AuthStore.getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentDidMount() {
+    AuthStore.listen(this.onChange);
+  }
+
+  componentWillUnmount() {
+    AuthStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
   }
 
   render() {
-    debugger;
-    if(this.authState.isAdmin){
+    if(this.state.isAdmin){
       return (
         <div className='Navigation' role="navigation">
             <Link className="Navigation-link" to="/role-manager">Role Manager</Link>

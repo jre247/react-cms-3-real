@@ -8,7 +8,6 @@ class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = NavbarStore.getState();
-    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +28,6 @@ class Navbar extends React.Component {
 
   render() {
     return (
-
       <div className='Navigation' role="navigation">
           <Link className="Navigation-link" to="/">Home</Link>
           <Link className="Navigation-link" to="/our-story">Our Story</Link>

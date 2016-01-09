@@ -1048,15 +1048,30 @@ var AuthLinks = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthLinks).call(this, props));
 
-    _this.authState = _AuthStore2.default.getState();
+    _this.state = _AuthStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
   _createClass(AuthLinks, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _AuthStore2.default.listen(this.onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _AuthStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
     key: 'render',
     value: function render() {
-      debugger;
-      if (this.authState.isAdmin) {
+      if (this.state.isAdmin) {
         return _react2.default.createElement(
           'div',
           { className: 'Navigation', role: 'navigation' },
@@ -1237,7 +1252,6 @@ var EditLink = (function (_React$Component) {
   _createClass(EditLink, [{
     key: 'render',
     value: function render() {
-      debugger;
       if (!this.authState.isPublisher) {
         return _react2.default.createElement('span', null);
       } else {
@@ -1974,7 +1988,6 @@ var Navbar = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navbar).call(this, props));
 
     _this.state = _NavbarStore2.default.getState();
-    _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
@@ -7722,6 +7735,7 @@ var AuthStore = (function () {
     key: 'getUserAuthenticationDataSuccess',
     value: function getUserAuthenticationDataSuccess(authData) {
       this.auth = authData;
+      window.authData = authData;
 
       //TODO: put in utility
       //publisher roles are either "publisher" or "admin"
@@ -7732,7 +7746,7 @@ var AuthStore = (function () {
       if (publisherRolesForUser.length > 0) {
         this.isPublisher = true;
       }
-      debugger;
+
       var adminRolesForUser = _underscore._.intersection(this.auth.userRoles, adminRoles);
       if (adminRolesForUser.length > 0) {
         this.isAdmin = true;

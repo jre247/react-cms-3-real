@@ -13,6 +13,7 @@ class AuthStore {
 
   getUserAuthenticationDataSuccess(authData) {
     this.auth = authData;
+    window.authData = authData;
 
     //TODO: put in utility
     //publisher roles are either "publisher" or "admin"
@@ -23,7 +24,7 @@ class AuthStore {
     if(publisherRolesForUser.length > 0){
       this.isPublisher = true;
     }
-    debugger;
+
     var adminRolesForUser = _.intersection(this.auth.userRoles, adminRoles);
     if(adminRolesForUser.length > 0){
       this.isAdmin = true;
