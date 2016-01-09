@@ -2,7 +2,7 @@ import React from 'react';
 import {_} from 'underscore';
 import API from '../../API';
 import AuthHelper from '../../helpers/AuthHelper';
-var transitionTo = Router.transitionTo;
+import { createHistory } from 'history'
 
 class RoleManager extends React.Component {
   constructor(props) {
@@ -21,7 +21,8 @@ class RoleManager extends React.Component {
   }
   selectUser(user){
     var self = this;
-
+    debugger;
+    this.props.history.pushState(null, '/users/' + user.id);
   }
 
   render() {

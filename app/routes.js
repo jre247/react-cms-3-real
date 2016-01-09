@@ -21,6 +21,7 @@ import EditAccomodations from './components/Accomodations/EditAccomodations';
 import Signup from './components/Auth/Signup';
 import Login from './components/Auth/Login';
 import RoleManager from './components/Auth/RoleManager';
+import User from './components/Auth/User';
 
 export default (
   <Route component={App}>
@@ -44,5 +45,6 @@ export default (
     <Route path='/signup' component={Signup} />
     <Route path='/login' component={Login} />
     <Route path='/role-manager' component={RoleManager} />
+    <Route path='/users/:id' component={User} />
   </Route>
 );
