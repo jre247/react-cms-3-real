@@ -5,13 +5,13 @@ import API from '../../API';
 class User extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {user: {}}};
+    this.state = {user: {}, userRoles: []};
   }
 
   componentDidMount() {
     var self = this;
-    API.getUser(this.props.params).then(function(user){
-      self.setState({user: user});
+    API.getUser(this.props.params).then(function(viewmodel){
+      self.setState({user: viewmodel.user, userRoles: viewmodel.userRoles});
     });
   }
   componentWillUnmount() {

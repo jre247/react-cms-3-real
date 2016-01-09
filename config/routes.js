@@ -32,14 +32,14 @@ module.exports = function(app, passport) {
           });
     });
 
-    app.post('/api/user/:id', isAdmin, function(req, res) {
+    app.post('/api/users/:id', isAdmin, function(req, res) {
         UserDb.saveUser(req.userViewmodel)
-          .then(function(users){
-            res.status(200).send(users);
+          .then(function(){
+            res.status(200).send();
           });
     });
 
-    app.get('/api/users/:id', isLoggedIn, function(req, res) {
+    app.get('/api/users/:id', isAdmin, function(req, res) {
         var viewmodel = {user: null, userRoles: []};
         var userId = req.user.id;
 
