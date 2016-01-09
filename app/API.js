@@ -22,6 +22,24 @@ class API {
     return promise.promise();
   }
 
+  static saveUser(userViewmodel, history) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/role-manager/'
+        data: {userViewmodel: userViewmodel}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveContentListForPage(contentList, pageId, history) {
     var promise = $.Deferred();
 
@@ -41,7 +59,6 @@ class API {
   }
 
   static getContentListForPage(pageId, isEdit) {
-    debugger;
     var promise = $.Deferred();
     var baseUrl = '/api/pages/';
     if(isEdit){

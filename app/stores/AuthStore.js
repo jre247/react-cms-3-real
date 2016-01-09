@@ -1,6 +1,7 @@
 import alt from '../alt';
 import AuthActions from '../actions/AuthActions';
 import {_} from 'underscore';
+import AuthHelper from '../helpers/AuthHelper';
 
 class AuthStore {
   constructor() {
@@ -15,21 +16,9 @@ class AuthStore {
   getUserAuthenticationDataSuccess(authData) {
     this.auth = authData;
     this.allRoles = authData.allRoles;
-    
-    //TODO: put in utility
-    //publisher roles are either "publisher" or "admin"
-    var publisherRoles = [1, 2];
-    var adminRoles = [2];
 
-    var publisherRolesForUser = _.intersection(this.auth.userRoles, publisherRoles);
-    if(publisherRolesForUser.length > 0){
-      this.isPublisher = true;
-    }
-
-    var adminRolesForUser = _.intersection(this.auth.userRoles, adminRoles);
-    if(adminRolesForUser.length > 0){
-      this.isAdmin = true;
-    }
+    this.isPublisher = AuthHelper.isUserPublisher(this.auth.userRoles);
+    this.isAdmin = AuthHelper.isUserAdmin(this.auth.userRoles);
   }
 
   getUserAuthenticationDataFail(jqXhr){

@@ -64,7 +64,6 @@ var API = (function () {
     value: function getContentListForPage(pageId, isEdit) {
       var _this3 = this;
 
-      debugger;
       var promise = $.Deferred();
       var baseUrl = '/api/pages/';
       if (isEdit) {
@@ -861,6 +860,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _underscore = require('underscore');
 
+var _API = require('../../API');
+
+var _API2 = _interopRequireDefault(_API);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -884,8 +887,9 @@ var RoleManager = (function (_React$Component) {
   _createClass(RoleManager, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      API.getRoleManagerViewmodel().then(function (viewmodel) {
-        this.setState({ roles: viewmodel.roles, users: viewmodel.users });
+      var self = this;
+      _API2.default.getRoleManagerViewmodel().then(function (viewmodel) {
+        self.setState({ users: viewmodel });
       });
     }
   }, {
@@ -907,7 +911,7 @@ var RoleManager = (function (_React$Component) {
 
 exports.default = RoleManager;
 
-},{"react":"react","underscore":"underscore"}],15:[function(require,module,exports){
+},{"../../API":1,"react":"react","underscore":"underscore"}],15:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1841,7 +1845,6 @@ var EditHowToGetThere = (function (_React$Component) {
     value: function componentDidMount() {
       var self = this;
       _API2.default.getContentListForPage(this.pageId, true).then(function (viewmodel) {
-        self.setState({ isAuthenticated: viewmodel.isAuthenticated });
         self.setState({ contentList: viewmodel.contentList });
       });
     }

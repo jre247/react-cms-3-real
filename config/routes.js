@@ -29,12 +29,21 @@ module.exports = function(app, passport) {
     app.get('/api/role-manager', isAdmin, function(req, res) {
         UserDb.getAllUsers()
           .then(function(users){
+            var userRolesHash = {};
+            _.each(req.session.userRoles)
+            var viewmodel = {users: users, userRoles: req.session.userRoles}
             res.status(200).send(users);
+          })
+          .then(function(){
+            AuthDb.getUserRolesForUsers(userIds)
+              .then(function(userRoles){
+
+              });
           });
     });
 
     app.post('/api/role-manager', isAdmin, function(req, res) {
-        UserDb.saveUser()
+        UserDb.saveUser(req.userViewmodel)
           .then(function(users){
             res.status(200).send(users);
           });
@@ -105,9 +114,9 @@ function isLoggedIn(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-    var userRoles = req.session.userRoles;
+  var userRoles = req.session.userRoles;
   var isUserAdminRole = false;
-  var adminRoles = [2];
+  var adminRoles = [2]; //TODO: put in common utility
   var adminRolesForUser = _.intersection(userRoles, adminRoles);
   if(adminRolesForUser.length > 0){
     isUserAdminRole = true;
