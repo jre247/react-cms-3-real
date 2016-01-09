@@ -13,8 +13,8 @@ class RoleManager extends React.Component {
 
   componentDidMount() {
     var self = this;
-    API.getRoleManagerViewmodel().then(function(viewmodel){
-      self.setState({users: viewmodel});
+    API.getAllUsers().then(function(users){
+      self.setState({users: users});
     });
   }
   componentWillUnmount() {
@@ -23,20 +23,11 @@ class RoleManager extends React.Component {
   render() {
     debugger;
     let nodes = this.state.users.map((user, index) => {
-      var isPublisher = AuthHelper.isUserPublisher(this.auth.userRoles);
-      var isAdmin = AuthHelper.isUserAdmin(this.auth.userRoles);
-
       return (
         <tr>
           <td>{user.first_name}</td>
           <td>{user.last_name}</td>
           <td>{user.email}</td>
-          <td>
-            <input type="checkbox" value={isAdmin} />
-          </td>
-          <td>
-            <input type="checkbox" value={isPublisher} />
-          </td>
         </tr>
       );
     });
@@ -49,8 +40,6 @@ class RoleManager extends React.Component {
             <th>Firstname</th>
             <th>Lastname</th>
             <th>Email</th>
-            <th>Admin</th>
-            <th>Publisher</th>
           </tr>
         </thead>
         <tbody>

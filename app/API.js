@@ -5,12 +5,29 @@ class API {
 
   }
 
-  static getRoleManagerViewmodel(history) {
+  static getAllUsers(history) {
     var promise = $.Deferred();
 
     $.ajax({
         type: 'GET',
-        url: '/api/role-manager/'
+        url: '/api/users'
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
+  static getUserData(userId, history) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'GET',
+        url: '/api/users/' + userId
       })
         .done((data) => {
           promise.resolve(data);
