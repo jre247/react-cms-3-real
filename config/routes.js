@@ -105,7 +105,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-  var userRoles = AuthSession.getLoggedInUserRoles();
+    var userRoles = req.session.userRoles;
   var isUserAdminRole = false;
   var adminRoles = [2];
   var adminRolesForUser = _.intersection(userRoles, adminRoles);
@@ -122,7 +122,7 @@ function isAdmin(req, res, next) {
 }
 
 function isPublisher(req, res, next) {
-  var userRoles = AuthSession.getLoggedInUserRoles();
+  var userRoles = req.session.userRoles;
   var isPublisher = false;
   var publisherRoles = [1, 2];
 

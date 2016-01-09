@@ -64,7 +64,7 @@ module.exports = function(passport) {
                 var userRoleIds = _.each(userRoles, function(userRole){
                     loggedInUserRoles.push(userRole.role_id);
                 });
-                AuthSession.setLoggedInUserRoles = loggedInUserRoles;
+                req.session.userRoles = loggedInUserRoles;
                 // all is well, return successful user
                 return done(null, user);
             });
