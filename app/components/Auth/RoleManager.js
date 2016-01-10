@@ -47,7 +47,7 @@ class RoleManager extends React.Component {
       return (
         <div className='Content-panel'>
           <div className="table-responsive">
-            <table className="table table-hover">
+            <table className="table role-manager">
             <thead>
               <tr>
                 <th>Firstname</th>

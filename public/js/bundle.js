@@ -1002,7 +1002,7 @@ var RoleManager = (function (_React$Component) {
             { className: 'table-responsive' },
             _react2.default.createElement(
               'table',
-              { className: 'table table-hover' },
+              { className: 'table role-manager' },
               _react2.default.createElement(
                 'thead',
                 null,
