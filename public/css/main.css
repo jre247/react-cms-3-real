@@ -7704,7 +7704,7 @@ a:hover {
 .Widget-input {
   text-align: center;
 }
-.role-manager tr:hover {
+.role-manager-table-body tr:hover {
   background-color: #BDAC28;
   cursor: pointer;
 }

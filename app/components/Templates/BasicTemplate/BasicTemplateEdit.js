@@ -5,62 +5,89 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import TemplateHelper from '../TemplateHelper';
+import API from '../../../API';
+var self;
 
 class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
+    this.state = {contentList: []};
+    self = this;
   }
 
   componentDidMount() {
-
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
   }
 
   componentWillUnmount() {
 
   }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  submit(event){
+    API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
+      self.props.history.pushState(null, self.props.readOnlyPageLink)
+    });
+  }
   onAddWidgetToContentList(factoryInstance){
-    this.props.contentList.push(factoryInstance);
-    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentList();
+    self.state.contentList.push(factoryInstance);
+    TemplateHelper.setNewSortOrderForAllListItems(self.state.contentList);
+    self.setStateForContentList(self.state.contentList);
   }
   updateContent(index, event) {
-    this.props.contentList[index].value = event.target.value;
-    this.props.setStateForContentList();
+    self.state.contentList[index].value = event.target.value;
+    self.setStateForContentList(self.state.contentList);
   }
   removeContent(index, event){
-    this.props.contentList.splice(index, 1);
-    this.props.setStateForContentList();
+    self.state.contentList.splice(index, 1);
+    self.setStateForContentList();
   }
   render() {
-    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-      templateId: this.templateId, row_number: 1, column_number: 1};
+    if(_.isEmpty(self.state.contentList)){
+      return (
+        <EmptyContent {...this.props} />
+      );
+    }
+    else{
+      var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+        templateId: this.templateId, row_number: 1, column_number: 1};
 
-    let nodes = this.props.contentList.map((contentItem, index) => {
-      var propsData = {contentItem: contentItem, isEdit: true,
-        onChange:  this.updateContent.bind(this, index),
-        onRemove: this.removeContent.bind(this, index)};
+      let nodes = self.state.contentList.map((contentItem, index) => {
+        var propsData = {contentItem: contentItem,
+          onChange:  this.updateContent.bind(this, index),
+          onRemove: this.removeContent.bind(this, index)};
+
+        var fieldsPropData = _.extend(propsData, self.props);
 
         return (
           <div key={contentItem.sort_order}>
-            <Field {...propsData} />
+            <Field {...fieldsPropData} />
           </div>
         );
-    });
+      });
 
-    return (
-      <div className='Content-panel'>
-        <div className="Content-container Content-centered-container">
-          <WidgetSelectList {...widgetListPropsData} />
+      return(
+        <div className='Content-panel'>
+          <div className="Content-container Content-centered-container">
+            <WidgetSelectList {...widgetListPropsData} />
 
-          {nodes}
+            {nodes}
 
-          <div className={this.props.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
-            <button type='submit' onClick={this.props.submit} className='btn btn-primary'>Save</button>
+            <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
+              <button type='submit' onClick={this.submit} className='btn btn-primary'>Save</button>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 

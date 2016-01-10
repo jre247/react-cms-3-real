@@ -55,7 +55,7 @@ class RoleManager extends React.Component {
                 <th>Email</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="role-manager-table-body">
               {nodes}
             </tbody>
             </table>

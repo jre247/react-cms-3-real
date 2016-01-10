@@ -4,29 +4,39 @@ import Field from '../../Widgets/Field/Field';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import EditLink from '../../EditLink';
+import API from '../../../API';
+var self;
 
 class BasicTemplateReadOnly extends React.Component {
   constructor(props) {
     super(props);
+    this.templateId = 1;
+    this.state = {contentList: []};
+    self = this;
   }
 
   componentDidMount() {
-
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
   }
 
   componentWillUnmount() {
 
   }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
 
   render() {
-    if(_.isEmpty(this.props.contentList)){
+    if(_.isEmpty(this.state.contentList)){
       var emptyContentProps = {editLink: this.props.editLink};
       return (
         <EmptyContent {...emptyContentProps} />
       );
     }
     else {
-      let nodes = this.props.contentList.map((contentItem, index) => {
+      let nodes = this.state.contentList.map((contentItem, index) => {
           var propsData = _.extend({contentItem: contentItem, isEdit: this.props.isEdit}, this.props);
 
           return (
