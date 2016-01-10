@@ -33,12 +33,14 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/users/:id', isAdmin, function(req, res) {
-        UserDb.updateUser(req.body.userViewmodel.user)
+        var userViewmodel = req.body.userViewmodel;
+
+        UserDb.updateUser(userViewmodel.user)
           .then(function(){
-              return AuthDb.saveUserRoles(req.body.userViewmodel.userRoles);
+              return AuthDb.saveUserRoles(userViewmodel);
           })
           .then(function(){
-              res.status(200).send();
+              res.status(200).send("success");
           });
     });
 

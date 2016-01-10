@@ -33,9 +33,11 @@ exports.getUserRoles = function(userId){
     return promise;
 }
 
-exports.saveUserRoles = function(userId, userRoles){
+exports.saveUserRoles = function(userData){
     var results = [];
     var promise = new Promise();
+    var userId = userData.user.id;
+    var userRoles = userData.userRoles;
 
     try{
         pg.connect(connectionString, function(err, client, done) {
@@ -68,9 +70,9 @@ var buildBulkInsertStatement = function(userId, rows) {
         params.push(userId);
         valueClause.push('$' + params.length);
         params.push(roleId);
-        valueClause.push('$' + params.roleId);
-        chunks.push('(' + valueClause.join(', ') + ')');
-        valueClause.push('$' + true);
+        valueClause.push('$' + params.length);
+        params.push(true);
+        valueClause.push('$' + params.length);
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {

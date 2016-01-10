@@ -1074,6 +1074,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var self;
+
 var RoleManagerUser = (function (_React$Component) {
   _inherits(RoleManagerUser, _React$Component);
 
@@ -1089,7 +1091,7 @@ var RoleManagerUser = (function (_React$Component) {
   _createClass(RoleManagerUser, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var self = this;
+      self = this;
       _API2.default.getUser(this.props.params.id).then(function (viewmodel) {
         var isAdmin = _AuthHelper2.default.isUserAdmin(viewmodel.userRoles);
         var isPublisher = _AuthHelper2.default.isUserPublisher(viewmodel.userRoles);
@@ -1104,6 +1106,7 @@ var RoleManagerUser = (function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
+      debugger;
     }
   }, {
     key: 'submit',
@@ -1119,7 +1122,7 @@ var RoleManagerUser = (function (_React$Component) {
       var userViewmodel = { user: this.state.user, userRoles: userRoles };
 
       _API2.default.saveUser(userViewmodel).then(function () {
-        this.props.history.pushState(null, '/role-manager');
+        self.props.history.pushState(null, '/role-manager');
       });
     }
   }, {
@@ -1150,8 +1153,8 @@ var RoleManagerUser = (function (_React$Component) {
           'div',
           { className: 'Content-panel' },
           _react2.default.createElement(
-            'form',
-            { action: "/api/users/" + this.props.params, method: 'post' },
+            'div',
+            null,
             _react2.default.createElement(
               'div',
               { className: 'form-group' },
@@ -1184,7 +1187,7 @@ var RoleManagerUser = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'button',
-              { type: 'submit', className: 'btn btn-warning btn-lg', onClick: this.submit.bind(this) },
+              { type: 'button', className: 'btn btn-warning btn-lg', onClick: this.submit.bind(this) },
               'Save'
             )
           )

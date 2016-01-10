@@ -3,6 +3,8 @@ import {_} from 'underscore';
 import API from '../../API';
 import AuthHelper from '../../helpers/AuthHelper';
 
+var self;
+
 class RoleManagerUser extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +12,7 @@ class RoleManagerUser extends React.Component {
   }
 
   componentDidMount() {
-    var self = this;
+    self = this;
     API.getUser(this.props.params.id).then(function(viewmodel){
       var isAdmin = AuthHelper.isUserAdmin(viewmodel.userRoles);
       var isPublisher = AuthHelper.isUserPublisher(viewmodel.userRoles);
@@ -24,6 +26,7 @@ class RoleManagerUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    debugger;
   }
 
   submit(event){
@@ -36,9 +39,9 @@ class RoleManagerUser extends React.Component {
     }
 
     var userViewmodel = {user: this.state.user, userRoles: userRoles};
-    
+
     API.saveUser(userViewmodel).then(function(){
-      this.props.history.pushState(null, '/role-manager');
+      self.props.history.pushState(null, '/role-manager');
     });
   }
 
@@ -64,7 +67,7 @@ class RoleManagerUser extends React.Component {
     else{
       return(
         <div className='Content-panel'>
-          <form action={"/api/users/" + this.props.params} method="post">
+          <div>
               <div className="form-group">
                   <label>Email</label>
                   <input type="text" className="form-control" name="email" value={this.state.user.email} onChange={this.onEmailChange.bind(this)} />
@@ -80,8 +83,8 @@ class RoleManagerUser extends React.Component {
                   <input className="form-control" name="publisher" type="checkbox" value={this.state.isPublisher} checked={this.state.isPublisher} onChange={this.onPublisherRoleChange.bind(this)} />
               </div>
 
-              <button type="submit" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
-          </form>
+              <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
+          </div>
         </div>
       );
     }
