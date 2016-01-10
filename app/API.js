@@ -24,7 +24,7 @@ class API {
 
   static getUser(userId, history) {
     var promise = $.Deferred();
-    debugger;
+    
     $.ajax({
         type: 'GET',
         url: '/api/users/' + userId

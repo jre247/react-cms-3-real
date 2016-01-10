@@ -48,7 +48,7 @@ module.exports = function(app, passport) {
 
         UserDb.findById(userId)
           .then(function(user){
-            var userData = {email: user.email, firstName: user.first_name, lastName: user.last_name};
+            var userData = {id: user.id, email: user.email, firstName: user.first_name, lastName: user.last_name};
             viewmodel.user = userData;
 
             return AuthDb.getUserRoles(userId);

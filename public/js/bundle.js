@@ -46,7 +46,7 @@ var API = (function () {
       var _this2 = this;
 
       var promise = $.Deferred();
-      debugger;
+
       $.ajax({
         type: 'GET',
         url: '/api/users/' + userId
