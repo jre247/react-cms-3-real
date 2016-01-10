@@ -24,7 +24,7 @@ class API {
 
   static getUser(userId, history) {
     var promise = $.Deferred();
-
+    debugger;
     $.ajax({
         type: 'GET',
         url: '/api/users/' + userId
@@ -38,8 +38,26 @@ class API {
 
     return promise.promise();
   }
+  //
+  // static getLoggedInUser(history) {
+  //   var promise = $.Deferred();
+  //   debugger;
+  //   $.ajax({
+  //       type: 'GET',
+  //       url: '/api/getLoggedInUser'
+  //     })
+  //       .done((data) => {
+  //         promise.resolve(data);
+  //       })
+  //       .fail((jqXhr) => {
+  //         promise.reject(this.onFail(jqXhr.responseJSON.message));
+  //       });
+  //
+  //   return promise.promise();
+  // }
 
-  static saveUser(userViewmodel, history) {
+
+  static saveUser(userViewmodel) {
     var promise = $.Deferred();
 
     $.ajax({

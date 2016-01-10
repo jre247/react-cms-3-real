@@ -33,6 +33,54 @@ exports.getUserRoles = function(userId){
     return promise;
 }
 
+exports.saveUserRoles = function(userId, userRoles){
+    var results = [];
+    var promise = new Promise();
+
+    try{
+        pg.connect(connectionString, function(err, client, done) {
+            if(err) {
+                processError(done, err);
+            }
+
+            userId = parseInt(userId);
+            client.query("update wedding_user_role set is_active = false where user_id = $1", [userId]);
+
+            client.query(buildBulkInsertStatement(userId, userRoles));
+
+            done();
+
+            promise.resolve();
+        });
+    }
+    catch(ex){
+        console.log('Exception running query with psql: ' + ex);
+    }
+
+    return promise;
+}
+
+var buildBulkInsertStatement = function(userId, rows) {
+    var params = []
+    var chunks = []
+    _.each(rows, function(roleId){
+        var valueClause = [];
+        params.push(userId);
+        valueClause.push('$' + params.length);
+        params.push(roleId);
+        valueClause.push('$' + params.roleId);
+        chunks.push('(' + valueClause.join(', ') + ')');
+        valueClause.push('$' + true);
+        chunks.push('(' + valueClause.join(', ') + ')');
+    });
+    return {
+        text: 'INSERT INTO wedding_user_role(user_id, role_id, is_active) VALUES ' +
+            chunks.join(', '),
+        values: params
+    }
+}
+
+
 var processError = function(done, err){
   done();
   console.log(err);

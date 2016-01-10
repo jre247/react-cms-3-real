@@ -33,46 +33,53 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/users/:id', isAdmin, function(req, res) {
-        UserDb.saveUser(req.userViewmodel)
+        UserDb.updateUser(req.body.userViewmodel.user)
           .then(function(){
-            res.status(200).send();
+              return AuthDb.saveUserRoles(req.body.userViewmodel.userRoles);
+          })
+          .then(function(){
+              res.status(200).send();
           });
     });
 
     app.get('/api/users/:id', isAdmin, function(req, res) {
         var viewmodel = {user: null, userRoles: []};
-        var userId = req.user.id;
+        var userId = req.params.id;
 
-        UserDb.findById(userId).then(function(user){
-          viewmodel.user = user;
+        UserDb.findById(userId)
+          .then(function(user){
+            var userData = {email: user.email, firstName: user.first_name, lastName: user.last_name};
+            viewmodel.user = userData;
 
-          AuthDb.getUserRoles(userId).then(function(userRoles){
-              var userRoleIds = _.each(userRoles, function(userRole){
-                  viewmodel.userRoles.push(userRole.role_id);
-              });
-              res.status(200).send(viewmodel);
-          });
-        });
+            return AuthDb.getUserRoles(userId);
+          })
+          .then(function(userRoles){
+            var userRoleIds = _.each(userRoles, function(userRole){
+                viewmodel.userRoles.push(userRole.role_id);
+            });
+            res.status(200).send(viewmodel);
+          })
 
     });
 
-    app.get('/api/users/loggedInUser', isLoggedIn, function(req, res) {
+    app.get('/api/getLoggedInUser', isLoggedIn, function(req, res) {
         var viewmodel = {isAuthenticated: false, userRoles: []};
 
         viewmodel.isAuthenticated = true;
         viewmodel.email = req.user.email;
         viewmodel.firstName = req.user.first_name;
         viewmodel.lastName = req.user.last_name;
-          viewmodel.userRoles = [];
+        viewmodel.userRoles = [];
 
         var userId = req.user.id;
 
-        AuthDb.getUserRoles(userId).then(function(userRoles){
-            var userRoleIds = _.each(userRoles, function(userRole){
-                viewmodel.userRoles.push(userRole.role_id);
-            });
-            res.status(200).send(viewmodel);
-        });
+        AuthDb.getUserRoles(userId)
+          .then(function(userRoles){
+              var userRoleIds = _.each(userRoles, function(userRole){
+                  viewmodel.userRoles.push(userRole.role_id);
+              });
+              res.status(200).send(viewmodel);
+          });
     });
 
     app.get('/api/pages/edit/:id', isPublisher, function(req, res, next) {

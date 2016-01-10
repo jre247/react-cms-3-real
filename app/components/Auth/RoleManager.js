@@ -4,10 +4,14 @@ import API from '../../API';
 import AuthHelper from '../../helpers/AuthHelper';
 import { createHistory } from 'history'
 
+var self;
+
 class RoleManager extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {roles: [], users: []};
+    self = this;
   }
 
   componentDidMount() {
@@ -19,10 +23,8 @@ class RoleManager extends React.Component {
   componentWillUnmount() {
 
   }
-  selectUser(user){
-    var self = this;
-    debugger;
-    this.props.history.pushState(null, '/users/' + user.id);
+  selectUser(user, event){
+    self.props.history.pushState(null, '/role-manager/users/' + user.id);
   }
 
   render() {
@@ -34,7 +36,7 @@ class RoleManager extends React.Component {
     else{
       let nodes = this.state.users.map((user, index) => {
         return (
-          <tr onClick={this.selectUser.bind(user, this)}>
+          <tr key={index} onClick={this.selectUser.bind(this, user)}>
             <td>{user.first_name}</td>
             <td>{user.last_name}</td>
             <td>{user.email}</td>

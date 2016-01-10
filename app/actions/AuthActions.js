@@ -10,7 +10,7 @@ class AuthActions {
 
   getUserAuthenticationData() {
     $.ajax({
-      url: '/api/users/loggedInUser'
+      url: '/api/getLoggedInUser'
     })
       .done((data) => {
         this.actions.getUserAuthenticationDataSuccess(data);

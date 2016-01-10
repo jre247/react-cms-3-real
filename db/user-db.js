@@ -126,6 +126,38 @@ exports.createUser = function(newUser){
     return promise;
 }
 
+exports.updateUser = function(user){
+    var promise = new Promise();
+
+    try{
+        pg.connect(connectionString, function(err, client, done) {
+            if(err) {
+                processError(done, err);
+            }
+
+            var queryText = "update wedding_user set email = $1 where id = $2";
+            var queryParams = [user.email, user.id];
+
+            client.query(queryText, queryParams, function(err, result) {
+                if(err){
+                    promise.reject(err);
+                }
+                else {
+                    done();
+
+                    promise.resolve();
+                }
+            });
+
+
+        });
+    }
+    catch(ex){
+        console.log('Exception running query with psql: ' + ex);
+    }
+
+    return promise;
+}
 
 var processQueryEnd = function(done, results){
   done();
