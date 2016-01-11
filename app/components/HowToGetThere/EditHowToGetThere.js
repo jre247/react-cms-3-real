@@ -6,50 +6,23 @@ import API from '../../API';
 class EditHowToGetThere extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentList: []};
-    this.pageId = 6;
+    this.pageId = 5;
   }
 
   componentDidMount() {
-    var self = this;
-    API.getContentListForPage(this.pageId, true).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
-    });
+
   }
   componentWillUnmount() {
 
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-  setStateForContentList(){
-    this.setState({contentList: this.state.contentList})
-  }
-
-  submit(event){
-    API.saveContentListForPage(this.state.contentList, this.pageId, this.props.history);
-  }
-
 
   render() {
-    var propsData = {isEdit: true, contentList: this.state.contentList, editLink: '/how-to-get-there/edit',
-       setStateForContentList: this.setStateForContentList.bind(this)};
+    var propsData = _.extend({isEdit: true, editLink: '/how-to-get-there/edit', readOnlyPageLink: '/how-to-get-there',
+      pageId: this.pageId}, this.props);
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className='container List-page'>
-            <div className='row List-container'>
-              <ListTemplate {...propsData} />
-            </div>
-
-            <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
-              <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
-            </div>
-          </div>
-        </form>
-      </div>
+      <ListTemplate {...propsData} />
     );
   }
 }

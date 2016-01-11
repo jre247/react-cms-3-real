@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {_} from 'underscore';
 import ListGridTemplate from '../Templates/ListGridTemplate/ListGridTemplate';
 
 class BridalParty extends React.Component {
   constructor(props) {
     super(props);
-    this.pageId = 7;
+    this.pageId = 6;
   }
 
   componentDidMount() {
@@ -16,7 +16,7 @@ class BridalParty extends React.Component {
   }
 
   render() {
-    var propsData = {isEdit: false, editLink: '/bridal-party/edit', pageId: this.pageId};
+    var propsData = _.extend({isEdit: false, editLink: '/bridal-party/edit', pageId: this.pageId}, this.props);
 
     return (
       <ListGridTemplate {...propsData} />

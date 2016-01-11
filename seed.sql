@@ -4,6 +4,7 @@ drop table content_type;
 drop table wedding_user_role;
 drop table wedding_role;
 drop table wedding_user;
+drop table template;
 CREATE TABLE wedding_user
 (
 	id SERIAL PRIMARY KEY,
@@ -13,6 +14,12 @@ CREATE TABLE wedding_user
 	password VARCHAR(340),
 	is_active BOOLEAN
 );
+CREATE TABLE template
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	is_active BOOLEAN
+);
 CREATE TABLE page
 (
 	id SERIAL PRIMARY KEY,
@@ -20,12 +27,7 @@ CREATE TABLE page
 	description VARCHAR(840) null,
 	user_id INTEGER NULL references wedding_user(id),
 	date_created TIMESTAMP null,
-	is_active BOOLEAN
-);
-CREATE TABLE template
-(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(40) not null,
+	template_id INTEGER NOT NULL references template(id),
 	is_active BOOLEAN
 );
 CREATE TABLE content_type
@@ -43,7 +45,6 @@ CREATE TABLE content
 	page_id INTEGER NOT NULL references page(id),
 	content_type_id INTEGER NOT NULL references content_type(id),
 	user_id INTEGER NULL references wedding_user(id),
-	template_id INTEGER NOT NULL references template(id),
 	sort_order INTEGER NULL,
 	parent_index INTEGER NULL,
 	row_number INTEGER NOT NULL,
@@ -73,8 +74,6 @@ CREATE INDEX conect_user_permission_idx ON wedding_user_role (user_id);
 insert into wedding_role (name, description, is_active) values ('Publisher', 'Publish Content', true);
 insert into wedding_role (name, description, is_active) values ('Admin', 'Full control', true);
 
-insert into wedding_user_role (user_id, role_id, is_active) values (18, 2, true);
-
 insert into content_type (name, description, is_active) values ('Image', 'Url for an Image', true);
 insert into content_type (name, description, is_active) values ('Description', 'Description', true);
 insert into content_type (name, description, is_active) values ('Title', 'Title', true);
@@ -82,26 +81,27 @@ insert into content_type (name, description, is_active) values ('ShortDescriptio
 insert into content_type (name, description, is_active) values ('Link', 'Link', true);
 insert into content_type (name, description, is_active) values ('Iframe', 'Iframe', true);
 
-insert into wedding_user (first_name, last_name, email, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', true);
+insert into wedding_user (first_name, last_name, email, password, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', '$2a$08$vq.A/nFxWWGYceljbK.Ct.5X/dN.0.VsvXsSsF8O58ckkVfqE/8n2', true);
 
-insert into page(name, description, user_id, date_created, is_active) values ('Venue', 'Venue', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('The Proposal', 'The Proposal', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('Things To Do', 'Things To Do', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('Photo Album', 'Photo Album', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('Gift Registry', 'Gift Registry', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('How To Get There', 'How To Get There', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('Bridal Party', 'Bridal Party', 1, null, true);
-insert into page(name, description, user_id, date_created, is_active) values ('Accomodations', 'Accomodations', 1, null, true);
+insert into wedding_user_role (user_id, role_id, is_active) Values (1, 2, true);
 
 insert into template(name, is_active) values ('Basic Template', true);
-insert into template(name, is_active) values ('Photo With Description', true);
 insert into template(name, is_active) values ('Photo Gallery', true);
 insert into template(name, is_active) values ('List', true);
 insert into template(name, is_active) values ('ListGrid', true);
 
+insert into page(name, description, user_id, date_created, template_id, s_active) values ('Venue', 'Venue', 1, null, 1, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('The Proposal', 'The Proposal', 1, null, 1, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('Things To Do', 'Things To Do', 1, null, 3, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('Photo Album', 'Photo Album', 1, null, 2, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('Gift Registry', 'Gift Registry', 1, null, 3, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('How To Get There', 'How To Get There', 1, null, 3, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('Bridal Party', 'Bridal Party', 1, null, 4, true);
+insert into page(name, description, user_id, date_created, template_id, is_active) values ('Accomodations', 'Accomodations', 1, null, 3, true);
+
 GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
-GRANT USAGE, SELECT ON SEQUENCE wedding_user_id_seq TO jevans
+GRANT USAGE, SELECT ON SEQUENCE wedding_user_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE wedding_user_role TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE wedding_user_role_id_seq TO jevans;

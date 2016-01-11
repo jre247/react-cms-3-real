@@ -1,4 +1,5 @@
 import React from 'react';
+import API from '../../../API';
 import {Link} from 'react-router';
 import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
@@ -10,14 +11,22 @@ import Title from '../../Widgets/Title/Title';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import Carousel from '../../Widgets/Carousel/Carousel';
 import EditLink from '../../EditLink';
+var self;
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
   constructor(props) {
     super(props);
+    this.templateId = 2;
+    this.state = {contentList: [], selectedPhoto: 1};
+    self = this;
   }
-
   componentDidMount() {
-
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
+  }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
   }
 
   componentWillUnmount() {
@@ -37,10 +46,10 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   render() {
-    var propsData = _.extend({selectedPhoto: this.props.selectedPhoto,
-      imageSize: this.props.imageSize}, this.props);
+    var propsData = _.extend({selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
+      imageSize: 'small'}, this.props);
 
-    let nodes = this.props.contentList.map((contentItem, index) => {
+    let nodes = this.state.contentList.map((contentItem, index) => {
       var fieldPropsData = _.extend({contentItem: contentItem}, propsData);
       return (
         <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
@@ -49,7 +58,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       );
     });
 
-    if(_.isEmpty(this.props.contentList)){
+    if(_.isEmpty(this.state.contentList)){
       return (
         <EmptyContent {...propsData} />
       );

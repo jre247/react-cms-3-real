@@ -1,30 +1,23 @@
 import React from 'react';
-import PhotoAlbumStore from '../../stores/PhotoAlbumStore';
-import PhotoAlbumActions from '../../actions/PhotoAlbumActions';
 import PhotoAlbumTemplate from '../Templates/PhotoAlbumTemplate/PhotoAlbumTemplate';
+import {_} from 'underscore';
 
 class PhotoAlbum extends React.Component {
   constructor(props) {
     super(props);
-    this.state = PhotoAlbumStore.getState();
-    this.onChange = this.onChange.bind(this);
+    this.pageId = 3;
   }
-  onChange(state) {
-    this.setState(state);
-  }
+
   componentDidMount() {
-    PhotoAlbumStore.listen(this.onChange);
-    PhotoAlbumActions.getPhotoAlbumData();
-  }
 
+  }
   componentWillUnmount() {
-    PhotoAlbumStore.unlisten(this.onChange);
+
   }
 
-  //TODO: create field component that will figure out what kind of field to render
   render() {
-    var propsData = { contentList: this.state.contentList, selectedPhoto: this.state.selectedPhoto,
-      editLink: '/photo-album/edit', isEdit: false, imageSize: 'small'};
+    var propsData = _.extend({isEdit: false, editLink: '/photo-album/edit', pageId: this.pageId}, this.props);
+
     return (
       <PhotoAlbumTemplate {...propsData} />
     );

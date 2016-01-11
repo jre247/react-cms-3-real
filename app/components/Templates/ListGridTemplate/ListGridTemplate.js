@@ -9,16 +9,17 @@ import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import API from '../../../API';
 import EditLink from '../../EditLink';
+var self;
 
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {contentGroupList: [], contentList: []};
-    this.templateId = 5;
+    this.templateId = 4;
+    self = this;
   }
 
   componentDidMount() {
-    var self = this;
     API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
       self.setState({contentList: viewmodel.contentList});
 
@@ -46,11 +47,12 @@ class ListGridTemplate extends React.Component {
   }
 
   submit(event){
-    API.saveContentListForPage(this.state.contentList, this.props.pageId, this.props.history);
+    API.saveContentListForPage(this.state.contentList, this.props.pageId).then(function(){
+      self.props.history.pushState(null, self.props.readOnlyPageLink);
+    });
   }
 
   buildContentGroupList(){
-    var self = this;
     var contentGroupIndex;
 
     _.each(this.state.contentList, function(contentItem, index){

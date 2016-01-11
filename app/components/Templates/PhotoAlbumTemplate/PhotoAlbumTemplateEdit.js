@@ -1,4 +1,5 @@
 import React from 'react';
+import API from '../../../API';
 import {Link} from 'react-router';
 import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
@@ -12,44 +13,59 @@ import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptio
 import ImageFactory from '../../Widgets/Image/ImageFactory';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import ShortDescriptionFactory from '../../Widgets/ShortDescription/ShortDescriptionFactory';
+var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
+    this.templateId = 2;
+    this.state = {contentList: []};
+    self = this;
   }
-
   componentDidMount() {
-
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
   }
 
   componentWillUnmount() {
 
   }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  submit(event){
+    API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
+      self.props.history.pushState(null, self.props.readOnlyPageLink)
+    });
+  }
+
   //todo: move to actions
   createImage(event){
-    var sortOrder = this.props.contentList.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
 
     var imageFactory = new ImageFactory(sortOrder, 'Our Story Image',
       'Our Story Image');
     var image = imageFactory.create();
-    image.template_id = 1;
 
-    this.props.contentList.push(image);
-    this.props.setStateForContentList();
-  //  this.setState({contentList: this.props.contentList});
+    this.state.contentList.push(image);
+    this.setStateForContentList(this.state.contentList);
   }
   updateContent(index, event) {
-    this.props.contentList[index].value = event.target.value;
-    this.props.setStateForContentList();
+    this.state.contentList[index].value = event.target.value;
+    this.setStateForContentList(this.state.contentList);
     //this.setState({contentList: this.state.contentList});
   }
   removeContent(index, event){
-    this.props.contentList.splice(index, 1);
-    this.props.setStateForContentList();
-    //this.setState({contentList: this.state.contentList});
+    this.state.contentList.splice(index, 1);
+    this.setStateForContentList(this.state.contentList);
   }
   render() {
-    let nodes = this.props.contentList.map((contentItem, index) => {
+    let nodes = this.state.contentList.map((contentItem, index) => {
       var propsData = {contentItem: contentItem, isEdit: true, imageSize: 'small',
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
@@ -83,8 +99,8 @@ class PhotoAlbumTemplateEdit extends React.Component {
             {nodes}
           </div>
 
-          <div className={this.props.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
-            <button type='submit' onClick={this.props.submit} className='btn btn-primary'>Save</button>
+          <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
+            <button type='submit' onClick={this.submit} className='btn btn-primary'>Save</button>
           </div>
         </div>
       </div>

@@ -34,7 +34,7 @@ class BasicTemplateEdit extends React.Component {
 
   submit(event){
     API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
-      self.props.history.pushState(null, self.props.readOnlyPageLink)
+      self.props.history.pushState(null, self.props.readOnlyPageLink);
     });
   }
 
@@ -49,18 +49,22 @@ class BasicTemplateEdit extends React.Component {
   }
   removeContent(index, event){
     self.state.contentList.splice(index, 1);
-    self.setStateForContentList();
+    self.setStateForContentList(self.state.contentList);
   }
   render() {
+    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+      templateId: this.templateId, row_number: 1, column_number: 1};
+
     if(_.isEmpty(self.state.contentList)){
       return (
-        <EmptyContent {...this.props} />
+        <div>
+          <WidgetSelectList {...widgetListPropsData} />
+
+          <EmptyContent {...this.props} />
+        </div>
       );
     }
     else{
-      var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-        templateId: this.templateId, row_number: 1, column_number: 1};
-
       let nodes = self.state.contentList.map((contentItem, index) => {
         var propsData = {contentItem: contentItem,
           onChange:  this.updateContent.bind(this, index),

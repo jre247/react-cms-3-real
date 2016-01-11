@@ -23,7 +23,7 @@ class ParentListItemEdit extends React.Component {
   onAddWidgetToContentList(factoryInstance){
     this.props.contentList.splice(this.getIndexForNewChild(this.props.index), 0, factoryInstance);
     TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentList();
+    this.props.setStateForContentList(this.props.contentList);
   }
 
   getIndexForNewChild(parentIndex){

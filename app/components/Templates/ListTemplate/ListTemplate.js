@@ -14,7 +14,7 @@ var self;
 class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.templateId = 4;
+    this.templateId = 3;
     this.state = {contentList: []};
     self = this;
   }
@@ -30,6 +30,7 @@ class ListTemplate extends React.Component {
   }
 
   setStateForContentList(newContentList){
+    debugger;
     self.setState({contentList: newContentList})
   }
   handleSubmit(event) {
@@ -44,13 +45,13 @@ class ListTemplate extends React.Component {
 
   updateContent(index, event) {
     this.state.contentList[index].value = event.target.value;
-    this.setStateForContentList();
+    this.setStateForContentList(this.state.contentList);
   }
 
   removeContent(index, event){
     this.state.contentList.splice(index, 1);
     TemplateHelper.setNewSortOrderForAllListItems(this.state.contentList);
-    this.setStateForContentList();
+    this.setStateForContentList(this.state.contentList);
   }
 
   addParentListItem(){
@@ -60,7 +61,7 @@ class ListTemplate extends React.Component {
     var widget = factory.create();
 
     this.state.contentList.push(widget);
-    this.setStateForContentList();
+    this.setStateForContentList(this.state.contentList);
   }
 
   removeContentAndItsSubListItems(index, event){
@@ -120,6 +121,7 @@ class ListTemplate extends React.Component {
         var propsData = {
           contentItem: contentItem, isEdit: this.props.isEdit,
           contentList: this.state.contentList,
+          setStateForContentList: this.setStateForContentList.bind(this),
           onRemove: this.removeContent.bind(this, index),
           onChange: this.updateContent.bind(this, index),
           templateId: this.templateId,

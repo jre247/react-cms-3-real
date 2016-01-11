@@ -7,21 +7,20 @@ import API from '../../API';
 class Accomodations extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentList: []};
-    this.pageId = 8;
+    this.pageId = 7;
   }
 
   componentDidMount() {
-    var self = this;
-    API.getContentListForPage(this.pageId).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
-    });
+
   }
   componentWillUnmount() {
 
   }
+
+
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/accomodations/edit'};
+    var propsData = _.extend({isEdit: false, editLink: '/accomodations/edit', readOnlyPageLink: '/accomodations',
+      pageId: this.pageId}, this.props);
 
     return (
       <ListTemplate {...propsData} />

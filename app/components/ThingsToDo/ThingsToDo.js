@@ -1,28 +1,25 @@
 import React from 'react';
-import {Link} from 'react-router';
-import ThingsToDoStore from '../../stores/ThingsToDoStore';
-import ThingsToDoActions from '../../actions/ThingsToDoActions';
 import ListTemplate from '../Templates/ListTemplate/ListTemplate';
 import {_} from 'underscore';
 
 class ThingsToDo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = ThingsToDoStore.getState();
-    this.onChange = this.onChange.bind(this);
+    this.pageId = 2;
   }
-  onChange(state) {
-    this.setState(state);
-  }
+
   componentDidMount() {
-    ThingsToDoStore.listen(this.onChange);
-    ThingsToDoActions.getThingsToDoData();
+
   }
   componentWillUnmount() {
-    ThingsToDoStore.unlisten(this.onChange);
+
   }
+
+
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/things-to-do/edit'};
+    var propsData = _.extend({isEdit: false, editLink: '/things-to-do/edit', readOnlyPageLink: '/things-to-do',
+      pageId: this.pageId}, this.props);
+
     return (
       <ListTemplate {...propsData} />
     );

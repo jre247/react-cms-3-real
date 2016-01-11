@@ -5,7 +5,7 @@ import ListTemplate from '../Templates/ListTemplate/ListTemplate';
 class GiftRegistry extends React.Component {
   constructor(props) {
     super(props);
-    this.pageId = 5;
+    this.pageId = 4;
   }
 
   componentDidMount() {

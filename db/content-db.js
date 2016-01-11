@@ -44,8 +44,6 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(userId);
         valueClause.push('$' + params.length);
-        params.push(row.template_id);
-        valueClause.push('$' + params.length);
         params.push(row.sort_order);
         valueClause.push('$' + params.length);
         params.push(row.parent_index == "" ? null : row.parent_index);
@@ -61,7 +59,7 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content(name, value, page_id, content_type_id, user_id, template_id, sort_order, parent_index, date_created, is_active, row_number, column_number) VALUES ' +
+        text: 'INSERT INTO content(name, value, page_id, content_type_id, user_id, sort_order, parent_index, date_created, is_active, row_number, column_number) VALUES ' +
             chunks.join(', '),
         values: params
     }
