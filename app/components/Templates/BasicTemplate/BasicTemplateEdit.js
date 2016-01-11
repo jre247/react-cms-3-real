@@ -37,6 +37,7 @@ class BasicTemplateEdit extends React.Component {
       self.props.history.pushState(null, self.props.readOnlyPageLink)
     });
   }
+
   onAddWidgetToContentList(factoryInstance){
     self.state.contentList.push(factoryInstance);
     TemplateHelper.setNewSortOrderForAllListItems(self.state.contentList);

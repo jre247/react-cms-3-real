@@ -8,61 +8,79 @@ import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import EditLink from '../../EditLink';
+import API from '../../../API';
+var self;
 
 class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 4;
+    this.state = {contentList: []};
+    self = this;
   }
 
   componentDidMount() {
-
+    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
   }
 
   componentWillUnmount() {
 
   }
 
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  submit(event){
+    API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
+      self.props.history.pushState(null, self.props.readOnlyPageLink)
+    });
+  }
+
   updateContent(index, event) {
-    this.props.contentList[index].value = event.target.value;
-    this.props.setStateForContentList();
+    this.state.contentList[index].value = event.target.value;
+    this.setStateForContentList();
   }
 
   removeContent(index, event){
-    this.props.contentList.splice(index, 1);
-    TemplateHelper.setNewSortOrderForAllListItems(this.props.contentList);
-    this.props.setStateForContentList();
+    this.state.contentList.splice(index, 1);
+    TemplateHelper.setNewSortOrderForAllListItems(this.state.contentList);
+    this.setStateForContentList();
   }
 
   addParentListItem(){
-    var sortOrder = this.props.contentList.length + 1;
+    var sortOrder = this.state.contentList.length + 1;
     var factory = new TitleFactory(sortOrder, 'List Parent Item',
       'List Parent Item', this.templateId, null, 1, 1);
     var widget = factory.create();
 
-    this.props.contentList.push(widget);
-    this.props.setStateForContentList();
+    this.state.contentList.push(widget);
+    this.setStateForContentList();
   }
 
   removeContentAndItsSubListItems(index, event){
     var parentIndex = index + 1;
 
-    var itemsToRemove = _.filter(this.props.contentList, function(item){
+    var itemsToRemove = _.filter(this.state.contentList, function(item){
       return item.parent_index === parentIndex || item.sort_order === parentIndex;
     });
 
-    var itemsToKeep = _.filter(this.props.contentList, function(item){
+    var itemsToKeep = _.filter(this.state.contentList, function(item){
       return item.parent_index != parentIndex && item.sort_order != parentIndex;
     });
 
     this.setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove);
 
-    //this.props.contentList = [];
-    this.props.contentList = itemsToKeep;
-    this.setState({thingsToDo: this.props.contentList});
+    this.state.contentList = itemsToKeep;
+    this.setState({thingsToDo: this.state.contentList});
 
     //want to always maintain at miniumum one list item on the page
-    if(this.props.contentList.length == 0){
+    if(this.state.contentList.length == 0){
       this.addParentListItem();
     }
   }
@@ -85,7 +103,7 @@ class ListTemplate extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.props.contentList)){
+    if(_.isEmpty(this.state.contentList)){
       var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
       return (
         <div>
@@ -98,9 +116,10 @@ class ListTemplate extends React.Component {
     }
     else {
       var subListItemIndex = 0;
-      let nodes = this.props.contentList.map((contentItem, index) => {
+      let nodes = this.state.contentList.map((contentItem, index) => {
         var propsData = {
           contentItem: contentItem, isEdit: this.props.isEdit,
+          contentList: this.state.contentList,
           onRemove: this.removeContent.bind(this, index),
           onChange: this.updateContent.bind(this, index),
           templateId: this.templateId,
@@ -130,21 +149,28 @@ class ListTemplate extends React.Component {
       });
 
       return (
-        <div className='container List-page'>
-          <div className='row List-container'>
-            <div className='Content-panel List-Grid-Template List-template'>
-              <EditLink {...this.props} />
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <div className='container List-page'>
+            <div className='row List-container'>
+              <div className='Content-panel List-Grid-Template List-template'>
+                <EditLink {...this.props} />
 
-              <div className={!this.props.isEdit ? "hidden" : ""}>
-                <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
-              </div>
+                <div className={!this.props.isEdit ? "hidden" : ""}>
+                  <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
+                </div>
 
-              <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
-                {nodes}
+                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
+                  {nodes}
+                </div>
               </div>
             </div>
+
+            <div className={this.state.contentList.length > 0 && this.props.isEdit ? 'form-group' :
+              'form-group hidden'}>
+              <button type='submit' onClick={this.submit.bind(this)} className='btn btn-primary'>Save</button>
+            </div>
           </div>
-        </div>
+        </form>
       );
     }
   }

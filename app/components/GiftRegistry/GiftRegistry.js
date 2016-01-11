@@ -1,28 +1,24 @@
 import React from 'react';
-import {Link} from 'react-router';
-import GiftRegistryStore from '../../stores/GiftRegistryStore';
-import GiftRegistryActions from '../../actions/GiftRegistryActions';
-import ListTemplate from '../Templates/ListTemplate/ListTemplate';
 import {_} from 'underscore';
+import ListTemplate from '../Templates/ListTemplate/ListTemplate';
 
 class GiftRegistry extends React.Component {
   constructor(props) {
     super(props);
-    this.state = GiftRegistryStore.getState();
-    this.onChange = this.onChange.bind(this);
+    this.pageId = 5;
   }
-  onChange(state) {
-    this.setState(state);
-  }
+
   componentDidMount() {
-    GiftRegistryStore.listen(this.onChange);
-    GiftRegistryActions.getContentListData();
+
   }
   componentWillUnmount() {
-    GiftRegistryStore.unlisten(this.onChange);
+
   }
+
+
   render() {
-    var propsData = {isEdit: false, contentList: this.state.contentList, editLink: '/gift-registry/edit'};
+    var propsData = _.extend({isEdit: false, editLink: '/gift-registry/edit', readOnlyPageLink: '/gift-registry',
+      pageId: this.pageId}, this.props);
 
     return (
       <ListTemplate {...propsData} />
