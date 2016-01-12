@@ -18,7 +18,7 @@ class Signup extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="col-sm-6 col-sm-offset-3 role-manager">
+        <div className="col-sm-6 col-sm-offset-2 role-manager">
             <h1><span className="fa fa-sign-in"></span> Signup</h1>
 
             <form action="/signup" method="post">
