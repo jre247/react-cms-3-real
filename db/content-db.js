@@ -65,7 +65,7 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
     }
 }
 
-exports.get = function(pageId, userId){
+exports.get = function(pageId){
   var results = [];
   var promise = new Promise();
 

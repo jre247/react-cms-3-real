@@ -75,12 +75,29 @@ class API {
     return promise.promise();
   }
 
+  static getPageByUrl(pageUrl) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'GET',
+        url: '/api/pages/' + pageUrl
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveContentListForPage(contentList, pageId) {
     var promise = $.Deferred();
 
     $.ajax({
         type: 'POST',
-        url: '/api/pages/' + pageId,
+        url: '/api/pages/' + pageId + '/content-list',
         data: {contents: contentList}
       })
         .done((data) => {
@@ -101,7 +118,7 @@ class API {
     }
 
     $.ajax({
-      url: baseUrl + pageId
+      url: baseUrl + pageId + '/content-list'
     })
       .done((data) => {
         promise.resolve(data);

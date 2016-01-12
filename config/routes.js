@@ -1,6 +1,7 @@
 var ContentDb = require('../db/content-db');
 var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
+var PageDb = require('../db/page-db');
 var _ = require('underscore-node');
 
 // app/routes.js
@@ -84,29 +85,45 @@ module.exports = function(app, passport) {
           });
     });
 
-    app.get('/api/pages/edit/:id', isPublisher, function(req, res, next) {
+    app.get('/api/pages/edit/:id/content-list', isPublisher, function(req, res, next) {
         getPage(req, res, next);
     });
 
-    app.get('/api/pages/:id/', function(req, res, next) {
+    app.get('/api/pages/:id/content-list', function(req, res, next) {
       getPage(req, res, next);
     });
 
-    app.post('/api/pages/:id', isPublisher, function(req, res, next) {
+    app.post('/api/pages/:id/content-list', isPublisher, function(req, res, next) {
       var pageId = req.params.id;
+      var userId = null;
       var contents = req.body.contents;
-      var userId = req.user.id;
+      if(req.user){
+        userId = req.user.id;
+      }
+
       ContentDb.save(pageId, userId, contents).then(function(data){
           res.status(200).send(data);
       });
+    });
+
+    app.get('/api/pages/:pageUrl', function(req, res, next) {
+      getPageByUrl(req, res, next);
     });
 };
 
 var getPage = function(req, res, next){
   var pageId = req.params.id;
-  var userId = req.params.userId || 1;
-  ContentDb.get(pageId, userId).then(function(data){
+  ContentDb.get(pageId).then(function(data){
       var viewmodel = {contentList: data,};
+
+      res.status(200).send(viewmodel);
+  });
+}
+
+var getPageByUrl = function(req, res, next){
+  var pageUrl = req.params.pageUrl;
+  PageDb.findByName(pageUrl).then(function(data){
+      var viewmodel = {page: data,};
 
       res.status(200).send(viewmodel);
   });
