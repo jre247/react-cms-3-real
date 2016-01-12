@@ -75,7 +75,7 @@ class API {
     return promise.promise();
   }
 
-  static saveContentListForPage(contentList, pageId, history) {
+  static saveContentListForPage(contentList, pageId) {
     var promise = $.Deferred();
 
     $.ajax({

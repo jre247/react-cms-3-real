@@ -95,7 +95,7 @@ module.exports = function(app, passport) {
     app.post('/api/pages/:id', isPublisher, function(req, res, next) {
       var pageId = req.params.id;
       var contents = req.body.contents;
-      var userId = req.params.userId || 1;
+      var userId = req.user.id;
       ContentDb.save(pageId, userId, contents).then(function(data){
           res.status(200).send(data);
       });

@@ -7315,7 +7315,7 @@ a:hover {
 }
 .Header {
   background: white;
-  color: #7e3d10;
+  color: white;
   display: inline;
 }
 .Header-container {
@@ -7327,7 +7327,7 @@ a:hover {
   margin-left: 3%;
 }
 .Header-brand {
-  color: #7e3d10;
+  color: white;
   text-decoration: none;
   font-size: 5.5em;
   /* ~28px */
@@ -7384,7 +7384,7 @@ a:hover {
 }
 .fixed-container {
   opacity: 1;
-  background-image: url("https://d25uo7j7o9w973.cloudfront.net/uploads/background/555d389c346439003d580000/52/390bb00ec311e59816270388c96c32/Stephanie_Rob_Engagement-18.jpg");
+  background-image: url("http://passcdn-cf1.pass.us/bKn1Z1557788/fDjB1266150348l.jpg");
   background-position: 0% 50%;
   background-size: cover;
   top: 0;
@@ -7425,7 +7425,7 @@ a:hover {
 }
 .Home-content {
   text-align: center;
-  color: #7e3d10;
+  color: white;
 }
 .Content-large-image {
   width: 300px;

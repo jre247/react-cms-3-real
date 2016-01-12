@@ -97,7 +97,7 @@ var API = (function () {
     }
   }, {
     key: 'saveContentListForPage',
-    value: function saveContentListForPage(contentList, pageId, history) {
+    value: function saveContentListForPage(contentList, pageId) {
       var _this4 = this;
 
       var promise = $.Deferred();
