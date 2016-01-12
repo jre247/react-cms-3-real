@@ -17,7 +17,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="container">
-        <div className="col-sm-6 col-sm-offset-3">
+        <div className="col-sm-6 col-sm-offset-3 role-manager">
             <h1><span className="fa fa-sign-in"></span> Login</h1>
 
             <form action="/login" method="post">
@@ -39,7 +39,7 @@ class Login extends React.Component {
               <a href="/signup">Signup</a>
             </p>
             <p>Or go
-              <a href="/">home</a>.
+              <a href="/"> home</a>.
             </p>
 
         </div>

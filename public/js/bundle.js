@@ -453,7 +453,7 @@ var Login = (function (_React$Component) {
         { className: 'container' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-6 col-sm-offset-3' },
+          { className: 'col-sm-6 col-sm-offset-3 role-manager' },
           _react2.default.createElement(
             'h1',
             null,
@@ -507,7 +507,7 @@ var Login = (function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/' },
-              'home'
+              ' home'
             ),
             '.'
           )
@@ -870,7 +870,7 @@ var Signup = (function (_React$Component) {
         { className: 'container' },
         _react2.default.createElement(
           'div',
-          { className: 'col-sm-6 col-sm-offset-3' },
+          { className: 'col-sm-6 col-sm-offset-3 role-manager' },
           _react2.default.createElement(
             'h1',
             null,
@@ -944,7 +944,7 @@ var Signup = (function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: '/' },
-              'home'
+              ' home'
             ),
             '.'
           )
