@@ -5,8 +5,22 @@ class NavbarActions {
   constructor() {
     this.generateActions(
       'updateOnlineUsers',
-      'updateAjaxAnimation'
+      'updateAjaxAnimation',
+      'getAllPagesSuccess'
     );
+  }
+
+  getAllPages() {
+    $.ajax({
+      url: '/api/pages'
+    })
+      .done((data) => {
+        debugger;
+        this.actions.getAllPagesSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getAllPagesFail(jqXhr);
+      });
   }
 
 }

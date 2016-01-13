@@ -39,7 +39,6 @@ class PageEdit extends React.Component {
   }
   render() {
     if(this.state.pageRetrieved && !_.isEmpty(this.state.page)){
-      debugger;
       var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id,
         readOnlyPageLink: '/page/' + this.state.page.url}, this.props);

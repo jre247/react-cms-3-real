@@ -1,7 +1,8 @@
 var pg = require('pg');
 var _ = require('underscore-node');
 var Promise = require("node-promise").Promise;
-var connectionString = process.env.DATABASE_URL || 'postgres://jevans:jj1108jj@localhost:5432/wedding';
+var connectionConfig = require('../config/connection-config');
+var connectionString = process.env.DATABASE_URL || connectionConfig.getConnectionString();
 
 exports.getUserRoles = function(userId){
     var results = [];

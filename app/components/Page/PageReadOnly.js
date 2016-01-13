@@ -4,7 +4,7 @@ import {_} from 'underscore';
 import API from '../../API';
 var self;
 
-class Page extends React.Component {
+class PageReadOnly extends React.Component {
   constructor(props) {
     super(props);
     this.pageId;
@@ -29,7 +29,7 @@ class Page extends React.Component {
     //note that this.props.params.name does not update like it should when changing routes
     var url = window.location.pathname;
     var pageUrl = window.location.pathname.split('/page/')[1];
-    
+
     self.setState({pageRetrieved: false});
     API.getPageByUrl(pageUrl, this.isEdit).then(function(viewmodel){
       self.setState({page: viewmodel.page});
@@ -38,7 +38,6 @@ class Page extends React.Component {
   }
   render() {
     if(this.state.pageRetrieved && !_.isEmpty(this.state.page)){
-      debugger;
       var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id}, this.props);
 
@@ -51,8 +50,7 @@ class Page extends React.Component {
         <span />
       );
     }
-
   }
 }
 
-export default Page;
+export default PageReadOnly;

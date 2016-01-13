@@ -5,7 +5,17 @@ class NavbarStore {
   constructor() {
     this.bindActions(NavbarActions);
     this.onlineUsers = 0;
+    this.pages = [];
     this.ajaxAnimationClass = '';
+  }
+  getAllPagesSuccess(viewmodel){
+    debugger;
+    this.pages = viewmodel.pages;
+  }
+
+  getAllPagesFail(jqXhr){
+    onsole.log('onGetAllPagesFail');
+    toastr.error(jqXhr.responseJSON.message);
   }
 
   onUpdateOnlineUsers(data) {

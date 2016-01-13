@@ -24,8 +24,13 @@ class AuthLinks extends React.Component {
   render() {
     if(this.state.isAdmin){
       return (
-        <div className='Navigation' role="navigation">
-            <Link className="Navigation-link" to="/auth/role-manager">Role Manager</Link>
+        <div>
+          <div className='Navigation' role="navigation">
+              <Link className="Navigation-link" to="/auth/role-manager">Role Manager</Link>
+          </div>
+          <div className='Navigation logout' role="navigation">
+              <Link className="Navigation-link" to="/logout">Logout</Link>
+          </div>
         </div>
       );
     }

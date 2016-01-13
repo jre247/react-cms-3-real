@@ -254,6 +254,8 @@ exports.default = _alt2.default.createActions(FooterActions);
 },{"../alt":5}],4:[function(require,module,exports){
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -268,11 +270,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var NavbarActions = function NavbarActions() {
-  _classCallCheck(this, NavbarActions);
+var NavbarActions = (function () {
+  function NavbarActions() {
+    _classCallCheck(this, NavbarActions);
 
-  this.generateActions('updateOnlineUsers', 'updateAjaxAnimation');
-};
+    this.generateActions('updateOnlineUsers', 'updateAjaxAnimation', 'getAllPagesSuccess');
+  }
+
+  _createClass(NavbarActions, [{
+    key: 'getAllPages',
+    value: function getAllPages() {
+      var _this = this;
+
+      $.ajax({
+        url: '/api/pages'
+      }).done(function (data) {
+        debugger;
+        _this.actions.getAllPagesSuccess(data);
+      }).fail(function (jqXhr) {
+        _this.actions.getAllPagesFail(jqXhr);
+      });
+    }
+  }]);
+
+  return NavbarActions;
+})();
 
 exports.default = _alt2.default.createActions(NavbarActions);
 
@@ -905,11 +927,24 @@ var AuthLinks = (function (_React$Component) {
       if (this.state.isAdmin) {
         return _react2.default.createElement(
           'div',
-          { className: 'Navigation', role: 'navigation' },
+          null,
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/auth/role-manager' },
-            'Role Manager'
+            'div',
+            { className: 'Navigation', role: 'navigation' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/auth/role-manager' },
+              'Role Manager'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'Navigation logout', role: 'navigation' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/logout' },
+              'Logout'
+            )
           )
         );
       } else {
@@ -1303,6 +1338,8 @@ var _AuthLinks = require('./AuthLinks');
 
 var _AuthLinks2 = _interopRequireDefault(_AuthLinks);
 
+var _underscore = require('underscore');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1320,6 +1357,7 @@ var Navbar = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navbar).call(this, props));
 
     _this.state = _NavbarStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
@@ -1327,6 +1365,7 @@ var Navbar = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _NavbarStore2.default.listen(this.onChange);
+      _NavbarActions2.default.getAllPagesSuccess();
     }
   }, {
     key: 'componentWillUnmount',
@@ -1344,56 +1383,38 @@ var Navbar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'Navigation', role: 'navigation' },
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/' },
-          'Home'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/our-story' },
-          'Our Story'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/venue' },
-          'The Wedding'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/photo-album' },
-          'Photo Album'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/accomodations' },
-          'Accomodations'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/things-to-do' },
-          'Things To Do'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/gift-registry' },
-          'Gift Registry'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/how-to-get-there' },
-          'How to get there'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { className: 'Navigation-link', to: '/page/bridal-party' },
-          'Bridal Party'
-        ),
-        _react2.default.createElement(_AuthLinks2.default, null)
-      );
+      if (_underscore._.isEmpty(this.state.pages)) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Navigation', role: 'navigation' },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { className: 'Navigation-link', to: '/' },
+            'Home'
+          ),
+          _react2.default.createElement(_AuthLinks2.default, null)
+        );
+      } else {
+        var nodes = this.state.pages.map(function (page, index) {
+          return _react2.default.createElement(
+            _reactRouter.Link,
+            { className: 'Navigation-link', to: "/page/" + page.url },
+            page.name
+          );
+        });
+
+        return _react2.default.createElement(
+          'div',
+          { className: 'Navigation', role: 'navigation' },
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { className: 'Navigation-link', to: '/' },
+            'Home'
+          ),
+          nodes,
+          _react2.default.createElement(_AuthLinks2.default, null)
+        );
+      }
     }
   }]);
 
@@ -1402,7 +1423,7 @@ var Navbar = (function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../actions/NavbarActions":4,"../stores/NavbarStore":81,"./AuthLinks":10,"react":"react","react-router":"react-router"}],17:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../stores/NavbarStore":81,"./AuthLinks":10,"react":"react","react-router":"react-router","underscore":"underscore"}],17:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1485,7 +1506,6 @@ var PageEdit = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
-        debugger;
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id,
           readOnlyPageLink: '/page/' + this.state.page.url }, this.props);
@@ -1535,13 +1555,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var self;
 
-var Page = (function (_React$Component) {
-  _inherits(Page, _React$Component);
+var PageReadOnly = (function (_React$Component) {
+  _inherits(PageReadOnly, _React$Component);
 
-  function Page(props) {
-    _classCallCheck(this, Page);
+  function PageReadOnly(props) {
+    _classCallCheck(this, PageReadOnly);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Page).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageReadOnly).call(this, props));
 
     _this.pageId;
     _this.isEdit = false;
@@ -1553,7 +1573,7 @@ var Page = (function (_React$Component) {
   //this method will only get called when the first page route is loaded. Subsequent page route changes will
   //fire componentWillReceiveProps
 
-  _createClass(Page, [{
+  _createClass(PageReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.getPage();
@@ -1584,7 +1604,6 @@ var Page = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
-        debugger;
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 
@@ -1595,10 +1614,10 @@ var Page = (function (_React$Component) {
     }
   }]);
 
-  return Page;
+  return PageReadOnly;
 })(_react2.default.Component);
 
-exports.default = Page;
+exports.default = PageReadOnly;
 
 },{"../../API":1,"../Templates/TemplateRenderer":28,"react":"react","underscore":"underscore"}],19:[function(require,module,exports){
 'use strict';
@@ -6850,10 +6869,23 @@ var NavbarStore = (function () {
 
     this.bindActions(_NavbarActions2.default);
     this.onlineUsers = 0;
+    this.pages = [];
     this.ajaxAnimationClass = '';
   }
 
   _createClass(NavbarStore, [{
+    key: 'getAllPagesSuccess',
+    value: function getAllPagesSuccess(viewmodel) {
+      debugger;
+      this.pages = viewmodel.pages;
+    }
+  }, {
+    key: 'getAllPagesFail',
+    value: function getAllPagesFail(jqXhr) {
+      onsole.log('onGetAllPagesFail');
+      toastr.error(jqXhr.responseJSON.message);
+    }
+  }, {
     key: 'onUpdateOnlineUsers',
     value: function onUpdateOnlineUsers(data) {
       this.onlineUsers = data.onlineUsers;

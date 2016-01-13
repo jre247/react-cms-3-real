@@ -3,15 +3,18 @@ import {Link} from 'react-router';
 import NavbarStore from '../stores/NavbarStore';
 import NavbarActions from '../actions/NavbarActions';
 import AuthLinks from './AuthLinks';
+import {_} from 'underscore';
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = NavbarStore.getState();
+    this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
+    NavbarActions.getAllPagesSuccess();
   }
 
   componentWillUnmount() {
@@ -27,21 +30,33 @@ class Navbar extends React.Component {
   }
 
   render() {
-    return (
-      <div className='Navigation' role="navigation">
-          <Link className="Navigation-link" to="/">Home</Link>
-          <Link className="Navigation-link" to="/page/our-story">Our Story</Link>
-          <Link className="Navigation-link" to="/page/venue">The Wedding</Link>
-          <Link className="Navigation-link" to="/page/photo-album">Photo Album</Link>
-          <Link className="Navigation-link" to="/page/accomodations">Accomodations</Link>
-          <Link className="Navigation-link" to="/page/things-to-do">Things To Do</Link>
-          <Link className="Navigation-link" to="/page/gift-registry">Gift Registry</Link>
-          <Link className="Navigation-link" to="/page/how-to-get-there">How to get there</Link>
-          <Link className="Navigation-link" to="/page/bridal-party">Bridal Party</Link>
+    if(_.isEmpty(this.state.pages)){
+      return (
+        <div className='Navigation' role="navigation">
+            <Link className="Navigation-link" to="/">Home</Link>
 
-          <AuthLinks />
-      </div>
-    );
+            <AuthLinks />
+        </div>
+      );
+    }
+    else{
+      let nodes = this.state.pages.map((page, index) => {
+        return (
+          <Link className="Navigation-link" to={"/page/" + page.url}>{page.name}</Link>
+        );
+      });
+
+      return (
+        <div className='Navigation' role="navigation">
+            <Link className="Navigation-link" to="/">Home</Link>
+
+            {nodes}
+
+            <AuthLinks />
+        </div>
+      );
+    }
+
   }
 }
 

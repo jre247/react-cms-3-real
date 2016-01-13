@@ -109,12 +109,24 @@ module.exports = function(app, passport) {
     app.get('/api/pages/:pageUrl', function(req, res, next) {
       getPageByUrl(req, res, next);
     });
+
+    app.get('/api/pages', function(req, res, next) {
+      getAllNonAuthorizedPages(req, res, next);
+    });
 };
 
 var getPage = function(req, res, next){
   var pageId = req.params.id;
   ContentDb.get(pageId).then(function(data){
       var viewmodel = {contentList: data,};
+
+      res.status(200).send(viewmodel);
+  });
+}
+
+var getAllNonAuthorizedPages = function(req, res, next){
+  PageDb.findAll().then(function(data){
+      var viewmodel = {pages: data};
 
       res.status(200).send(viewmodel);
   });
