@@ -469,7 +469,7 @@ var RoleManager = (function (_React$Component) {
   }, {
     key: 'selectUser',
     value: function selectUser(user, event) {
-      self.props.history.pushState(null, '/role-manager/users/' + user.id);
+      self.props.history.pushState(null, '/auth/role-manager/users/' + user.id);
     }
   }, {
     key: 'render',
@@ -629,7 +629,7 @@ var RoleManagerUser = (function (_React$Component) {
       var userViewmodel = { user: this.state.user, userRoles: userRoles };
 
       _API2.default.saveUser(userViewmodel).then(function () {
-        self.props.history.pushState(null, '/role-manager');
+        self.props.history.pushState(null, '/auth/role-manager');
       });
     }
   }, {
@@ -908,7 +908,7 @@ var AuthLinks = (function (_React$Component) {
           { className: 'Navigation', role: 'navigation' },
           _react2.default.createElement(
             _reactRouter.Link,
-            { className: 'Navigation-link', to: '/role-manager' },
+            { className: 'Navigation-link', to: '/auth/role-manager' },
             'Role Manager'
           )
         );
@@ -1445,25 +1445,50 @@ var PageEdit = (function (_React$Component) {
 
     _this.pageId;
     _this.isEdit = true;
-    _this.state = { page: {} };
+    _this.state = { pageId: null, templateId: null };
     self = _this;
     return _this;
   }
 
+  //this method will only get called when the first page route is loaded. Subsequent page route changes will
+  //fire componentWillReceiveProps
+
   _createClass(PageEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.getPage();
+    }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.getPage();
+    }
+  }, {
+    key: 'getPage',
+    value: function getPage() {
+      //note that this.props.params.name does not update like it should when changing routes
+      var url = window.location.pathname;
+      var pageUrlWithEdit = window.location.pathname.split('/page/')[1];
+      var pageUrl = pageUrlWithEdit.split('/edit')[0];
       debugger;
-      _API2.default.getPageByUrl(this.props.params.name, this.isEdit).then(function (viewmodel) {
-        self.setState({ page: viewmodel.page, templateId: this.state.page.template_id });
+      self.setState({ pageRetrieved: false });
+      _API2.default.getPageByUrl(pageUrl, this.isEdit).then(function (viewmodel) {
+        self.setState({ page: viewmodel.page });
+        self.setState({ pageRetrieved: true });
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      if (!_underscore._.isEmpty(this.state.page)) {
-        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: this.state.page.url + '/edit',
-          pageId: this.state.page.id }, this.props);
+      if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
+        debugger;
+        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
+          pageId: this.state.page.id, templateId: this.state.page.template_id,
+          readOnlyPageLink: '/page/' + this.state.page.url }, this.props);
 
         return _react2.default.createElement(_TemplateRenderer2.default, propsData);
       } else {
@@ -1520,23 +1545,47 @@ var Page = (function (_React$Component) {
 
     _this.pageId;
     _this.isEdit = false;
-    _this.state = { page: {} };
+    _this.state = { page: {}, pageRetrieved: false };
     self = _this;
     return _this;
   }
 
+  //this method will only get called when the first page route is loaded. Subsequent page route changes will
+  //fire componentWillReceiveProps
+
   _createClass(Page, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getPageByUrl(this.props.params.name, this.isEdit).then(function (viewmodel) {
+      this.getPage();
+    }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      this.getPage();
+    }
+  }, {
+    key: 'getPage',
+    value: function getPage() {
+      //note that this.props.params.name does not update like it should when changing routes
+      var url = window.location.pathname;
+      var pageUrl = window.location.pathname.split('/page/')[1];
+
+      self.setState({ pageRetrieved: false });
+      _API2.default.getPageByUrl(pageUrl, this.isEdit).then(function (viewmodel) {
         self.setState({ page: viewmodel.page });
+        self.setState({ pageRetrieved: true });
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      if (!_underscore._.isEmpty(this.state.page)) {
-        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: 'page/' + this.state.page.url + '/edit',
+      if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
+        debugger;
+        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 
         return _react2.default.createElement(_TemplateRenderer2.default, propsData);

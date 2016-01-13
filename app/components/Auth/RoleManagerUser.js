@@ -41,7 +41,7 @@ class RoleManagerUser extends React.Component {
     var userViewmodel = {user: this.state.user, userRoles: userRoles};
 
     API.saveUser(userViewmodel).then(function(){
-      self.props.history.pushState(null, '/role-manager');
+      self.props.history.pushState(null, '/auth/role-manager');
     });
   }
 

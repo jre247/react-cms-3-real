@@ -24,7 +24,7 @@ class RoleManager extends React.Component {
 
   }
   selectUser(user, event){
-    self.props.history.pushState(null, '/role-manager/users/' + user.id);
+    self.props.history.pushState(null, '/auth/role-manager/users/' + user.id);
   }
 
   render() {
