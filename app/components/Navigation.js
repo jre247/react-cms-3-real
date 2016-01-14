@@ -30,6 +30,7 @@ class Navbar extends React.Component {
   }
 
   render() {
+    debugger;
     if(_.isEmpty(this.state.pages)){
       return (
         <div className='Navigation' role="navigation">

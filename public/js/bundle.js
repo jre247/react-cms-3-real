@@ -1242,7 +1242,7 @@ var Header = (function (_React$Component) {
 exports.default = Header;
 
 },{"./Navigation":16,"react":"react","react-router":"react-router"}],15:[function(require,module,exports){
-"use strict";
+'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -1250,9 +1250,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require("react");
+var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
+
+var _NavbarStore = require('../stores/NavbarStore');
+
+var _NavbarStore2 = _interopRequireDefault(_NavbarStore);
+
+var _NavbarActions = require('../actions/NavbarActions');
+
+var _NavbarActions2 = _interopRequireDefault(_NavbarActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1265,22 +1273,46 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = (function (_React$Component) {
   _inherits(Home, _React$Component);
 
-  function Home() {
+  function Home(props) {
     _classCallCheck(this, Home);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Home).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Home).call(this, props));
+
+    _this.state = _NavbarStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    return _this;
   }
 
+  //this method will only get called when the first page route is loaded. Subsequent page route changes will
+  //fire componentWillReceiveProps
+
   _createClass(Home, [{
-    key: "render",
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _NavbarStore2.default.listen(this.onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _NavbarStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      debugger;
+      this.setState(state);
+    }
+  }, {
+    key: 'render',
     value: function render() {
+      debugger;
       return _react2.default.createElement(
-        "div",
-        { className: "Home-content" },
+        'div',
+        { className: 'Home-content' },
         _react2.default.createElement(
-          "h3",
+          'h3',
           null,
-          "Middletown, CT"
+          'Middletown, CT'
         )
       );
     }
@@ -1291,7 +1323,7 @@ var Home = (function (_React$Component) {
 
 exports.default = Home;
 
-},{"react":"react"}],16:[function(require,module,exports){
+},{"../actions/NavbarActions":4,"../stores/NavbarStore":81,"react":"react"}],16:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1363,6 +1395,7 @@ var Navbar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      debugger;
       if (_underscore._.isEmpty(this.state.pages)) {
         return _react2.default.createElement(
           'div',
@@ -1556,6 +1589,7 @@ var PageReadOnly = (function (_React$Component) {
     _this.state = { page: {}, pageRetrieved: false };
     _this.navState = _NavbarStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
+    _this.isHomePage = false;
     self = _this;
     return _this;
   }
@@ -1577,6 +1611,7 @@ var PageReadOnly = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
+      debugger;
       this.setState(state);
       this.pages = state.pages;
       this.getPage();
@@ -1595,21 +1630,42 @@ var PageReadOnly = (function (_React$Component) {
     value: function getPage() {
       //note that this.props.params.name does not update like it should when changing routes
       var url = window.location.pathname;
-      var pageUrl = window.location.pathname.split('/page/')[1];
+      var urlPageSplit = window.location.pathname.split('/page/');
+      debugger;
+      var isHomePage = urlPageSplit.length == 0;
+      if (isHomePage) {
+        this.isHomePage = true;
+        this.forceUpdate();
+      } else {
+        this.isHomePage = false;
 
-      var page = _underscore._.findWhere(this.pages, { url: pageUrl });
-      if (page) {
-        self.setState({ page: page });
+        var pageUrl = urlPageSplit[1];
+
+        var page = _underscore._.findWhere(this.pages, { url: pageUrl });
+        if (page) {
+          self.setState({ page: page });
+        }
       }
     }
   }, {
     key: 'render',
     value: function render() {
+      debugger;
       if (!_underscore._.isEmpty(this.pages) && !_underscore._.isEmpty(this.state.page)) {
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 
         return _react2.default.createElement(_TemplateRenderer2.default, propsData);
+      } else if (this.isHomePage) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'Home-content' },
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Middletown, CT'
+          )
+        );
       } else {
         return _react2.default.createElement('span', null);
       }
@@ -6799,7 +6855,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _app2.default },
-  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _PageReadOnly2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/page/:name/edit', component: _PageEdit2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/page/:name', component: _PageReadOnly2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/signup', component: _Signup2.default }),
