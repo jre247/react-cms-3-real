@@ -253,24 +253,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var NavbarActions = function NavbarActions() {
   _classCallCheck(this, NavbarActions);
 
-  this.generateActions('updateOnlineUsers', 'updateAjaxAnimation'
-  //  'getAllPagesSuccess'
-  );
-}
-//
-// getAllPages() {
-//   $.ajax({
-//     url: '/api/pages'
-//   })
-//     .done((data) => {
-//       this.actions.getAllPagesSuccess(data);
-//     })
-//     .fail((jqXhr) => {
-//       this.actions.getAllPagesFail(jqXhr);
-//     });
-// }
-
-;
+  this.generateActions('updateOnlineUsers', 'updateAjaxAnimation');
+};
 
 exports.default = _alt2.default.createActions(NavbarActions);
 
@@ -308,6 +292,7 @@ var PageActions = (function () {
       $.ajax({
         url: '/api/pages'
       }).done(function (data) {
+        debugger;
         _this.actions.getAllPagesSuccess(data);
       }).fail(function (jqXhr) {
         _this.actions.getAllPagesFail(jqXhr);
@@ -1666,9 +1651,10 @@ var PageReadOnly = (function (_React$Component) {
 
       var pageUrl = urlPageSplit[1];
       debugger;
-      var page = _underscore._.findWhere(this.state.pages, { url: pageUrl });
+      var pages = this.state.pages || this.pageState.pages;
+      var page = _underscore._.findWhere(pages, { url: pageUrl });
       if (page) {
-        self.setState({ page: page, pages: this.state.pages });
+        self.setState({ page: page, pages: pages });
       }
     }
   }, {
@@ -6673,7 +6659,6 @@ var App = (function (_React$Component) {
   _createClass(App, [{
     key: 'onChange',
     value: function onChange(state) {
-      debugger;
       this.setState(state);
     }
   }, {

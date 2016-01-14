@@ -49,9 +49,10 @@ class PageReadOnly extends React.Component {
 
     var pageUrl = urlPageSplit[1];
     debugger;
-    var page = _.findWhere(this.state.pages, {url: pageUrl});
+    var pages = this.state.pages || this.pageState.pages;
+    var page = _.findWhere(pages, {url: pageUrl});
     if(page){
-      self.setState({page: page, pages: this.state.pages});
+      self.setState({page: page, pages: pages});
     }
   }
   render() {

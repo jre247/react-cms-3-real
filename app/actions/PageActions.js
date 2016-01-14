@@ -14,6 +14,7 @@ class PageActions {
       url: '/api/pages'
     })
       .done((data) => {
+        debugger;
         this.actions.getAllPagesSuccess(data);
       })
       .fail((jqXhr) => {

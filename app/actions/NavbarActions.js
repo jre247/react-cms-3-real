@@ -6,22 +6,8 @@ class NavbarActions {
     this.generateActions(
       'updateOnlineUsers',
       'updateAjaxAnimation'
-    //  'getAllPagesSuccess'
     );
   }
-  //
-  // getAllPages() {
-  //   $.ajax({
-  //     url: '/api/pages'
-  //   })
-  //     .done((data) => {
-  //       this.actions.getAllPagesSuccess(data);
-  //     })
-  //     .fail((jqXhr) => {
-  //       this.actions.getAllPagesFail(jqXhr);
-  //     });
-  // }
-
 }
 
 export default alt.createActions(NavbarActions);
