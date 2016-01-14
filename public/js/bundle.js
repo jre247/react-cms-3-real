@@ -1514,7 +1514,7 @@ var PageEdit = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
+      if (!_underscore._.isEmpty(this.state.page)) {
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id,
           readOnlyPageLink: '/page/' + this.state.page.url }, this.props);
@@ -1631,15 +1631,14 @@ var PageReadOnly = (function (_React$Component) {
       var isHomePage = urlPageSplit.length == 1;
       if (isHomePage) {
         this.isHomePage = true;
-        this.forceUpdate();
       } else {
         this.isHomePage = false;
 
         var pageUrl = urlPageSplit[1];
 
-        var page = _underscore._.findWhere(this.pages, { url: pageUrl });
+        var page = _underscore._.findWhere(this.state.pages, { url: pageUrl });
         if (page) {
-          self.setState({ page: page });
+          self.setState({ page: page, pages: this.state.pages });
         }
       }
     }
@@ -1656,7 +1655,7 @@ var PageReadOnly = (function (_React$Component) {
             'Middletown, CT'
           )
         );
-      } else if (!_underscore._.isEmpty(this.pages) && !_underscore._.isEmpty(this.state.page)) {
+      } else if (!_underscore._.isEmpty(this.state.pages) && !_underscore._.isEmpty(this.state.page)) {
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 

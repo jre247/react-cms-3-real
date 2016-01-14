@@ -50,16 +50,15 @@ class PageReadOnly extends React.Component {
     var isHomePage = urlPageSplit.length == 1;
     if(isHomePage){
       this.isHomePage = true;
-      this.forceUpdate();
     }
     else{
       this.isHomePage = false;
 
       var pageUrl = urlPageSplit[1];
 
-      var page = _.findWhere(this.pages, {url: pageUrl});
+      var page = _.findWhere(this.state.pages, {url: pageUrl});
       if(page){
-        self.setState({page: page});
+        self.setState({page: page, pages: this.state.pages});
       }
     }
 
@@ -72,7 +71,7 @@ class PageReadOnly extends React.Component {
         </div>
       );
     }
-    else if(!_.isEmpty(this.pages) && !_.isEmpty(this.state.page)){
+    else if(!_.isEmpty(this.state.pages) && !_.isEmpty(this.state.page)){
       var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id}, this.props);
 
