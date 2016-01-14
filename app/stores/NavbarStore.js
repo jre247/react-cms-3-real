@@ -9,7 +9,6 @@ class NavbarStore {
     this.ajaxAnimationClass = '';
   }
   getAllPagesSuccess(viewmodel){
-    debugger;
     this.pages = viewmodel.pages;
   }
 

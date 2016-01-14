@@ -19,7 +19,6 @@ class TemplateRenderer extends React.Component {
   }
 
   render() {
-    debugger;
     if(this.props.templateId === 1){
       return (
         <BasicTemplate {...this.props} />

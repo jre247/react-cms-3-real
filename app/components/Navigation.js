@@ -14,7 +14,7 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-    NavbarActions.getAllPagesSuccess();
+    NavbarActions.getAllPages();
   }
 
   componentWillUnmount() {
@@ -42,7 +42,7 @@ class Navbar extends React.Component {
     else{
       let nodes = this.state.pages.map((page, index) => {
         return (
-          <Link className="Navigation-link" to={"/page/" + page.url}>{page.name}</Link>
+          <Link key={index} className="Navigation-link" to={"/page/" + page.url}>{page.name}</Link>
         );
       });
 

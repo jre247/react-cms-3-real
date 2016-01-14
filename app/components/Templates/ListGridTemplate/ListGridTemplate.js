@@ -22,7 +22,16 @@ class ListGridTemplate extends React.Component {
   componentDidMount() {
     API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
       self.setState({contentList: viewmodel.contentList});
+      self.buildContentGroupList();
+      self.setStateForContentGroupList();
+    });
+  }
 
+  //need to get page in this method since componentDidMount does not get called when
+  //changing routes to another page
+  componentWillReceiveProps(nextProps){
+    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList});
       self.buildContentGroupList();
       self.setStateForContentGroupList();
     });

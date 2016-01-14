@@ -96,27 +96,9 @@ var API = (function () {
       return promise.promise();
     }
   }, {
-    key: 'getPageByUrl',
-    value: function getPageByUrl(pageUrl) {
-      var _this4 = this;
-
-      var promise = $.Deferred();
-
-      $.ajax({
-        type: 'GET',
-        url: '/api/pages/' + pageUrl
-      }).done(function (data) {
-        promise.resolve(data);
-      }).fail(function (jqXhr) {
-        promise.reject(_this4.onFail(jqXhr.responseJSON.message));
-      });
-
-      return promise.promise();
-    }
-  }, {
     key: 'saveContentListForPage',
     value: function saveContentListForPage(contentList, pageId) {
-      var _this5 = this;
+      var _this4 = this;
 
       var promise = $.Deferred();
 
@@ -127,7 +109,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this4.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -135,7 +117,7 @@ var API = (function () {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(pageId, isEdit) {
-      var _this6 = this;
+      var _this5 = this;
 
       var promise = $.Deferred();
       var baseUrl = '/api/pages/';
@@ -148,7 +130,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this6.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -285,7 +267,6 @@ var NavbarActions = (function () {
       $.ajax({
         url: '/api/pages'
       }).done(function (data) {
-        debugger;
         _this.actions.getAllPagesSuccess(data);
       }).fail(function (jqXhr) {
         _this.actions.getAllPagesFail(jqXhr);
@@ -635,7 +616,6 @@ var RoleManagerUser = (function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
       event.preventDefault();
-      debugger;
     }
   }, {
     key: 'submit',
@@ -1365,7 +1345,7 @@ var Navbar = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _NavbarStore2.default.listen(this.onChange);
-      _NavbarActions2.default.getAllPagesSuccess();
+      _NavbarActions2.default.getAllPages();
     }
   }, {
     key: 'componentWillUnmount',
@@ -1398,7 +1378,7 @@ var Navbar = (function (_React$Component) {
         var nodes = this.state.pages.map(function (page, index) {
           return _react2.default.createElement(
             _reactRouter.Link,
-            { className: 'Navigation-link', to: "/page/" + page.url },
+            { key: index, className: 'Navigation-link', to: "/page/" + page.url },
             page.name
           );
         });
@@ -1495,12 +1475,11 @@ var PageEdit = (function (_React$Component) {
       var url = window.location.pathname;
       var pageUrlWithEdit = window.location.pathname.split('/page/')[1];
       var pageUrl = pageUrlWithEdit.split('/edit')[0];
-      debugger;
-      self.setState({ pageRetrieved: false });
-      _API2.default.getPageByUrl(pageUrl, this.isEdit).then(function (viewmodel) {
-        self.setState({ page: viewmodel.page });
-        self.setState({ pageRetrieved: true });
-      });
+
+      var page = _underscore._.findWhere(this.pages, { url: pageUrl });
+      if (page) {
+        self.setState({ page: page });
+      }
     }
   }, {
     key: 'render',
@@ -1545,6 +1524,14 @@ var _API = require('../../API');
 
 var _API2 = _interopRequireDefault(_API);
 
+var _NavbarStore = require('../../stores/NavbarStore');
+
+var _NavbarStore2 = _interopRequireDefault(_NavbarStore);
+
+var _NavbarActions = require('../../actions/NavbarActions');
+
+var _NavbarActions2 = _interopRequireDefault(_NavbarActions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1565,7 +1552,10 @@ var PageReadOnly = (function (_React$Component) {
 
     _this.pageId;
     _this.isEdit = false;
+    _this.pages = [];
     _this.state = { page: {}, pageRetrieved: false };
+    _this.navState = _NavbarStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
     self = _this;
     return _this;
   }
@@ -1576,6 +1566,19 @@ var PageReadOnly = (function (_React$Component) {
   _createClass(PageReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      _NavbarStore2.default.listen(this.onChange);
+      this.getPage();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _NavbarStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+      this.pages = state.pages;
       this.getPage();
     }
 
@@ -1594,16 +1597,15 @@ var PageReadOnly = (function (_React$Component) {
       var url = window.location.pathname;
       var pageUrl = window.location.pathname.split('/page/')[1];
 
-      self.setState({ pageRetrieved: false });
-      _API2.default.getPageByUrl(pageUrl, this.isEdit).then(function (viewmodel) {
-        self.setState({ page: viewmodel.page });
-        self.setState({ pageRetrieved: true });
-      });
+      var page = _underscore._.findWhere(this.pages, { url: pageUrl });
+      if (page) {
+        self.setState({ page: page });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      if (this.state.pageRetrieved && !_underscore._.isEmpty(this.state.page)) {
+      if (!_underscore._.isEmpty(this.pages) && !_underscore._.isEmpty(this.state.page)) {
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 
@@ -1619,7 +1621,7 @@ var PageReadOnly = (function (_React$Component) {
 
 exports.default = PageReadOnly;
 
-},{"../../API":1,"../Templates/TemplateRenderer":28,"react":"react","underscore":"underscore"}],19:[function(require,module,exports){
+},{"../../API":1,"../../actions/NavbarActions":4,"../../stores/NavbarStore":81,"../Templates/TemplateRenderer":28,"react":"react","underscore":"underscore"}],19:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1746,6 +1748,17 @@ var BasicTemplateEdit = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
+        self.setStateForContentList(viewmodel.contentList);
+      });
+    }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
         self.setStateForContentList(viewmodel.contentList);
       });
     }
@@ -1910,6 +1923,17 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         self.setStateForContentList(viewmodel.contentList);
       });
     }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
+        self.setStateForContentList(viewmodel.contentList);
+      });
+    }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
@@ -2034,7 +2058,19 @@ var ListGridTemplate = (function (_React$Component) {
     value: function componentDidMount() {
       _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
         self.setState({ contentList: viewmodel.contentList });
+        self.buildContentGroupList();
+        self.setStateForContentGroupList();
+      });
+    }
 
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList });
         self.buildContentGroupList();
         self.setStateForContentGroupList();
       });
@@ -2303,6 +2339,7 @@ var ListTemplate = (function (_React$Component) {
 
     _this.templateId = 3;
     _this.state = { contentList: [] };
+    _this.isContentListRetrieved = false;
     self = _this;
     return _this;
   }
@@ -2314,13 +2351,20 @@ var ListTemplate = (function (_React$Component) {
         self.setStateForContentList(viewmodel.contentList);
       });
     }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
+        self.setStateForContentList(viewmodel.contentList);
+      });
+    }
   }, {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
-      debugger;
       self.setState({ contentList: newContentList });
     }
   }, {
@@ -2661,6 +2705,17 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
         self.setStateForContentList(viewmodel.contentList);
       });
     }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
+        self.setStateForContentList(viewmodel.contentList);
+      });
+    }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
@@ -2861,6 +2916,17 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
+        self.setStateForContentList(viewmodel.contentList);
+      });
+    }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
         self.setStateForContentList(viewmodel.contentList);
       });
     }
@@ -3070,7 +3136,6 @@ var TemplateRenderer = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       if (this.props.templateId === 1) {
         return _react2.default.createElement(_BasicTemplate2.default, this.props);
       } else if (this.props.templateId === 2) {
@@ -6876,7 +6941,6 @@ var NavbarStore = (function () {
   _createClass(NavbarStore, [{
     key: 'getAllPagesSuccess',
     value: function getAllPagesSuccess(viewmodel) {
-      debugger;
       this.pages = viewmodel.pages;
     }
   }, {

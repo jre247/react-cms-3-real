@@ -16,6 +16,7 @@ class ListTemplate extends React.Component {
     super(props);
     this.templateId = 3;
     this.state = {contentList: []};
+    this.isContentListRetrieved = false;
     self = this;
   }
 
@@ -25,12 +26,15 @@ class ListTemplate extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-
+  //need to get page in this method since componentDidMount does not get called when
+  //changing routes to another page
+  componentWillReceiveProps(nextProps){
+    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
   }
 
   setStateForContentList(newContentList){
-    debugger;
     self.setState({contentList: newContentList})
   }
   handleSubmit(event) {

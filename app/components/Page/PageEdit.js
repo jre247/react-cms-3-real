@@ -30,12 +30,11 @@ class PageEdit extends React.Component {
     var url = window.location.pathname;
     var pageUrlWithEdit = window.location.pathname.split('/page/')[1];
     var pageUrl = pageUrlWithEdit.split('/edit')[0];
-    debugger;
-    self.setState({pageRetrieved: false});
-    API.getPageByUrl(pageUrl, this.isEdit).then(function(viewmodel){
-      self.setState({page: viewmodel.page});
-      self.setState({pageRetrieved: true});
-    });
+
+    var page = _.findWhere(this.pages, {url: pageUrl});
+    if(page){
+      self.setState({page: page});
+    }
   }
   render() {
     if(this.state.pageRetrieved && !_.isEmpty(this.state.page)){

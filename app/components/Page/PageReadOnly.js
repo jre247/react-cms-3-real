@@ -2,6 +2,8 @@ import React from 'react';
 import TemplateRenderer from '../Templates/TemplateRenderer';
 import {_} from 'underscore';
 import API from '../../API';
+import NavbarStore from '../../stores/NavbarStore';
+import NavbarActions from '../../actions/NavbarActions';
 var self;
 
 class PageReadOnly extends React.Component {
@@ -9,13 +11,27 @@ class PageReadOnly extends React.Component {
     super(props);
     this.pageId;
     this.isEdit = false;
+    this.pages = [];
     this.state = {page: {}, pageRetrieved: false};
+    this.navState = NavbarStore.getState();
+    this.onChange = this.onChange.bind(this);
     self = this;
   }
 
   //this method will only get called when the first page route is loaded. Subsequent page route changes will
   //fire componentWillReceiveProps
   componentDidMount() {
+    NavbarStore.listen(this.onChange);
+    this.getPage();
+  }
+
+  componentWillUnmount() {
+    NavbarStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
+    this.pages = state.pages;
     this.getPage();
   }
 
@@ -30,14 +46,13 @@ class PageReadOnly extends React.Component {
     var url = window.location.pathname;
     var pageUrl = window.location.pathname.split('/page/')[1];
 
-    self.setState({pageRetrieved: false});
-    API.getPageByUrl(pageUrl, this.isEdit).then(function(viewmodel){
-      self.setState({page: viewmodel.page});
-      self.setState({pageRetrieved: true});
-    });
+    var page = _.findWhere(this.pages, {url: pageUrl});
+    if(page){
+      self.setState({page: page});
+    }
   }
   render() {
-    if(this.state.pageRetrieved && !_.isEmpty(this.state.page)){
+    if(!_.isEmpty(this.pages) && !_.isEmpty(this.state.page)){
       var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id}, this.props);
 

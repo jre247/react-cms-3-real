@@ -106,10 +106,6 @@ module.exports = function(app, passport) {
       });
     });
 
-    app.get('/api/pages/:pageUrl', function(req, res, next) {
-      getPageByUrl(req, res, next);
-    });
-
     app.get('/api/pages', function(req, res, next) {
       getAllNonAuthorizedPages(req, res, next);
     });
@@ -127,15 +123,6 @@ var getPage = function(req, res, next){
 var getAllNonAuthorizedPages = function(req, res, next){
   PageDb.findAll().then(function(data){
       var viewmodel = {pages: data};
-
-      res.status(200).send(viewmodel);
-  });
-}
-
-var getPageByUrl = function(req, res, next){
-  var pageUrl = req.params.pageUrl;
-  PageDb.findByName(pageUrl).then(function(data){
-      var viewmodel = {page: data,};
 
       res.status(200).send(viewmodel);
   });

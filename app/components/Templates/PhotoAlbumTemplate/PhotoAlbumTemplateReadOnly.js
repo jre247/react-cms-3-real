@@ -25,6 +25,15 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       self.setStateForContentList(viewmodel.contentList);
     });
   }
+  
+  //need to get page in this method since componentDidMount does not get called when
+  //changing routes to another page
+  componentWillReceiveProps(nextProps){
+    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
+      self.setStateForContentList(viewmodel.contentList);
+    });
+  }
+
   setStateForContentList(newContentList){
     self.setState({contentList: newContentList})
   }

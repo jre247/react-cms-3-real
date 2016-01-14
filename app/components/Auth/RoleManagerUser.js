@@ -26,7 +26,6 @@ class RoleManagerUser extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    debugger;
   }
 
   submit(event){
