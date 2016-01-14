@@ -1,24 +1,22 @@
 import React from 'react';
 import {Link} from 'react-router';
-import NavbarStore from '../stores/NavbarStore';
-import NavbarActions from '../actions/NavbarActions';
+import PageStore from '../stores/PageStore';
 import AuthLinks from './AuthLinks';
 import {_} from 'underscore';
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = NavbarStore.getState();
+    this.state = PageStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    NavbarStore.listen(this.onChange);
-    NavbarActions.getAllPages();
+    PageStore.listen(this.onChange);
   }
 
   componentWillUnmount() {
-    NavbarStore.unlisten(this.onChange);
+    PageStore.unlisten(this.onChange);
   }
 
   onChange(state) {

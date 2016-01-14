@@ -5,22 +5,22 @@ class NavbarActions {
   constructor() {
     this.generateActions(
       'updateOnlineUsers',
-      'updateAjaxAnimation',
-      'getAllPagesSuccess'
+      'updateAjaxAnimation'
+    //  'getAllPagesSuccess'
     );
   }
-
-  getAllPages() {
-    $.ajax({
-      url: '/api/pages'
-    })
-      .done((data) => {
-        this.actions.getAllPagesSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getAllPagesFail(jqXhr);
-      });
-  }
+  //
+  // getAllPages() {
+  //   $.ajax({
+  //     url: '/api/pages'
+  //   })
+  //     .done((data) => {
+  //       this.actions.getAllPagesSuccess(data);
+  //     })
+  //     .fail((jqXhr) => {
+  //       this.actions.getAllPagesFail(jqXhr);
+  //     });
+  // }
 
 }
 
