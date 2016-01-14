@@ -61,7 +61,7 @@ var API = (function () {
     //
     // static getLoggedInUser(history) {
     //   var promise = $.Deferred();
-    //   debugger;
+
     //   $.ajax({
     //       type: 'GET',
     //       url: '/api/getLoggedInUser'
@@ -1299,13 +1299,11 @@ var Home = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
-      debugger;
       this.setState(state);
     }
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'Home-content' },
@@ -1395,7 +1393,6 @@ var Navbar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       if (_underscore._.isEmpty(this.state.pages)) {
         return _react2.default.createElement(
           'div',
@@ -1611,7 +1608,6 @@ var PageReadOnly = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
-      debugger;
       this.setState(state);
       this.pages = state.pages;
       this.getPage();
@@ -1631,8 +1627,8 @@ var PageReadOnly = (function (_React$Component) {
       //note that this.props.params.name does not update like it should when changing routes
       var url = window.location.pathname;
       var urlPageSplit = window.location.pathname.split('/page/');
-      debugger;
-      var isHomePage = urlPageSplit.length == 0;
+
+      var isHomePage = urlPageSplit.length == 1;
       if (isHomePage) {
         this.isHomePage = true;
         this.forceUpdate();
@@ -1650,13 +1646,7 @@ var PageReadOnly = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
-      if (!_underscore._.isEmpty(this.pages) && !_underscore._.isEmpty(this.state.page)) {
-        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
-          pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
-
-        return _react2.default.createElement(_TemplateRenderer2.default, propsData);
-      } else if (this.isHomePage) {
+      if (this.isHomePage) {
         return _react2.default.createElement(
           'div',
           { className: 'Home-content' },
@@ -1666,6 +1656,11 @@ var PageReadOnly = (function (_React$Component) {
             'Middletown, CT'
           )
         );
+      } else if (!_underscore._.isEmpty(this.pages) && !_underscore._.isEmpty(this.state.page)) {
+        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
+          pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
+
+        return _react2.default.createElement(_TemplateRenderer2.default, propsData);
       } else {
         return _react2.default.createElement('span', null);
       }

@@ -20,12 +20,10 @@ class Home extends React.Component {
   }
 
   onChange(state) {
-    debugger;
     this.setState(state);
   }
 
   render() {
-    debugger;
     return (
       <div className="Home-content">
           <h3>Middletown, CT</h3>

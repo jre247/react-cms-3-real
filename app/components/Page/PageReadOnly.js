@@ -31,7 +31,6 @@ class PageReadOnly extends React.Component {
   }
 
   onChange(state) {
-    debugger;
     this.setState(state);
     this.pages = state.pages;
     this.getPage();
@@ -47,8 +46,8 @@ class PageReadOnly extends React.Component {
     //note that this.props.params.name does not update like it should when changing routes
     var url = window.location.pathname;
     var urlPageSplit = window.location.pathname.split('/page/');
-    debugger;
-    var isHomePage = urlPageSplit.length == 0;
+
+    var isHomePage = urlPageSplit.length == 1;
     if(isHomePage){
       this.isHomePage = true;
       this.forceUpdate();
@@ -66,20 +65,19 @@ class PageReadOnly extends React.Component {
 
   }
   render() {
-    debugger;
-    if(!_.isEmpty(this.pages) && !_.isEmpty(this.state.page)){
+    if (this.isHomePage){
+      return (
+        <div className="Home-content">
+            <h3>Middletown, CT</h3>
+        </div>
+      );
+    }
+    else if(!_.isEmpty(this.pages) && !_.isEmpty(this.state.page)){
       var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id}, this.props);
 
       return (
         <TemplateRenderer {...propsData} />
-      );
-    }
-    else if (this.isHomePage){
-      return (
-        <div className="Home-content">
-            <h3>Middletown, CT</h3>
-        </div>
       );
     }
     else{

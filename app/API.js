@@ -41,7 +41,7 @@ class API {
   //
   // static getLoggedInUser(history) {
   //   var promise = $.Deferred();
-  //   debugger;
+
   //   $.ajax({
   //       type: 'GET',
   //       url: '/api/getLoggedInUser'
