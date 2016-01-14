@@ -11,8 +11,7 @@ class PageReadOnly extends React.Component {
     super(props);
     this.pageId;
     this.isEdit = false;
-    this.pages = [];
-    this.state = {page: {}, pageRetrieved: false};
+    this.state = {page: {}};
     this.pageState = PageStore.getState();
     this.onChange = this.onChange.bind(this);
     self = this;
@@ -30,9 +29,7 @@ class PageReadOnly extends React.Component {
   }
 
   onChange(state) {
-    debugger;
     this.setState(state);
-    //this.pages = state.pages;
     this.getPage();
   }
 
@@ -48,7 +45,7 @@ class PageReadOnly extends React.Component {
     var urlPageSplit = window.location.pathname.split('/page/');
 
     var pageUrl = urlPageSplit[1];
-    debugger;
+
     var pages = this.state.pages || this.pageState.pages;
     var page = _.findWhere(pages, {url: pageUrl});
     if(page){

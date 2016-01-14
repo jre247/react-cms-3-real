@@ -292,7 +292,6 @@ var PageActions = (function () {
       $.ajax({
         url: '/api/pages'
       }).done(function (data) {
-        debugger;
         _this.actions.getAllPagesSuccess(data);
       }).fail(function (jqXhr) {
         _this.actions.getAllPagesFail(jqXhr);
@@ -1477,6 +1476,14 @@ var _API = require('../../API');
 
 var _API2 = _interopRequireDefault(_API);
 
+var _PageStore = require('../../stores/PageStore');
+
+var _PageStore2 = _interopRequireDefault(_PageStore);
+
+var _PageActions = require('../../actions/PageActions');
+
+var _PageActions2 = _interopRequireDefault(_PageActions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1497,7 +1504,9 @@ var PageEdit = (function (_React$Component) {
 
     _this.pageId;
     _this.isEdit = true;
-    _this.state = { pageId: null, templateId: null };
+    _this.state = { page: {} };
+    _this.pageState = _PageStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
     self = _this;
     return _this;
   }
@@ -1508,6 +1517,18 @@ var PageEdit = (function (_React$Component) {
   _createClass(PageEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      _PageStore2.default.listen(this.onChange);
+      this.getPage();
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _PageStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
       this.getPage();
     }
 
@@ -1524,18 +1545,22 @@ var PageEdit = (function (_React$Component) {
     value: function getPage() {
       //note that this.props.params.name does not update like it should when changing routes
       var url = window.location.pathname;
-      var pageUrlWithEdit = window.location.pathname.split('/page/')[1];
-      var pageUrl = pageUrlWithEdit.split('/edit')[0];
+      var urlPageSplit = window.location.pathname.split('/page/');
+      debugger;
+      var pageUrl = urlPageSplit[1];
+      urlPageSplit = pageUrl.split('/edit');
+      pageUrl = urlPageSplit[0];
 
-      var page = _underscore._.findWhere(this.pages, { url: pageUrl });
+      var pages = this.state.pages || this.pageState.pages;
+      var page = _underscore._.findWhere(pages, { url: pageUrl });
       if (page) {
-        self.setState({ page: page });
+        self.setState({ page: page, pages: pages });
       }
     }
   }, {
     key: 'render',
     value: function render() {
-      if (!_underscore._.isEmpty(this.state.page)) {
+      if (!_underscore._.isEmpty(this.state.pages) && !_underscore._.isEmpty(this.state.page)) {
         var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id,
           readOnlyPageLink: '/page/' + this.state.page.url }, this.props);
@@ -1552,7 +1577,7 @@ var PageEdit = (function (_React$Component) {
 
 exports.default = PageEdit;
 
-},{"../../API":1,"../Templates/TemplateRenderer":29,"react":"react","underscore":"underscore"}],19:[function(require,module,exports){
+},{"../../API":1,"../../actions/PageActions":5,"../../stores/PageStore":83,"../Templates/TemplateRenderer":29,"react":"react","underscore":"underscore"}],19:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1603,8 +1628,7 @@ var PageReadOnly = (function (_React$Component) {
 
     _this.pageId;
     _this.isEdit = false;
-    _this.pages = [];
-    _this.state = { page: {}, pageRetrieved: false };
+    _this.state = { page: {} };
     _this.pageState = _PageStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     self = _this;
@@ -1628,9 +1652,7 @@ var PageReadOnly = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
-      debugger;
       this.setState(state);
-      //this.pages = state.pages;
       this.getPage();
     }
 
@@ -1650,7 +1672,7 @@ var PageReadOnly = (function (_React$Component) {
       var urlPageSplit = window.location.pathname.split('/page/');
 
       var pageUrl = urlPageSplit[1];
-      debugger;
+
       var pages = this.state.pages || this.pageState.pages;
       var page = _underscore._.findWhere(pages, { url: pageUrl });
       if (page) {
