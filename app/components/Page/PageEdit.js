@@ -17,8 +17,6 @@ class PageEdit extends React.Component {
     self = this;
   }
 
-  //this method will only get called when the first page route is loaded. Subsequent page route changes will
-  //fire componentWillReceiveProps
   componentDidMount() {
     PageStore.listen(this.onChange);
     this.getPage(this.props);
@@ -33,8 +31,6 @@ class PageEdit extends React.Component {
     this.getPage(this.props);
   }
 
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
   componentWillReceiveProps(newProps){
     this.getPage(newProps);
   }
@@ -43,9 +39,11 @@ class PageEdit extends React.Component {
     var pageUrl = propsData.params.name;
 
     var pages = this.state.pages || this.pageState.pages;
-    var page = _.findWhere(pages, {url: pageUrl});
-    if(page){
-      self.setState({page: page, pages: pages});
+    if(pages){
+      var page = _.findWhere(pages, {url: pageUrl});
+      if(page){
+        self.setState({page: page, pages: pages});
+      }
     }
   }
   render() {

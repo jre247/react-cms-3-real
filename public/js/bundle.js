@@ -1511,9 +1511,6 @@ var PageEdit = (function (_React$Component) {
     return _this;
   }
 
-  //this method will only get called when the first page route is loaded. Subsequent page route changes will
-  //fire componentWillReceiveProps
-
   _createClass(PageEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
@@ -1531,10 +1528,6 @@ var PageEdit = (function (_React$Component) {
       this.setState(state);
       this.getPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
@@ -1546,9 +1539,11 @@ var PageEdit = (function (_React$Component) {
       var pageUrl = propsData.params.name;
 
       var pages = this.state.pages || this.pageState.pages;
-      var page = _underscore._.findWhere(pages, { url: pageUrl });
-      if (page) {
-        self.setState({ page: page, pages: pages });
+      if (pages) {
+        var page = _underscore._.findWhere(pages, { url: pageUrl });
+        if (page) {
+          self.setState({ page: page, pages: pages });
+        }
       }
     }
   }, {
@@ -1629,9 +1624,6 @@ var PageReadOnly = (function (_React$Component) {
     return _this;
   }
 
-  //this method will only get called when the first page route is loaded. Subsequent page route changes will
-  //fire componentWillReceiveProps
-
   _createClass(PageReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
@@ -1649,10 +1641,6 @@ var PageReadOnly = (function (_React$Component) {
       this.setState(state);
       this.getPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
@@ -1664,9 +1652,11 @@ var PageReadOnly = (function (_React$Component) {
       var pageUrl = propsData.params.name;
 
       var pages = this.state.pages || this.pageState.pages;
-      var page = _underscore._.findWhere(pages, { url: pageUrl });
-      if (page) {
-        self.setState({ page: page, pages: pages });
+      if (pages) {
+        var page = _underscore._.findWhere(pages, { url: pageUrl });
+        if (page) {
+          self.setState({ page: page, pages: pages });
+        }
       }
     }
   }, {
