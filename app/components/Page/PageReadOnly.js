@@ -21,7 +21,7 @@ class PageReadOnly extends React.Component {
   //fire componentWillReceiveProps
   componentDidMount() {
     PageStore.listen(this.onChange);
-    this.getPage();
+    this.getPage(this.props);
   }
 
   componentWillUnmount() {
@@ -30,21 +30,17 @@ class PageReadOnly extends React.Component {
 
   onChange(state) {
     this.setState(state);
-    this.getPage();
+    this.getPage(this.props);
   }
 
   //need to get page in this method since componentDidMount does not get called when
   //changing routes to another page
-  componentWillReceiveProps(){
-    this.getPage();
+  componentWillReceiveProps(newProps){
+    this.getPage(newProps);
   }
 
-  getPage(){
-    //note that this.props.params.name does not update like it should when changing routes
-    var url = window.location.pathname;
-    var urlPageSplit = window.location.pathname.split('/page/');
-
-    var pageUrl = urlPageSplit[1];
+  getPage(propsData){
+    var pageUrl = propsData.params.name;
 
     var pages = this.state.pages || this.pageState.pages;
     var page = _.findWhere(pages, {url: pageUrl});

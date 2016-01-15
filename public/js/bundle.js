@@ -1518,7 +1518,7 @@ var PageEdit = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _PageStore2.default.listen(this.onChange);
-      this.getPage();
+      this.getPage(this.props);
     }
   }, {
     key: 'componentWillUnmount',
@@ -1529,7 +1529,7 @@ var PageEdit = (function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
-      this.getPage();
+      this.getPage(this.props);
     }
 
     //need to get page in this method since componentDidMount does not get called when
@@ -1537,19 +1537,13 @@ var PageEdit = (function (_React$Component) {
 
   }, {
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      this.getPage();
+    value: function componentWillReceiveProps(newProps) {
+      this.getPage(newProps);
     }
   }, {
     key: 'getPage',
-    value: function getPage() {
-      //note that this.props.params.name does not update like it should when changing routes
-      var url = window.location.pathname;
-      var urlPageSplit = window.location.pathname.split('/page/');
-      debugger;
-      var pageUrl = urlPageSplit[1];
-      urlPageSplit = pageUrl.split('/edit');
-      pageUrl = urlPageSplit[0];
+    value: function getPage(propsData) {
+      var pageUrl = propsData.params.name;
 
       var pages = this.state.pages || this.pageState.pages;
       var page = _underscore._.findWhere(pages, { url: pageUrl });
@@ -1642,7 +1636,7 @@ var PageReadOnly = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _PageStore2.default.listen(this.onChange);
-      this.getPage();
+      this.getPage(this.props);
     }
   }, {
     key: 'componentWillUnmount',
@@ -1653,7 +1647,7 @@ var PageReadOnly = (function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
-      this.getPage();
+      this.getPage(this.props);
     }
 
     //need to get page in this method since componentDidMount does not get called when
@@ -1661,17 +1655,13 @@ var PageReadOnly = (function (_React$Component) {
 
   }, {
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      this.getPage();
+    value: function componentWillReceiveProps(newProps) {
+      this.getPage(newProps);
     }
   }, {
     key: 'getPage',
-    value: function getPage() {
-      //note that this.props.params.name does not update like it should when changing routes
-      var url = window.location.pathname;
-      var urlPageSplit = window.location.pathname.split('/page/');
-
-      var pageUrl = urlPageSplit[1];
+    value: function getPage(propsData) {
+      var pageUrl = propsData.params.name;
 
       var pages = this.state.pages || this.pageState.pages;
       var page = _underscore._.findWhere(pages, { url: pageUrl });
