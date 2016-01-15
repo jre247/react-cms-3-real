@@ -1,5 +1,5 @@
 import alt from '../alt';
-import LookupActions from '../actions/ookupActions';
+import LookupActions from '../actions/LookupActions';
 
 class LookupStore {
   constructor() {
