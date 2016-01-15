@@ -2,6 +2,7 @@ var ContentDb = require('../db/content-db');
 var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
 var PageDb = require('../db/page-db');
+var TemplateDb =require('../db/template-db');
 var _ = require('underscore-node');
 
 // app/routes.js
@@ -109,6 +110,10 @@ module.exports = function(app, passport) {
     app.get('/api/pages', function(req, res, next) {
       getAllNonAuthorizedPages(req, res, next);
     });
+
+    app.get('/api/lookups', function(req, res, next) {
+      getAllLookups(req, res, next);
+    });
 };
 
 var getPage = function(req, res, next){
@@ -123,6 +128,14 @@ var getPage = function(req, res, next){
 var getAllNonAuthorizedPages = function(req, res, next){
   PageDb.findAll().then(function(data){
       var viewmodel = {pages: data};
+
+      res.status(200).send(viewmodel);
+  });
+}
+
+var getAllLookups = function(req, res, next){
+  TemplateDb.findAll().then(function(data){
+      var viewmodel = {templates: data};
 
       res.status(200).send(viewmodel);
   });
