@@ -40,7 +40,7 @@ class Navbar extends React.Component {
     else{
       let nodes = this.state.pages.map((page, index) => {
         return (
-          <Link key={index} className="Navigation-link" to={"/page/" + page.url}>{page.name}</Link>
+          <Link key={index} className="Navigation-link" to={page.url}>{page.name}</Link>
         );
       });
 

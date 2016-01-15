@@ -12,8 +12,8 @@ import RoleManagerUser from './components/Auth/RoleManagerUser';
 export default (
   <Route component={App}>
     <Route path='/' component={Home} />
-    <Route path='/page/:name/edit' component={PageEdit} />
-    <Route path='/page/:name' component={PageReadOnly} />
+    <Route path='/:name/edit' component={PageEdit} />
+    <Route path='/:name' component={PageReadOnly} />
     <Route path='/auth/signup' component={Signup} />
     <Route path='/auth/login' component={Login} />
     <Route path='/auth/role-manager' component={RoleManager} />

@@ -1428,7 +1428,7 @@ var Navbar = (function (_React$Component) {
         var nodes = this.state.pages.map(function (page, index) {
           return _react2.default.createElement(
             _reactRouter.Link,
-            { key: index, className: 'Navigation-link', to: "/page/" + page.url },
+            { key: index, className: 'Navigation-link', to: page.url },
             page.name
           );
         });
@@ -1550,9 +1550,9 @@ var PageEdit = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (!_underscore._.isEmpty(this.state.pages) && !_underscore._.isEmpty(this.state.page)) {
-        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
+        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id,
-          readOnlyPageLink: '/page/' + this.state.page.url }, this.props);
+          readOnlyPageLink: this.state.page.url }, this.props);
 
         return _react2.default.createElement(_TemplateRenderer2.default, propsData);
       } else {
@@ -1663,7 +1663,7 @@ var PageReadOnly = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (!_underscore._.isEmpty(this.state.pages) && !_underscore._.isEmpty(this.state.page)) {
-        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
+        var propsData = _underscore._.extend({ isEdit: this.isEdit, editLink: this.state.page.url + '/edit',
           pageId: this.state.page.id, templateId: this.state.page.template_id }, this.props);
 
         return _react2.default.createElement(_TemplateRenderer2.default, propsData);
@@ -6869,8 +6869,8 @@ exports.default = _react2.default.createElement(
   _reactRouter.Route,
   { component: _app2.default },
   _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Home2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/page/:name/edit', component: _PageEdit2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/page/:name', component: _PageReadOnly2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/:name/edit', component: _PageEdit2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/:name', component: _PageReadOnly2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/signup', component: _Signup2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/login', component: _Login2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/role-manager', component: _RoleManager2.default }),

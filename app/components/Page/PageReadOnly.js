@@ -48,7 +48,7 @@ class PageReadOnly extends React.Component {
   }
   render() {
     if(!_.isEmpty(this.state.pages) && !_.isEmpty(this.state.page)){
-      var propsData = _.extend({isEdit: this.isEdit, editLink: '/page/' + this.state.page.url + '/edit',
+      var propsData = _.extend({isEdit: this.isEdit, editLink: this.state.page.url + '/edit',
         pageId: this.state.page.id, templateId: this.state.page.template_id}, this.props);
 
       return (
