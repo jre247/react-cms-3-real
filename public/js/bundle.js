@@ -392,6 +392,10 @@ var _PageActions = require('../../actions/PageActions');
 
 var _PageActions2 = _interopRequireDefault(_PageActions);
 
+var _LookupStore = require('../../stores/LookupStore');
+
+var _LookupStore2 = _interopRequireDefault(_LookupStore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -411,17 +415,43 @@ var PageAdministration = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PageAdministration).call(this, props));
 
     _this.state = { page: {} };
+    _this.pageState = _PageStore2.default.getState();
+    _this.lookupState = _LookupStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    self = _this;
     return _this;
   }
 
   _createClass(PageAdministration, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      self = this;
+      _PageStore2.default.listen(this.onChange);
+      _LookupStore2.default.listen(this.onChange);
+      this.getPage();
     }
   }, {
     key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
+    value: function componentWillUnmount() {
+      _PageStore2.default.unlisten(this.onChange);
+      _LookupStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'getPage',
+    value: function getPage() {
+      debugger;
+      var pages = this.state.pages;
+      if (pages) {
+        var page = _underscore._.findWhere(pages, { id: this.props.params.id });
+        if (page) {
+          self.setState({ page: page });
+        }
+      }
+    }
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
@@ -431,11 +461,37 @@ var PageAdministration = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {}
   }, {
+    key: 'onNameChange',
+    value: function onNameChange(event) {
+      this.state.page.name = event.target.value;
+      this.setState({ page: this.state.page });
+    }
+  }, {
+    key: 'onUrlChange',
+    value: function onUrlChange(event) {
+      this.state.page.url = event.target.value;
+      this.setState({ page: this.state.page });
+    }
+  }, {
+    key: 'onTemplateChange',
+    value: function onTemplateChange(event) {
+      this.state.page.template = event.target.value;
+      this.setState({ page: this.state.page });
+    }
+  }, {
     key: 'render',
     value: function render() {
       if (!this.state.page) {
         return _react2.default.createElement('span', null);
       } else {
+        var templates = this.state.templates.map(function (template, index) {
+          return _react2.default.createElement(
+            'option',
+            { key: index, value: template.id },
+            template.name
+          );
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-panel' },
@@ -450,7 +506,7 @@ var PageAdministration = (function (_React$Component) {
                 null,
                 'Email'
               ),
-              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', value: this.state.page.name, onChange: this.PageActions.onPageChange.bind(this) })
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', value: this.state.page.name, onChange: this.onPageChange.bind(this) })
             ),
             _react2.default.createElement(
               'div',
@@ -460,7 +516,21 @@ var PageAdministration = (function (_React$Component) {
                 null,
                 'Admin'
               ),
-              _react2.default.createElement('input', { className: 'form-control', name: 'admin', type: 'checkbox', value: this.state.page.url, onChange: this.PageActions.onUrlChange.bind(this) })
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'admin', value: this.state.page.url, onChange: this.onUrlChange.bind(this) })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'form-group' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'Templates'
+              ),
+              _react2.default.createElement(
+                'select',
+                { onChange: this.onTemplateChange.bind(this) },
+                templates
+              )
             ),
             _react2.default.createElement(
               'button',
@@ -478,7 +548,7 @@ var PageAdministration = (function (_React$Component) {
 
 exports.default = PageAdministration;
 
-},{"../../actions/PageActions":6,"../../helpers/AuthHelper":79,"../../stores/PageStore":87,"react":"react","underscore":"underscore"}],9:[function(require,module,exports){
+},{"../../actions/PageActions":6,"../../helpers/AuthHelper":79,"../../stores/LookupStore":85,"../../stores/PageStore":87,"react":"react","underscore":"underscore"}],9:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -7349,14 +7419,14 @@ var LookupStore = (function () {
   }
 
   _createClass(LookupStore, [{
-    key: 'getLookupsSuccess',
-    value: function getLookupsSuccess(viewmodel) {
+    key: 'getAllLookupsSuccess',
+    value: function getAllLookupsSuccess(viewmodel) {
       this.lookups = viewmodel.lookups;
     }
   }, {
-    key: 'getLookupsFail',
-    value: function getLookupsFail(jqXhr) {
-      onsole.log('getLookupsFail');
+    key: 'getAllLookupsFail',
+    value: function getAllLookupsFail(jqXhr) {
+      onsole.log('getAllLookupsFail');
       toastr.error(jqXhr.responseJSON.message);
     }
   }, {

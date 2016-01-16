@@ -7,12 +7,12 @@ class LookupStore {
     this.lookups = [];
     this.ajaxAnimationClass = '';
   }
-  getLookupsSuccess(viewmodel){
+  getAllLookupsSuccess(viewmodel){
     this.lookups = viewmodel.lookups;
   }
 
-  getLookupsFail(jqXhr){
-    onsole.log('getLookupsFail');
+  getAllLookupsFail(jqXhr){
+    onsole.log('getAllLookupsFail');
     toastr.error(jqXhr.responseJSON.message);
   }
 
