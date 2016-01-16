@@ -4,6 +4,7 @@ import AuthHelper from '../../helpers/AuthHelper';
 import PageStore from '../../stores/PageStore';
 import PageActions from '../../actions/PageActions';
 import LookupStore from '../../stores/LookupStore';
+import API from '../../API';
 
 var self;
 
@@ -34,7 +35,6 @@ class PageAdministration extends React.Component {
     if(pages){
       var page = _.findWhere(pages, {id: parseInt(this.props.params.id)});
       if(page){
-        page.selectedTemplate = page.template_id;
         self.setState({page: page});
       }
     }
@@ -44,7 +44,10 @@ class PageAdministration extends React.Component {
   }
 
   submit(event){
-
+    API.savePage(this.state.page).then(function(){
+      debugger;
+      self.props.history.pushState(null, '/admin/pages-administration');
+    })
   }
 
   onNameChange(event){
@@ -58,7 +61,7 @@ class PageAdministration extends React.Component {
   }
 
   onTemplateChange(event){
-    this.state.page.selectedTemplate = event.target.value;
+    this.state.page.template_id = event.target.value;
     this.setState({page: this.state.page});
   }
 
@@ -93,7 +96,7 @@ class PageAdministration extends React.Component {
               <div className="form-group">
                   <label>Templates</label>
                   <select className="form-control" onChange={this.onTemplateChange.bind(this)}
-                    value={this.state.page.selectedTemplate}>
+                    value={this.state.page.template_id}>
                       {templates}
                   </select>
               </div>

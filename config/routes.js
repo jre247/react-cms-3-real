@@ -111,6 +111,32 @@ module.exports = function(app, passport) {
       getAllNonAuthorizedPages(req, res, next);
     });
 
+    app.post('/api/pages/:id', isAdmin, function(req, res, next) {
+      var pageId = req.params.id;
+      var userId = null;
+      var page = req.body.page;
+      if(req.user){
+        userId = req.user.id;
+      }
+
+      if(pageId > 0){
+        PageDb.findById(pageId)
+          .then(function(page){
+            if(page){
+              return PageDb.update(page);
+            }
+          })
+          .then(function(pageFromDb){
+            res.status(200).send(pageFromDb);
+          });
+      }
+      else{
+        PageDb.create(page).then(function(pageFromDb){
+            res.status(200).send(pageFromDb);
+        });
+      }
+    });
+
     app.get('/api/lookups', function(req, res, next) {
       getAllLookups(req, res, next);
     });

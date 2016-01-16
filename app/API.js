@@ -75,6 +75,24 @@ class API {
     return promise.promise();
   }
 
+  static savePage(pageViewmodel) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/pages/' + pageViewmodel.id,
+        data: {page: pageViewmodel}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveContentListForPage(contentList, pageId) {
     var promise = $.Deferred();
 

@@ -96,9 +96,28 @@ var API = (function () {
       return promise.promise();
     }
   }, {
+    key: 'savePage',
+    value: function savePage(pageViewmodel) {
+      var _this4 = this;
+
+      var promise = $.Deferred();
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/pages/' + pageViewmodel.id,
+        data: { page: pageViewmodel }
+      }).done(function (data) {
+        promise.resolve(data);
+      }).fail(function (jqXhr) {
+        promise.reject(_this4.onFail(jqXhr.responseJSON.message));
+      });
+
+      return promise.promise();
+    }
+  }, {
     key: 'saveContentListForPage',
     value: function saveContentListForPage(contentList, pageId) {
-      var _this4 = this;
+      var _this5 = this;
 
       var promise = $.Deferred();
 
@@ -109,7 +128,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this4.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -117,7 +136,7 @@ var API = (function () {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(pageId, isEdit) {
-      var _this5 = this;
+      var _this6 = this;
 
       var promise = $.Deferred();
       var baseUrl = '/api/pages/';
@@ -130,7 +149,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this6.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -396,6 +415,10 @@ var _LookupStore = require('../../stores/LookupStore');
 
 var _LookupStore2 = _interopRequireDefault(_LookupStore);
 
+var _API = require('../../API');
+
+var _API2 = _interopRequireDefault(_API);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -447,7 +470,6 @@ var PageAdministration = (function (_React$Component) {
       if (pages) {
         var page = _underscore._.findWhere(pages, { id: parseInt(this.props.params.id) });
         if (page) {
-          page.selectedTemplate = page.template_id;
           self.setState({ page: page });
         }
       }
@@ -459,7 +481,12 @@ var PageAdministration = (function (_React$Component) {
     }
   }, {
     key: 'submit',
-    value: function submit(event) {}
+    value: function submit(event) {
+      _API2.default.savePage(this.state.page).then(function () {
+        debugger;
+        self.props.history.pushState(null, '/admin/pages-administration');
+      });
+    }
   }, {
     key: 'onNameChange',
     value: function onNameChange(event) {
@@ -475,7 +502,7 @@ var PageAdministration = (function (_React$Component) {
   }, {
     key: 'onTemplateChange',
     value: function onTemplateChange(event) {
-      this.state.page.selectedTemplate = event.target.value;
+      this.state.page.template_id = event.target.value;
       this.setState({ page: this.state.page });
     }
   }, {
@@ -529,7 +556,7 @@ var PageAdministration = (function (_React$Component) {
               _react2.default.createElement(
                 'select',
                 { className: 'form-control', onChange: this.onTemplateChange.bind(this),
-                  value: this.state.page.selectedTemplate },
+                  value: this.state.page.template_id },
                 templates
               )
             ),
@@ -549,7 +576,7 @@ var PageAdministration = (function (_React$Component) {
 
 exports.default = PageAdministration;
 
-},{"../../actions/PageActions":6,"../../helpers/AuthHelper":79,"../../stores/LookupStore":85,"../../stores/PageStore":87,"react":"react","underscore":"underscore"}],9:[function(require,module,exports){
+},{"../../API":1,"../../actions/PageActions":6,"../../helpers/AuthHelper":79,"../../stores/LookupStore":85,"../../stores/PageStore":87,"react":"react","underscore":"underscore"}],9:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
