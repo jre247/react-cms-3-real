@@ -23,7 +23,7 @@ class PagesAdministration extends React.Component {
     PageStore.unlisten(this.onChange);
   }
   onChange(state) {
-    this.setState(state);
+    self.setState(state);
   }
   selectPage(page, event){
     self.props.history.pushState(null, '/admin/pages-administration/' + page.id);

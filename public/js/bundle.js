@@ -256,7 +256,7 @@ var LookupActions = (function () {
   function LookupActions() {
     _classCallCheck(this, LookupActions);
 
-    this.generateActions('updateAjaxAnimation', 'getLookupsSuccess');
+    this.generateActions('updateAjaxAnimation', 'getAllLookupsSuccess');
   }
 
   _createClass(LookupActions, [{
@@ -438,16 +438,16 @@ var PageAdministration = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
-      this.setState(state);
+      self.setState(state);
     }
   }, {
     key: 'getPage',
     value: function getPage() {
-      debugger;
-      var pages = this.state.pages;
+      var pages = this.pageState.pages;
       if (pages) {
-        var page = _underscore._.findWhere(pages, { id: this.props.params.id });
+        var page = _underscore._.findWhere(pages, { id: parseInt(this.props.params.id) });
         if (page) {
+          page.selectedTemplate = page.template_id;
           self.setState({ page: page });
         }
       }
@@ -475,16 +475,16 @@ var PageAdministration = (function (_React$Component) {
   }, {
     key: 'onTemplateChange',
     value: function onTemplateChange(event) {
-      this.state.page.template = event.target.value;
+      this.state.page.selectedTemplate = event.target.value;
       this.setState({ page: this.state.page });
     }
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.page) {
+      if (_underscore._.isEmpty(this.state.page)) {
         return _react2.default.createElement('span', null);
       } else {
-        var templates = this.state.templates.map(function (template, index) {
+        var templates = this.lookupState.lookups.templates.map(function (template, index) {
           return _react2.default.createElement(
             'option',
             { key: index, value: template.id },
@@ -504,9 +504,9 @@ var PageAdministration = (function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'Email'
+                'Name'
               ),
-              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', value: this.state.page.name, onChange: this.onPageChange.bind(this) })
+              _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'email', value: this.state.page.name, onChange: this.onNameChange.bind(this) })
             ),
             _react2.default.createElement(
               'div',
@@ -514,7 +514,7 @@ var PageAdministration = (function (_React$Component) {
               _react2.default.createElement(
                 'label',
                 null,
-                'Admin'
+                'Url'
               ),
               _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'admin', value: this.state.page.url, onChange: this.onUrlChange.bind(this) })
             ),
@@ -528,7 +528,8 @@ var PageAdministration = (function (_React$Component) {
               ),
               _react2.default.createElement(
                 'select',
-                { onChange: this.onTemplateChange.bind(this) },
+                { className: 'form-control', onChange: this.onTemplateChange.bind(this),
+                  value: this.state.page.selectedTemplate },
                 templates
               )
             ),
@@ -614,7 +615,7 @@ var PagesAdministration = (function (_React$Component) {
   }, {
     key: 'onChange',
     value: function onChange(state) {
-      this.setState(state);
+      self.setState(state);
     }
   }, {
     key: 'selectPage',
@@ -7421,7 +7422,7 @@ var LookupStore = (function () {
   _createClass(LookupStore, [{
     key: 'getAllLookupsSuccess',
     value: function getAllLookupsSuccess(viewmodel) {
-      this.lookups = viewmodel.lookups;
+      this.lookups = viewmodel;
     }
   }, {
     key: 'getAllLookupsFail',

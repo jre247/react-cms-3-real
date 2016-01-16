@@ -27,14 +27,14 @@ class PageAdministration extends React.Component {
     LookupStore.unlisten(this.onChange);
   }
   onChange(state) {
-    this.setState(state);
+    self.setState(state);
   }
   getPage(){
-    debugger;
-    var pages = this.state.pages;
+    var pages = this.pageState.pages;
     if(pages){
-      var page = _.findWhere(pages, {id: this.props.params.id});
+      var page = _.findWhere(pages, {id: parseInt(this.props.params.id)});
       if(page){
+        page.selectedTemplate = page.template_id;
         self.setState({page: page});
       }
     }
@@ -58,18 +58,18 @@ class PageAdministration extends React.Component {
   }
 
   onTemplateChange(event){
-    this.state.page.template = event.target.value;
+    this.state.page.selectedTemplate = event.target.value;
     this.setState({page: this.state.page});
   }
 
   render() {
-    if(!this.state.page){
+    if(_.isEmpty(this.state.page)){
       return(
         <span />
       );
     }
     else{
-      var templates = this.state.templates.map((template, index) => {
+      var templates = this.lookupState.lookups.templates.map((template, index) => {
         return (
           <option key={index} value={template.id}>
             {template.name}
@@ -81,19 +81,20 @@ class PageAdministration extends React.Component {
         <div className='Content-panel'>
           <div>
               <div className="form-group">
-                  <label>Email</label>
-                  <input type="text" className="form-control" name="email" value={this.state.page.name} onChange={this.onPageChange.bind(this)} />
+                  <label>Name</label>
+                  <input type="text" className="form-control" name="email" value={this.state.page.name} onChange={this.onNameChange.bind(this)} />
               </div>
 
               <div className="form-group">
-                  <label>Admin</label>
+                  <label>Url</label>
                   <input type="text" className="form-control" name="admin" value={this.state.page.url} onChange={this.onUrlChange.bind(this)} />
               </div>
 
               <div className="form-group">
                   <label>Templates</label>
-                  <select onChange={this.onTemplateChange.bind(this)}>
-                    {templates}
+                  <select className="form-control" onChange={this.onTemplateChange.bind(this)}
+                    value={this.state.page.selectedTemplate}>
+                      {templates}
                   </select>
               </div>
 

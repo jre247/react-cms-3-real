@@ -5,7 +5,7 @@ class LookupActions {
   constructor() {
     this.generateActions(
       'updateAjaxAnimation',
-      'getLookupsSuccess'
+      'getAllLookupsSuccess'
     );
   }
 

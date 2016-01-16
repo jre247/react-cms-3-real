@@ -8,7 +8,7 @@ class LookupStore {
     this.ajaxAnimationClass = '';
   }
   getAllLookupsSuccess(viewmodel){
-    this.lookups = viewmodel.lookups;
+    this.lookups = viewmodel;
   }
 
   getAllLookupsFail(jqXhr){
