@@ -112,9 +112,9 @@ module.exports = function(app, passport) {
     });
 
     app.post('/api/pages/:id', isAdmin, function(req, res, next) {
-      var pageId = req.params.id;
       var userId = null;
-      var page = req.body.page;
+      var pageViewmodel = req.body.page;
+      var pageId = pageViewmodel.id;
       if(req.user){
         userId = req.user.id;
       }
@@ -123,7 +123,7 @@ module.exports = function(app, passport) {
         PageDb.findById(pageId)
           .then(function(page){
             if(page){
-              return PageDb.update(page);
+              return PageDb.update(pageViewmodel);
             }
           })
           .then(function(pageFromDb){
