@@ -110,3 +110,5 @@ GRANT ALL PRIVILEGES ON TABLE wedding_user_role TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE wedding_user_role_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE page TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE page_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE template TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE template_id_seq TO jevans;

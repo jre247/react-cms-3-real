@@ -31,6 +31,10 @@ class AuthLinks extends React.Component {
           <div className='Navigation logout' role="navigation">
               <Link className="Navigation-link" to="/logout">Logout</Link>
           </div>
+          <div className='Navigation logout' role="navigation">
+              <Link className="Navigation-link" to="/admin/pages-administration">Pages Administration</Link>
+          </div>
+
         </div>
       );
     }

@@ -8,6 +8,8 @@ import Signup from './components/Auth/Signup';
 import Login from './components/Auth/Login';
 import RoleManager from './components/Auth/RoleManager';
 import RoleManagerUser from './components/Auth/RoleManagerUser';
+import PagesAdministration from './components/Admin/PagesAdministration';
+import PageAdministration from './components/Admin/PageAdministration';
 
 export default (
   <Route component={App}>
@@ -18,5 +20,7 @@ export default (
     <Route path='/auth/login' component={Login} />
     <Route path='/auth/role-manager' component={RoleManager} />
     <Route path='/auth/role-manager/users/:id' component={RoleManagerUser} />
+    <Route path='/admin/pages-administration' component={PagesAdministration} />
+    <Route path='/admin/pages-administration/:id' component={PageAdministration} />
   </Route>
 );
