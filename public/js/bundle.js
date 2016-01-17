@@ -618,7 +618,7 @@ var PageAdministration = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { type: 'button delete-page-btn', className: self.state.page.id > 0 ? 'btn btn-danger btn-lg' : 'hidden',
+            { type: 'button', className: self.state.page.id > 0 ? 'btn btn-danger btn-lg delete-page-btn' : 'hidden',
               onClick: this.deletePage.bind(this) },
             'Delete'
           )

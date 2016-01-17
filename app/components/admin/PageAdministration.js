@@ -111,7 +111,7 @@ class PageAdministration extends React.Component {
             </div>
 
             <button type="button" className="btn btn-primary btn-lg" onClick={this.submit.bind(this)}>Save</button>
-            <button type="button delete-page-btn" className={self.state.page.id > 0 ? 'btn btn-danger btn-lg' : 'hidden'}
+            <button type="button" className={self.state.page.id > 0 ? 'btn btn-danger btn-lg delete-page-btn' : 'hidden'}
               onClick={this.deletePage.bind(this)}>Delete</button>
         </div>
       </div>
