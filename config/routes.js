@@ -120,20 +120,10 @@ module.exports = function(app, passport) {
       }
 
       if(pageId > 0){
-        PageDb.findById(pageId)
-          .then(function(page){
-            if(page){
-              return PageDb.update(pageViewmodel);
-            }
-          })
-          .then(function(pageFromDb){
-            res.status(200).send(pageFromDb);
-          });
+        updatePage(req, res, next, pageViewmodel);
       }
       else{
-        PageDb.create(page).then(function(pageFromDb){
-            res.status(200).send(pageFromDb);
-        });
+        createPage(req, res, next, pageViewmodel);
       }
     });
 
@@ -141,6 +131,29 @@ module.exports = function(app, passport) {
       getAllLookups(req, res, next);
     });
 };
+
+var updatePage = function(req, res, next, pageViewmodel){
+  var pageId = pageViewmodel.id;
+
+  PageDb.findById(pageId)
+    .then(function(page){
+      if(page){
+        return PageDb.update(pageViewmodel);
+      }
+      else{
+        res.status(403).send("forbidden");
+      }
+    })
+    .then(function(pageFromDb){
+      res.status(200).send(pageFromDb);
+    });
+}
+
+var createPage = function(req, res, next, pageViewmodel){
+  PageDb.create(pageViewmodel).then(function(pageFromDb){
+      res.status(200).send(pageFromDb);
+  });
+}
 
 var getPage = function(req, res, next){
   var pageId = req.params.id;

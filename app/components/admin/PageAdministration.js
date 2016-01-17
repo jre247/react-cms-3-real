@@ -21,7 +21,13 @@ class PageAdministration extends React.Component {
   componentDidMount() {
     PageStore.listen(this.onChange);
     LookupStore.listen(this.onChange);
-    this.getPage();
+    debugger;
+    var isEdit = this.props.isEdit;
+
+    if(isEdit)
+      this.getPage();
+    else
+      this.createPage();
   }
   componentWillUnmount() {
     PageStore.unlisten(this.onChange);
@@ -29,6 +35,10 @@ class PageAdministration extends React.Component {
   }
   onChange(state) {
     self.setState(state);
+  }
+  createPage(){
+    var newPage = {id: 0, name: '', url: '', template_id: 1};
+    self.setState({page: newPage});
   }
   getPage(){
     var pages = this.pageState.pages;
@@ -45,7 +55,6 @@ class PageAdministration extends React.Component {
 
   submit(event){
     API.savePage(this.state.page).then(function(){
-      debugger;
       self.props.history.pushState(null, '/admin/pages-administration');
     })
   }
@@ -66,46 +75,40 @@ class PageAdministration extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.state.page)){
-      return(
-        <span />
+    var templates = this.lookupState.lookups.templates.map((template, index) => {
+      return (
+        <option key={index} value={template.id}>
+          {template.name}
+        </option>
       );
-    }
-    else{
-      var templates = this.lookupState.lookups.templates.map((template, index) => {
-        return (
-          <option key={index} value={template.id}>
-            {template.name}
-          </option>
-        );
-      });
+    });
 
-      return(
-        <div className='Content-panel'>
-          <div>
-              <div className="form-group">
-                  <label>Name</label>
-                  <input type="text" className="form-control" name="email" value={this.state.page.name} onChange={this.onNameChange.bind(this)} />
-              </div>
+    return(
+      <div className='Content-panel'>
+        <div>
+            <div className="form-group">
+                <label>Name</label>
+                <input type="text" className="form-control" name="email" value={this.state.page.name} onChange={this.onNameChange.bind(this)} />
+            </div>
 
-              <div className="form-group">
-                  <label>Url</label>
-                  <input type="text" className="form-control" name="admin" value={this.state.page.url} onChange={this.onUrlChange.bind(this)} />
-              </div>
+            <div className="form-group">
+                <label>Url</label>
+                <input type="text" className="form-control" name="admin" value={this.state.page.url} onChange={this.onUrlChange.bind(this)} />
+            </div>
 
-              <div className="form-group">
-                  <label>Templates</label>
-                  <select className="form-control" onChange={this.onTemplateChange.bind(this)}
-                    value={this.state.page.template_id}>
-                      {templates}
-                  </select>
-              </div>
+            <div className="form-group">
+                <label>Templates</label>
+                <select className="form-control" onChange={this.onTemplateChange.bind(this)}
+                  value={this.state.page.template_id}>
+                    {templates}
+                </select>
+            </div>
 
-              <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
-          </div>
+            <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
         </div>
-      );
-    }
+      </div>
+    );
+
   }
 }
 

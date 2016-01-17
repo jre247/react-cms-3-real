@@ -4,11 +4,9 @@ import AuthHelper from '../../helpers/AuthHelper';
 import PageStore from '../../stores/PageStore';
 import PageActions from '../../actions/PageActions';
 import { createHistory } from 'history'
-
 var self;
 
 class PagesAdministration extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = PageStore.getState();
@@ -26,7 +24,10 @@ class PagesAdministration extends React.Component {
     self.setState(state);
   }
   selectPage(page, event){
-    self.props.history.pushState(null, '/admin/pages-administration/' + page.id);
+    self.props.history.pushState(null, '/admin/pages/' + page.id);
+  }
+  create(){
+    self.props.history.pushState(null, '/admin/pages/create');
   }
 
   render() {
@@ -48,6 +49,8 @@ class PagesAdministration extends React.Component {
 
       return (
         <div className='Content-panel'>
+          <button type="button" className="btn btn-warning btn-lg" onClick={this.create.bind(this)}>Create</button>
+
           <div className="table-responsive">
             <table className="table pages-administration">
             <thead>
