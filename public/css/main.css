@@ -7382,6 +7382,13 @@ a:hover {
 .edit-content-button {
   cursor: pointer;
 }
+.edit-link {
+  color: gray;
+}
+.edit-link:hover {
+  color: black;
+  text-decoration: none;
+}
 .fixed-container {
   opacity: 1;
   background-image: url("http://passcdn-cf1.pass.us/bKn1Z1557788/fDjB1266150348l.jpg");
@@ -7568,10 +7575,10 @@ a:hover {
   margin-bottom: 40px;
 }
 .List-Grid-Group-Column-Small-Edit {
-  width: 37%;
+  width: 47%;
 }
 .List-Grid-Row-Edit {
-  padding-left: 12%;
+  padding-left: 19%;
 }
 .Sub-List-Items {
   padding-left: 10%;
@@ -7612,6 +7619,9 @@ a:hover {
 .List-Grid-Template .Content-short-description {
   text-align: left;
   width: 90%;
+}
+.list-grid-column-content-container {
+  margin-top: 10px;
 }
 .Content-long-description {
   display: inline-block;
@@ -7704,10 +7714,14 @@ a:hover {
 .Widget-input {
   text-align: center;
 }
-.role-manager-table-body tr:hover {
-  background-color: #BDAC28;
+.auth-table-body tr:hover {
+  background-color: lightgray;
+  color: black;
   cursor: pointer;
 }
 .role-manager {
   color: white;
+}
+.page-create-button {
+  margin-bottom: 20px;
 }

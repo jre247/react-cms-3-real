@@ -57,7 +57,7 @@ class ListGridTemplate extends React.Component {
 
   submit(event){
     API.saveContentListForPage(this.state.contentList, this.props.pageId).then(function(){
-      self.props.history.pushState(null, self.props.readOnlyPageLink);
+      self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
 
@@ -170,7 +170,7 @@ class ListGridTemplate extends React.Component {
 
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <div className='container List-page'>
+          <div className='List-page'>
             <div className='row List-container'>
               <div className='Content-panel List-Grid-Template'>
                 <EditLink {...this.props} />

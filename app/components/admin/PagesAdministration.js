@@ -49,21 +49,25 @@ class PagesAdministration extends React.Component {
 
       return (
         <div className='Content-panel'>
-          <button type="button" className="btn btn-warning btn-lg" onClick={this.create.bind(this)}>Create</button>
-
-          <div className="table-responsive">
-            <table className="table pages-administration">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Template</th>
-                <th>Url</th>
-              </tr>
-            </thead>
-            <tbody className="pages-administration-table-body">
-              {nodes}
-            </tbody>
-            </table>
+          <div className="page-create-button">
+            <button type="button" className="btn btn-primary btn-lg"
+              onClick={this.create.bind(this)}>Create</button>
+          </div>
+          <div>
+            <div className="table-responsive">
+              <table className="table pages-administration">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Template</th>
+                  <th>Url</th>
+                </tr>
+              </thead>
+              <tbody className="auth-table-body">
+                {nodes}
+              </tbody>
+              </table>
+            </div>
           </div>
         </div>
       );

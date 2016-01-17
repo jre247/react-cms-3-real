@@ -42,7 +42,7 @@ class BasicTemplateEdit extends React.Component {
 
   submit(event){
     API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
-      self.props.history.pushState(null, self.props.readOnlyPageLink);
+      self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
 

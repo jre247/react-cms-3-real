@@ -29,6 +29,7 @@ CREATE TABLE page
 	user_id INTEGER NULL references wedding_user(id),
 	date_created TIMESTAMP null,
 	template_id INTEGER NOT NULL references template(id),
+	sort_order INTEGER NOT NULL,
 	is_active BOOLEAN
 );
 CREATE TABLE content_type

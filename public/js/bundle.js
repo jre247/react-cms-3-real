@@ -806,43 +806,52 @@ var PagesAdministration = (function (_React$Component) {
           'div',
           { className: 'Content-panel' },
           _react2.default.createElement(
-            'button',
-            { type: 'button', className: 'btn btn-warning btn-lg', onClick: this.create.bind(this) },
-            'Create'
+            'div',
+            { className: 'page-create-button' },
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'btn btn-primary btn-lg',
+                onClick: this.create.bind(this) },
+              'Create'
+            )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'table-responsive' },
+            null,
             _react2.default.createElement(
-              'table',
-              { className: 'table pages-administration' },
+              'div',
+              { className: 'table-responsive' },
               _react2.default.createElement(
-                'thead',
-                null,
+                'table',
+                { className: 'table pages-administration' },
                 _react2.default.createElement(
-                  'tr',
+                  'thead',
                   null,
                   _react2.default.createElement(
-                    'th',
+                    'tr',
                     null,
-                    'Name'
-                  ),
-                  _react2.default.createElement(
-                    'th',
-                    null,
-                    'Template'
-                  ),
-                  _react2.default.createElement(
-                    'th',
-                    null,
-                    'Url'
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Name'
+                    ),
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Template'
+                    ),
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Url'
+                    )
                   )
+                ),
+                _react2.default.createElement(
+                  'tbody',
+                  { className: 'auth-table-body' },
+                  nodes
                 )
-              ),
-              _react2.default.createElement(
-                'tbody',
-                { className: 'pages-administration-table-body' },
-                nodes
               )
             )
           )
@@ -1100,7 +1109,7 @@ var RoleManager = (function (_React$Component) {
               ),
               _react2.default.createElement(
                 'tbody',
-                { className: 'role-manager-table-body' },
+                { className: 'auth-table-body' },
                 nodes
               )
             )
@@ -1435,20 +1444,20 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AuthLinks = (function (_React$Component) {
-  _inherits(AuthLinks, _React$Component);
+var AuthHeader = (function (_React$Component) {
+  _inherits(AuthHeader, _React$Component);
 
-  function AuthLinks(props) {
-    _classCallCheck(this, AuthLinks);
+  function AuthHeader(props) {
+    _classCallCheck(this, AuthHeader);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthLinks).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthHeader).call(this, props));
 
     _this.state = _AuthStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
 
-  _createClass(AuthLinks, [{
+  _createClass(AuthHeader, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       _AuthStore2.default.listen(this.onChange);
@@ -1468,33 +1477,45 @@ var AuthLinks = (function (_React$Component) {
     value: function render() {
       if (this.state.isAdmin) {
         return _react2.default.createElement(
-          'div',
-          null,
+          'nav',
+          { className: 'navbar navbar-default auth-nav-container' },
           _react2.default.createElement(
             'div',
-            { className: 'Navigation', role: 'navigation' },
+            { className: 'container' },
             _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'Navigation-link', to: '/auth/role-manager' },
-              'Role Manager'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Navigation logout', role: 'navigation' },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'Navigation-link', to: '/logout' },
-              'Logout'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'Navigation logout', role: 'navigation' },
-            _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'Navigation-link', to: '/admin/pages' },
-              'Pages Administration'
+              'div',
+              { id: 'navbar', className: 'navbar-collapse collapse' },
+              _react2.default.createElement(
+                'ul',
+                { className: 'nav navbar-nav' },
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/auth/role-manager' },
+                    'Role Manager'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/admin/pages' },
+                    'Pages Administration'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/logout' },
+                    'Logout'
+                  )
+                )
+              )
             )
           )
         );
@@ -1504,10 +1525,10 @@ var AuthLinks = (function (_React$Component) {
     }
   }]);
 
-  return AuthLinks;
+  return AuthHeader;
 })(_react2.default.Component);
 
-exports.default = AuthLinks;
+exports.default = AuthHeader;
 
 },{"../stores/AuthStore":85,"react":"react","react-router":"react-router"}],17:[function(require,module,exports){
 'use strict';
@@ -1558,9 +1579,13 @@ var EditLink = (function (_React$Component) {
           'div',
           { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: this.props.editLink },
-            'Edit'
+            'button',
+            { className: 'btn btn-default' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'edit-link', to: '/' + this.props.editLink },
+              'Edit'
+            )
           )
         );
       }
@@ -1911,10 +1936,6 @@ var _PageStore = require('../stores/PageStore');
 
 var _PageStore2 = _interopRequireDefault(_PageStore);
 
-var _AuthLinks = require('./AuthLinks');
-
-var _AuthLinks2 = _interopRequireDefault(_AuthLinks);
-
 var _underscore = require('underscore');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1962,33 +1983,39 @@ var Navbar = (function (_React$Component) {
       if (_underscore._.isEmpty(this.state.pages)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Navigation', role: 'navigation' },
+          null,
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/' },
-            'Home'
-          ),
-          _react2.default.createElement(_AuthLinks2.default, null)
+            'div',
+            { className: 'Navigation', role: 'navigation' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/' },
+              'Home'
+            )
+          )
         );
       } else {
         var nodes = this.state.pages.map(function (page, index) {
           return _react2.default.createElement(
             _reactRouter.Link,
-            { key: index, className: 'Navigation-link', to: page.url },
+            { key: index, className: 'Navigation-link', to: '/' + page.url },
             page.name
           );
         });
 
         return _react2.default.createElement(
           'div',
-          { className: 'Navigation', role: 'navigation' },
+          null,
           _react2.default.createElement(
-            _reactRouter.Link,
-            { className: 'Navigation-link', to: '/' },
-            'Home'
-          ),
-          nodes,
-          _react2.default.createElement(_AuthLinks2.default, null)
+            'div',
+            { className: 'Navigation', role: 'navigation' },
+            _react2.default.createElement(
+              _reactRouter.Link,
+              { className: 'Navigation-link', to: '/' },
+              'Home'
+            ),
+            nodes
+          )
         );
       }
     }
@@ -1999,7 +2026,7 @@ var Navbar = (function (_React$Component) {
 
 exports.default = Navbar;
 
-},{"../stores/PageStore":89,"./AuthLinks":16,"react":"react","react-router":"react-router","underscore":"underscore"}],23:[function(require,module,exports){
+},{"../stores/PageStore":89,"react":"react","react-router":"react-router","underscore":"underscore"}],23:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2382,7 +2409,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {
       _API2.default.saveContentListForPage(self.state.contentList, self.props.pageId).then(function () {
-        self.props.history.pushState(null, self.props.readOnlyPageLink);
+        self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
   }, {
@@ -2703,7 +2730,7 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {
       _API2.default.saveContentListForPage(this.state.contentList, this.props.pageId).then(function () {
-        self.props.history.pushState(null, self.props.readOnlyPageLink);
+        self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
   }, {
@@ -2829,7 +2856,7 @@ var ListGridTemplate = (function (_React$Component) {
           { onSubmit: this.handleSubmit.bind(this) },
           _react2.default.createElement(
             'div',
-            { className: 'container List-page' },
+            { className: 'List-page' },
             _react2.default.createElement(
               'div',
               { className: 'row List-container' },
@@ -2979,7 +3006,7 @@ var ListTemplate = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {
       _API2.default.saveContentListForPage(self.state.contentList, self.props.pageId).then(function () {
-        self.props.history.pushState(null, self.props.readOnlyPageLink);
+        self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
   }, {
@@ -3106,7 +3133,7 @@ var ListTemplate = (function (_React$Component) {
           { onSubmit: this.handleSubmit.bind(this) },
           _react2.default.createElement(
             'div',
-            { className: 'container List-page' },
+            { className: 'List-page' },
             _react2.default.createElement(
               'div',
               { className: 'row List-container' },
@@ -3336,7 +3363,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {
       _API2.default.saveContentListForPage(self.state.contentList, self.props.pageId).then(function () {
-        self.props.history.pushState(null, self.props.readOnlyPageLink);
+        self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
 
@@ -5173,7 +5200,7 @@ var ListGridGroupColumn = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'row' },
+            { className: 'row list-grid-column-content-container' },
             nodes
           )
         )
@@ -7190,6 +7217,10 @@ var _LookupActions = require('../actions/LookupActions');
 
 var _LookupActions2 = _interopRequireDefault(_LookupActions);
 
+var _AuthHeader = require('./AuthHeader');
+
+var _AuthHeader2 = _interopRequireDefault(_AuthHeader);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7240,14 +7271,19 @@ var App = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'App-container' },
-        _react2.default.createElement(_Header2.default, null),
-        this.props.children,
-        _react2.default.createElement(_Footer2.default, null),
+        null,
+        _react2.default.createElement(_AuthHeader2.default, null),
         _react2.default.createElement(
           'div',
-          { className: 'Backdrop' },
-          _react2.default.createElement('div', { className: 'fixed-container' })
+          { className: 'App-container' },
+          _react2.default.createElement(_Header2.default, null),
+          this.props.children,
+          _react2.default.createElement(_Footer2.default, null),
+          _react2.default.createElement(
+            'div',
+            { className: 'Backdrop' },
+            _react2.default.createElement('div', { className: 'fixed-container' })
+          )
         )
       );
     }
@@ -7258,7 +7294,7 @@ var App = (function (_React$Component) {
 
 exports.default = App;
 
-},{"../actions/AuthActions":2,"../actions/LookupActions":4,"../actions/PageActions":6,"../stores/AuthStore":85,"../stores/LookupStore":87,"../stores/PageStore":89,"./Footer":19,"./Header":20,"react":"react"}],81:[function(require,module,exports){
+},{"../actions/AuthActions":2,"../actions/LookupActions":4,"../actions/PageActions":6,"../stores/AuthStore":85,"../stores/LookupStore":87,"../stores/PageStore":89,"./AuthHeader":16,"./Footer":19,"./Header":20,"react":"react"}],81:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

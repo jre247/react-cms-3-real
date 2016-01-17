@@ -7,6 +7,7 @@ import PageStore from '../stores/PageStore';
 import PageActions from '../actions/PageActions';
 import LookupStore from '../stores/LookupStore';
 import LookupActions from '../actions/LookupActions';
+import AuthHeader from './AuthHeader';
 
 class App extends React.Component {
   constructor(props) {
@@ -38,12 +39,16 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App-container">
-        <Header />
-        {this.props.children}
-        <Footer />
-        <div className="Backdrop">
-          <div className="fixed-container">
+      <div>
+        <AuthHeader />
+
+        <div className="App-container">
+          <Header />
+          {this.props.children}
+          <Footer />
+          <div className="Backdrop">
+            <div className="fixed-container">
+            </div>
           </div>
         </div>
       </div>

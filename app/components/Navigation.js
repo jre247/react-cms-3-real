@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
 import PageStore from '../stores/PageStore';
-import AuthLinks from './AuthLinks';
 import {_} from 'underscore';
 
 class Navbar extends React.Component {
@@ -30,27 +29,26 @@ class Navbar extends React.Component {
   render() {
     if(_.isEmpty(this.state.pages)){
       return (
-        <div className='Navigation' role="navigation">
-            <Link className="Navigation-link" to="/">Home</Link>
-
-            <AuthLinks />
+        <div>
+          <div className='Navigation' role="navigation">
+              <Link className="Navigation-link" to="/">Home</Link>
+          </div>
         </div>
       );
     }
     else{
       let nodes = this.state.pages.map((page, index) => {
         return (
-          <Link key={index} className="Navigation-link" to={page.url}>{page.name}</Link>
+          <Link key={index} className="Navigation-link" to={'/' + page.url}>{page.name}</Link>
         );
       });
 
       return (
-        <div className='Navigation' role="navigation">
-            <Link className="Navigation-link" to="/">Home</Link>
-
-            {nodes}
-
-            <AuthLinks />
+        <div>
+          <div className='Navigation' role="navigation">
+              <Link className="Navigation-link" to="/">Home</Link>
+              {nodes}
+          </div>
         </div>
       );
     }

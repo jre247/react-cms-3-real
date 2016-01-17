@@ -69,7 +69,7 @@ class ListGridGroupColumn extends React.Component {
             <WidgetSelectList {...widgetListPropsData} />
           </div>
 
-          <div className='row'>
+          <div className='row list-grid-column-content-container'>
             {nodes}
           </div>
         </div>
