@@ -21,7 +21,7 @@ class PageAdministration extends React.Component {
   componentDidMount() {
     PageStore.listen(this.onChange);
     LookupStore.listen(this.onChange);
-  
+
     var isEdit = this.props.isEdit;
 
     if(isEdit)
@@ -40,6 +40,11 @@ class PageAdministration extends React.Component {
     var sortOrder = this.pageState.pages.length;
     var newPage = {id: 0, name: '', url: '', template_id: 1, sort_order: sortOrder};
     self.setState({page: newPage});
+  }
+  deletePage(){
+    API.deletePage(self.state.page.id).then(function(){
+      self.props.history.pushState(null, '/admin/pages');
+    })
   }
   getPage(){
     var pages = this.pageState.pages;
@@ -105,7 +110,9 @@ class PageAdministration extends React.Component {
                 </select>
             </div>
 
-            <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
+            <button type="button" className="btn btn-primary btn-lg" onClick={this.submit.bind(this)}>Save</button>
+            <button type="button delete-page-btn" className={self.state.page.id > 0 ? 'btn btn-danger btn-lg' : 'hidden'}
+              onClick={this.deletePage.bind(this)}>Delete</button>
         </div>
       </div>
     );

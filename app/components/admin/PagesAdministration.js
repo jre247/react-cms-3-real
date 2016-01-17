@@ -13,13 +13,22 @@ class PagesAdministration extends React.Component {
   constructor(props) {
     super(props);
     this.state = PageStore.getState();
+    this.onChange = this.onChange.bind(this);
     self = this;
   }
 
   componentDidMount() {
+    debugger;
     PageStore.listen(this.onChange);
     PageActions.getAllPages();
 
+    this.setupSortableTable();
+  }
+  componentWillReceiveProps(){
+    debugger;
+    this.setupSortableTable();
+  }
+  setupSortableTable(){
     // ReactDOM.findDOMNode(this) is the <ul>
     // element created in our render method
     $(ReactDOM.findDOMNode(this)).sortable({
@@ -34,19 +43,13 @@ class PagesAdministration extends React.Component {
     self.setState(state);
   }
   handleSortableUpdate() {
-    // We should only use setState to mutate our component's state,
-    // so here we'll clone the items array (using lodash) and
     // update the list items through this new array.
     var newItems = _.clone(self.state.pages, true);
     var $node = $(ReactDOM.findDOMNode(this));
 
-    // Here's where our data-id attribute from before comes
-    // into play. toArray will return a sorted array of item ids:
+    // toArray will return a sorted array of item ids:
     var ids = $node.sortable('toArray', { attribute: 'data-id' });
 
-    // Now we can loop through the array of ids, find the
-    // item in our array by its id (again, w/ lodash),
-    // and update its position:
     ids.forEach((id, index) => {
       var pageId = parseInt(id);
 
@@ -59,14 +62,9 @@ class PagesAdministration extends React.Component {
 
     newItems = _.sortBy(newItems, 'sort_order');
 
-    // After making our updates, we'll set our items
-    // array to our updated array, causing items with
-    // a new position to be updated in the DOM:
     self.setState({ pages: newItems });
 
-    API.saveSortingForPages(self.state.pages).then(function(){
-      debugger;
-    });
+    API.saveSortingForPages(self.state.pages);
   }
   selectPage(page, event){
     self.props.history.pushState(null, '/admin/pages/' + page.id + '/edit');

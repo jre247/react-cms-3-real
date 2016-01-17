@@ -115,9 +115,28 @@ var API = (function () {
       return promise.promise();
     }
   }, {
+    key: 'deletePage',
+    value: function deletePage(pageId) {
+      var _this5 = this;
+
+      var promise = $.Deferred();
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/pages/' + pageId + '/delete',
+        data: { pageId: pageId }
+      }).done(function (data) {
+        promise.resolve(data);
+      }).fail(function (jqXhr) {
+        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
+      });
+
+      return promise.promise();
+    }
+  }, {
     key: 'saveSortingForPages',
     value: function saveSortingForPages(pages) {
-      var _this5 = this;
+      var _this6 = this;
 
       var promise = $.Deferred();
 
@@ -128,7 +147,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this5.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this6.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -136,7 +155,7 @@ var API = (function () {
   }, {
     key: 'saveContentListForPage',
     value: function saveContentListForPage(contentList, pageId) {
-      var _this6 = this;
+      var _this7 = this;
 
       var promise = $.Deferred();
 
@@ -147,7 +166,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this6.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this7.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -155,7 +174,7 @@ var API = (function () {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(pageId, isEdit) {
-      var _this7 = this;
+      var _this8 = this;
 
       var promise = $.Deferred();
       var baseUrl = '/api/pages/';
@@ -168,7 +187,7 @@ var API = (function () {
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
-        promise.reject(_this7.onFail(jqXhr.responseJSON.message));
+        promise.reject(_this8.onFail(jqXhr.responseJSON.message));
       });
 
       return promise.promise();
@@ -493,6 +512,13 @@ var PageAdministration = (function (_React$Component) {
       self.setState({ page: newPage });
     }
   }, {
+    key: 'deletePage',
+    value: function deletePage() {
+      _API2.default.deletePage(self.state.page.id).then(function () {
+        self.props.history.pushState(null, '/admin/pages');
+      });
+    }
+  }, {
     key: 'getPage',
     value: function getPage() {
       var pages = this.pageState.pages;
@@ -587,8 +613,14 @@ var PageAdministration = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'button',
-            { type: 'button', className: 'btn btn-warning btn-lg', onClick: this.submit.bind(this) },
+            { type: 'button', className: 'btn btn-primary btn-lg', onClick: this.submit.bind(this) },
             'Save'
+          ),
+          _react2.default.createElement(
+            'button',
+            { type: 'button delete-page-btn', className: self.state.page.id > 0 ? 'btn btn-danger btn-lg' : 'hidden',
+              onClick: this.deletePage.bind(this) },
+            'Delete'
           )
         )
       );
@@ -772,6 +804,7 @@ var PagesAdministration = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PagesAdministration).call(this, props));
 
     _this.state = _PageStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
     self = _this;
     return _this;
   }
@@ -779,9 +812,21 @@ var PagesAdministration = (function (_React$Component) {
   _createClass(PagesAdministration, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      debugger;
       _PageStore2.default.listen(this.onChange);
       _PageActions2.default.getAllPages();
 
+      this.setupSortableTable();
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
+      debugger;
+      this.setupSortableTable();
+    }
+  }, {
+    key: 'setupSortableTable',
+    value: function setupSortableTable() {
       // ReactDOM.findDOMNode(this) is the <ul>
       // element created in our render method
       $(_reactDom2.default.findDOMNode(this)).sortable({
@@ -802,19 +847,13 @@ var PagesAdministration = (function (_React$Component) {
   }, {
     key: 'handleSortableUpdate',
     value: function handleSortableUpdate() {
-      // We should only use setState to mutate our component's state,
-      // so here we'll clone the items array (using lodash) and
       // update the list items through this new array.
       var newItems = _underscore._.clone(self.state.pages, true);
       var $node = $(_reactDom2.default.findDOMNode(this));
 
-      // Here's where our data-id attribute from before comes
-      // into play. toArray will return a sorted array of item ids:
+      // toArray will return a sorted array of item ids:
       var ids = $node.sortable('toArray', { attribute: 'data-id' });
 
-      // Now we can loop through the array of ids, find the
-      // item in our array by its id (again, w/ lodash),
-      // and update its position:
       ids.forEach(function (id, index) {
         var pageId = parseInt(id);
 
@@ -827,14 +866,9 @@ var PagesAdministration = (function (_React$Component) {
 
       newItems = _underscore._.sortBy(newItems, 'sort_order');
 
-      // After making our updates, we'll set our items
-      // array to our updated array, causing items with
-      // a new position to be updated in the DOM:
       self.setState({ pages: newItems });
 
-      _API2.default.saveSortingForPages(self.state.pages).then(function () {
-        debugger;
-      });
+      _API2.default.saveSortingForPages(self.state.pages);
     }
   }, {
     key: 'selectPage',

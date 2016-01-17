@@ -64,6 +64,31 @@ exports.findById = function(pageId){
   return promise;
 }
 
+exports.delete = function(pageId){
+  var results = [];
+  var promise = new Promise();
+
+  try{
+    pg.connect(connectionString, function(err, client, done) {
+        if(err) {
+          processError(done, err);
+        }
+
+        var query = client.query("delete from content where page_id = $1", [pageId]);
+        query = client.query("delete from page where id = $1", [pageId]);
+
+        done();
+
+        promise.resolve();
+    });
+  }
+  catch(ex){
+    console.log('Exception running query with psql: ' + ex);
+  }
+
+  return promise;
+}
+
 exports.create = function(newPage){
   var results = [];
   var promise = new Promise();

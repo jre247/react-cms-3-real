@@ -127,6 +127,14 @@ module.exports = function(app, passport) {
       }
     });
 
+    app.post('/api/pages/:id/delete', isAdmin, function(req, res, next) {
+      var pageId = req.body.pageId;
+
+      if(pageId > 0){
+        deletePage(req, res, next, pageId);
+      }
+    });
+
     app.post('/api/pages/sorting/update', isAdmin, function(req, res, next) {
       var pages = req.body.pages;
       debugger;
@@ -154,6 +162,13 @@ var updatePage = function(req, res, next, pageViewmodel){
     })
     .then(function(pageFromDb){
       res.status(200).send(pageFromDb);
+    });
+}
+
+var deletePage = function(req, res, next, pageId){
+  PageDb.delete(pageId)
+    .then(function(page){
+      res.status(200).send(page);
     });
 }
 

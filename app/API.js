@@ -93,6 +93,24 @@ class API {
     return promise.promise();
   }
 
+  static deletePage(pageId) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/pages/' + pageId + '/delete',
+        data: {pageId: pageId}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveSortingForPages(pages){
     var promise = $.Deferred();
 
