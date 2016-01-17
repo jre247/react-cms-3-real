@@ -74,8 +74,8 @@ exports.create = function(newPage){
           processError(done, err);
         }
 
-        var query = client.query("insert into page(name, url, template_id, is_active) values ($1, $2, $3, $4) RETURNING *");
         var queryParams = [newPage.name, newPage.url, newPage.template_id, true];
+        var query = client.query("insert into page(name, url, template_id, is_active) values ($1, $2, $3, $4) RETURNING *", queryParams);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
