@@ -5,6 +5,8 @@ import PageStore from '../../stores/PageStore';
 import PageActions from '../../actions/PageActions';
 import { createHistory } from 'history'
 import ReactDOM from 'react-dom';
+import API from '../../API';
+import PagesAdministrationPositionButtons from './PagesAdministrationPositionButtons';
 var self;
 
 class PagesAdministration extends React.Component {
@@ -61,6 +63,10 @@ class PagesAdministration extends React.Component {
     // array to our updated array, causing items with
     // a new position to be updated in the DOM:
     self.setState({ pages: newItems });
+
+    API.saveSortingForPages(self.state.pages).then(function(){
+      debugger;
+    });
   }
   selectPage(page, event){
     self.props.history.pushState(null, '/admin/pages/' + page.id + '/edit');
@@ -86,9 +92,12 @@ class PagesAdministration extends React.Component {
         );
       });
 
+      var positionButtonsProps = _.extend({pages: self.state.pages, handleSortableUpdate: this.handleSortableUpdate},
+         this.props);
+
       return (
         <div className='Content-panel'>
-          <div className="page-create-button">
+          <div className="pages-administration-buttons">
             <button type="button" className="btn btn-primary btn-lg"
               onClick={this.create.bind(this)}>Create</button>
           </div>

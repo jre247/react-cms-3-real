@@ -21,7 +21,7 @@ class PageAdministration extends React.Component {
   componentDidMount() {
     PageStore.listen(this.onChange);
     LookupStore.listen(this.onChange);
-    debugger;
+  
     var isEdit = this.props.isEdit;
 
     if(isEdit)

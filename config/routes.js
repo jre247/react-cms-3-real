@@ -127,6 +127,14 @@ module.exports = function(app, passport) {
       }
     });
 
+    app.post('/api/pages/sorting/update', isAdmin, function(req, res, next) {
+      var pages = req.body.pages;
+      debugger;
+      if(pages && pages.length > 0){
+        updateSortingForPages(req, res, next, pages);
+      }
+    });
+
     app.get('/api/lookups', function(req, res, next) {
       getAllLookups(req, res, next);
     });
@@ -146,6 +154,13 @@ var updatePage = function(req, res, next, pageViewmodel){
     })
     .then(function(pageFromDb){
       res.status(200).send(pageFromDb);
+    });
+}
+
+var updateSortingForPages = function(req, res, next, pages){
+  PageDb.updateSortingForPages(pages)
+    .then(function(pages){
+      res.status(200).send(pages);
     });
 }
 

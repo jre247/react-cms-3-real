@@ -10,7 +10,6 @@ class PageAdministrationEdit extends React.Component {
   }
 
   render() {
-    debugger;
     var propsData = _.extend({isEdit: true}, this.props);
 
     return(

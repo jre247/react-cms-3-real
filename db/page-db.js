@@ -96,6 +96,32 @@ exports.create = function(newPage){
   return promise;
 }
 
+exports.updateSortingForPages = function(pages){
+  var results = [];
+  var promise = new Promise();
+
+  try{
+    pg.connect(connectionString, function(err, client, done) {
+        if(err) {
+          processError(done, err);
+        }
+
+        _.each(pages, function(page){
+          debugger;
+          var queryParams = [page.sort_order, page.id,];
+          var query = client.query("update page set sort_order = $1 where id = $2", queryParams);
+        });
+
+        done();
+    });
+  }
+  catch(ex){
+    console.log('Exception running query with psql: ' + ex);
+  }
+
+  return promise;
+}
+
 exports.update = function(page){
   var results = [];
   var promise = new Promise();

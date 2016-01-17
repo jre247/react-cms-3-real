@@ -93,6 +93,24 @@ class API {
     return promise.promise();
   }
 
+  static saveSortingForPages(pages){
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/pages/sorting/update',
+        data: {pages: pages}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static saveContentListForPage(contentList, pageId) {
     var promise = $.Deferred();
 
