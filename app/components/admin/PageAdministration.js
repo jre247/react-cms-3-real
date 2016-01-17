@@ -37,7 +37,6 @@ class PageAdministration extends React.Component {
     self.setState(state);
   }
   createPage(){
-    debugger;
     var sortOrder = this.pageState.pages.length;
     var newPage = {id: 0, name: '', url: '', template_id: 1, sort_order: sortOrder};
     self.setState({page: newPage});

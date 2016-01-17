@@ -469,7 +469,6 @@ var PageAdministration = (function (_React$Component) {
   }, {
     key: 'createPage',
     value: function createPage() {
-      debugger;
       var sortOrder = this.pageState.pages.length;
       var newPage = { id: 0, name: '', url: '', template_id: 1, sort_order: sortOrder };
       self.setState({ page: newPage });
@@ -761,7 +760,7 @@ var PagesAdministration = (function (_React$Component) {
       // ReactDOM.findDOMNode(this) is the <ul>
       // element created in our render method
       $(_reactDom2.default.findDOMNode(this)).sortable({
-        items: 'tr',
+        items: 'tbody tr',
         update: this.handleSortableUpdate
       });
     }
@@ -792,12 +791,16 @@ var PagesAdministration = (function (_React$Component) {
       // item in our array by its id (again, w/ lodash),
       // and update its position:
       ids.forEach(function (id, index) {
-        var item = _underscore._.findWhere(newItems, { id: id });
+        var pageId = parseInt(id);
+
+        var item = _underscore._.findWhere(newItems, { id: pageId });
         item.sort_order = index;
       });
 
       // We'll cancel the sortable change and let React reorder the DOM instead:
       $node.sortable('cancel');
+
+      newItems = _underscore._.sortBy(newItems, 'sort_order');
 
       // After making our updates, we'll set our items
       // array to our updated array, causing items with

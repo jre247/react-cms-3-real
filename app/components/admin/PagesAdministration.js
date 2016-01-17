@@ -21,7 +21,7 @@ class PagesAdministration extends React.Component {
     // ReactDOM.findDOMNode(this) is the <ul>
     // element created in our render method
     $(ReactDOM.findDOMNode(this)).sortable({
-      items: 'tr',
+      items: 'tbody tr',
       update: this.handleSortableUpdate
     });
   }
@@ -46,12 +46,16 @@ class PagesAdministration extends React.Component {
     // item in our array by its id (again, w/ lodash),
     // and update its position:
     ids.forEach((id, index) => {
-      var item = _.findWhere(newItems, {id: id});
+      var pageId = parseInt(id);
+
+      var item = _.findWhere(newItems, {id: pageId});
       item.sort_order = index;
     });
 
     // We'll cancel the sortable change and let React reorder the DOM instead:
     $node.sortable('cancel');
+
+    newItems = _.sortBy(newItems, 'sort_order');
 
     // After making our updates, we'll set our items
     // array to our updated array, causing items with
