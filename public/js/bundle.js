@@ -725,6 +725,10 @@ var _PageActions2 = _interopRequireDefault(_PageActions);
 
 var _history = require('history');
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -753,6 +757,13 @@ var PagesAdministration = (function (_React$Component) {
     value: function componentDidMount() {
       _PageStore2.default.listen(this.onChange);
       _PageActions2.default.getAllPages();
+
+      // ReactDOM.findDOMNode(this) is the <ul>
+      // element created in our render method
+      $(_reactDom2.default.findDOMNode(this)).sortable({
+        items: 'tr',
+        update: this.handleSortableUpdate
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -763,6 +774,35 @@ var PagesAdministration = (function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       self.setState(state);
+    }
+  }, {
+    key: 'handleSortableUpdate',
+    value: function handleSortableUpdate() {
+      // We should only use setState to mutate our component's state,
+      // so here we'll clone the items array (using lodash) and
+      // update the list items through this new array.
+      var newItems = _underscore._.clone(self.state.pages, true);
+      var $node = $(_reactDom2.default.findDOMNode(this));
+
+      // Here's where our data-id attribute from before comes
+      // into play. toArray will return a sorted array of item ids:
+      var ids = $node.sortable('toArray', { attribute: 'data-id' });
+
+      // Now we can loop through the array of ids, find the
+      // item in our array by its id (again, w/ lodash),
+      // and update its position:
+      ids.forEach(function (id, index) {
+        var item = _underscore._.findWhere(newItems, { id: id });
+        item.sort_order = index;
+      });
+
+      // We'll cancel the sortable change and let React reorder the DOM instead:
+      $node.sortable('cancel');
+
+      // After making our updates, we'll set our items
+      // array to our updated array, causing items with
+      // a new position to be updated in the DOM:
+      self.setState({ pages: newItems });
     }
   }, {
     key: 'selectPage',
@@ -785,7 +825,7 @@ var PagesAdministration = (function (_React$Component) {
         var nodes = this.state.pages.map(function (page, index) {
           return _react2.default.createElement(
             'tr',
-            { key: index, onClick: _this2.selectPage.bind(_this2, page) },
+            { key: index, 'data-id': page.id, onClick: _this2.selectPage.bind(_this2, page) },
             _react2.default.createElement(
               'td',
               null,
@@ -867,7 +907,7 @@ var PagesAdministration = (function (_React$Component) {
 
 exports.default = PagesAdministration;
 
-},{"../../actions/PageActions":6,"../../helpers/AuthHelper":81,"../../stores/PageStore":89,"history":106,"react":"react","underscore":"underscore"}],12:[function(require,module,exports){
+},{"../../actions/PageActions":6,"../../helpers/AuthHelper":81,"../../stores/PageStore":89,"history":106,"react":"react","react-dom":"react-dom","underscore":"underscore"}],12:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

@@ -4,6 +4,7 @@ import AuthHelper from '../../helpers/AuthHelper';
 import PageStore from '../../stores/PageStore';
 import PageActions from '../../actions/PageActions';
 import { createHistory } from 'history'
+import ReactDOM from 'react-dom';
 var self;
 
 class PagesAdministration extends React.Component {
@@ -16,12 +17,46 @@ class PagesAdministration extends React.Component {
   componentDidMount() {
     PageStore.listen(this.onChange);
     PageActions.getAllPages();
+
+    // ReactDOM.findDOMNode(this) is the <ul>
+    // element created in our render method
+    $(ReactDOM.findDOMNode(this)).sortable({
+      items: 'tr',
+      update: this.handleSortableUpdate
+    });
   }
   componentWillUnmount() {
     PageStore.unlisten(this.onChange);
   }
   onChange(state) {
     self.setState(state);
+  }
+  handleSortableUpdate() {
+    // We should only use setState to mutate our component's state,
+    // so here we'll clone the items array (using lodash) and
+    // update the list items through this new array.
+    var newItems = _.clone(self.state.pages, true);
+    var $node = $(ReactDOM.findDOMNode(this));
+
+    // Here's where our data-id attribute from before comes
+    // into play. toArray will return a sorted array of item ids:
+    var ids = $node.sortable('toArray', { attribute: 'data-id' });
+
+    // Now we can loop through the array of ids, find the
+    // item in our array by its id (again, w/ lodash),
+    // and update its position:
+    ids.forEach((id, index) => {
+      var item = _.findWhere(newItems, {id: id});
+      item.sort_order = index;
+    });
+
+    // We'll cancel the sortable change and let React reorder the DOM instead:
+    $node.sortable('cancel');
+
+    // After making our updates, we'll set our items
+    // array to our updated array, causing items with
+    // a new position to be updated in the DOM:
+    self.setState({ pages: newItems });
   }
   selectPage(page, event){
     self.props.history.pushState(null, '/admin/pages/' + page.id + '/edit');
@@ -39,7 +74,7 @@ class PagesAdministration extends React.Component {
     else{
       let nodes = this.state.pages.map((page, index) => {
         return (
-          <tr key={index} onClick={this.selectPage.bind(this, page)}>
+          <tr key={index} data-id={page.id} onClick={this.selectPage.bind(this, page)}>
             <td>{page.name}</td>
             <td>{page.template_name}</td>
             <td>{page.url}</td>
