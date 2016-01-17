@@ -492,7 +492,7 @@ var PageAdministration = (function (_React$Component) {
     key: 'submit',
     value: function submit(event) {
       _API2.default.savePage(this.state.page).then(function () {
-        self.props.history.pushState(null, '/admin/pages-administration');
+        self.props.history.pushState(null, '/admin/pages');
       });
     }
   }, {
@@ -765,7 +765,7 @@ var PagesAdministration = (function (_React$Component) {
   }, {
     key: 'selectPage',
     value: function selectPage(page, event) {
-      self.props.history.pushState(null, '/admin/pages/' + page.id);
+      self.props.history.pushState(null, '/admin/pages/' + page.id + '/edit');
     }
   }, {
     key: 'create',
@@ -7446,8 +7446,8 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/role-manager', component: _RoleManager2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/role-manager/users/:id', component: _RoleManagerUser2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages', component: _PagesAdministration2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/:id', component: _PageAdministrationEdit2.default }),
-  _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/create', component: _PageAdministrationCreate2.default })
+  _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/create', component: _PageAdministrationCreate2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/:id/edit', component: _PageAdministrationEdit2.default })
 );
 
 },{"./components/Admin/PageAdministrationCreate":9,"./components/Admin/PageAdministrationEdit":10,"./components/Admin/PagesAdministration":11,"./components/Auth/Login":12,"./components/Auth/RoleManager":13,"./components/Auth/RoleManagerUser":14,"./components/Auth/Signup":15,"./components/Home":21,"./components/Page/PageEdit":23,"./components/Page/PageReadOnly":24,"./components/app":80,"react":"react","react-router":"react-router"}],85:[function(require,module,exports){

@@ -24,7 +24,7 @@ class PagesAdministration extends React.Component {
     self.setState(state);
   }
   selectPage(page, event){
-    self.props.history.pushState(null, '/admin/pages/' + page.id);
+    self.props.history.pushState(null, '/admin/pages/' + page.id + '/edit');
   }
   create(){
     self.props.history.pushState(null, '/admin/pages/create');

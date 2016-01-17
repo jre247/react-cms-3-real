@@ -22,7 +22,8 @@ export default (
     <Route path='/auth/role-manager' component={RoleManager} />
     <Route path='/auth/role-manager/users/:id' component={RoleManagerUser} />
     <Route path='/admin/pages' component={PagesAdministration} />
-    <Route path='/admin/pages/:id' component={PageAdministrationEdit} />
     <Route path='/admin/pages/create' component={PageAdministrationCreate} />
+    <Route path='/admin/pages/:id/edit' component={PageAdministrationEdit} />
+
   </Route>
 );

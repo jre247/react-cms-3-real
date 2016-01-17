@@ -55,7 +55,7 @@ class PageAdministration extends React.Component {
 
   submit(event){
     API.savePage(this.state.page).then(function(){
-      self.props.history.pushState(null, '/admin/pages-administration');
+      self.props.history.pushState(null, '/admin/pages');
     })
   }
 
