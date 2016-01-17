@@ -94,14 +94,14 @@ insert into template(name, is_active) values ('Photo Gallery', true);
 insert into template(name, is_active) values ('List', true);
 insert into template(name, is_active) values ('ListGrid', true);
 
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Venue', 'Venue', 'venue', 1, null, 1, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('The Proposal', 'The Proposal', 'our-story', 1, null, 1, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Things To Do', 'Things To Do', 'things-to-do', 1, null, 3, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Photo Album', 'Photo Album', 'photo-album', 1, null, 2, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Gift Registry', 'Gift Registry', 'gift-registry', 1, null, 3, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('How To Get There', 'How To Get There', 'how-to-get-there', 1, null, 3, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Bridal Party', 'Bridal Party', 'bridal-party', 1, null, 4, true);
-insert into page(name, description, url, user_id, date_created, template_id, is_active) values ('Accomodations', 'Accomodations', 'accomodations', 1, null, 3, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Venue', 'Venue', 'venue', 1, null, 1, 0, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('The Proposal', 'The Proposal', 'our-story', 1, null, 1, 1, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Things To Do', 'Things To Do', 'things-to-do', 1, null, 3, 2, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Photo Album', 'Photo Album', 'photo-album', 1, null, 2, 3, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Gift Registry', 'Gift Registry', 'gift-registry', 1, null, 3, 4, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('How To Get There', 'How To Get There', 'how-to-get-there', 1, null, 3, 5, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Bridal Party', 'Bridal Party', 'bridal-party', 1, null, 4, 6, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Accomodations', 'Accomodations', 'accomodations', 1, null, 3, 7, true);
 
 GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;

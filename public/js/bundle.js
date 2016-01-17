@@ -469,7 +469,9 @@ var PageAdministration = (function (_React$Component) {
   }, {
     key: 'createPage',
     value: function createPage() {
-      var newPage = { id: 0, name: '', url: '', template_id: 1 };
+      debugger;
+      var sortOrder = this.pageState.pages.length;
+      var newPage = { id: 0, name: '', url: '', template_id: 1, sort_order: sortOrder };
       self.setState({ page: newPage });
     }
   }, {

@@ -14,7 +14,7 @@ exports.findAll = function(pageUrl){
           processError(done, err);
         }
 
-        var query = client.query("select p.id, p.name, p.url, p.template_id, t.name as template_name from page p join template t on p.template_id = t.id where p.is_active = true;");
+        var query = client.query("select p.id, p.name, p.url, p.template_id, p.sort_order, t.name as template_name from page p join template t on p.template_id = t.id where p.is_active = true order by p.sort_order;");
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
@@ -74,8 +74,8 @@ exports.create = function(newPage){
           processError(done, err);
         }
 
-        var queryParams = [newPage.name, newPage.url, newPage.template_id, true];
-        var query = client.query("insert into page(name, url, template_id, is_active) values ($1, $2, $3, $4) RETURNING *", queryParams);
+        var queryParams = [newPage.name, newPage.url, newPage.template_id, newPage.sort_order, true];
+        var query = client.query("insert into page(name, url, template_id, sort_order, is_active) values ($1, $2, $3, $4, $5) RETURNING *", queryParams);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
