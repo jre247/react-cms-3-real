@@ -3518,6 +3518,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
     _this.templateId = 2;
     _this.state = { contentList: [] };
+    _this.maxContentId;
     self = _this;
     return _this;
   }
@@ -3527,6 +3528,10 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     value: function componentDidMount() {
       _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
         self.setState({ contentList: viewmodel.contentList });
+        var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
+          return contentItem.id;
+        });
+        self.maxContentId = contentItemWithMaxId.id;
       });
 
       this.setupSortableTable();
@@ -3600,6 +3605,9 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
       var imageFactory = new _ImageFactory2.default(sortOrder, 'Our Story Image', 'Our Story Image');
       var image = imageFactory.create();
+      self.maxContentId++;
+      image.id = self.maxContentId;
+      image.sort_order = self.state.contentList.length;
 
       this.state.contentList.push(image);
       self.setState({ contentList: this.state.contentList });

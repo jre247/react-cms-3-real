@@ -15,11 +15,14 @@ class PhotoAlbumTemplateEdit extends React.Component {
     super(props);
     this.templateId = 2;
     this.state = {contentList: []};
+    this.maxContentId;
     self = this;
   }
   componentDidMount() {
     API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
       self.setState({contentList: viewmodel.contentList});
+      var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
+      self.maxContentId = contentItemWithMaxId.id;
     });
 
     this.setupSortableTable();
@@ -85,7 +88,10 @@ class PhotoAlbumTemplateEdit extends React.Component {
     var imageFactory = new ImageFactory(sortOrder, 'Our Story Image',
       'Our Story Image');
     var image = imageFactory.create();
-
+    self.maxContentId++;
+    image.id = self.maxContentId;
+    image.sort_order = self.state.contentList.length;
+  
     this.state.contentList.push(image);
     self.setState({contentList: this.state.contentList});
   }
