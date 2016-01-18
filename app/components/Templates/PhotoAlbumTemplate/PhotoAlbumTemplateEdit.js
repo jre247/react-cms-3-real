@@ -5,14 +5,9 @@ import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
-import LongDescription from '../../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
-import Title from '../../Widgets/Title/Title';
-import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
-import LongDescriptionFactory from '../../Widgets/LongDescription/LongDescriptionFactory';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
-import TitleFactory from '../../Widgets/Title/TitleFactory';
-import ShortDescriptionFactory from '../../Widgets/ShortDescription/ShortDescriptionFactory';
+import ReactDOM from 'react-dom';
 var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {
@@ -24,24 +19,55 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
   componentDidMount() {
     API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
+      self.setState({contentList: viewmodel.contentList});
+    });
+
+    this.setupSortableTable();
+  }
+
+  setupSortableTable(){
+    // ReactDOM.findDOMNode(this) is the <ul>
+    // element created in our render method
+    $(ReactDOM.findDOMNode(this)).sortable({
+      items: '.Photo',
+      update: this.handleSortableUpdate
     });
   }
 
+  handleSortableUpdate() {
+    // update the list items through this new array.
+    var newItems = _.clone(self.state.contentList, true);
+    var $node = $(ReactDOM.findDOMNode(this));
+
+    // toArray will return a sorted array of item ids:
+    var ids = $node.sortable('toArray', { attribute: 'data-id' });
+
+    ids.forEach((id, index) => {
+      var pageId = parseInt(id);
+
+      var item = _.findWhere(newItems, {id: pageId});
+      item.sort_order = index;
+    });
+
+    // We'll cancel the sortable change and let React reorder the DOM instead:
+    $node.sortable('cancel');
+
+    newItems = _.sortBy(newItems, 'sort_order');
+
+    self.setState({ contentList: newItems });
+  }
   //need to get page in this method since componentDidMount does not get called when
   //changing routes to another page
   componentWillReceiveProps(nextProps){
     API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
+      self.setState({contentList: viewmodel.contentList});
     });
   }
 
   componentWillUnmount() {
 
   }
-  setStateForContentList(newContentList){
-    self.setState({contentList: newContentList})
-  }
+
   handleSubmit(event) {
     event.preventDefault();
   }
@@ -61,16 +87,15 @@ class PhotoAlbumTemplateEdit extends React.Component {
     var image = imageFactory.create();
 
     this.state.contentList.push(image);
-    this.setStateForContentList(this.state.contentList);
+    self.setState({contentList: this.state.contentList});
   }
   updateContent(index, event) {
     this.state.contentList[index].value = event.target.value;
-    this.setStateForContentList(this.state.contentList);
-    //this.setState({contentList: this.state.contentList});
+    self.setState({contentList: this.state.contentList});
   }
   removeContent(index, event){
     this.state.contentList.splice(index, 1);
-    this.setStateForContentList(this.state.contentList);
+    self.setState({contentList: this.state.contentList});
   }
   render() {
     let nodes = this.state.contentList.map((contentItem, index) => {
@@ -80,7 +105,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
 
         if(FieldHelper.isImage(contentItem)){
           return (
-            <div key={contentItem.sort_order} className="Photo">
+            <div key={contentItem.sort_order} data-id={contentItem.id} className="Photo">
               <Field {...propsData} />
             </div>
           );

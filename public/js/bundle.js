@@ -812,16 +812,9 @@ var PagesAdministration = (function (_React$Component) {
   _createClass(PagesAdministration, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
       _PageStore2.default.listen(this.onChange);
       _PageActions2.default.getAllPages();
 
-      this.setupSortableTable();
-    }
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      debugger;
       this.setupSortableTable();
     }
   }, {
@@ -1729,7 +1722,7 @@ var AuthHeader = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'li',
-                  null,
+                  { className: 'pull-right' },
                   _react2.default.createElement(
                     _reactRouter.Link,
                     { className: 'auth-link', to: '/logout' },
@@ -3493,37 +3486,17 @@ var _EmptyContent2 = _interopRequireDefault(_EmptyContent);
 
 var _underscore = require('underscore');
 
-var _LongDescription = require('../../Widgets/LongDescription/LongDescription');
-
-var _LongDescription2 = _interopRequireDefault(_LongDescription);
-
 var _ImageWidget = require('../../Widgets/Image/ImageWidget');
 
 var _ImageWidget2 = _interopRequireDefault(_ImageWidget);
-
-var _Title = require('../../Widgets/Title/Title');
-
-var _Title2 = _interopRequireDefault(_Title);
-
-var _ShortDescription = require('../../Widgets/ShortDescription/ShortDescription');
-
-var _ShortDescription2 = _interopRequireDefault(_ShortDescription);
-
-var _LongDescriptionFactory = require('../../Widgets/LongDescription/LongDescriptionFactory');
-
-var _LongDescriptionFactory2 = _interopRequireDefault(_LongDescriptionFactory);
 
 var _ImageFactory = require('../../Widgets/Image/ImageFactory');
 
 var _ImageFactory2 = _interopRequireDefault(_ImageFactory);
 
-var _TitleFactory = require('../../Widgets/Title/TitleFactory');
+var _reactDom = require('react-dom');
 
-var _TitleFactory2 = _interopRequireDefault(_TitleFactory);
-
-var _ShortDescriptionFactory = require('../../Widgets/ShortDescription/ShortDescriptionFactory');
-
-var _ShortDescriptionFactory2 = _interopRequireDefault(_ShortDescriptionFactory);
+var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3553,10 +3526,45 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
+        self.setState({ contentList: viewmodel.contentList });
+      });
+
+      this.setupSortableTable();
+    }
+  }, {
+    key: 'setupSortableTable',
+    value: function setupSortableTable() {
+      // ReactDOM.findDOMNode(this) is the <ul>
+      // element created in our render method
+      $(_reactDom2.default.findDOMNode(this)).sortable({
+        items: '.Photo',
+        update: this.handleSortableUpdate
       });
     }
+  }, {
+    key: 'handleSortableUpdate',
+    value: function handleSortableUpdate() {
+      // update the list items through this new array.
+      var newItems = _underscore._.clone(self.state.contentList, true);
+      var $node = $(_reactDom2.default.findDOMNode(this));
 
+      // toArray will return a sorted array of item ids:
+      var ids = $node.sortable('toArray', { attribute: 'data-id' });
+
+      ids.forEach(function (id, index) {
+        var pageId = parseInt(id);
+
+        var item = _underscore._.findWhere(newItems, { id: pageId });
+        item.sort_order = index;
+      });
+
+      // We'll cancel the sortable change and let React reorder the DOM instead:
+      $node.sortable('cancel');
+
+      newItems = _underscore._.sortBy(newItems, 'sort_order');
+
+      self.setState({ contentList: newItems });
+    }
     //need to get page in this method since componentDidMount does not get called when
     //changing routes to another page
 
@@ -3564,17 +3572,12 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
+        self.setState({ contentList: viewmodel.contentList });
       });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
-  }, {
-    key: 'setStateForContentList',
-    value: function setStateForContentList(newContentList) {
-      self.setState({ contentList: newContentList });
-    }
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
@@ -3599,20 +3602,19 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       var image = imageFactory.create();
 
       this.state.contentList.push(image);
-      this.setStateForContentList(this.state.contentList);
+      self.setState({ contentList: this.state.contentList });
     }
   }, {
     key: 'updateContent',
     value: function updateContent(index, event) {
       this.state.contentList[index].value = event.target.value;
-      this.setStateForContentList(this.state.contentList);
-      //this.setState({contentList: this.state.contentList});
+      self.setState({ contentList: this.state.contentList });
     }
   }, {
     key: 'removeContent',
     value: function removeContent(index, event) {
       this.state.contentList.splice(index, 1);
-      this.setStateForContentList(this.state.contentList);
+      self.setState({ contentList: this.state.contentList });
     }
   }, {
     key: 'render',
@@ -3627,7 +3629,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
         if (_FieldHelper2.default.isImage(contentItem)) {
           return _react2.default.createElement(
             'div',
-            { key: contentItem.sort_order, className: 'Photo' },
+            { key: contentItem.sort_order, 'data-id': contentItem.id, className: 'Photo' },
             _react2.default.createElement(_Field2.default, propsData)
           );
         } else {
@@ -3682,7 +3684,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":19,"../../Widgets/Field/Field":39,"../../Widgets/Field/FieldHelper":41,"../../Widgets/Image/ImageFactory":48,"../../Widgets/Image/ImageWidget":49,"../../Widgets/LongDescription/LongDescription":63,"../../Widgets/LongDescription/LongDescriptionFactory":65,"../../Widgets/ShortDescription/ShortDescription":67,"../../Widgets/ShortDescription/ShortDescriptionFactory":69,"../../Widgets/Title/Title":71,"../../Widgets/Title/TitleFactory":73,"react":"react","react-router":"react-router","underscore":"underscore"}],33:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":19,"../../Widgets/Field/Field":39,"../../Widgets/Field/FieldHelper":41,"../../Widgets/Image/ImageFactory":48,"../../Widgets/Image/ImageWidget":49,"react":"react","react-dom":"react-dom","react-router":"react-router","underscore":"underscore"}],33:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

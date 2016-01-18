@@ -18,16 +18,12 @@ class PagesAdministration extends React.Component {
   }
 
   componentDidMount() {
-    debugger;
     PageStore.listen(this.onChange);
     PageActions.getAllPages();
 
     this.setupSortableTable();
   }
-  componentWillReceiveProps(){
-    debugger;
-    this.setupSortableTable();
-  }
+
   setupSortableTable(){
     // ReactDOM.findDOMNode(this) is the <ul>
     // element created in our render method
