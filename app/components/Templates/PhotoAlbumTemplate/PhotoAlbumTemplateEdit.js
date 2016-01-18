@@ -39,6 +39,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
 
   setupSortableTable(){
+    debugger;
     // ReactDOM.findDOMNode(this) is the <ul>
     // element created in our render method
     $(ReactDOM.findDOMNode(this)).sortable({

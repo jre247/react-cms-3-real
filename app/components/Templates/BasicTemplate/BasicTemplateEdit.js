@@ -6,7 +6,7 @@ import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import TemplateHelper from '../TemplateHelper';
 import API from '../../../API';
-import ReactDOM from 'react-dom';
+import Sortable from '../../Sortable';
 var self;
 
 class BasicTemplateEdit extends React.Component {
@@ -20,7 +20,6 @@ class BasicTemplateEdit extends React.Component {
 
   componentDidMount() {
     this.getContentListForPage(this.props);
-    this.setupSortableTable();
   }
 
   componentWillReceiveProps(nextProps){
@@ -37,38 +36,6 @@ class BasicTemplateEdit extends React.Component {
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
     });
-  }
-
-  setupSortableTable(){
-    // ReactDOM.findDOMNode(this) is the <ul>
-    // element created in our render method
-    $(ReactDOM.findDOMNode(this)).sortable({
-      items: '.ContentItem',
-      update: this.handleSortableUpdate
-    });
-  }
-
-  handleSortableUpdate() {
-    // update the list items through this new array.
-    var newItems = _.clone(self.state.contentList, true);
-    var $node = $(ReactDOM.findDOMNode(this));
-
-    // toArray will return a sorted array of item ids:
-    var ids = $node.sortable('toArray', { attribute: 'data-id' });
-
-    ids.forEach((id, index) => {
-      var pageId = parseInt(id);
-
-      var item = _.findWhere(newItems, {id: pageId});
-      item.sort_order = index;
-    });
-
-    // We'll cancel the sortable change and let React reorder the DOM instead:
-    $node.sortable('cancel');
-
-    newItems = _.sortBy(newItems, 'sort_order');
-
-    self.setState({ contentList: newItems });
   }
 
   handleSubmit(event) {
@@ -125,12 +92,20 @@ class BasicTemplateEdit extends React.Component {
         );
       });
 
+      var sortableProps = _.extend({sortableItemElement: '.ContentItem', itemList: self.state.contentList,
+        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this)},
+        this.props);
+
       return(
         <div className='Content-panel basic-template-edit'>
           <div className="Content-container Content-centered-container">
             <WidgetSelectList {...widgetListPropsData} />
 
-            {nodes}
+            <Sortable {...sortableProps}>
+              <div>
+                {nodes}
+              </div>
+            </Sortable>
 
             <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>
               <button type='submit' onClick={this.submit} className='btn btn-primary'>Save</button>
