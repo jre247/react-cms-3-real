@@ -1793,8 +1793,8 @@ var EditLink = (function (_React$Component) {
           'div',
           { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
           _react2.default.createElement(
-            'a',
-            { href: '/' + this.props.editLink },
+            _reactRouter.Link,
+            { to: '/' + this.props.editLink },
             _react2.default.createElement(
               'button',
               { className: 'btn btn-default' },

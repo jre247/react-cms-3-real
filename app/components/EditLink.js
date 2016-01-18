@@ -17,11 +17,11 @@ class EditLink extends React.Component {
     else{
       return (
         <div className={!this.props.isEdit ? "Edit-Content-Button" : "hidden"}>
-          <a href={'/' + this.props.editLink}>
+          <Link to={'/' + this.props.editLink}>
             <button className="btn btn-default">
               Edit
             </button>
-          </a>
+          </Link>
         </div>
       );
     }
