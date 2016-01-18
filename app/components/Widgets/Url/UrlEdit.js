@@ -16,7 +16,7 @@ class UrlEdit extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="url-widget">
         <div className="form-group Content-item">
           <input className='form-control' type='text' placeholder="Link" value={this.props.value}
             onChange={this.props.onChange} autoFocus/>

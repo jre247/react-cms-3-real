@@ -1793,11 +1793,11 @@ var EditLink = (function (_React$Component) {
           'div',
           { className: !this.props.isEdit ? "Edit-Content-Button" : "hidden" },
           _react2.default.createElement(
-            'button',
-            { className: 'btn btn-default' },
+            'a',
+            { href: '/' + this.props.editLink },
             _react2.default.createElement(
-              _reactRouter.Link,
-              { className: 'edit-link', to: '/' + this.props.editLink },
+              'button',
+              { className: 'btn btn-default' },
               'Edit'
             )
           )
@@ -2564,6 +2564,10 @@ var _API = require('../../../API');
 
 var _API2 = _interopRequireDefault(_API);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2584,6 +2588,7 @@ var BasicTemplateEdit = (function (_React$Component) {
 
     _this.templateId = 1;
     _this.state = { contentList: [] };
+    _this.maxContentId;
     self = _this;
     return _this;
   }
@@ -2591,28 +2596,63 @@ var BasicTemplateEdit = (function (_React$Component) {
   _createClass(BasicTemplateEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(this.props);
+      this.setupSortableTable();
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(nextProps);
     }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
   }, {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
       self.setState({ contentList: newContentList });
+    }
+  }, {
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _API2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList });
+        var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
+          return contentItem.id;
+        });
+        self.maxContentId = contentItemWithMaxId.id;
+      });
+    }
+  }, {
+    key: 'setupSortableTable',
+    value: function setupSortableTable() {
+      // ReactDOM.findDOMNode(this) is the <ul>
+      // element created in our render method
+      $(_reactDom2.default.findDOMNode(this)).sortable({
+        items: '.ContentItem',
+        update: this.handleSortableUpdate
+      });
+    }
+  }, {
+    key: 'handleSortableUpdate',
+    value: function handleSortableUpdate() {
+      // update the list items through this new array.
+      var newItems = _underscore._.clone(self.state.contentList, true);
+      var $node = $(_reactDom2.default.findDOMNode(this));
+
+      // toArray will return a sorted array of item ids:
+      var ids = $node.sortable('toArray', { attribute: 'data-id' });
+
+      ids.forEach(function (id, index) {
+        var pageId = parseInt(id);
+
+        var item = _underscore._.findWhere(newItems, { id: pageId });
+        item.sort_order = index;
+      });
+
+      // We'll cancel the sortable change and let React reorder the DOM instead:
+      $node.sortable('cancel');
+
+      newItems = _underscore._.sortBy(newItems, 'sort_order');
+
+      self.setState({ contentList: newItems });
     }
   }, {
     key: 'handleSubmit',
@@ -2629,6 +2669,9 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'onAddWidgetToContentList',
     value: function onAddWidgetToContentList(factoryInstance) {
+      self.maxContentId++;
+      factoryInstance.id = self.maxContentId;
+
       self.state.contentList.push(factoryInstance);
       _TemplateHelper2.default.setNewSortOrderForAllListItems(self.state.contentList);
       self.setStateForContentList(self.state.contentList);
@@ -2670,14 +2713,14 @@ var BasicTemplateEdit = (function (_React$Component) {
 
           return _react2.default.createElement(
             'div',
-            { key: contentItem.sort_order },
+            { key: contentItem.sort_order, className: 'ContentItem', 'data-id': contentItem.id },
             _react2.default.createElement(_Field2.default, fieldsPropData)
           );
         });
 
         return _react2.default.createElement(
           'div',
-          { className: 'Content-panel' },
+          { className: 'Content-panel basic-template-edit' },
           _react2.default.createElement(
             'div',
             { className: 'Content-container Content-centered-container' },
@@ -2703,7 +2746,7 @@ var BasicTemplateEdit = (function (_React$Component) {
 
 exports.default = BasicTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":19,"../../Widgets/Field/Field":39,"../../Widgets/WidgetSelectList":80,"../TemplateHelper":34,"react":"react","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":19,"../../Widgets/Field/Field":39,"../../Widgets/WidgetSelectList":80,"../TemplateHelper":34,"react":"react","react-dom":"react-dom","react-router":"react-router","underscore":"underscore"}],28:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3526,15 +3569,29 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
   _createClass(PhotoAlbumTemplateEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
+      this.getContentListForPage(this.props);
+
+      this.setupSortableTable();
+    }
+
+    //need to get page in this method since componentDidMount does not get called when
+    //changing routes to another page
+
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      this.getContentListForPage(nextProps);
+    }
+  }, {
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _API2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
         self.setState({ contentList: viewmodel.contentList });
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
         });
         self.maxContentId = contentItemWithMaxId.id;
       });
-
-      this.setupSortableTable();
     }
   }, {
     key: 'setupSortableTable',
@@ -3570,19 +3627,6 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
       self.setState({ contentList: newItems });
     }
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
-  }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList });
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(event) {
@@ -7034,7 +7078,7 @@ var UrlEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'url-widget' },
         _react2.default.createElement(
           'div',
           { className: 'form-group Content-item' },

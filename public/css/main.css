@@ -7424,6 +7424,9 @@ a:hover {
   color: #a94442;
   cursor: pointer;
 }
+.Content-item {
+  display: inline-block;
+}
 .Content-centered-container .Content-long-description-container,
 .Content-centered-container .Content-short-description-container {
   margin: 0 auto;
@@ -7727,4 +7730,14 @@ a:hover {
 }
 .delete-page-btn {
   margin-left: 10px;
+}
+.basic-template-edit .url-widget {
+  margin: 0 auto;
+  text-align: center;
+}
+.basic-template-edit .Content-item {
+  width: 47%;
+}
+.basic-template-edit .url-widget input {
+  text-align: center;
 }

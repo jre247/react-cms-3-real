@@ -19,13 +19,23 @@ class PhotoAlbumTemplateEdit extends React.Component {
     self = this;
   }
   componentDidMount() {
-    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
+    this.getContentListForPage(this.props);
+
+    this.setupSortableTable();
+  }
+
+  //need to get page in this method since componentDidMount does not get called when
+  //changing routes to another page
+  componentWillReceiveProps(nextProps){
+    this.getContentListForPage(nextProps);
+  }
+
+  getContentListForPage(propsData){
+    API.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
       self.setState({contentList: viewmodel.contentList});
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
     });
-
-    this.setupSortableTable();
   }
 
   setupSortableTable(){
@@ -59,17 +69,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
 
     self.setState({ contentList: newItems });
   }
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
-  componentWillReceiveProps(nextProps){
-    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
-    });
-  }
 
-  componentWillUnmount() {
-
-  }
 
   handleSubmit(event) {
     event.preventDefault();
@@ -91,7 +91,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
     self.maxContentId++;
     image.id = self.maxContentId;
     image.sort_order = self.state.contentList.length;
-  
+
     this.state.contentList.push(image);
     self.setState({contentList: this.state.contentList});
   }
