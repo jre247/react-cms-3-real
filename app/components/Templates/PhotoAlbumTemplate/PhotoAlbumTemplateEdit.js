@@ -7,7 +7,7 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
-import ReactDOM from 'react-dom';
+import Sortable from '../../Sortable';
 var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {
@@ -20,8 +20,6 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
   componentDidMount() {
     this.getContentListForPage(this.props);
-
-    this.setupSortableTable();
   }
 
   //need to get page in this method since componentDidMount does not get called when
@@ -37,40 +35,6 @@ class PhotoAlbumTemplateEdit extends React.Component {
       self.maxContentId = contentItemWithMaxId.id;
     });
   }
-
-  setupSortableTable(){
-    debugger;
-    // ReactDOM.findDOMNode(this) is the <ul>
-    // element created in our render method
-    $(ReactDOM.findDOMNode(this)).sortable({
-      items: '.Photo',
-      update: this.handleSortableUpdate
-    });
-  }
-
-  handleSortableUpdate() {
-    // update the list items through this new array.
-    var newItems = _.clone(self.state.contentList, true);
-    var $node = $(ReactDOM.findDOMNode(this));
-
-    // toArray will return a sorted array of item ids:
-    var ids = $node.sortable('toArray', { attribute: 'data-id' });
-
-    ids.forEach((id, index) => {
-      var pageId = parseInt(id);
-
-      var item = _.findWhere(newItems, {id: pageId});
-      item.sort_order = index;
-    });
-
-    // We'll cancel the sortable change and let React reorder the DOM instead:
-    $node.sortable('cancel');
-
-    newItems = _.sortBy(newItems, 'sort_order');
-
-    self.setState({ contentList: newItems });
-  }
-
 
   handleSubmit(event) {
     event.preventDefault();
@@ -104,6 +68,10 @@ class PhotoAlbumTemplateEdit extends React.Component {
     this.state.contentList.splice(index, 1);
     self.setState({contentList: this.state.contentList});
   }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
+
   render() {
     let nodes = this.state.contentList.map((contentItem, index) => {
       var propsData = {contentItem: contentItem, isEdit: true, imageSize: 'small',
@@ -122,6 +90,10 @@ class PhotoAlbumTemplateEdit extends React.Component {
         }
     });
 
+    var sortableProps = _.extend({sortableItemElement: '.Photo', itemList: self.state.contentList,
+      itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this)},
+      this.props);
+
     return (
       <div className='Content-panel Photo-album-template'>
         <div className="Content-container">
@@ -136,7 +108,11 @@ class PhotoAlbumTemplateEdit extends React.Component {
           </div>
 
           <div className="Photo-album-container-edit">
-            {nodes}
+            <Sortable {...sortableProps}>
+              <div>
+                {nodes}
+              </div>
+            </Sortable>
           </div>
 
           <div className={this.state.contentList.length > 0 ? 'form-group' : 'form-group hidden'}>

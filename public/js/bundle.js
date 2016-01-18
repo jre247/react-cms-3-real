@@ -3606,9 +3606,9 @@ var _ImageFactory = require('../../Widgets/Image/ImageFactory');
 
 var _ImageFactory2 = _interopRequireDefault(_ImageFactory);
 
-var _reactDom = require('react-dom');
+var _Sortable = require('../../Sortable');
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _Sortable2 = _interopRequireDefault(_Sortable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3639,8 +3639,6 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.getContentListForPage(this.props);
-
-      this.setupSortableTable();
     }
 
     //need to get page in this method since componentDidMount does not get called when
@@ -3661,41 +3659,6 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
         });
         self.maxContentId = contentItemWithMaxId.id;
       });
-    }
-  }, {
-    key: 'setupSortableTable',
-    value: function setupSortableTable() {
-      debugger;
-      // ReactDOM.findDOMNode(this) is the <ul>
-      // element created in our render method
-      $(_reactDom2.default.findDOMNode(this)).sortable({
-        items: '.Photo',
-        update: this.handleSortableUpdate
-      });
-    }
-  }, {
-    key: 'handleSortableUpdate',
-    value: function handleSortableUpdate() {
-      // update the list items through this new array.
-      var newItems = _underscore._.clone(self.state.contentList, true);
-      var $node = $(_reactDom2.default.findDOMNode(this));
-
-      // toArray will return a sorted array of item ids:
-      var ids = $node.sortable('toArray', { attribute: 'data-id' });
-
-      ids.forEach(function (id, index) {
-        var pageId = parseInt(id);
-
-        var item = _underscore._.findWhere(newItems, { id: pageId });
-        item.sort_order = index;
-      });
-
-      // We'll cancel the sortable change and let React reorder the DOM instead:
-      $node.sortable('cancel');
-
-      newItems = _underscore._.sortBy(newItems, 'sort_order');
-
-      self.setState({ contentList: newItems });
     }
   }, {
     key: 'handleSubmit',
@@ -3739,6 +3702,11 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       self.setState({ contentList: this.state.contentList });
     }
   }, {
+    key: 'setStateForContentList',
+    value: function setStateForContentList(newContentList) {
+      self.setState({ contentList: newContentList });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -3758,6 +3726,9 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           throw 'content type should be image.';
         }
       });
+
+      var sortableProps = _underscore._.extend({ sortableItemElement: '.Photo', itemList: self.state.contentList,
+        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this) }, this.props);
 
       return _react2.default.createElement(
         'div',
@@ -3785,7 +3756,15 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'Photo-album-container-edit' },
-            nodes
+            _react2.default.createElement(
+              _Sortable2.default,
+              sortableProps,
+              _react2.default.createElement(
+                'div',
+                null,
+                nodes
+              )
+            )
           ),
           _react2.default.createElement(
             'div',
@@ -3806,7 +3785,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":19,"../../Widgets/Field/Field":40,"../../Widgets/Field/FieldHelper":42,"../../Widgets/Image/ImageFactory":49,"../../Widgets/Image/ImageWidget":50,"react":"react","react-dom":"react-dom","react-router":"react-router","underscore":"underscore"}],34:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":19,"../../Sortable":26,"../../Widgets/Field/Field":40,"../../Widgets/Field/FieldHelper":42,"../../Widgets/Image/ImageFactory":49,"../../Widgets/Image/ImageWidget":50,"react":"react","react-router":"react-router","underscore":"underscore"}],34:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
