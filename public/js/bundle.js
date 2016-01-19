@@ -1308,7 +1308,7 @@ var PagesAdministration = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'tbody',
-                  { className: 'auth-table-body' },
+                  { className: 'table-body' },
                   nodes
                 )
               )
@@ -8256,6 +8256,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/role-manager', component: _RoleManager2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/auth/role-manager/users/:id', component: _RoleManagerUser2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages', component: _PagesAdministration2.default }),
+  _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/:id/edit', component: _PageAdministrationEdit2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/pages/create', component: _PageAdministrationCreate2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/app-settings', component: _AppSettings2.default }),
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/app-settings/:id/edit', component: _AppSetting2.default })

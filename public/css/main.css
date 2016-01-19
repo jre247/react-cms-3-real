@@ -7721,11 +7721,6 @@ a:hover {
 .Widget-input {
   text-align: center;
 }
-.auth-table-body tr:hover {
-  background-color: lightgray;
-  color: black;
-  cursor: pointer;
-}
 .role-manager {
   color: white;
 }

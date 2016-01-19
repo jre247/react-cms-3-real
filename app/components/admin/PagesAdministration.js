@@ -105,7 +105,7 @@ class PagesAdministration extends React.Component {
                   <th>Url</th>
                 </tr>
               </thead>
-              <tbody className="auth-table-body">
+              <tbody className="table-body">
                 {nodes}
               </tbody>
               </table>
