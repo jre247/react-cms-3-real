@@ -23,8 +23,7 @@ class AppBackdrop extends React.Component {
 
 
   render() {
-    debugger;
-    var backgroundImageUrl = this.state.appSettings["AppBackgroundImage"];
+    var backgroundImageUrl = this.state.appSettingsDictionary["AppBackgroundImage"];
 
     var divStyle = {
       backgroundImage: 'url(' + backgroundImageUrl + ')'

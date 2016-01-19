@@ -2,7 +2,7 @@ var ContentDb = require('../db/content-db');
 var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
 var PageDb = require('../db/page-db');
-var AppSettingsDb = require('../db/app-settings-db');
+var AppSettingDb = require('../db/app-setting-db');
 var TemplateDb =require('../db/template-db');
 var _ = require('underscore-node');
 
@@ -138,7 +138,7 @@ module.exports = function(app, passport) {
 
     app.post('/api/pages/sorting/update', isAdmin, function(req, res, next) {
       var pages = req.body.pages;
-      debugger;
+
       if(pages && pages.length > 0){
         updateSortingForPages(req, res, next, pages);
       }
@@ -151,12 +151,28 @@ module.exports = function(app, passport) {
     app.get('/api/app-settings', function(req, res, next) {
       getAllAppSettings(req, res, next);
     });
+
+    app.post('/api/app-settings/:id', isAdmin, function(req, res, next) {
+      var appSetting = req.body.appSetting;
+      var appSettingId = appSetting.id;
+
+      if(appSettingId > 0){
+        updateAppSetting(req, res, next, appSetting);
+      }
+    });
 };
 
 var getAllAppSettings = function(req, res, next){
-  AppSettingsDb.findAll()
+  AppSettingDb.findAll()
     .then(function(appSettings){
       res.status(200).send(appSettings);
+    });
+}
+
+var updateAppSetting = function(req, res, next, appSetting){
+  AppSettingDb.save(appSetting)
+    .then(function(appSettingFromDb){
+      res.status(200).send(appSettingFromDb);
     });
 }
 

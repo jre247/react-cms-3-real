@@ -34,6 +34,9 @@ class AuthHeader extends React.Component {
                 <li>
                   <Link className="auth-link" to="/admin/pages">Pages Administration</Link>
                 </li>
+                <li>
+                  <Link className="auth-link" to="/admin/app-settings">App Settings</Link>
+                </li>
                 <li className='pull-right'>
                   <Link className="auth-link" to="/logout">Logout</Link>
                 </li>

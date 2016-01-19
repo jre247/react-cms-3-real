@@ -75,6 +75,24 @@ class API {
     return promise.promise();
   }
 
+  static saveAppSetting(appSetting) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/app-settings/' + appSetting.id,
+        data: {appSetting: appSetting}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
   static savePage(pageViewmodel) {
     var promise = $.Deferred();
 

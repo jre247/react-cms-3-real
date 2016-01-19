@@ -34,6 +34,30 @@ exports.findAll = function(pageUrl){
   return promise;
 }
 
+exports.save = function(appSetting){
+  var results = [];
+  var promise = new Promise();
+
+  try{
+    pg.connect(connectionString, function(err, client, done) {
+        if(err) {
+          processError(done, err);
+        }
+
+        var query = client.query("update app_setting set value = $1 where id = $2",
+          [appSetting.value, appSetting.id]);
+
+        done();
+        promise.resolve();
+    });
+  }
+  catch(ex){
+    console.log('Exception running query with psql: ' + ex);
+  }
+
+  return promise;
+}
+
 var processQueryEnd = function(done, results){
   done();
 

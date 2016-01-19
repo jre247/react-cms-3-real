@@ -6,17 +6,18 @@ class AppSettingStore {
   constructor() {
     this.bindActions(AppSettingActions);
     this.appSettings = [];
+    this.appSettingsDictionary = {};
     this.ajaxAnimationClass = '';
   }
   getAppSettingsSuccess(appSettings){
-    debugger;
     var appSettingsDictionary = {};
 
     _.each(appSettings, (setting) => {
       appSettingsDictionary[setting.name] = setting.value;
     });
 
-    this.appSettings = appSettingsDictionary;
+    this.appSettings = appSettings;
+    this.appSettingsDictionary = appSettingsDictionary;
   }
 
   getAppSettingsFail(jqXhr){

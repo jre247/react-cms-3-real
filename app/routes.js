@@ -11,6 +11,8 @@ import RoleManagerUser from './components/Auth/RoleManagerUser';
 import PagesAdministration from './components/Admin/PagesAdministration';
 import PageAdministrationEdit from './components/Admin/PageAdministrationEdit';
 import PageAdministrationCreate from './components/Admin/PageAdministrationCreate';
+import AppSettings from './components/Admin/AppSettings';
+import AppSetting from './components/Admin/AppSetting';
 
 export default (
   <Route component={App}>
@@ -23,7 +25,7 @@ export default (
     <Route path='/auth/role-manager/users/:id' component={RoleManagerUser} />
     <Route path='/admin/pages' component={PagesAdministration} />
     <Route path='/admin/pages/create' component={PageAdministrationCreate} />
-    <Route path='/admin/pages/:id/edit' component={PageAdministrationEdit} />
-
+    <Route path='/admin/app-settings' component={AppSettings} />
+    <Route path='/admin/app-settings/:id/edit' component={AppSetting} />
   </Route>
 );
