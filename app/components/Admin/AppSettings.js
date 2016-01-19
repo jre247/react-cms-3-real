@@ -53,7 +53,7 @@ class AppSettings extends React.Component {
                   <th>Value</th>
                 </tr>
               </thead>
-              <tbody className="app-settings-table-body">
+              <tbody className="table-body">
                 {nodes}
               </tbody>
               </table>

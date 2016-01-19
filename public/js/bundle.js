@@ -762,7 +762,7 @@ var AppSettings = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'tbody',
-                  { className: 'app-settings-table-body' },
+                  { className: 'table-body' },
                   nodes
                 )
               )
