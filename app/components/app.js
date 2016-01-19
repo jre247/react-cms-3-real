@@ -8,6 +8,7 @@ import PageActions from '../actions/PageActions';
 import LookupStore from '../stores/LookupStore';
 import LookupActions from '../actions/LookupActions';
 import AuthHeader from './AuthHeader';
+import AppBackdrop from './AppBackdrop';
 
 class App extends React.Component {
   constructor(props) {
@@ -46,10 +47,7 @@ class App extends React.Component {
           <Header />
           {this.props.children}
           <Footer />
-          <div className="Backdrop">
-            <div className="fixed-container">
-            </div>
-          </div>
+          <AppBackdrop />
         </div>
       </div>
     );

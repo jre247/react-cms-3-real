@@ -5,6 +5,14 @@ drop table wedding_user_role;
 drop table wedding_role;
 drop table wedding_user;
 drop table template;
+drop table app_settings;
+CREATE TABLE app_setting
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	value VARCHAR(840) not null,
+	is_active BOOLEAN
+);
 CREATE TABLE wedding_user
 (
 	id SERIAL PRIMARY KEY,
@@ -73,6 +81,7 @@ CREATE TABLE wedding_user_role
 );
 CREATE INDEX conect_user_permission_idx ON wedding_user_role (user_id);
 
+insert into app_setting (name, value, is_active) values ('AppBackgroundImage', 'http://passcdn-cf1.pass.us/bKn1Z1557788/fDjB1266150348l.jpg', true);
 insert into wedding_role (name, description, is_active) values ('Publisher', 'Publish Content', true);
 insert into wedding_role (name, description, is_active) values ('Admin', 'Full control', true);
 
@@ -113,3 +122,5 @@ GRANT ALL PRIVILEGES ON TABLE page TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE page_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE template TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE template_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE app_setting TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE app_setting_id_seq TO jevans;

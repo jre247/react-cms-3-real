@@ -2,6 +2,7 @@ var ContentDb = require('../db/content-db');
 var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
 var PageDb = require('../db/page-db');
+var AppSettingsDb = require('../db/app-settings-db');
 var TemplateDb =require('../db/template-db');
 var _ = require('underscore-node');
 
@@ -146,7 +147,18 @@ module.exports = function(app, passport) {
     app.get('/api/lookups', function(req, res, next) {
       getAllLookups(req, res, next);
     });
+
+    app.get('/api/app-settings', function(req, res, next) {
+      getAllAppSettings(req, res, next);
+    });
 };
+
+var getAllAppSettings = function(req, res, next){
+  AppSettingsDb.findAll()
+    .then(function(appSettings){
+      res.status(200).send(appSettings);
+    });
+}
 
 var updatePage = function(req, res, next, pageViewmodel){
   var pageId = pageViewmodel.id;

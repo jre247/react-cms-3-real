@@ -46,7 +46,6 @@ class PhotoAlbumTemplateEdit extends React.Component {
     });
   }
 
-  //todo: move to actions
   createImage(event){
     var sortOrder = this.state.contentList.length + 1;
 
