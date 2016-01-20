@@ -45,6 +45,9 @@ class Sortable extends React.Component {
     newItems = _.sortBy(newItems, self.props.itemPropertyToSortBy);
 
     self.props.setStateForItemList(newItems);
+
+    if(self.props.onSortingUpdateCallback)
+      self.props.onSortingUpdateCallback();
   }
 
 

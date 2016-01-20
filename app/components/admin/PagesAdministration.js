@@ -6,7 +6,7 @@ import PageActions from '../../actions/PageActions';
 import { createHistory } from 'history'
 import ReactDOM from 'react-dom';
 import API from '../../API';
-import PagesAdministrationPositionButtons from './PagesAdministrationPositionButtons';
+import Sortable from '../Sortable';
 var self;
 
 class PagesAdministration extends React.Component {
@@ -20,46 +20,16 @@ class PagesAdministration extends React.Component {
   componentDidMount() {
     PageStore.listen(this.onChange);
     PageActions.getAllPages();
-
-    this.setupSortableTable();
   }
 
-  setupSortableTable(){
-    // ReactDOM.findDOMNode(this) is the <ul>
-    // element created in our render method
-    $(ReactDOM.findDOMNode(this)).sortable({
-      items: 'tbody tr',
-      update: this.handleSortableUpdate
-    });
-  }
   componentWillUnmount() {
     PageStore.unlisten(this.onChange);
   }
   onChange(state) {
     self.setState(state);
   }
-  handleSortableUpdate() {
-    // update the list items through this new array.
-    var newItems = _.clone(self.state.pages, true);
-    var $node = $(ReactDOM.findDOMNode(this));
 
-    // toArray will return a sorted array of item ids:
-    var ids = $node.sortable('toArray', { attribute: 'data-id' });
-
-    ids.forEach((id, index) => {
-      var pageId = parseInt(id);
-
-      var item = _.findWhere(newItems, {id: pageId});
-      item.sort_order = index;
-    });
-
-    // We'll cancel the sortable change and let React reorder the DOM instead:
-    $node.sortable('cancel');
-
-    newItems = _.sortBy(newItems, 'sort_order');
-
-    self.setState({ pages: newItems });
-
+  onSortingUpdate(){
     API.saveSortingForPages(self.state.pages);
   }
   selectPage(page, event){
@@ -67,6 +37,9 @@ class PagesAdministration extends React.Component {
   }
   create(){
     self.props.history.pushState(null, '/admin/pages/create');
+  }
+  setStateForPages(newPages){
+    self.setState({pages: newPages});
   }
 
   render() {
@@ -86,8 +59,10 @@ class PagesAdministration extends React.Component {
         );
       });
 
-      var positionButtonsProps = _.extend({pages: self.state.pages, handleSortableUpdate: this.handleSortableUpdate},
-         this.props);
+      var sortableProps = _.extend({sortableItemElement: 'tr', itemList: self.state.pages,
+        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForPages.bind(this),
+        onSortingUpdateCallback: self.onSortingUpdate.bind(this)},
+        this.props);
 
       return (
         <div className='Content-panel'>
@@ -98,16 +73,18 @@ class PagesAdministration extends React.Component {
           <div>
             <div className="table-responsive">
               <table className="table pages-administration">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Template</th>
-                  <th>Url</th>
-                </tr>
-              </thead>
-              <tbody className="table-body">
-                {nodes}
-              </tbody>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Template</th>
+                    <th>Url</th>
+                  </tr>
+                </thead>
+                <Sortable {...sortableProps}>
+                  <tbody className="table-body">
+                      {nodes}
+                  </tbody>
+                </Sortable>
               </table>
             </div>
           </div>

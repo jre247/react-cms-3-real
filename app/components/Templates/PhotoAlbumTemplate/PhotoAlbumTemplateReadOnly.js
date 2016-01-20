@@ -25,7 +25,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       self.setStateForContentList(viewmodel.contentList);
     });
   }
-  
+
   //need to get page in this method since componentDidMount does not get called when
   //changing routes to another page
   componentWillReceiveProps(nextProps){
@@ -56,7 +56,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
 
   render() {
     var propsData = _.extend({selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
-      imageSize: 'small'}, this.props);
+      imageSize: 'small', showIndicators: false}, this.props);
 
     let nodes = this.state.contentList.map((contentItem, index) => {
       var fieldPropsData = _.extend({contentItem: contentItem}, propsData);

@@ -7740,3 +7740,29 @@ a:hover {
 .basic-template-edit .url-widget input {
   text-align: center;
 }
+.basic-template-edit .Content-long-description-container {
+  width: 100%;
+}
+.modal-content {
+  background-color: transparent;
+}
+.modal-header > .close {
+  color: white;
+  opacity: 1;
+  font-size: 30px;
+  position: relative;
+  left: 177px;
+}
+.modal-header {
+  border-bottom: none;
+}
+.carousel-control.left {
+  left: -193px;
+}
+.carousel-control.right {
+  right: -193px;
+}
+.modal-content .glyphicon-chevron-right,
+.modal-content .glyphicon-chevron-left {
+  font-size: 42px;
+}
