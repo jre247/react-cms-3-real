@@ -7,7 +7,7 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
-import Sortable from '../../Sortable';
+import Sortable from '../../Widgets/Components/Sortable';
 var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {

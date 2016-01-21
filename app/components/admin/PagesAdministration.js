@@ -6,7 +6,7 @@ import PageActions from '../../actions/PageActions';
 import { createHistory } from 'history'
 import ReactDOM from 'react-dom';
 import API from '../../API';
-import Sortable from '../Sortable';
+import Sortable from '../Widgets/Components/Sortable';
 var self;
 
 class PagesAdministration extends React.Component {

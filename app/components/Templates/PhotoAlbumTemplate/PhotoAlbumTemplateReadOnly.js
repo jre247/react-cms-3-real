@@ -9,15 +9,16 @@ import LongDescription from '../../Widgets/LongDescription/LongDescription';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import Title from '../../Widgets/Title/Title';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
-import Carousel from '../../Widgets/Carousel/Carousel';
+import Carousel from '../../Widgets/Components/Carousel/Carousel';
 import EditLink from '../../EditLink';
+import Modal from '../../Widgets/Components/Modal'
 var self;
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 2;
-    this.state = {contentList: [], selectedPhoto: 1};
+    this.state = {contentList: [], selectedPhoto: 1, showModal: false};
     self = this;
   }
   componentDidMount() {
@@ -43,16 +44,17 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   closeModal() {
-    //this.setState({ isModalOpen: false });
-    $('#largeCarouselModal').modal('hide');
+    this.setState({selectedPhoto: 1});
+    this.setState({showModal: false});
+    //$('#largeCarouselModal').modal('hide');
   }
 
   openModal(index) {
-  //  this.setState({isModalOpen: true});
-  //  this.setState({isModalOpen: true});
-    //this.props.selectedPhoto = index || 1;
-    $('#largeCarouselModal').modal('show');
+    this.setState({selectedPhoto: index});
+    this.setState({showModal: true});
+  //  $('#largeCarouselModal').modal('show');
   }
+
 
   render() {
     var propsData = _.extend({selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
@@ -62,7 +64,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       var fieldPropsData = _.extend({contentItem: contentItem}, propsData);
       return (
         <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
-          <Field {...fieldPropsData} />
+            <Field {...fieldPropsData} />
         </div>
       );
     });
@@ -73,6 +75,8 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       );
     }
     else {
+      var modalProps = {modalElement: '#largeCarouselModal', showModal: this.state.showModal};
+
       return (
         <div className='Content-panel'>
           <EditLink {...this.props} />
@@ -81,18 +85,20 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
             {nodes}
           </div>
 
-          <div id="largeCarouselModal" className="modal fade" role="dialog">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <button type="button" className="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div className="modal-body">
-                  <Carousel {...propsData} />
+          <Modal {...modalProps}>
+            <div id="largeCarouselModal">
+              <div className="modal-content-area">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <button type="button" className="close" onClick={this.closeModal.bind(this)}>&times;</button>
+                  </div>
+                  <div className="body">
+                    <Carousel {...propsData} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Modal>
         </div>
 
       );

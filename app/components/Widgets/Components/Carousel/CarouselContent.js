@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import PropsHelper from '../../../helpers/PropsHelper'
+import PropsHelper from '../../../../helpers/PropsHelper'
 
 class CarouselContent extends React.Component {
   constructor(props) {
@@ -16,11 +16,15 @@ class CarouselContent extends React.Component {
   }
 
   render() {
+    $('.modal-content').removeClass('active');
+
     var propsArray = PropsHelper.convertPropsToArray(this.props.contentList);
 
     let images = propsArray.map((image, index) => {
+      var className = index == this.props.selectedPhoto ? 'item active' : 'item';
+
       return (
-        <div key={image.sort_order} className={index == this.props.selectedPhoto ? 'item active' : 'item'}>
+        <div key={image.sort_order} className={className}>
           <img key={index} src={image.value} />
         </div>
       );

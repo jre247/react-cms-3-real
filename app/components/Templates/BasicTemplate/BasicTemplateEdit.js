@@ -6,7 +6,7 @@ import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import TemplateHelper from '../TemplateHelper';
 import API from '../../../API';
-import Sortable from '../../Sortable';
+import Sortable from '../../Widgets/Components/Sortable';
 var self;
 
 class BasicTemplateEdit extends React.Component {

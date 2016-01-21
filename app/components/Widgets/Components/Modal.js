@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ReactCSSTransitionGroup from 'react-addons-transition-group';
+import ReactDOM from 'react-dom';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -9,26 +9,33 @@ class Modal extends React.Component {
 
   componentDidMount() {
 
+
+  }
+
+  componentDidUpdate(){
+    debugger
+    if(this.props.showModal){
+      $('body').append('<div class="modal-backdrop fade in"></div>');
+    }
+    else{
+      $('body .modal-backdrop').remove();
+    }
+
   }
 
   componentWillUnmount() {
 
+  //document.body.removeChild(this.props.modalElement);
+
   }
 
   render() {
-    if(this.props.isOpen){
+    if(this.props.showModal){
       return (
-        <div>
-          <div id="largeCarouselModal" className="modal fade" role="dialog">
-            <div className="modal-dialog">
-               <div className="modal-content">
-                 
-               </div>
-            </div>
-          </div>
+        <div className="modal-container">
+          {this.props.children}
         </div>
       );
-
     }
     else{
       return (

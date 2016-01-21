@@ -7743,6 +7743,35 @@ a:hover {
 .basic-template-edit .Content-long-description-container {
   width: 100%;
 }
+.carousel-control.left {
+  left: -193px;
+}
+.carousel-control.right {
+  right: -193px;
+}
+.modal-container {
+  opacity: 1;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  z-index: 1050;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+  width: 1300px;
+  top: 40px;
+}
+.modal-content-area {
+  width: 600px;
+  margin: 30px auto;
+}
+.modal-content .glyphicon-chevron-right,
+.modal-content .glyphicon-chevron-left {
+  font-size: 42px;
+}
 .modal-content {
   background-color: transparent;
 }
@@ -7756,13 +7785,27 @@ a:hover {
 .modal-header {
   border-bottom: none;
 }
-.carousel-control.left {
-  left: -193px;
+.modal-anim-enter {
+  opacity: 0.00;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
-.carousel-control.right {
-  right: -193px;
+.modal-anim-enter.modal-anim-enter-active {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
-.modal-content .glyphicon-chevron-right,
-.modal-content .glyphicon-chevron-left {
-  font-size: 42px;
+.modal-anim-leave {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+.modal-anim-leave.modal-anim-leave-active {
+  opacity: 0.00;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
 }
