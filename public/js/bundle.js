@@ -4386,7 +4386,7 @@ var Carousel = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { id: 'largeCarousel', className: 'carousel', 'data-ride': 'carousel' },
+        { id: 'largeCarousel', className: 'carousel', 'data-ride': 'carousel', 'data-interval': 'false' },
         _react2.default.createElement(
           'div',
           { className: !this.props.showIndicators ? 'hidden' : '' },

@@ -7744,13 +7744,13 @@ a:hover {
   width: 100%;
 }
 .carousel-control.left {
-  left: -193px;
+  left: 100px;
 }
 .carousel-control.right {
-  right: -193px;
+  right: 100px;
 }
 .carousel-inner img {
-  max-height: 550px;
+  height: 550px;
   text-align: center;
 }
 .carousel-inner .item-container {
@@ -7773,7 +7773,7 @@ a:hover {
   transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
 }
 .modal-content-area {
-  width: 600px;
+  width: 100%;
   margin: 30px auto;
 }
 .modal-content .glyphicon-chevron-right,
@@ -7788,7 +7788,8 @@ a:hover {
   opacity: 1;
   font-size: 30px;
   position: relative;
-  left: 177px;
+  left: -177px;
+  bottom: 20px;
 }
 .modal-header {
   border-bottom: none;

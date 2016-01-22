@@ -19,7 +19,7 @@ class Carousel extends React.Component {
 
   render() {
     return (
-      <div id="largeCarousel" className="carousel" data-ride="carousel">
+      <div id="largeCarousel" className="carousel" data-ride="carousel" data-interval="false">
         <div className={!this.props.showIndicators ? 'hidden' : ''}>
           <CarouselIndicators {...this.props} />
         </div>
