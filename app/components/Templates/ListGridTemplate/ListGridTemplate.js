@@ -9,6 +9,7 @@ import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import API from '../../../API';
 import EditLink from '../../EditLink';
+import WidgetSaveService from '../../Widgets/WidgetSaveService';
 var self;
 
 class ListGridTemplate extends React.Component {
@@ -56,7 +57,7 @@ class ListGridTemplate extends React.Component {
   }
 
   submit(event){
-    API.saveContentListForPage(this.state.contentList, this.props.pageId).then(function(){
+    WidgetSaveService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }

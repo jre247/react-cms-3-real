@@ -16,6 +16,10 @@ class ImageWidget extends React.Component {
 
   }
 
+  static onSave(contentItem){
+    return contentItem;
+  }
+
   render() {
     if(this.props.isEdit){
       return(

@@ -8,6 +8,7 @@ import {_} from 'underscore';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
 import Sortable from '../../Widgets/Components/Sortable';
+import WidgetSaveService from '../../Widgets/WidgetSaveService';
 var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {
@@ -41,8 +42,8 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
 
   submit(event){
-    API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
-      self.props.history.pushState(null, '/' + self.props.readOnlyPageLink)
+    WidgetSaveService.save(self.state.contentList, self.props.pageId).then(function(){
+      self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
 

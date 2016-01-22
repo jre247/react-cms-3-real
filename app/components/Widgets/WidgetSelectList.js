@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import WidgetFactory from './WidgetFactory';
+import WidgetInstanceFactory from './WidgetInstanceFactory';
 
 class WidgetSelectList extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class WidgetSelectList extends React.Component {
   onAddWidget(event){
     var selectedWidget = this.state.selectedWidget;
     var parentIndex = this.props.parentIndex;
-    var factory = new WidgetFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex, this.props.row_number,
+    var factory = new WidgetInstanceFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex, this.props.row_number,
       this.props.column_number);
     var factoryInstance = factory.create();
 

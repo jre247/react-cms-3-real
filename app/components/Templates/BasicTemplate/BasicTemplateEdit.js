@@ -5,6 +5,7 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import TemplateHelper from '../TemplateHelper';
+import WidgetSaveService from '../../Widgets/WidgetSaveService';
 import API from '../../../API';
 import Sortable from '../../Widgets/Components/Sortable';
 var self;
@@ -43,7 +44,7 @@ class BasicTemplateEdit extends React.Component {
   }
 
   submit(event){
-    API.saveContentListForPage(self.state.contentList, self.props.pageId).then(function(){
+    WidgetSaveService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
