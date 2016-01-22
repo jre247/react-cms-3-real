@@ -7558,8 +7558,8 @@ a:hover {
   width: 90%;
   display: inline-block;
 }
-.List-template .Content-extra-large-image-percentage {
-  width: 42%;
+.List-template .edit-content .Content-extra-large-image-percentage {
+  width: 43%;
 }
 .List-Grid-Group-Column {
   width: 65%;
@@ -7749,6 +7749,13 @@ a:hover {
 .carousel-control.right {
   right: -193px;
 }
+.carousel-inner img {
+  max-height: 550px;
+  text-align: center;
+}
+.carousel-inner .item-container {
+  text-align: center;
+}
 .modal-container {
   opacity: 1;
   overflow-x: hidden;
@@ -7762,7 +7769,8 @@ a:hover {
   -webkit-transition: opacity .15s linear;
   transition: opacity .15s linear;
   width: 1300px;
-  top: 40px;
+  top: 15px;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
 }
 .modal-content-area {
   width: 600px;

@@ -165,7 +165,7 @@ class ListTemplate extends React.Component {
                   <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
                 </div>
 
-                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
+                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page edit-content'}>
                   {nodes}
                 </div>
               </div>

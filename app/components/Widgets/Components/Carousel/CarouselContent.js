@@ -25,7 +25,9 @@ class CarouselContent extends React.Component {
 
       return (
         <div key={image.sort_order} className={className}>
-          <img key={index} src={image.value} />
+          <div className="item-container">
+            <img src={image.value} />
+          </div>
         </div>
       );
     });

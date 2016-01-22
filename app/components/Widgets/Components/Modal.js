@@ -13,7 +13,6 @@ class Modal extends React.Component {
   }
 
   componentDidUpdate(){
-    debugger
     if(this.props.showModal){
       $('body').append('<div class="modal-backdrop fade in"></div>');
     }
@@ -24,8 +23,6 @@ class Modal extends React.Component {
   }
 
   componentWillUnmount() {
-
-  //document.body.removeChild(this.props.modalElement);
 
   }
 

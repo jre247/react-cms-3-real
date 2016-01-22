@@ -3697,7 +3697,7 @@ var ListTemplate = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
+                  { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page edit-content' },
                   nodes
                 )
               )
@@ -4479,7 +4479,11 @@ var CarouselContent = (function (_React$Component) {
         return _react2.default.createElement(
           'div',
           { key: image.sort_order, className: className },
-          _react2.default.createElement('img', { key: index, src: image.value })
+          _react2.default.createElement(
+            'div',
+            { className: 'item-container' },
+            _react2.default.createElement('img', { src: image.value })
+          )
         );
       });
 
@@ -4606,7 +4610,6 @@ var Modal = (function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      debugger;
       if (this.props.showModal) {
         $('body').append('<div class="modal-backdrop fade in"></div>');
       } else {
@@ -4615,11 +4618,7 @@ var Modal = (function (_React$Component) {
     }
   }, {
     key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-
-      //document.body.removeChild(this.props.modalElement);
-
-    }
+    value: function componentWillUnmount() {}
   }, {
     key: 'render',
     value: function render() {
