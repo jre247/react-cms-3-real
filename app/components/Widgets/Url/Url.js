@@ -23,14 +23,20 @@ class Url extends React.Component {
   }
 
   static formatValue(contentValue){
-    var httpProtocal = 'http://';
-    var httpProtocalWithWww = 'http://www.'
-    debugger;
-    if(contentValue.indexOf(httpProtocalWithWww) < 0)
-      return httpProtocalWithWww + contentValue;
+    var wwwProtocol = "www.";
+    var httpProtocol = "http://";
 
-    if(contentValue.indexOf(httpProtocal) < 0)
-      return httpProtocal + contentValue;
+    //if www is missing and http is not present
+    if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) < 0)
+      return wwwProtocol + contentValue;
+
+    debugger;
+    // if www is missing, but http is present
+    if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) >= 0){
+      var valueSplit = contentValue.split(httpProtocol);
+      var valueFormatted = valueSplit[0] + wwwProtocol + valueSplit[1];
+      return valueFormatted;
+    }
 
     return contentValue;
   }
