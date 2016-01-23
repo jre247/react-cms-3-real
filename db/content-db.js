@@ -77,7 +77,7 @@ exports.get = function(pageId){
         }
 
         pageId = parseInt(pageId);
-        var query = client.query("select * from content where is_active = true And page_id = $1 order by sort_order", [pageId]);
+        var query = client.query("select c.* from content c join page p on c.page_id = p.id where p.is_active = true And c.is_active = true And c.page_id = $1 order by c.sort_order", [pageId]);
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

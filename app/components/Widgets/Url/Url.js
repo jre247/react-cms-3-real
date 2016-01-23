@@ -30,7 +30,6 @@ class Url extends React.Component {
     if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) < 0)
       return wwwProtocol + contentValue;
 
-    debugger;
     // if www is missing, but http is present
     if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) >= 0){
       var valueSplit = contentValue.split(httpProtocol);
