@@ -80,6 +80,11 @@ class PageAdministration extends React.Component {
     this.setState({page: this.state.page});
   }
 
+  onIsActiveChange(event){
+    this.state.page.is_active = event.target.checked;
+    this.setState({page: this.state.page});
+  }
+
   render() {
     var templates = this.lookupState.lookups.templates.map((template, index) => {
       return (
@@ -108,6 +113,12 @@ class PageAdministration extends React.Component {
                   value={this.state.page.template_id}>
                     {templates}
                 </select>
+            </div>
+
+            <div className="form-group">
+                <label>Is Active</label>
+                <input className="form-control" name="admin" type="checkbox" value={this.state.page.is_active}
+                  checked={this.state.page.is_active} onChange={this.onIsActiveChange.bind(this)} />
             </div>
 
             <button type="button" className="btn btn-primary btn-lg" onClick={this.submit.bind(this)}>Save</button>

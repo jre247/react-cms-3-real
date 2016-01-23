@@ -14,7 +14,7 @@ exports.findAll = function(pageUrl){
           processError(done, err);
         }
 
-        var query = client.query("select p.id, p.name, p.url, p.template_id, p.sort_order, t.name as template_name from page p join template t on p.template_id = t.id order by p.sort_order;");
+        var query = client.query("select p.id, p.name, p.url, p.template_id, p.sort_order, t.name as template_name, p.is_active from page p join template t on p.template_id = t.id order by p.sort_order;");
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
@@ -99,7 +99,7 @@ exports.create = function(newPage){
           processError(done, err);
         }
 
-        var queryParams = [newPage.name, newPage.url, newPage.template_id, newPage.sort_order, true];
+        var queryParams = [newPage.name, newPage.url, newPage.template_id, newPage.sort_order, newPage.is_active];
         var query = client.query("insert into page(name, url, template_id, sort_order, is_active) values ($1, $2, $3, $4, $5) RETURNING *", queryParams);
 
         // Stream results back one row at a time
@@ -157,8 +157,8 @@ exports.update = function(page){
           processError(done, err);
         }
 
-        var queryParams = [page.name, page.url, page.template_id, page.id];
-        var query = client.query("update page set name = $1, url = $2, template_id = $3 where id = $4", queryParams);
+        var queryParams = [page.name, page.url, page.template_id, page.is_active, page.id];
+        var query = client.query("update page set name = $1, url = $2, template_id = $3, is_active = $4 where id = $5", queryParams);
 
         // Stream results back one row at a time
         query.on('row', function(row) {

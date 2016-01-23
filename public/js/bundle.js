@@ -916,6 +916,12 @@ var PageAdministration = (function (_React$Component) {
       this.setState({ page: this.state.page });
     }
   }, {
+    key: 'onIsActiveChange',
+    value: function onIsActiveChange(event) {
+      this.state.page.is_active = event.target.checked;
+      this.setState({ page: this.state.page });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var templates = this.lookupState.lookups.templates.map(function (template, index) {
@@ -966,6 +972,17 @@ var PageAdministration = (function (_React$Component) {
                 value: this.state.page.template_id },
               templates
             )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'form-group' },
+            _react2.default.createElement(
+              'label',
+              null,
+              'Is Active'
+            ),
+            _react2.default.createElement('input', { className: 'form-control', name: 'admin', type: 'checkbox', value: this.state.page.is_active,
+              checked: this.state.page.is_active, onChange: this.onIsActiveChange.bind(this) })
           ),
           _react2.default.createElement(
             'button',
@@ -2481,6 +2498,7 @@ var Navbar = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navbar).call(this, props));
 
     _this.state = _PageStore2.default.getState();
+    _this.pagesActive = [];
     _this.onChange = _this.onChange.bind(_this);
     return _this;
   }
@@ -2499,6 +2517,10 @@ var Navbar = (function (_React$Component) {
     key: 'onChange',
     value: function onChange(state) {
       this.setState(state);
+
+      if (state.pages.length > 0) {
+        this.pagesActive = _underscore._.where(this.state.pages, { is_active: true });
+      }
     }
   }, {
     key: 'handleSubmit',
@@ -2506,7 +2528,7 @@ var Navbar = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (_underscore._.isEmpty(this.state.pages)) {
+      if (_underscore._.isEmpty(this.pagesActive)) {
         return _react2.default.createElement(
           'div',
           null,
@@ -2521,7 +2543,7 @@ var Navbar = (function (_React$Component) {
           )
         );
       } else {
-        var nodes = this.state.pages.map(function (page, index) {
+        var nodes = this.pagesActive.map(function (page, index) {
           return _react2.default.createElement(
             _reactRouter.Link,
             { key: index, className: 'Navigation-link', to: '/' + page.url },

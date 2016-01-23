@@ -7,6 +7,7 @@ class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = PageStore.getState();
+    this.pagesActive = [];
     this.onChange = this.onChange.bind(this);
   }
 
@@ -20,6 +21,10 @@ class Navbar extends React.Component {
 
   onChange(state) {
     this.setState(state);
+
+    if(state.pages.length > 0){
+      this.pagesActive = _.where(this.state.pages, {is_active: true});
+    }
   }
 
   handleSubmit(event) {
@@ -27,7 +32,7 @@ class Navbar extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.state.pages)){
+    if(_.isEmpty(this.pagesActive)){
       return (
         <div>
           <div className='Navigation' role="navigation">
@@ -37,7 +42,7 @@ class Navbar extends React.Component {
       );
     }
     else{
-      let nodes = this.state.pages.map((page, index) => {
+      let nodes = this.pagesActive.map((page, index) => {
         return (
           <Link key={index} className="Navigation-link" to={'/' + page.url}>{page.name}</Link>
         );
