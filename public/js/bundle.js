@@ -1380,7 +1380,7 @@ var AppBackdrop = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var backgroundImageUrl = this.state.appSettingsDictionary["AppBackgroundImage"];
+      var backgroundImageUrl = this.state.appSettingsDictionary["Background Image"];
 
       var divStyle = {
         backgroundImage: 'url(' + backgroundImageUrl + ')'
