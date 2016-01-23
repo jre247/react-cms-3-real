@@ -3,9 +3,10 @@ var AuthDb = require('../db/auth-db');
 var UserDb = require('../db/user-db');
 var PageDb = require('../db/page-db');
 var AppSettingDb = require('../db/app-setting-db');
-var TemplateDb =require('../db/template-db');
-var MealDb =require('../db/meal-db');
-var SettingDb =require('../db/setting-db');
+var TemplateDb = require('../db/template-db');
+var MealDb = require('../db/meal-db');
+var SettingDb = require('../db/setting-db');
+var ContentSettingDb = require('../db/content-setting-db');
 var _ = require('underscore-node');
 
 // app/routes.js
@@ -265,10 +266,17 @@ var createPage = function(req, res, next, pageViewmodel){
 
 var getPage = function(req, res, next){
   var pageId = req.params.id;
-  ContentDb.get(pageId).then(function(data){
-      var viewmodel = {contentList: data,};
+  var viewmodel = {};
 
-      res.status(200).send(viewmodel);
+  ContentDb.get(pageId).then(function(contentList){
+      viewmodel.contentList = contentList;
+
+      return ContentSettingDb.getSettingsForPage(pageId);
+  })
+  .then(function(contentSettings){
+    viewmodel.contentSettings = contentSettings;
+
+    res.status(200).send(viewmodel);
   });
 }
 
