@@ -4,6 +4,7 @@ var UserDb = require('../db/user-db');
 var PageDb = require('../db/page-db');
 var AppSettingDb = require('../db/app-setting-db');
 var TemplateDb =require('../db/template-db');
+var MealDb =require('../db/meal-db');
 var _ = require('underscore-node');
 
 // app/routes.js
@@ -102,7 +103,7 @@ module.exports = function(app, passport) {
       if(req.user){
         userId = req.user.id;
       }
-      
+
       PageDb.findById(pageId)
         .then(function(page){
           if(page.is_active){
@@ -166,6 +167,27 @@ module.exports = function(app, passport) {
         updateAppSetting(req, res, next, appSetting);
       }
     });
+
+    app.get('/api/meals', function(req, res, next) {
+      getAllMeals(req, res, next);
+    });
+
+    app.post('/api/meals/:id', isAdmin, function(req, res, next) {
+      var meal = req.body.meal;
+      var mealId = meal.id;
+
+      if(mealId > 0){
+        updateMeal(req, res, next, meal);
+      }
+    });
+
+    app.post('/api/meals/sorting/update', isAdmin, function(req, res, next) {
+      var meals = req.body.meals;
+
+      if(meals && meals.length > 0){
+        updateSortingForMeal(req, res, next, meals);
+      }
+    });
 };
 
 var getAllAppSettings = function(req, res, next){
@@ -179,6 +201,20 @@ var updateAppSetting = function(req, res, next, appSetting){
   AppSettingDb.save(appSetting)
     .then(function(appSettingFromDb){
       res.status(200).send(appSettingFromDb);
+    });
+}
+
+var getAllMeals = function(req, res, next){
+  MealDb.findAll()
+    .then(function(meals){
+      res.status(200).send(meals);
+    });
+}
+
+var updateMeal = function(req, res, next, meal){
+  MealDb.save(meal)
+    .then(function(mealFromDb){
+      res.status(200).send(mealFromDb);
     });
 }
 
@@ -210,6 +246,13 @@ var updateSortingForPages = function(req, res, next, pages){
   PageDb.updateSortingForPages(pages)
     .then(function(pages){
       res.status(200).send(pages);
+    });
+}
+
+var updateSortingForMeal = function(req, res, next, meals){
+  MealDb.updateSortingForMeals(meals)
+    .then(function(meals){
+      res.status(200).send(meals);
     });
 }
 

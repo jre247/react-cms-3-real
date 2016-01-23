@@ -38,24 +38,6 @@ class API {
 
     return promise.promise();
   }
-  //
-  // static getLoggedInUser(history) {
-  //   var promise = $.Deferred();
-
-  //   $.ajax({
-  //       type: 'GET',
-  //       url: '/api/getLoggedInUser'
-  //     })
-  //       .done((data) => {
-  //         promise.resolve(data);
-  //       })
-  //       .fail((jqXhr) => {
-  //         promise.reject(this.onFail(jqXhr.responseJSON.message));
-  //       });
-  //
-  //   return promise.promise();
-  // }
-
 
   static saveUser(userViewmodel) {
     var promise = $.Deferred();
@@ -82,6 +64,24 @@ class API {
         type: 'POST',
         url: '/api/app-settings/' + appSetting.id,
         data: {appSetting: appSetting}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
+
+    return promise.promise();
+  }
+
+  static saveMeal(meal) {
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/meals/' + meal.id,
+        data: {meal: meal}
       })
         .done((data) => {
           promise.resolve(data);
@@ -181,6 +181,24 @@ class API {
       .fail((jqXhr) => {
         promise.reject(this.onFail(jqXhr.responseJSON.message));
       });
+
+    return promise.promise();
+  }
+
+  static saveSortingForMeals(meals){
+    var promise = $.Deferred();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/meals/sorting/update',
+        data: {meals: meals}
+      })
+        .done((data) => {
+          promise.resolve(data);
+        })
+        .fail((jqXhr) => {
+          promise.reject(this.onFail(jqXhr.responseJSON.message));
+        });
 
     return promise.promise();
   }

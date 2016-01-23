@@ -6,6 +6,7 @@ drop table wedding_role;
 drop table wedding_user;
 drop table template;
 drop table app_settings;
+drop table meal;
 CREATE TABLE app_setting
 (
 	id SERIAL PRIMARY KEY,
@@ -20,6 +21,13 @@ CREATE TABLE wedding_user
 	last_name VARCHAR(40) not null,
 	email VARCHAR(40),
 	password VARCHAR(340),
+	is_active BOOLEAN
+);
+CREATE TABLE meal
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	sort_order INTEGER NOT NULL,
 	is_active BOOLEAN
 );
 CREATE TABLE template
@@ -85,6 +93,11 @@ insert into app_setting (name, value, is_active) values ('Background Image', 'ht
 insert into wedding_role (name, description, is_active) values ('Publisher', 'Publish Content', true);
 insert into wedding_role (name, description, is_active) values ('Admin', 'Full control', true);
 
+insert into meal (name, sort_order, is_active) values ('Salmon', 1, true);
+insert into meal (name, sort_order, is_active) values ('Steak', 2, true);
+insert into meal (name, sort_order, is_active) values ('Chicken', 3, true);
+insert into meal (name, sort_order, is_active) values ('Vegeterian', 4, true);
+
 insert into content_type (name, description, is_active) values ('Image', 'Url for an Image', true);
 insert into content_type (name, description, is_active) values ('Description', 'Description', true);
 insert into content_type (name, description, is_active) values ('Title', 'Title', true);
@@ -124,3 +137,5 @@ GRANT ALL PRIVILEGES ON TABLE template TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE template_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE app_setting TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE app_setting_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE meal TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE meal_id_seq TO jevans;

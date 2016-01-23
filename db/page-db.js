@@ -132,7 +132,6 @@ exports.updateSortingForPages = function(pages){
         }
 
         _.each(pages, function(page){
-          debugger;
           var queryParams = [page.sort_order, page.id,];
           var query = client.query("update page set sort_order = $1 where id = $2", queryParams);
         });

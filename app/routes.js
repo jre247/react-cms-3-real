@@ -13,6 +13,8 @@ import PageAdministrationEdit from './components/Admin/PageAdministrationEdit';
 import PageAdministrationCreate from './components/Admin/PageAdministrationCreate';
 import AppSettings from './components/Admin/AppSettings';
 import AppSetting from './components/Admin/AppSetting';
+import Meals from './components/Admin/Meals';
+import Meal from './components/Admin/Meal';
 
 export default (
   <Route component={App}>
@@ -28,5 +30,7 @@ export default (
     <Route path='/admin/pages/create' component={PageAdministrationCreate} />
     <Route path='/admin/app-settings' component={AppSettings} />
     <Route path='/admin/app-settings/:id/edit' component={AppSetting} />
+    <Route path='/admin/meals' component={Meals} />
+    <Route path='/admin/meals/:id/edit' component={Meal} />
   </Route>
 );
