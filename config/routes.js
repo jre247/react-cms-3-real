@@ -102,10 +102,16 @@ module.exports = function(app, passport) {
       if(req.user){
         userId = req.user.id;
       }
-
-      ContentDb.save(pageId, userId, contents).then(function(data){
-          res.status(200).send(data);
-      });
+      
+      PageDb.findById(pageId)
+        .then(function(page){
+          if(page.is_active){
+            ContentDb.save(pageId, userId, contents)
+          }
+        })
+        .then(function(data){
+            res.status(200).send(data);
+        });
     });
 
     app.get('/api/pages', function(req, res, next) {

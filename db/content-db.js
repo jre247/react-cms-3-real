@@ -84,9 +84,9 @@ exports.get = function(pageId){
         });
 
         query.on('end', function() {
-          var venue = processQueryEnd(done, results);
+          var contentList = processQueryEnd(done, results);
           console.log('query on end');
-          promise.resolve(venue);
+          promise.resolve(contentList);
         });
     });
   }
