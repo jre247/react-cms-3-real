@@ -5,6 +5,7 @@ var PageDb = require('../db/page-db');
 var AppSettingDb = require('../db/app-setting-db');
 var TemplateDb =require('../db/template-db');
 var MealDb =require('../db/meal-db');
+var SettingDb =require('../db/setting-db');
 var _ = require('underscore-node');
 
 // app/routes.js
@@ -280,11 +281,19 @@ var getAllNonAuthorizedPages = function(req, res, next){
 }
 
 var getAllLookups = function(req, res, next){
-  TemplateDb.findAll().then(function(data){
-      var viewmodel = {templates: data};
+  var viewmodel = {};
+
+  TemplateDb.findAll()
+  .then(function(templates){
+    viewmodel.templates = templates;
+
+    return SettingDb.findAll()
+  })
+  .then(function(settings){
+      viewmodel.settings = settings;
 
       res.status(200).send(viewmodel);
-  });
+  })
 }
 
 // route middleware to make sure a user is logged in

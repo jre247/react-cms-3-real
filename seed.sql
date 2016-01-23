@@ -1,3 +1,4 @@
+drop table content_setting;
 drop table content;
 drop table page;
 drop table content_type;
@@ -7,6 +8,7 @@ drop table wedding_user;
 drop table template;
 drop table app_settings;
 drop table meal;
+drop table setting;
 CREATE TABLE app_setting
 (
 	id SERIAL PRIMARY KEY,
@@ -72,6 +74,19 @@ CREATE TABLE content
 );
 CREATE INDEX conect_page_idx ON content (page_id, is_active);
 
+CREATE TABLE setting
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(40) not null,
+	is_active BOOLEAN
+);
+CREATE TABLE content_setting
+(
+	id SERIAL PRIMARY KEY,
+	setting_id INTEGER NOT NULL references setting(id),
+	content_id INTEGER NOT NULL references content(id),
+	is_active BOOLEAN
+);
 CREATE TABLE wedding_role
 (
 	id SERIAL PRIMARY KEY,
@@ -125,6 +140,14 @@ insert into page(name, description, url, user_id, date_created, template_id, sor
 insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Bridal Party', 'Bridal Party', 'bridal-party', 1, null, 4, 6, true);
 insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Accomodations', 'Accomodations', 'accomodations', 1, null, 3, 7, true);
 
+insert into setting (name, is_active) Values ('Font size', true);
+insert into setting (name, is_active) Values ('Spacing below', true);
+insert into setting (name, is_active) Values ('Spacing above', true);
+insert into setting (name, is_active) Values ('Spacing right', true);
+insert into setting (name, is_active) Values ('Spacing left', true);
+insert into setting (name, is_active) Values ('Font color', true);
+insert into setting (name, is_active) Values ('Background color', true);
+
 GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
@@ -139,3 +162,7 @@ GRANT ALL PRIVILEGES ON TABLE app_setting TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE app_setting_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE meal TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE meal_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE setting TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE setting_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE content_setting TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE content_setting_id_seq TO jevans;
