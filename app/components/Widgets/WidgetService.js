@@ -30,22 +30,19 @@ class WidgetService {
 
     return promise.promise();
   }
-  
+
   static packageContentSettingsForSave(contentSettingsHash){
-    var contentsSettings = [];
+    var contentSettings = [];
     for(var contentKey in contentSettingsHash){
       var contentId = contentKey;
-      var settingsHash = contentSettings[contentKey];
+      var settingsHash = contentSettingsHash[contentKey];
 
       for(var settingKey in settingsHash){
-        var setting = settingsHash[settingKey];
-        settings.setting_id = setting.id;
+        contentSettings.push({setting_id: settingKey, content_id: contentId});
+      };
+    };
 
-        contentsSettings.push({setting_id: setting.id, content_id: contentId});
-      });
-    });
-
-    return contentsSettings;
+    return contentSettings;
   }
 
   static getContentListForPage(pageId, isEdit){

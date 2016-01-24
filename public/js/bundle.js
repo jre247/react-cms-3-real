@@ -8671,6 +8671,21 @@ var WidgetService = (function () {
       return promise.promise();
     }
   }, {
+    key: 'packageContentSettingsForSave',
+    value: function packageContentSettingsForSave(contentSettingsHash) {
+      var contentSettings = [];
+      for (var contentKey in contentSettingsHash) {
+        var contentId = contentKey;
+        var settingsHash = contentSettingsHash[contentKey];
+
+        for (var settingKey in settingsHash) {
+          contentSettings.push({ setting_id: settingKey, content_id: contentId });
+        };
+      };
+
+      return contentSettings;
+    }
+  }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(pageId, isEdit) {
       var promise = $.Deferred();

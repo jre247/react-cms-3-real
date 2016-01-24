@@ -34,7 +34,7 @@ exports.getSettingsForPage = function(pageId){
   return promise;
 }
 
-exports.save = function(contentIds, contentSettings){
+exports.save = function(contentSettings){
   try{
     var results = [];
     var promise = new Promise();
@@ -46,8 +46,8 @@ exports.save = function(contentIds, contentSettings){
 
         // deactivate existing content settings for all content ids being saved
         var params = [];
-        for(var id = 1; id <= contentIds.length; id++) {
-          params.push('$' + id);
+        for(var setting = 1; setting <= contentSettings.length; id++) {
+          params.push('$' + contentSettings[setting].content_id);
         }
         var queryText = 'UPDATE content_setting set is_active = false where content_id in (' + params.join(',') + ')';
 
