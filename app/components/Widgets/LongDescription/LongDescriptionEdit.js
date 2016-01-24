@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import ContentSettings from '../ContentSettings';
 var self;
 
 class LongDescriptionEdit extends React.Component {
@@ -17,13 +18,14 @@ class LongDescriptionEdit extends React.Component {
               value={this.props.value} onChange={this.props.onChange}>
             </textarea>
           </div>
+
+          <ContentSettings {...this.props} />
+
           <div className="Widget-Remove-Button-Container">
             <div onClick={this.props.onRemove}>
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </div>
           </div>
-
-          <ContentSettings {...this.props} />
         </div>
       </div>
     );

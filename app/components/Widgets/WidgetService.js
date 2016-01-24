@@ -46,13 +46,21 @@ class WidgetService {
     return promise.promise();
   }
 
+  // build a hash where the key is the content id and the value is
+  // another hash where that inner hash's key is the setting id and t
+  // he value is the setting
   static formatContentSettingsAsHash(contentSettings){
-    var contentSettingsHash = {};
-    _.each(contentSettings, (contentSetting) =>{
-      contentSettingsHash[contentSetting.content_id] = contentSetting;
+    var contentsSettingsHash = {};
+    _.each(contentsSettingsHash, (contentSettings) =>{
+      var settingsHash = {};
+      _.each(contentSettings, (setting) =>{
+        settingsHash[setting.id] = setting;
+      });
+
+      contentsSettingsHash[contentSetting.content_id] = settingsHash;
     });
 
-    return contentSettingsHash;
+    return contentsSettingsHash;
   }
 }
 

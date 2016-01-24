@@ -1,12 +1,13 @@
 import React from 'react';
-import Modal from '../Components/Modal';
+import Modal from './Components/Modal';
 import LookupStore from '../../stores/LookupStore';
+import {_} from 'underscore';
 var self;
 
 class ContentSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {showModal: false, contentSettings: {}};
+    this.state = {settings: {}, showModal: false};
     this.lookupState = LookupStore.getState();
     this.onChange = this.onChange.bind(this);
     self = this;
@@ -14,71 +15,80 @@ class ContentSettings extends React.Component {
 
   componentDidMount() {
     LookupStore.listen(this.onChange);
+    self.setState({settings: self.props.settings || {}});
+  }
+
+  componentWillReceiveProps(newProps){
+    self.setState({settings: newProps.settings || {}});
   }
 
   componentWillUnmount() {
     LookupStore.unlisten(this.onChange);
   }
 
-  onChange(state) {
-    self.setState(state);
-  }
-
   closeModal() {
     self.setState({showModal: false});
   }
 
-  openModal() {
-    self.setState({showModal: true});
+  openModal(contentItem, event) {
+    debugger;
+    var settings = self.props.contentSettings[contentItem.id];
+    self.setState({showModal: true, settings: settings});
   }
 
-  onSettingChange(event, index){
+  onChange(state) {
+    self.setState(state);
+  }
+
+  onSettingChange(index, event){
     var setting = self.lookupState.lookups.settings[index];
     var settingValue = event.target.value;
 
-    this.state.contentSettings[setting.id] = settingValue;
-    self.setState({contentSettings: this.state.contentSettings});
+    self.state.settings[setting.id] = settingValue;
+    self.setState({settings: self.state.settings});
   }
 
   onSave(){
-    self.props.onSettingsSave(self.state.contentSettings, self.props.contentItem.id);
+    self.props.onSettingsSave(self.state.settings, self.props.contentItem.id);
   }
 
   render() {
-    var modalProps = {modalElement: '#settingsModal', showModal: this.state.showModal};
+    var modalProps = _.extend({modalElement: '#settingsModal', showModal: self.state.showModal,
+      closeModal: this.closeModal.bind(this)}, this.props);
 
     let settingNodes = self.lookupState.lookups.settings.map((setting, index) => {
+      var settingValue = self.state.settings[setting.id];
       return (
-        <div>
+        <div key={index}>
           <div className="form-group">
               <label>{setting.name}</label>
-              <input type="text" className="form-control" name={setting.name}
-                onChange={this.bind.onSettingChange(this, index)} />
+              <input type="text" className="form-control" name={setting.name} value={settingValue}
+                onChange={self.onSettingChange.bind(self, index)} />
           </div>
         </div>
       );
     });
 
     return (
-      <div>
+      <div className="content-settings-container">
         <div className="widget-settings-container">
-          <div onClick={this.openModal}>
-            <a>Settings</a>
+          <div onClick={self.openModal.bind(this, this.props.contentItem)}>
+            <span className="glyphicon glyphicon-cog" aria-hidden="true"></span>
           </div>
         </div>
 
-        <button className="btn btn-warning btn-lg" onClick={this.onSave.bind(this)}>Save</button>
-
         <Modal {...modalProps}>
-          <div id="settingsModal">
+          <div id="settingsModal" className="col-sm-6 col-sm-offset-2">
             <div className="modal-content-area">
               <div className="modal-content">
                 <div className="modal-header">
-                  <button type="button" className="close" onClick={this.closeModal.bind(this)}>&times;</button>
+                  <button type="button" className="close" onClick={self.closeModal.bind(this)}>&times;</button>
                 </div>
                 <div className="body">
                   Settings
                   {settingNodes}
+
+                  <button className="btn btn-warning btn-lg" onClick={self.onSave.bind(this)}>Save</button>
                 </div>
               </div>
             </div>
