@@ -45,11 +45,7 @@ exports.save = function(contentSettings){
         }
 
         // deactivate existing content settings for all content ids being saved
-        var params = [];
-        for(var setting = 1; setting <= contentSettings.length; id++) {
-          params.push('$' + contentSettings[setting].content_id);
-        }
-        var queryText = 'UPDATE content_setting set is_active = false where content_id in (' + params.join(',') + ')';
+        client.query(buildBulkUpdateStatement(contentSettings));
 
         client.query(buildBulkInsertStatement(contentSettings));
 
@@ -65,6 +61,22 @@ exports.save = function(contentSettings){
   return promise;
 }
 
+var buildBulkUpdateStatement = function(rows){
+  var params = []
+  var chunks = []
+  _.each(rows, function(row){
+      var valueClause = [];
+      params.push(row.content_id);
+      valueClause.push('$' + params.length);
+      chunks.push('(' + valueClause.join(', ') + ')');
+  });
+  return {
+      text: 'UPDATE content_setting set is_active = false where content_id in (' +
+          chunks.join(', ') + ')',
+      values: params
+  }
+}
+
 var buildBulkInsertStatement = function(rows) {
     var params = []
     var chunks = []
@@ -74,12 +86,14 @@ var buildBulkInsertStatement = function(rows) {
         valueClause.push('$' + params.length);
         params.push(row.content_id);
         valueClause.push('$' + params.length);
+        params.push(row.setting_value);
+        valueClause.push('$' + params.length);
         params.push(true);
         valueClause.push('$' + params.length);
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content_setting(setting_id, content_id, is_active) VALUES ' +
+        text: 'INSERT INTO content_setting(setting_id, content_id, setting_value, is_active) VALUES ' +
             chunks.join(', '),
         values: params
     }

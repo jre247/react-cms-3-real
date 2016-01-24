@@ -8679,7 +8679,8 @@ var WidgetService = (function () {
         var settingsHash = contentSettingsHash[contentKey];
 
         for (var settingKey in settingsHash) {
-          contentSettings.push({ setting_id: settingKey, content_id: contentId });
+          var settingValue = settingsHash[settingKey];
+          contentSettings.push({ setting_id: settingKey, content_id: contentId, setting_value: settingValue });
         };
       };
 

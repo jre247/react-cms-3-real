@@ -85,6 +85,7 @@ CREATE TABLE content_setting
 	id SERIAL PRIMARY KEY,
 	setting_id INTEGER NOT NULL references setting(id),
 	content_id INTEGER NOT NULL references content(id),
+	setting_value VARCHAR(80) not null,
 	is_active BOOLEAN
 );
 CREATE TABLE wedding_role
