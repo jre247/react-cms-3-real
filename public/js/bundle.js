@@ -5215,7 +5215,8 @@ var ContentSettings = (function (_React$Component) {
     key: 'openModal',
     value: function openModal(contentItem, event) {
       self.isSaving = false;
-      var settings = self.props.contentSettings[contentItem.id];
+      var settings = _underscore._.clone(self.props.contentSettings[contentItem.id]);
+      debugger;
       self.setState({ showModal: true, contentItem: contentItem, settings: settings || {} });
     }
   }, {
@@ -5226,9 +5227,8 @@ var ContentSettings = (function (_React$Component) {
   }, {
     key: 'onSettingChange',
     value: function onSettingChange(index, event) {
-      debugger;
       var setting = self.lookupState.lookups.settings[index];
-      setting.value = event.target.value;
+      setting.setting_value = event.target.value;
 
       self.state.settings[setting.id] = setting;
       self.setState({ settings: self.state.settings });
@@ -5238,7 +5238,7 @@ var ContentSettings = (function (_React$Component) {
     value: function onSave() {
       self.setState({ showModal: false });
       self.isSaving = true;
-
+      debugger;
       self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
     }
   }, {
@@ -5250,8 +5250,7 @@ var ContentSettings = (function (_React$Component) {
         closeModal: this.closeModal.bind(this) }, this.props);
 
       var settingNodes = self.lookupState.lookups.settings.map(function (settingLookup, index) {
-        debugger;
-        var setting = self.props.settings[settingLookup.id];
+        var setting = self.state.settings[settingLookup.id];
 
         var settingName = settingLookup.name;
         var settingValue;
@@ -8687,7 +8686,7 @@ var WidgetService = (function () {
         var settingsHash = contentSettingsHash[contentKey];
 
         for (var settingKey in settingsHash) {
-          var settingValue = settingsHash[settingKey];
+          var settingValue = settingsHash[settingKey].setting_value;
           contentSettings.push({ setting_id: settingKey, content_id: contentId, setting_value: settingValue });
         };
       };

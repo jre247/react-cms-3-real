@@ -36,7 +36,7 @@ class WidgetService {
       var settingsHash = contentSettingsHash[contentKey];
 
       for(var settingKey in settingsHash){
-        var settingValue = settingsHash[settingKey];
+        var settingValue = settingsHash[settingKey].setting_value;
         contentSettings.push({setting_id: settingKey, content_id: contentId, setting_value: settingValue});
       };
     };

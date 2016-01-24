@@ -33,7 +33,8 @@ class ContentSettings extends React.Component {
 
   openModal(contentItem, event) {
     self.isSaving = false;
-    var settings = self.props.contentSettings[contentItem.id];
+    var settings = _.clone(self.props.contentSettings[contentItem.id]);
+    debugger;
     self.setState({showModal: true, contentItem: contentItem, settings: settings || {}});
   }
 
@@ -42,9 +43,8 @@ class ContentSettings extends React.Component {
   }
 
   onSettingChange(index, event){
-    debugger;
     var setting = self.lookupState.lookups.settings[index];
-    setting.value = event.target.value;
+    setting.setting_value = event.target.value;
 
     self.state.settings[setting.id] = setting;
     self.setState({settings: self.state.settings});
@@ -53,7 +53,7 @@ class ContentSettings extends React.Component {
   onSave(){
     self.setState({showModal: false});
     self.isSaving = true;
-
+    debugger;
     self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
   }
 
@@ -64,8 +64,7 @@ class ContentSettings extends React.Component {
       closeModal: this.closeModal.bind(this)}, this.props);
 
     let settingNodes = self.lookupState.lookups.settings.map((settingLookup, index) => {
-      debugger;
-      var setting = self.props.settings[settingLookup.id];
+      var setting = self.state.settings[settingLookup.id];
 
       var settingName = settingLookup.name;
       var settingValue;
