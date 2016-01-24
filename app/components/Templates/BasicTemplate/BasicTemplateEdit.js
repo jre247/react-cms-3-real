@@ -66,7 +66,9 @@ class BasicTemplateEdit extends React.Component {
     self.state.contentList.splice(index, 1);
     self.setStateForContentList(self.state.contentList);
   }
-  onSettingsSave(contentSettings){
+  onSettingsSave(contentSettings, contentId){
+    this.state.contentSettings[contentId] = contentSettings;
+    self.setState(contentSettings: this.state.contentSettings);
     debugger;
   }
   render() {

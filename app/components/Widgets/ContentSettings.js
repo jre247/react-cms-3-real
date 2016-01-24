@@ -41,7 +41,7 @@ class ContentSettings extends React.Component {
   }
 
   onSave(){
-    self.props.onSettingsSave(self.state.contentSettings);
+    self.props.onSettingsSave(self.state.contentSettings, self.props.contentItem.id);
   }
 
   render() {
