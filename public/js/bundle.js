@@ -5186,6 +5186,7 @@ var ContentSettings = (function (_React$Component) {
     _this.state = { settings: {}, showModal: false };
     _this.lookupState = _LookupStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
+    _this.isSaving = false;
     self = _this;
     return _this;
   }
@@ -5215,8 +5216,9 @@ var ContentSettings = (function (_React$Component) {
     key: 'openModal',
     value: function openModal(contentItem, event) {
       debugger;
+      self.isSaving = false;
       var settings = self.props.contentSettings[contentItem.id];
-      self.setState({ showModal: true, settings: settings });
+      self.setState({ showModal: true, settings: settings || {} });
     }
   }, {
     key: 'onChange',
@@ -5235,12 +5237,18 @@ var ContentSettings = (function (_React$Component) {
   }, {
     key: 'onSave',
     value: function onSave() {
+      self.setState({ showModal: false });
+      self.isSaving = true;
+
       self.props.onSettingsSave(self.state.settings, self.props.contentItem.id);
     }
   }, {
     key: 'render',
     value: function render() {
-      var modalProps = _underscore._.extend({ modalElement: '#settingsModal', showModal: self.state.showModal,
+      debugger;
+      var showModal = self.state.showModal && !self.isSaving;
+
+      var modalProps = _underscore._.extend({ modalElement: '.settingsModal', showModal: showModal,
         closeModal: this.closeModal.bind(this) }, this.props);
 
       var settingNodes = self.lookupState.lookups.settings.map(function (setting, index) {
@@ -5279,7 +5287,7 @@ var ContentSettings = (function (_React$Component) {
           modalProps,
           _react2.default.createElement(
             'div',
-            { id: 'settingsModal', className: 'col-sm-6 col-sm-offset-2' },
+            { className: 'col-sm-6 col-sm-offset-2 settingsModal' },
             _react2.default.createElement(
               'div',
               { className: 'modal-content-area' },

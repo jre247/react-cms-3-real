@@ -10,6 +10,7 @@ class ContentSettings extends React.Component {
     this.state = {settings: {}, showModal: false};
     this.lookupState = LookupStore.getState();
     this.onChange = this.onChange.bind(this);
+    this.isSaving = false;
     self = this;
   }
 
@@ -32,8 +33,9 @@ class ContentSettings extends React.Component {
 
   openModal(contentItem, event) {
     debugger;
+    self.isSaving = false;
     var settings = self.props.contentSettings[contentItem.id];
-    self.setState({showModal: true, settings: settings});
+    self.setState({showModal: true, settings: settings || {}});
   }
 
   onChange(state) {
@@ -49,11 +51,17 @@ class ContentSettings extends React.Component {
   }
 
   onSave(){
+    self.setState({showModal: false});
+    self.isSaving = true;
+
     self.props.onSettingsSave(self.state.settings, self.props.contentItem.id);
   }
 
   render() {
-    var modalProps = _.extend({modalElement: '#settingsModal', showModal: self.state.showModal,
+    debugger;
+    var showModal = self.state.showModal && !self.isSaving;
+
+    var modalProps = _.extend({modalElement: '.settingsModal', showModal: showModal,
       closeModal: this.closeModal.bind(this)}, this.props);
 
     let settingNodes = self.lookupState.lookups.settings.map((setting, index) => {
@@ -78,7 +86,7 @@ class ContentSettings extends React.Component {
         </div>
 
         <Modal {...modalProps}>
-          <div id="settingsModal" className="col-sm-6 col-sm-offset-2">
+          <div className="col-sm-6 col-sm-offset-2 settingsModal">
             <div className="modal-content-area">
               <div className="modal-content">
                 <div className="modal-header">
