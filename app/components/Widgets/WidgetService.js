@@ -3,7 +3,7 @@ import WidgetFactory from './WidgetFactory';
 import API from '../../API';
 
 class WidgetService {
-  static save(contentList, contentSettings, pageId) {
+  static save(contentList, contentSettingsHash, pageId) {
     var promise = $.Deferred();
 
     var contentListProcessed = [];
@@ -18,6 +18,8 @@ class WidgetService {
 
     debugger;
 
+    var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
+
     API.saveContentListForPage(contentList, contentSettings, pageId)
       .done(function(){
         promise.resolve();
@@ -27,6 +29,23 @@ class WidgetService {
       });
 
     return promise.promise();
+  }
+  
+  static packageContentSettingsForSave(contentSettingsHash){
+    var contentsSettings = [];
+    for(var contentKey in contentSettingsHash){
+      var contentId = contentKey;
+      var settingsHash = contentSettings[contentKey];
+
+      for(var settingKey in settingsHash){
+        var setting = settingsHash[settingKey];
+        settings.setting_id = setting.id;
+
+        contentsSettings.push({setting_id: setting.id, content_id: contentId});
+      });
+    });
+
+    return contentsSettings;
   }
 
   static getContentListForPage(pageId, isEdit){

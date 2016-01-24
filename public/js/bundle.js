@@ -3306,13 +3306,13 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
-      self.setState({ contentList: newContentList });
+      self.setState({ contentList: newContentList || [] });
     }
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList, contentSettings: viewmodel.contentSettings });
+        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -8645,7 +8645,7 @@ var WidgetService = (function () {
 
   _createClass(WidgetService, null, [{
     key: 'save',
-    value: function save(contentList, contentSettings, pageId) {
+    value: function save(contentList, contentSettingsHash, pageId) {
       var promise = $.Deferred();
 
       var contentListProcessed = [];
@@ -8659,6 +8659,8 @@ var WidgetService = (function () {
       });
 
       debugger;
+
+      var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
 
       _API2.default.saveContentListForPage(contentList, contentSettings, pageId).done(function () {
         promise.resolve();

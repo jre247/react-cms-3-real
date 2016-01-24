@@ -28,12 +28,12 @@ class BasicTemplateEdit extends React.Component {
   }
 
   setStateForContentList(newContentList){
-    self.setState({contentList: newContentList})
+    self.setState({contentList: newContentList || []});
   }
 
   getContentListForPage(propsData){
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList, contentSettings: viewmodel.contentSettings});
+      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
 
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
