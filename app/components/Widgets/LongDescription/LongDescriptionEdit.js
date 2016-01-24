@@ -1,17 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router';
+var self;
 
 class LongDescriptionEdit extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentWillUnmount() {
-
+    self = this;
   }
 
   render() {
@@ -28,6 +22,8 @@ class LongDescriptionEdit extends React.Component {
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </div>
           </div>
+
+          <ContentSettings {...this.props} />
         </div>
       </div>
     );

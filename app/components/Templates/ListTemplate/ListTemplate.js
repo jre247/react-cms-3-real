@@ -9,7 +9,7 @@ import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import EditLink from '../../EditLink';
 import API from '../../../API';
-import WidgetSaveService from '../../Widgets/WidgetSaveService';
+import WidgetService from '../../Widgets/WidgetService';
 var self;
 
 class ListTemplate extends React.Component {
@@ -43,7 +43,7 @@ class ListTemplate extends React.Component {
   }
 
   submit(event){
-    WidgetSaveService.save(self.state.contentList, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }

@@ -5,7 +5,7 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import TemplateHelper from '../TemplateHelper';
-import WidgetSaveService from '../../Widgets/WidgetSaveService';
+import WidgetService from '../../Widgets/WidgetService';
 import API from '../../../API';
 import Sortable from '../../Widgets/Components/Sortable';
 var self;
@@ -14,7 +14,7 @@ class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: []};
+    this.state = {contentList: [], contentSettings: {}};
     this.maxContentId;
     self = this;
   }
@@ -32,8 +32,9 @@ class BasicTemplateEdit extends React.Component {
   }
 
   getContentListForPage(propsData){
-    API.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
+    WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList, contentSettings: viewmodel.contentSettings});
+
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
     });
@@ -44,7 +45,7 @@ class BasicTemplateEdit extends React.Component {
   }
 
   submit(event){
-    WidgetSaveService.save(self.state.contentList, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
@@ -65,6 +66,9 @@ class BasicTemplateEdit extends React.Component {
     self.state.contentList.splice(index, 1);
     self.setStateForContentList(self.state.contentList);
   }
+  onSettingsSave(contentSettings){
+    debugger;
+  }
   render() {
     var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
       templateId: this.templateId, row_number: 1, column_number: 1};
@@ -80,9 +84,11 @@ class BasicTemplateEdit extends React.Component {
     }
     else{
       let nodes = self.state.contentList.map((contentItem, index) => {
-        var propsData = {contentItem: contentItem,
-          onChange:  this.updateContent.bind(this, index),
-          onRemove: this.removeContent.bind(this, index)};
+        var settings = self.state.contentSettings[contentItem.id];
+
+        var propsData = {contentItem: contentItem, settings: settings, onSettingsSave: this.onSettingsSave,
+          onChange:  this.updateContent.bind(this, index), onRemove: this.removeContent.bind(this, index),
+          onSettingsSave: this.onSettingsSave.bind(this)};
 
         var fieldsPropData = _.extend(propsData, self.props);
 

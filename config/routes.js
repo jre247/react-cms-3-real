@@ -102,6 +102,7 @@ module.exports = function(app, passport) {
       var pageId = req.params.id;
       var userId = null;
       var contents = req.body.contents;
+      var contentSettings = req.body.contentSettings;
       if(req.user){
         userId = req.user.id;
       }
@@ -109,12 +110,19 @@ module.exports = function(app, passport) {
       PageDb.findById(pageId)
         .then(function(page){
           if(page.is_active){
-            ContentDb.save(pageId, userId, contents)
+            if(contents && contents.length > 0){
+              return ContentDb.save(pageId, userId, contents);
+            }
           }
         })
         .then(function(data){
-            res.status(200).send(data);
-        });
+          if(contentSettings && contentSettings.length > 0){
+            return ContentSettingDb.save(contentSettings);
+          }
+        })
+        .then(function(data){
+          res.status(200).send(data);
+        })
     });
 
     app.get('/api/pages', function(req, res, next) {

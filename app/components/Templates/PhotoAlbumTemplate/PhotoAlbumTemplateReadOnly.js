@@ -11,7 +11,7 @@ import Title from '../../Widgets/Title/Title';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import Carousel from '../../Widgets/Components/Carousel/Carousel';
 import EditLink from '../../EditLink';
-import Modal from '../../Widgets/Components/Modal'
+import Modal from '../../Widgets/Components/Modal';
 var self;
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
@@ -46,15 +46,12 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   closeModal() {
     this.setState({selectedPhoto: 1});
     this.setState({showModal: false});
-    //$('#largeCarouselModal').modal('hide');
   }
 
   openModal(index) {
     this.setState({selectedPhoto: index});
     this.setState({showModal: true});
-  //  $('#largeCarouselModal').modal('show');
   }
-
 
   render() {
     var propsData = _.extend({selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
