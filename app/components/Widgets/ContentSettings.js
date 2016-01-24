@@ -7,7 +7,7 @@ var self;
 class ContentSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {settings: {}, showModal: false};
+    this.state = {settings: {}, showModal: false, contentItem: {}};
     this.lookupState = LookupStore.getState();
     this.onChange = this.onChange.bind(this);
     this.isSaving = false;
@@ -32,10 +32,9 @@ class ContentSettings extends React.Component {
   }
 
   openModal(contentItem, event) {
-    debugger;
     self.isSaving = false;
     var settings = self.props.contentSettings[contentItem.id];
-    self.setState({showModal: true, settings: settings || {}});
+    self.setState({showModal: true, contentItem: contentItem, settings: settings || {}});
   }
 
   onChange(state) {
@@ -54,11 +53,10 @@ class ContentSettings extends React.Component {
     self.setState({showModal: false});
     self.isSaving = true;
 
-    self.props.onSettingsSave(self.state.settings, self.props.contentItem.id);
+    self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
   }
 
   render() {
-    debugger;
     var showModal = self.state.showModal && !self.isSaving;
 
     var modalProps = _.extend({modalElement: '.settingsModal', showModal: showModal,
