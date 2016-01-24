@@ -42,10 +42,11 @@ class ContentSettings extends React.Component {
   }
 
   onSettingChange(index, event){
+    debugger;
     var setting = self.lookupState.lookups.settings[index];
-    var settingValue = event.target.value;
+    setting.value = event.target.value;
 
-    self.state.settings[setting.id] = settingValue;
+    self.state.settings[setting.id] = setting;
     self.setState({settings: self.state.settings});
   }
 
@@ -62,13 +63,22 @@ class ContentSettings extends React.Component {
     var modalProps = _.extend({modalElement: '.settingsModal', showModal: showModal,
       closeModal: this.closeModal.bind(this)}, this.props);
 
-    let settingNodes = self.lookupState.lookups.settings.map((setting, index) => {
-      var settingValue = self.state.settings[setting.id];
+    let settingNodes = self.lookupState.lookups.settings.map((settingLookup, index) => {
+      debugger;
+      var setting = self.props.settings[settingLookup.id];
+
+      var settingName = settingLookup.name;
+      var settingValue;
+
+      if(setting){
+        settingValue = setting.setting_value;
+      }
+
       return (
         <div key={index}>
           <div className="form-group">
-              <label>{setting.name}</label>
-              <input type="text" className="form-control" name={setting.name} value={settingValue}
+              <label>{settingName}</label>
+              <input type="text" className="form-control" name={settingName} value={settingValue}
                 onChange={self.onSettingChange.bind(self, index)} />
           </div>
         </div>

@@ -34,7 +34,7 @@ exports.getSettingsForPage = function(pageId){
   return promise;
 }
 
-exports.save = function(contentSettings){
+exports.save = function(contentSettings, pageId, contentListCount){
   try{
     var results = [];
     var promise = new Promise();
@@ -47,7 +47,7 @@ exports.save = function(contentSettings){
         // deactivate existing content settings for all content ids being saved
         client.query(buildBulkUpdateStatement(contentSettings));
 
-        client.query(buildBulkInsertStatement(contentSettings));
+        client.query(buildBulkInsertStatement(contentSettings, contentListCount));
 
         done();
 
@@ -77,14 +77,14 @@ var buildBulkUpdateStatement = function(rows){
   }
 }
 
-var buildBulkInsertStatement = function(rows) {
+var buildBulkInsertStatement = function(rows, contentListCount) {
     var params = []
     var chunks = []
     _.each(rows, function(row){
         var valueClause = [];
         params.push(row.setting_id);
         valueClause.push('$' + params.length);
-        params.push(row.content_id);
+        params.push(parseInt(row.content_id) + parseInt(contentListCount));
         valueClause.push('$' + params.length);
         params.push(row.setting_value);
         valueClause.push('$' + params.length);

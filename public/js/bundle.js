@@ -5226,10 +5226,11 @@ var ContentSettings = (function (_React$Component) {
   }, {
     key: 'onSettingChange',
     value: function onSettingChange(index, event) {
+      debugger;
       var setting = self.lookupState.lookups.settings[index];
-      var settingValue = event.target.value;
+      setting.value = event.target.value;
 
-      self.state.settings[setting.id] = settingValue;
+      self.state.settings[setting.id] = setting;
       self.setState({ settings: self.state.settings });
     }
   }, {
@@ -5248,8 +5249,17 @@ var ContentSettings = (function (_React$Component) {
       var modalProps = _underscore._.extend({ modalElement: '.settingsModal', showModal: showModal,
         closeModal: this.closeModal.bind(this) }, this.props);
 
-      var settingNodes = self.lookupState.lookups.settings.map(function (setting, index) {
-        var settingValue = self.state.settings[setting.id];
+      var settingNodes = self.lookupState.lookups.settings.map(function (settingLookup, index) {
+        debugger;
+        var setting = self.props.settings[settingLookup.id];
+
+        var settingName = settingLookup.name;
+        var settingValue;
+
+        if (setting) {
+          settingValue = setting.setting_value;
+        }
+
         return _react2.default.createElement(
           'div',
           { key: index },
@@ -5259,9 +5269,9 @@ var ContentSettings = (function (_React$Component) {
             _react2.default.createElement(
               'label',
               null,
-              setting.name
+              settingName
             ),
-            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: setting.name, value: settingValue,
+            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: settingName, value: settingValue,
               onChange: self.onSettingChange.bind(self, index) })
           )
         );

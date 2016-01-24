@@ -115,9 +115,9 @@ module.exports = function(app, passport) {
             }
           }
         })
-        .then(function(data){
+        .then(function(contentListDb){
           if(contentSettings && contentSettings.length > 0){
-            return ContentSettingDb.save(contentSettings);
+            return ContentSettingDb.save(contentSettings, pageId, contents.length);
           }
         })
         .then(function(data){
