@@ -46,7 +46,7 @@ exports.save = function(contentIds, contentSettings){
 
         // deactivate existing content settings for all content ids being saved
         var params = [];
-        for(var id = 1; i <= contentIds.length; id++) {
+        for(var id = 1; id <= contentIds.length; id++) {
           params.push('$' + id);
         }
         var queryText = 'UPDATE content_setting set is_active = false where content_id in (' + params.join(',') + ')';

@@ -3,7 +3,7 @@ import WidgetFactory from './WidgetFactory';
 import API from '../../API';
 
 class WidgetService {
-  static save(contentList, pageId) {
+  static save(contentList, contentSettings, pageId) {
     var promise = $.Deferred();
 
     var contentListProcessed = [];
@@ -16,7 +16,9 @@ class WidgetService {
       contentListProcessed.push(contentItemProcessed);
     });
 
-    API.saveContentListForPage(contentList, pageId)
+    debugger;
+
+    API.saveContentListForPage(contentList, contentSettings, pageId)
       .done(function(){
         promise.resolve();
       })

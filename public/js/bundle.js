@@ -174,7 +174,7 @@ var API = (function () {
     }
   }, {
     key: 'saveContentListForPage',
-    value: function saveContentListForPage(contentList, pageId) {
+    value: function saveContentListForPage(contentList, contentSettings, pageId) {
       var _this9 = this;
 
       var promise = $.Deferred();
@@ -182,7 +182,7 @@ var API = (function () {
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId + '/content-list',
-        data: { contents: contentList }
+        data: { contents: contentList, contentSettings: contentSettings }
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
@@ -3359,7 +3359,6 @@ var BasicTemplateEdit = (function (_React$Component) {
     value: function onSettingsSave(contentSettings, contentId) {
       this.state.contentSettings[contentId] = contentSettings;
       self.setState({ contentSettings: this.state.contentSettings });
-      debugger;
     }
   }, {
     key: 'render',
@@ -8646,7 +8645,7 @@ var WidgetService = (function () {
 
   _createClass(WidgetService, null, [{
     key: 'save',
-    value: function save(contentList, pageId) {
+    value: function save(contentList, contentSettings, pageId) {
       var promise = $.Deferred();
 
       var contentListProcessed = [];
@@ -8659,7 +8658,9 @@ var WidgetService = (function () {
         contentListProcessed.push(contentItemProcessed);
       });
 
-      _API2.default.saveContentListForPage(contentList, pageId).done(function () {
+      debugger;
+
+      _API2.default.saveContentListForPage(contentList, contentSettings, pageId).done(function () {
         promise.resolve();
       }).fail(function () {
         promise.reject("Error save for widget.");

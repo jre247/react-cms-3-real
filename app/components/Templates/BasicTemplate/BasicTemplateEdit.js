@@ -69,7 +69,6 @@ class BasicTemplateEdit extends React.Component {
   onSettingsSave(contentSettings, contentId){
     this.state.contentSettings[contentId] = contentSettings;
     self.setState({contentSettings: this.state.contentSettings});
-    debugger;
   }
   render() {
     var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
