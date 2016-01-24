@@ -16,8 +16,6 @@ class WidgetService {
       contentListProcessed.push(contentItemProcessed);
     });
 
-    debugger;
-
     var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
 
     API.saveContentListForPage(contentList, contentSettings, pageId)
@@ -69,17 +67,25 @@ class WidgetService {
   // another hash where that inner hash's key is the setting id and t
   // he value is the setting
   static formatContentSettingsAsHash(contentSettings){
-    var contentsSettingsHash = {};
-    _.each(contentsSettingsHash, (contentSettings) =>{
-      var settingsHash = {};
-      _.each(contentSettings, (setting) =>{
-        settingsHash[setting.id] = setting;
-      });
+    var contentSettingsHash = {};
+    _.each(contentSettings, (contentSetting) =>{
+      var contentId = contentSetting.content_id;
+      var settingId = contentSetting.setting_id;
+      var settingValue = contentSetting.setting_value;
 
-      contentsSettingsHash[contentSetting.content_id] = settingsHash;
+      var setting = {content_id: contentId, setting_id: settingId, setting_value: settingValue};
+
+      if(!contentSettingsHash){
+        contentSettingsHash = {};
+      }
+      if(!contentSettingsHash[contentId]){
+        contentSettingsHash[contentId] = {};
+      }
+
+      contentSettingsHash[contentId][settingId] = setting;
     });
 
-    return contentsSettingsHash;
+    return contentSettingsHash;
   }
 }
 

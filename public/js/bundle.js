@@ -8658,8 +8658,6 @@ var WidgetService = (function () {
         contentListProcessed.push(contentItemProcessed);
       });
 
-      debugger;
-
       var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
 
       _API2.default.saveContentListForPage(contentList, contentSettings, pageId).done(function () {
@@ -8712,17 +8710,25 @@ var WidgetService = (function () {
   }, {
     key: 'formatContentSettingsAsHash',
     value: function formatContentSettingsAsHash(contentSettings) {
-      var contentsSettingsHash = {};
-      _underscore._.each(contentsSettingsHash, function (contentSettings) {
-        var settingsHash = {};
-        _underscore._.each(contentSettings, function (setting) {
-          settingsHash[setting.id] = setting;
-        });
+      var contentSettingsHash = {};
+      _underscore._.each(contentSettings, function (contentSetting) {
+        var contentId = contentSetting.content_id;
+        var settingId = contentSetting.setting_id;
+        var settingValue = contentSetting.setting_value;
 
-        contentsSettingsHash[contentSetting.content_id] = settingsHash;
+        var setting = { content_id: contentId, setting_id: settingId, setting_value: settingValue };
+
+        if (!contentSettingsHash) {
+          contentSettingsHash = {};
+        }
+        if (!contentSettingsHash[contentId]) {
+          contentSettingsHash[contentId] = {};
+        }
+
+        contentSettingsHash[contentId][settingId] = setting;
       });
 
-      return contentsSettingsHash;
+      return contentSettingsHash;
     }
   }]);
 
