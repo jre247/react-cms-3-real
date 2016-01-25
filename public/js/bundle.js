@@ -3356,8 +3356,8 @@ var BasicTemplateEdit = (function (_React$Component) {
     }
   }, {
     key: 'onSettingsSave',
-    value: function onSettingsSave(contentSettings, contentId) {
-      this.state.contentSettings[contentId] = contentSettings;
+    value: function onSettingsSave(settings, contentId) {
+      this.state.contentSettings[contentId] = settings;
       self.setState({ contentSettings: this.state.contentSettings });
     }
   }, {
@@ -3380,7 +3380,7 @@ var BasicTemplateEdit = (function (_React$Component) {
           var settings = self.state.contentSettings[contentItem.id];
 
           var propsData = { contentItem: contentItem, settings: settings, onSettingsSave: _this2.onSettingsSave,
-            contentSettings: _this2.state.contentSettings, onChange: _this2.updateContent.bind(_this2, index),
+            contentSettings: _underscore._.clone(_this2.state.contentSettings), onChange: _this2.updateContent.bind(_this2, index),
             onRemove: _this2.removeContent.bind(_this2, index), onSettingsSave: _this2.onSettingsSave.bind(_this2) };
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
@@ -5227,7 +5227,8 @@ var ContentSettings = (function (_React$Component) {
   }, {
     key: 'onSettingChange',
     value: function onSettingChange(index, event) {
-      var setting = self.lookupState.lookups.settings[index];
+      var settingsLookups = self.lookupState.lookups.settings;
+      var setting = _underscore._.clone(settingsLookups[index]);
       setting.setting_value = event.target.value;
 
       self.state.settings[setting.id] = setting;
@@ -5249,7 +5250,9 @@ var ContentSettings = (function (_React$Component) {
       var modalProps = _underscore._.extend({ modalElement: '.settingsModal', showModal: showModal,
         closeModal: this.closeModal.bind(this) }, this.props);
 
-      var settingNodes = self.lookupState.lookups.settings.map(function (settingLookup, index) {
+      var settingsLookups = _underscore._.clone(self.lookupState.lookups.settings);
+
+      var settingNodes = settingsLookups.map(function (settingLookup, index) {
         var setting = self.state.settings[settingLookup.id];
 
         var settingName = settingLookup.name;

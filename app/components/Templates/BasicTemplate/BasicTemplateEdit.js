@@ -66,8 +66,8 @@ class BasicTemplateEdit extends React.Component {
     self.state.contentList.splice(index, 1);
     self.setStateForContentList(self.state.contentList);
   }
-  onSettingsSave(contentSettings, contentId){
-    this.state.contentSettings[contentId] = contentSettings;
+  onSettingsSave(settings, contentId){
+    this.state.contentSettings[contentId] = settings;
     self.setState({contentSettings: this.state.contentSettings});
   }
   render() {
@@ -88,7 +88,7 @@ class BasicTemplateEdit extends React.Component {
         var settings = self.state.contentSettings[contentItem.id];
 
         var propsData = {contentItem: contentItem, settings: settings, onSettingsSave: this.onSettingsSave,
-          contentSettings: this.state.contentSettings, onChange:  this.updateContent.bind(this, index),
+          contentSettings: _.clone(this.state.contentSettings), onChange:  this.updateContent.bind(this, index),
           onRemove: this.removeContent.bind(this, index), onSettingsSave: this.onSettingsSave.bind(this)};
 
         var fieldsPropData = _.extend(propsData, self.props);
