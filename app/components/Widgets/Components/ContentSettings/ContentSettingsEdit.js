@@ -1,10 +1,10 @@
 import React from 'react';
-import Modal from './Components/Modal';
-import LookupStore from '../../stores/LookupStore';
+import Modal from '../Modal';
+import LookupStore from '../../../../stores/LookupStore';
 import {_} from 'underscore';
 var self;
 
-class ContentSettings extends React.Component {
+class ContentSettingsEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {settings: {}, showModal: false, contentItem: {}};
@@ -34,7 +34,7 @@ class ContentSettings extends React.Component {
   openModal(contentItem, event) {
     self.isSaving = false;
     var settings = _.clone(self.props.contentSettings[contentItem.id]);
-    debugger;
+
     self.setState({showModal: true, contentItem: contentItem, settings: settings || {}});
   }
 
@@ -54,7 +54,7 @@ class ContentSettings extends React.Component {
   onSave(){
     self.setState({showModal: false});
     self.isSaving = true;
-    debugger;
+
     self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
   }
 
@@ -117,4 +117,4 @@ class ContentSettings extends React.Component {
   }
 }
 
-export default ContentSettings;
+export default ContentSettingsEdit;

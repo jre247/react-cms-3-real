@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import ContentSettings from '../ContentSettings';
+import ContentSettings from '../Components/ContentSettings/ContentSettings';
 var self;
 
 class LongDescriptionEdit extends React.Component {

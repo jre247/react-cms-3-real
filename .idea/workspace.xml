@@ -2,12 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8827cc87-42cf-4518-86c6-dcb4329d06b5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/Widgets/ContentSettings.js" afterPath="$PROJECT_DIR$/app/components/Widgets/ContentSettings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.js" afterPath="$PROJECT_DIR$/config/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/content-setting-db.js" afterPath="$PROJECT_DIR$/db/content-setting-db.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/components/Widgets/ContentSettings.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/Widgets/LongDescription/LongDescriptionEdit.js" afterPath="$PROJECT_DIR$/app/components/Widgets/LongDescription/LongDescriptionEdit.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/components/Widgets/LongDescription/LongDescriptionReadOnly.js" afterPath="$PROJECT_DIR$/app/components/Widgets/LongDescription/LongDescriptionReadOnly.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/bundle.js" afterPath="$PROJECT_DIR$/public/js/bundle.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/seed.sql" afterPath="$PROJECT_DIR$/seed.sql" />
     </list>
     <ignored path="wedding.iws" />
     <ignored path=".idea/workspace.xml" />

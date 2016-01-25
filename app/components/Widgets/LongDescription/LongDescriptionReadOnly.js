@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import ContentSettings from '../Components/ContentSettings/ContentSettings';
 
 class LongDescriptionReadOnly extends React.Component {
   constructor(props) {
@@ -16,11 +17,13 @@ class LongDescriptionReadOnly extends React.Component {
 
   render() {
     return (
-      <div className="Content-long-description-container">
-        <div className="Content-long-description">
-            {this.props.value}
+      <ContentSettings {...this.props}>
+        <div className="Content-long-description-container">
+          <div className="Content-long-description">
+              {this.props.value}
+          </div>
         </div>
-      </div>
+      </ContentSettings>
     );
   }
 }
