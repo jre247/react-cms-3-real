@@ -3460,9 +3460,9 @@ var _EditLink = require('../../EditLink');
 
 var _EditLink2 = _interopRequireDefault(_EditLink);
 
-var _API = require('../../../API');
+var _WidgetService = require('../../Widgets/WidgetService');
 
-var _API2 = _interopRequireDefault(_API);
+var _WidgetService2 = _interopRequireDefault(_WidgetService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3491,20 +3491,12 @@ var BasicTemplateReadOnly = (function (_React$Component) {
   _createClass(BasicTemplateReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(nextProps);
     }
   }, {
     key: 'componentWillUnmount',
@@ -3513,6 +3505,13 @@ var BasicTemplateReadOnly = (function (_React$Component) {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
       self.setState({ contentList: newContentList });
+    }
+  }, {
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+      });
     }
   }, {
     key: 'render',
@@ -3524,7 +3523,10 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
         var nodes = this.state.contentList.map(function (contentItem, index) {
-          var propsData = _underscore._.extend({ contentItem: contentItem, isEdit: _this2.props.isEdit }, _this2.props);
+          var settings = self.state.contentSettings[contentItem.id];
+
+          var propsData = _underscore._.extend({ contentItem: contentItem, isEdit: _this2.props.isEdit,
+            settings: _underscore._.clone(settings) }, _this2.props);
 
           return _react2.default.createElement(
             'div',
@@ -3552,7 +3554,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
 
 exports.default = BasicTemplateReadOnly;
 
-},{"../../../API":1,"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/Field":50,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
+},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/Field":50,"../../Widgets/WidgetService":93,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5293,8 +5295,10 @@ var ContentSettingsReadOnly = (function (_React$Component) {
         } else if (setting.setting_id === 4) {
           divStyle['margin-right'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 5) {
-          divStyle['color'] = setting.setting_value;
+          divStyle['margin-left'] = setting.setting_value;
         } else if (setting.setting_id === 6) {
+          divStyle['color'] = setting.setting_value;
+        } else if (setting.setting_id === 7) {
           divStyle['background-color'] = setting.setting_value;
         }
       });
@@ -7699,14 +7703,14 @@ var LongDescriptionReadOnly = (function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _ContentSettings2.default,
-        this.props,
+        'div',
+        { className: 'Content-long-description-container' },
         _react2.default.createElement(
           'div',
-          { className: 'Content-long-description-container' },
+          { className: 'Content-long-description' },
           _react2.default.createElement(
-            'div',
-            { className: 'Content-long-description' },
+            _ContentSettings2.default,
+            this.props,
             this.props.value
           )
         )

@@ -36,9 +36,12 @@ class ContentSettingsReadOnly extends React.Component {
         divStyle['margin-right'] = setting.setting_value+ 'px';
       }
       else if(setting.setting_id === 5){
-        divStyle['color'] = setting.setting_value;
+        divStyle['margin-left'] = setting.setting_value;
       }
       else if(setting.setting_id === 6){
+        divStyle['color'] = setting.setting_value;
+      }
+      else if(setting.setting_id === 7){
         divStyle['background-color'] = setting.setting_value;
       }
     });

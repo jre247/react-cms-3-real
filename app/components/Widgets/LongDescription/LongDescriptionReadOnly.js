@@ -17,13 +17,13 @@ class LongDescriptionReadOnly extends React.Component {
 
   render() {
     return (
-      <ContentSettings {...this.props}>
         <div className="Content-long-description-container">
           <div className="Content-long-description">
+            <ContentSettings {...this.props}>
               {this.props.value}
+            </ContentSettings>
           </div>
         </div>
-      </ContentSettings>
     );
   }
 }

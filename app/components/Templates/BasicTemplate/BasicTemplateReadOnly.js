@@ -4,7 +4,7 @@ import Field from '../../Widgets/Field/Field';
 import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import EditLink from '../../EditLink';
-import API from '../../../API';
+import WidgetService from '../../Widgets/WidgetService';
 var self;
 
 class BasicTemplateReadOnly extends React.Component {
@@ -16,24 +16,24 @@ class BasicTemplateReadOnly extends React.Component {
   }
 
   componentDidMount() {
-    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
-    });
+    this.getContentListForPage(this.props);
   }
 
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
   componentWillReceiveProps(nextProps){
-    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
-    });
+    this.getContentListForPage(nextProps);
   }
-  
+
   componentWillUnmount() {
 
   }
   setStateForContentList(newContentList){
     self.setState({contentList: newContentList})
+  }
+
+  getContentListForPage(propsData){
+    WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
+    });
   }
 
   render() {
@@ -45,13 +45,16 @@ class BasicTemplateReadOnly extends React.Component {
     }
     else {
       let nodes = this.state.contentList.map((contentItem, index) => {
-          var propsData = _.extend({contentItem: contentItem, isEdit: this.props.isEdit}, this.props);
+        var settings = self.state.contentSettings[contentItem.id];
 
-          return (
-            <div key={contentItem.sort_order}>
-              <Field {...propsData} />
-            </div>
-          );
+        var propsData = _.extend({contentItem: contentItem, isEdit: this.props.isEdit,
+          settings: _.clone(settings)}, this.props);
+
+        return (
+          <div key={contentItem.sort_order}>
+            <Field {...propsData} />
+          </div>
+        );
       });
 
       return (
