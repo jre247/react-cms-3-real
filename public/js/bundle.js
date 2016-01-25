@@ -7706,11 +7706,11 @@ var LongDescriptionReadOnly = (function (_React$Component) {
         'div',
         { className: 'Content-long-description-container' },
         _react2.default.createElement(
-          'div',
-          { className: 'Content-long-description' },
+          _ContentSettings2.default,
+          this.props,
           _react2.default.createElement(
-            _ContentSettings2.default,
-            this.props,
+            'div',
+            { className: 'Content-long-description' },
             this.props.value
           )
         )

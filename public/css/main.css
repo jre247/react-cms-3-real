@@ -7634,7 +7634,7 @@ a:hover {
   font-size: 25px;
   height: 43px;
 }
-.Content-long-description {
+.Content-long-description-container {
   display: inline-block;
   color: white;
   font-size: 18px;
