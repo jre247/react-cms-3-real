@@ -3530,7 +3530,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
 
           return _react2.default.createElement(
             'div',
-            { key: contentItem.sort_order },
+            { key: index },
             _react2.default.createElement(_Field2.default, propsData)
           );
         });
@@ -5253,8 +5253,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var self;
-
 var ContentSettingsReadOnly = (function (_React$Component) {
   _inherits(ContentSettingsReadOnly, _React$Component);
 
@@ -5263,57 +5261,53 @@ var ContentSettingsReadOnly = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContentSettingsReadOnly).call(this, props));
 
-    _this.state = { settings: {}, contentItem: {} };
-    self = _this;
+    _this.state = { styles: {}, settings: {}, contentItem: {} };
     return _this;
   }
 
   _createClass(ContentSettingsReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
-      self.setState({ settings: self.props.settings || {} });
+      var styles = this.buildWidgetStyles(this.props.settings);
+      this.setState({ contentItem: this.props.contentItem, styles: styles, settings: this.props.settings || {} });
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
-      debugger;
-      self.setState({ settings: newProps.settings || {} });
+      var styles = this.buildWidgetStyles(newProps.settings);
+      this.setState({ contentItem: this.props.contentItem, styles: styles, settings: newProps.settings || {} });
     }
   }, {
     key: 'buildWidgetStyles',
-    value: function buildWidgetStyles() {
-      var divStyle = {};
+    value: function buildWidgetStyles(settings) {
+      var styles = {};
 
-      _underscore._.each(self.state.settings, function (setting) {
+      _underscore._.each(settings, function (setting) {
         if (setting.setting_id === 1) {
-          divStyle['font-size'] = setting.setting_value + 'px';
+          styles['fontSize'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 2) {
-          divStyle['margin-bottom'] = setting.setting_value + 'px';
+          styles['marginBottom'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 3) {
-          divStyle['margin-top'] = setting.setting_value + 'px';
+          styles['marginTop'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 4) {
-          divStyle['margin-right'] = setting.setting_value + 'px';
+          styles['marginRight'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 5) {
-          divStyle['margin-left'] = setting.setting_value;
+          styles['marginLeft'] = setting.setting_value;
         } else if (setting.setting_id === 6) {
-          divStyle['color'] = setting.setting_value;
+          styles['color'] = setting.setting_value;
         } else if (setting.setting_id === 7) {
-          divStyle['background-color'] = setting.setting_value;
+          styles['backgroundColor'] = setting.setting_value;
         }
       });
 
-      return divStyle;
+      return styles;
     }
   }, {
     key: 'render',
     value: function render() {
-      debugger;
-      var divStyle = this.buildWidgetStyles();
-
       return _react2.default.createElement(
         'div',
-        { className: 'content-settings-container-readonly', style: divStyle },
+        { className: 'content-settings-container-readonly', style: this.state.styles },
         this.props.children
       );
     }
@@ -9497,7 +9491,6 @@ var MealStore = (function () {
   _createClass(MealStore, [{
     key: 'getMealsSuccess',
     value: function getMealsSuccess(meals) {
-      debugger;
       this.meals = meals;
     }
   }, {

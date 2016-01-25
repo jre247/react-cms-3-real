@@ -9,7 +9,6 @@ class MealStore {
     this.ajaxAnimationClass = '';
   }
   getMealsSuccess(meals){
-    debugger;
     this.meals = meals;
   }
 

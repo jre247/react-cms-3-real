@@ -51,7 +51,7 @@ class BasicTemplateReadOnly extends React.Component {
           settings: _.clone(settings)}, this.props);
 
         return (
-          <div key={contentItem.sort_order}>
+          <div key={index}>
             <Field {...propsData} />
           </div>
         );

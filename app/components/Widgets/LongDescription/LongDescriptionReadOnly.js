@@ -17,7 +17,6 @@ class LongDescriptionReadOnly extends React.Component {
 
   render() {
     return (
-
       <div className="Content-long-description-container">
         <ContentSettings {...this.props}>
           <div className="Content-long-description">
@@ -25,7 +24,6 @@ class LongDescriptionReadOnly extends React.Component {
           </div>
         </ContentSettings>
       </div>
-
     );
   }
 }
