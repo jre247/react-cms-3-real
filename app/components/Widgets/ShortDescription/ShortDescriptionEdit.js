@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import ContentSettings from '../Components/ContentSettings/ContentSettings';
 
 class ShortDescriptionEdit extends React.Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class ShortDescriptionEdit extends React.Component {
               value={this.props.value} onChange={this.props.onChange}>
             </input>
           </div>
+
+          <ContentSettings {...this.props} />
+
           <div className="Widget-Remove-Button-Container">
             <div onClick={this.props.onRemove}>
               <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>

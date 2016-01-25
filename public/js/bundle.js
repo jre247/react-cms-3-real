@@ -3357,6 +3357,7 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'onSettingsSave',
     value: function onSettingsSave(settings, contentId) {
+      debugger;
       this.state.contentSettings[contentId] = settings;
       self.setState({ contentSettings: this.state.contentSettings });
     }
@@ -7799,6 +7800,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7837,6 +7842,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
             _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Short description',
               value: this.props.value, onChange: this.props.onChange })
           ),
+          _react2.default.createElement(_ContentSettings2.default, this.props),
           _react2.default.createElement(
             'div',
             { className: 'Widget-Remove-Button-Container' },
@@ -7856,7 +7862,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
 
 exports.default = ShortDescriptionEdit;
 
-},{"react":"react","react-router":"react-router"}],80:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],80:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -7926,6 +7932,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7956,9 +7966,13 @@ var ShortDescriptionReadOnly = (function (_React$Component) {
         'div',
         { className: 'Content-short-description-container' },
         _react2.default.createElement(
-          'div',
-          { className: 'Content-short-description' },
-          this.props.value
+          _ContentSettings2.default,
+          this.props,
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-short-description' },
+            this.props.value
+          )
         )
       );
     }
@@ -7969,7 +7983,7 @@ var ShortDescriptionReadOnly = (function (_React$Component) {
 
 exports.default = ShortDescriptionReadOnly;
 
-},{"react":"react","react-router":"react-router"}],82:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],82:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

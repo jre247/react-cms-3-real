@@ -7431,12 +7431,6 @@ a:hover {
   color: black;
   cursor: pointer;
 }
-.Content-centered-container .Content-long-description-container,
-.Content-centered-container .Content-short-description-container {
-  margin: 0 auto;
-  text-align: center;
-  width: 70%;
-}
 .Home-content {
   text-align: center;
   color: white;
@@ -7501,13 +7495,17 @@ a:hover {
   width: 100%;
   height: 62px;
 }
-.Content-short-description {
+.Content-short-description-container {
   display: inline-block;
-  width: 47%;
-  text-align: center;
+  width: 100%;
   color: white;
   font-size: 18px;
   font-family: 'Source Sans Pro';
+  margin: 0 auto;
+  text-align: center;
+}
+.Content-short-description {
+  width: 93%;
 }
 .Photo-album-container {
   margin-left: 13%;
@@ -7639,6 +7637,9 @@ a:hover {
   color: white;
   font-size: 18px;
   font-family: 'Source Sans Pro';
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
 }
 .Content-long-description {
   width: 93%;
