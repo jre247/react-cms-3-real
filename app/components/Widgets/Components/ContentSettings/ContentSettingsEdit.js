@@ -80,7 +80,7 @@ class ContentSettingsEdit extends React.Component {
         <div key={index}>
           <div className="form-group">
               <label>{settingName}</label>
-              <input type="text" className="form-control" name={settingName} value={settingValue}
+              <input type="text" className="form-control setting-input" name={settingName} value={settingValue}
                 onChange={self.onSettingChange.bind(self, index)} />
           </div>
         </div>

@@ -5176,7 +5176,7 @@ var ContentSettingsEdit = (function (_React$Component) {
               null,
               settingName
             ),
-            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: settingName, value: settingValue,
+            _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', name: settingName, value: settingValue,
               onChange: self.onSettingChange.bind(self, index) })
           )
         );
@@ -6296,6 +6296,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 var _Image = require('./Image');
 
 var _Image2 = _interopRequireDefault(_Image);
@@ -6359,6 +6363,7 @@ var ImageWidgetEdit = (function (_React$Component) {
             { className: 'Content-Image-Edit-Button edit-content-button', onClick: this.saveImage.bind(this) },
             _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
           ),
+          _react2.default.createElement(_ContentSettings2.default, this.props),
           _react2.default.createElement(
             'div',
             { className: 'Widget-Remove-Button-Container', onClick: this.props.onRemove },
@@ -6375,6 +6380,7 @@ var ImageWidgetEdit = (function (_React$Component) {
             { className: 'Content-Image-Edit-Button edit-content-button', onClick: this.editImage.bind(this) },
             _react2.default.createElement('span', { className: 'glyphicon glyphicon-pencil' })
           ),
+          _react2.default.createElement(_ContentSettings2.default, this.props),
           _react2.default.createElement(
             'div',
             { className: 'Widget-Remove-Button-Container', onClick: this.props.onRemove },
@@ -6390,7 +6396,7 @@ var ImageWidgetEdit = (function (_React$Component) {
 
 exports.default = ImageWidgetEdit;
 
-},{"./Image":58,"react":"react","react-router":"react-router"}],62:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"./Image":58,"react":"react","react-router":"react-router"}],62:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -6408,6 +6414,10 @@ var _reactRouter = require('react-router');
 var _Image = require('./Image');
 
 var _Image2 = _interopRequireDefault(_Image);
+
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6438,7 +6448,11 @@ var ImageWidgetReadOnly = (function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'Content-image-container' },
-        _react2.default.createElement(_Image2.default, this.props)
+        _react2.default.createElement(
+          _ContentSettings2.default,
+          this.props,
+          _react2.default.createElement(_Image2.default, this.props)
+        )
       );
     }
   }]);
@@ -6448,7 +6462,7 @@ var ImageWidgetReadOnly = (function (_React$Component) {
 
 exports.default = ImageWidgetReadOnly;
 
-},{"./Image":58,"react":"react","react-router":"react-router"}],63:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"./Image":58,"react":"react","react-router":"react-router"}],63:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -7438,11 +7452,6 @@ var SubListItem = (function (_React$Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
   }, {
-    key: 'isSublistGroupBorder',
-    value: function isSublistGroupBorder() {
-      return this.props.subListItemIndex % 2 === 0 && this.props.subListItemIndex > 0;
-    }
-  }, {
     key: 'render',
     value: function render() {
       var propsData = _underscore._.extend({ value: this.props.contentItem.value }, this.props);
@@ -7460,7 +7469,7 @@ var SubListItem = (function (_React$Component) {
               { className: 'form-group Sub-list-item' },
               _react2.default.createElement(
                 'div',
-                { className: this.isSublistGroupBorder() ? 'Sub-list-item-group-border' : '' },
+                null,
                 _react2.default.createElement(_Field2.default, propsData)
               )
             )

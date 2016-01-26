@@ -7453,7 +7453,7 @@ a:hover {
   display: inline-block;
   width: 71%;
 }
-.Content-image-container input {
+.Content-image-container .Widget-input {
   text-align: center;
   width: 90%;
   display: inline-block;
@@ -7503,9 +7503,6 @@ a:hover {
   font-family: 'Source Sans Pro';
   margin: 0 auto;
   text-align: center;
-}
-.Content-short-description {
-  width: 93%;
 }
 .Photo-album-container {
   margin-left: 13%;
@@ -7639,9 +7636,6 @@ a:hover {
   font-family: 'Source Sans Pro';
   margin: 0 auto;
   width: 100%;
-}
-.Content-long-description {
-  width: 93%;
 }
 .List-page {
   font-family: 'Source Sans Pro';
@@ -7830,10 +7824,10 @@ a:hover {
 .content-settings-container:hover {
   cursor: pointer;
 }
+.setting-input {
+  display: block;
+}
 .content-url-container {
   margin: 0 auto;
   width: 100%;
-}
-.content-url {
-  width: 93%;
 }

@@ -16,9 +16,6 @@ class SubListItem extends React.Component {
 
   }
 
-  isSublistGroupBorder(){
-    return this.props.subListItemIndex % 2 === 0 && this.props.subListItemIndex > 0;
-  }
   render() {
     var propsData = _.extend({value: this.props.contentItem.value }, this.props);
     return (
@@ -26,7 +23,7 @@ class SubListItem extends React.Component {
         <div className='row'>
           <div className={this.props.isEdit ? 'col-sm-9 col-md-offset-3' : 'col-sm-8 col-md-offset-2'}>
             <div className="form-group Sub-list-item">
-              <div className={this.isSublistGroupBorder() ? 'Sub-list-item-group-border' : ''}>
+              <div>
                 <Field {...propsData} />
               </div>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Image from './Image';
+import ContentSettings from '../Components/ContentSettings/ContentSettings';
 
 class ImageWidgetReadOnly extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class ImageWidgetReadOnly extends React.Component {
   render() {
     return (
       <div className="Content-image-container">
-        <Image {...this.props} />
+        <ContentSettings {...this.props}>
+          <Image {...this.props} />
+        </ContentSettings>
       </div>
     )
   }
