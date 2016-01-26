@@ -5943,6 +5943,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -5971,13 +5975,14 @@ var IframeEdit = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'content-container' },
         _react2.default.createElement(
           'div',
           { className: 'form-group Content-item' },
           _react2.default.createElement('input', { className: 'form-control', placeholder: 'Iframe Src',
             value: this.props.value, onChange: this.props.onChange })
         ),
+        _react2.default.createElement(_ContentSettings2.default, this.props),
         _react2.default.createElement(
           'div',
           { className: 'Widget-Remove-Button-Container' },
@@ -5996,7 +6001,7 @@ var IframeEdit = (function (_React$Component) {
 
 exports.default = IframeEdit;
 
-},{"react":"react","react-router":"react-router"}],56:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],56:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -6066,6 +6071,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -6095,7 +6104,15 @@ var IframeReadOnly = (function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'Content-iframe-container' },
-        _react2.default.createElement('iframe', { src: this.props.value, className: 'Content-iframe' })
+        _react2.default.createElement(
+          _ContentSettings2.default,
+          this.props,
+          _react2.default.createElement(
+            'div',
+            { className: 'Content-item' },
+            _react2.default.createElement('iframe', { src: this.props.value, className: 'Content-iframe' })
+          )
+        )
       );
     }
   }]);
@@ -6105,7 +6122,7 @@ var IframeReadOnly = (function (_React$Component) {
 
 exports.default = IframeReadOnly;
 
-},{"react":"react","react-router":"react-router"}],58:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],58:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
