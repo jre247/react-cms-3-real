@@ -7744,7 +7744,7 @@ a:hover {
 .basic-template-edit .url-widget input {
   text-align: center;
 }
-.basic-template-edit .Content-item-container {
+.basic-template-edit .content-container {
   text-align: center;
 }
 .carousel-control.left {
@@ -7829,4 +7829,11 @@ a:hover {
 }
 .content-settings-container:hover {
   cursor: pointer;
+}
+.content-url-container {
+  margin: 0 auto;
+  width: 100%;
+}
+.content-url {
+  width: 93%;
 }

@@ -5306,6 +5306,10 @@ var ContentSettingsReadOnly = (function (_React$Component) {
           styles['color'] = setting.setting_value;
         } else if (setting.setting_id === 7) {
           styles['backgroundColor'] = setting.setting_value;
+        } else if (setting.setting_id === 8) {
+          styles['width'] = setting.setting_value + 'px';
+        } else if (setting.setting_id === 9) {
+          styles['height'] = setting.setting_value + 'px';
         }
       });
 
@@ -7587,7 +7591,7 @@ var LongDescriptionEdit = (function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'Content-long-description-container' },
+          { className: 'Content-long-description-container content-container' },
           _react2.default.createElement(
             'div',
             { className: 'Content-long-description Content-item' },
@@ -7852,7 +7856,7 @@ var ShortDescriptionEdit = (function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'Content-short-description-container' },
+          { className: 'Content-short-description-container content-container' },
           _react2.default.createElement(
             'div',
             { className: 'Content-short-description Content-item' },
@@ -8349,6 +8353,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8384,6 +8392,7 @@ var UrlEdit = (function (_React$Component) {
           _react2.default.createElement('input', { className: 'form-control', type: 'text', placeholder: 'Link', value: this.props.value,
             onChange: this.props.onChange, autoFocus: true })
         ),
+        _react2.default.createElement(_ContentSettings2.default, this.props),
         _react2.default.createElement(
           'div',
           { className: 'Widget-Remove-Button-Container' },
@@ -8402,7 +8411,7 @@ var UrlEdit = (function (_React$Component) {
 
 exports.default = UrlEdit;
 
-},{"react":"react","react-router":"react-router"}],88:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],88:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -8472,6 +8481,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8499,9 +8512,21 @@ var UrlReadOnly = (function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'a',
-        { ref: 'link', name: 'link', href: this.props.value },
-        this.props.value
+        'div',
+        { className: 'content-url-container content-container' },
+        _react2.default.createElement(
+          _ContentSettings2.default,
+          this.props,
+          _react2.default.createElement(
+            'div',
+            { className: 'content-url' },
+            _react2.default.createElement(
+              'a',
+              { ref: 'link', name: 'link', href: this.props.value },
+              this.props.value
+            )
+          )
+        )
       );
     }
   }]);
@@ -8511,7 +8536,7 @@ var UrlReadOnly = (function (_React$Component) {
 
 exports.default = UrlReadOnly;
 
-},{"react":"react","react-router":"react-router"}],90:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],90:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

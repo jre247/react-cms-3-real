@@ -42,6 +42,12 @@ class ContentSettingsReadOnly extends React.Component {
       else if(setting.setting_id === 7){
         styles['backgroundColor'] = setting.setting_value;
       }
+      else if(setting.setting_id === 8){
+        styles['width'] = setting.setting_value+ 'px';
+      }
+      else if(setting.setting_id === 9){
+        styles['height'] = setting.setting_value+ 'px';
+      }
     });
 
     return styles;

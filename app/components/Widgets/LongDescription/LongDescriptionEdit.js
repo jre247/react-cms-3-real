@@ -12,7 +12,7 @@ class LongDescriptionEdit extends React.Component {
   render() {
     return (
       <div>
-        <div className="Content-long-description-container">
+        <div className="Content-long-description-container content-container">
           <div className="Content-long-description Content-item">
             <textarea className='form-control Widget-input' placeholder="Long Description"
               value={this.props.value} onChange={this.props.onChange}>
