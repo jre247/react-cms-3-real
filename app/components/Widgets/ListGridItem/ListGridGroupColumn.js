@@ -5,11 +5,13 @@ import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../../Templates/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
+var self;
 
 class ListGridGroupColumn extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = this.props.templateId;
+    self = this;
   }
 
   componentDidMount() {
@@ -46,12 +48,15 @@ class ListGridGroupColumn extends React.Component {
       column_number: this.props.column_number};
 
     let nodes = this.props.column.contentList.map((contentItem, index) => {
+      var settings = self.props.contentSettings[contentItem.id];
+
       var propsData = {
         value: contentItem.value,
         contentItem: contentItem,
         onRemove: this.removeContent.bind(this, index),
         onChange: this.updateContent.bind(this, index),
-        imageSize: 'small'
+        imageSize: 'small',
+        settings: settings
       };
       var fieldPropsData = _.extend(propsData, this.props);
 

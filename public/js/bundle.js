@@ -6544,13 +6544,9 @@ var ListGridGroup = (function (_React$Component) {
       var parentListGridItemProps = _underscore._.extend(propsData, this.props);
 
       var nodes = this.props.contentGroupItem.rows.map(function (row, index) {
-        var settings = self.props.contentSettings[row.id];
-
         var propsData = {
           row: row,
-          row_number: index,
-          settings: settings,
-          contentItem: row
+          row_number: index
         };
         var rowProps = _underscore._.extend(propsData, _this2.props);
 
@@ -6628,6 +6624,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var self;
+
 var ListGridGroupColumn = (function (_React$Component) {
   _inherits(ListGridGroupColumn, _React$Component);
 
@@ -6637,6 +6635,7 @@ var ListGridGroupColumn = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridGroupColumn).call(this, props));
 
     _this.templateId = _this.props.templateId;
+    self = _this;
     return _this;
   }
 
@@ -6679,12 +6678,15 @@ var ListGridGroupColumn = (function (_React$Component) {
         column_number: this.props.column_number };
 
       var nodes = this.props.column.contentList.map(function (contentItem, index) {
+        var settings = self.props.contentSettings[contentItem.id];
+
         var propsData = {
           value: contentItem.value,
           contentItem: contentItem,
           onRemove: _this2.removeContent.bind(_this2, index),
           onChange: _this2.updateContent.bind(_this2, index),
-          imageSize: 'small'
+          imageSize: 'small',
+          settings: settings
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
