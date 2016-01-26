@@ -24,7 +24,7 @@ class SubListItem extends React.Component {
     return (
       <div key={this.props.contentItem.sort_order}>
         <div className='row'>
-          <div className={this.props.isEdit ? 'col-sm-8 col-md-offset-3' : 'col-sm-8 col-md-offset-2'}>
+          <div className={this.props.isEdit ? 'col-sm-9 col-md-offset-3' : 'col-sm-8 col-md-offset-2'}>
             <div className="form-group Sub-list-item">
               <div className={this.isSublistGroupBorder() ? 'Sub-list-item-group-border' : ''}>
                 <Field {...propsData} />

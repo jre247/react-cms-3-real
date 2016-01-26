@@ -3357,7 +3357,6 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'onSettingsSave',
     value: function onSettingsSave(settings, contentId) {
-      debugger;
       this.state.contentSettings[contentId] = settings;
       self.setState({ contentSettings: this.state.contentSettings });
     }
@@ -3381,8 +3380,8 @@ var BasicTemplateEdit = (function (_React$Component) {
           var settings = self.state.contentSettings[contentItem.id];
 
           var propsData = { contentItem: contentItem, settings: settings, onSettingsSave: _this2.onSettingsSave,
-            contentSettings: _underscore._.clone(_this2.state.contentSettings), onChange: _this2.updateContent.bind(_this2, index),
-            onRemove: _this2.removeContent.bind(_this2, index), onSettingsSave: _this2.onSettingsSave.bind(_this2) };
+            contentSettings: _underscore._.clone(_this2.state.contentSettings), onSettingsSave: _this2.onSettingsSave.bind(_this2),
+            onChange: _this2.updateContent.bind(_this2, index), onRemove: _this2.removeContent.bind(_this2, index) };
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
 
@@ -3894,10 +3893,6 @@ var _EditLink = require('../../EditLink');
 
 var _EditLink2 = _interopRequireDefault(_EditLink);
 
-var _API = require('../../../API');
-
-var _API2 = _interopRequireDefault(_API);
-
 var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
@@ -3921,7 +3916,7 @@ var ListTemplate = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
 
     _this.templateId = 3;
-    _this.state = { contentList: [] };
+    _this.state = { contentList: [], contentSettings: {} };
     _this.isContentListRetrieved = false;
     self = _this;
     return _this;
@@ -3930,19 +3925,23 @@ var ListTemplate = (function (_React$Component) {
   _createClass(ListTemplate, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
+      this.getContentListForPage(nextProps);
+    }
+  }, {
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+
+        var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
+          return contentItem.id;
+        });
+        self.maxContentId = contentItemWithMaxId.id;
       });
     }
   }, {
@@ -3958,7 +3957,7 @@ var ListTemplate = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
+      _WidgetService2.default.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
@@ -4009,6 +4008,12 @@ var ListTemplate = (function (_React$Component) {
       }
     }
   }, {
+    key: 'onSettingsSave',
+    value: function onSettingsSave(settings, contentId) {
+      this.state.contentSettings[contentId] = settings;
+      self.setState({ contentSettings: this.state.contentSettings });
+    }
+  }, {
     key: 'setNewSortOrderForChildrenForParent',
     value: function setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove) {
       var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
@@ -4050,6 +4055,8 @@ var ListTemplate = (function (_React$Component) {
       } else {
         var subListItemIndex = 0;
         var nodes = this.state.contentList.map(function (contentItem, index) {
+          var settings = self.state.contentSettings[contentItem.id];
+
           var propsData = {
             contentItem: contentItem, isEdit: _this2.props.isEdit,
             contentList: _this2.state.contentList,
@@ -4057,7 +4064,10 @@ var ListTemplate = (function (_React$Component) {
             onRemove: _this2.removeContent.bind(_this2, index),
             onChange: _this2.updateContent.bind(_this2, index),
             templateId: _this2.templateId,
-            index: index
+            index: index,
+            settings: settings, onSettingsSave: _this2.onSettingsSave,
+            contentSettings: _underscore._.clone(_this2.state.contentSettings),
+            onSettingsSave: _this2.onSettingsSave.bind(_this2)
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
 
@@ -4130,7 +4140,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../../API":1,"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/FieldHelper":52,"../../Widgets/ListItem/ParentListItem":70,"../../Widgets/ListItem/SubListItem":73,"../../Widgets/Title/TitleFactory":84,"../../Widgets/WidgetService":93,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],37:[function(require,module,exports){
+},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/FieldHelper":52,"../../Widgets/ListItem/ParentListItem":70,"../../Widgets/ListItem/SubListItem":73,"../../Widgets/Title/TitleFactory":84,"../../Widgets/WidgetService":93,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],37:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -7433,7 +7443,7 @@ var SubListItem = (function (_React$Component) {
           { className: 'row' },
           _react2.default.createElement(
             'div',
-            { className: this.props.isEdit ? 'col-sm-8 col-md-offset-3' : 'col-sm-8 col-md-offset-2' },
+            { className: this.props.isEdit ? 'col-sm-9 col-md-offset-3' : 'col-sm-8 col-md-offset-2' },
             _react2.default.createElement(
               'div',
               { className: 'form-group Sub-list-item' },

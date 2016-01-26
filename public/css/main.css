@@ -7638,7 +7638,6 @@ a:hover {
   font-size: 18px;
   font-family: 'Source Sans Pro';
   margin: 0 auto;
-  text-align: center;
   width: 100%;
 }
 .Content-long-description {
@@ -7745,8 +7744,8 @@ a:hover {
 .basic-template-edit .url-widget input {
   text-align: center;
 }
-.basic-template-edit .Content-long-description-container {
-  width: 100%;
+.basic-template-edit .Content-item-container {
+  text-align: center;
 }
 .carousel-control.left {
   left: 100px;
