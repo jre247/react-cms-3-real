@@ -7,11 +7,13 @@ import TemplateHelper from '../../Templates/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
 import ParentListGridItem from '../../Widgets/ListGridItem/ParentListGridItem';
 import ListGridGroupRow from '../../Widgets/ListGridItem/ListGridGroupRow';
+var self;
 
 class ListGridGroup extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = this.props.templateId;
+    self = this;
   }
 
   componentDidMount() {
@@ -46,9 +48,13 @@ class ListGridGroup extends React.Component {
     var parentListGridItemProps = _.extend(propsData, this.props);
 
     let nodes = this.props.contentGroupItem.rows.map((row, index) => {
+      var settings = self.props.contentSettings[row.id];
+
       var propsData = {
         row: row,
-        row_number: index
+        row_number: index,
+        settings: settings,
+        contentItem: row
       };
       var rowProps = _.extend(propsData, this.props);
 

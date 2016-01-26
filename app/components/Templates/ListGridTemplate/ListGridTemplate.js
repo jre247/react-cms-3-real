@@ -7,7 +7,6 @@ import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../TemplateHelper';
 import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
-import API from '../../../API';
 import EditLink from '../../EditLink';
 import WidgetService from '../../Widgets/WidgetService';
 var self;
@@ -15,32 +14,33 @@ var self;
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: [], contentList: []};
+    this.state = {contentGroupList: [], contentList: [], contentSettings: {}};
     this.templateId = 4;
     self = this;
   }
 
+
   componentDidMount() {
-    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
-      self.buildContentGroupList();
-      self.setStateForContentGroupList();
-    });
+    this.getContentListForPage(this.props);
   }
 
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
   componentWillReceiveProps(nextProps){
-    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
+    this.getContentListForPage(nextProps);
+  }
+
+  getContentListForPage(propsData){
+    WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
       self.buildContentGroupList();
       self.setStateForContentGroupList();
     });
   }
 
-  componentWillUnmount() {
-
+  onSettingsSave(settings, contentId){
+    this.state.contentSettings[contentId] = settings;
+    self.setState({contentSettings: this.state.contentSettings});
   }
+
   setStateForContentList(newContentList){
     this.setState({contentList: newContentList})
   }
@@ -57,7 +57,7 @@ class ListGridTemplate extends React.Component {
   }
 
   submit(event){
-    WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
@@ -158,7 +158,9 @@ class ListGridTemplate extends React.Component {
           templateId: this.templateId,
           contentGroupIndex: index,
           contentList: this.state.contentList,
-          setStateForContentList: this.setStateForContentList.bind(this)
+          setStateForContentList: this.setStateForContentList.bind(this),
+          contentSettings: _.clone(this.state.contentSettings),
+          onSettingsSave: this.onSettingsSave.bind(this)
         };
         var listItemProps = _.extend(propsData, this.props);
 

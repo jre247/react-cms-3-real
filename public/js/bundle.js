@@ -3595,10 +3595,6 @@ var _TitleFactory = require('../../Widgets/Title/TitleFactory');
 
 var _TitleFactory2 = _interopRequireDefault(_TitleFactory);
 
-var _API = require('../../../API');
-
-var _API2 = _interopRequireDefault(_API);
-
 var _EditLink = require('../../EditLink');
 
 var _EditLink2 = _interopRequireDefault(_EditLink);
@@ -3625,7 +3621,7 @@ var ListGridTemplate = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridTemplate).call(this, props));
 
-    _this.state = { contentGroupList: [], contentList: [] };
+    _this.state = { contentGroupList: [], contentList: [], contentSettings: {} };
     _this.templateId = 4;
     self = _this;
     return _this;
@@ -3634,28 +3630,28 @@ var ListGridTemplate = (function (_React$Component) {
   _createClass(ListGridTemplate, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList });
-        self.buildContentGroupList();
-        self.setStateForContentGroupList();
-      });
+      this.getContentListForPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList });
+      this.getContentListForPage(nextProps);
+    }
+  }, {
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
         self.buildContentGroupList();
         self.setStateForContentGroupList();
       });
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
+    key: 'onSettingsSave',
+    value: function onSettingsSave(settings, contentId) {
+      this.state.contentSettings[contentId] = settings;
+      self.setState({ contentSettings: this.state.contentSettings });
+    }
   }, {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
@@ -3677,7 +3673,7 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
+      _WidgetService2.default.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
@@ -3788,7 +3784,9 @@ var ListGridTemplate = (function (_React$Component) {
             templateId: _this2.templateId,
             contentGroupIndex: index,
             contentList: _this2.state.contentList,
-            setStateForContentList: _this2.setStateForContentList.bind(_this2)
+            setStateForContentList: _this2.setStateForContentList.bind(_this2),
+            contentSettings: _underscore._.clone(_this2.state.contentSettings),
+            onSettingsSave: _this2.onSettingsSave.bind(_this2)
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
 
@@ -3848,7 +3846,7 @@ var ListGridTemplate = (function (_React$Component) {
 
 exports.default = ListGridTemplate;
 
-},{"../../../API":1,"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/FieldHelper":52,"../../Widgets/ListGridItem/ListGridGroup":63,"../../Widgets/ListGridItem/ListGridGroupFactory":65,"../../Widgets/Title/TitleFactory":84,"../../Widgets/WidgetService":93,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],36:[function(require,module,exports){
+},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/FieldHelper":52,"../../Widgets/ListGridItem/ListGridGroup":63,"../../Widgets/ListGridItem/ListGridGroupFactory":65,"../../Widgets/Title/TitleFactory":84,"../../Widgets/WidgetService":93,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],36:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -6495,6 +6493,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var self;
+
 var ListGridGroup = (function (_React$Component) {
   _inherits(ListGridGroup, _React$Component);
 
@@ -6504,6 +6504,7 @@ var ListGridGroup = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridGroup).call(this, props));
 
     _this.templateId = _this.props.templateId;
+    self = _this;
     return _this;
   }
 
@@ -6543,9 +6544,13 @@ var ListGridGroup = (function (_React$Component) {
       var parentListGridItemProps = _underscore._.extend(propsData, this.props);
 
       var nodes = this.props.contentGroupItem.rows.map(function (row, index) {
+        var settings = self.props.contentSettings[row.id];
+
         var propsData = {
           row: row,
-          row_number: index
+          row_number: index,
+          settings: settings,
+          contentItem: row
         };
         var rowProps = _underscore._.extend(propsData, _this2.props);
 
