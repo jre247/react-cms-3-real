@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
+import TitleElementReadOnly from './TitleElementReadOnly';
+import ContentSettings from '../Components/ContentSettings/ContentSettings';
 
 class TitleReadOnly extends React.Component {
   constructor(props) {
@@ -17,9 +18,9 @@ class TitleReadOnly extends React.Component {
   render() {
     return (
       <div className="Content-title-container">
-        <div className="Content-title">
-            {this.props.value}
-        </div>
+        <ContentSettings {...this.props}>
+          <TitleElementReadOnly {...this.props} />
+        </ContentSettings>
       </div>
     );
   }

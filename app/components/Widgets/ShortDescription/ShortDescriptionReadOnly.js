@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router';
+import ShortDescriptionElementReadOnly from './ShortDescriptionElementReadOnly';
 import ContentSettings from '../Components/ContentSettings/ContentSettings';
 
 class ShortDescriptionReadOnly extends React.Component {
@@ -19,9 +19,7 @@ class ShortDescriptionReadOnly extends React.Component {
     return (
       <div className="Content-short-description-container">
         <ContentSettings {...this.props}>
-          <div className="Content-short-description">
-              {this.props.value}
-          </div>
+          <ShortDescriptionElementReadOnly {...this.props} />
         </ContentSettings>
       </div>
     );

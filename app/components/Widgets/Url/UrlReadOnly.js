@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
 import ContentSettings from '../Components/ContentSettings/ContentSettings';
+import UrlElementReadOnly from './UrlElementReadOnly';
 
 class UrlReadOnly extends React.Component {
   constructor(props) {
@@ -16,12 +16,11 @@ class UrlReadOnly extends React.Component {
   }
 
   render() {
+    debugger;
     return (
       <div className="content-url-container content-container">
         <ContentSettings {...this.props}>
-          <div className="content-url">
-            <a ref="link" name="link" href={this.props.value}>{this.props.value}</a>
-          </div>
+          <UrlElementReadOnly {...this.props} />
         </ContentSettings>
       </div>
     );

@@ -1,20 +1,45 @@
 import React from 'react';
 import {_} from 'underscore';
+import ReactAddOns from 'react/addons';
 
 class ContentSettingsReadOnly extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {styles: {}, settings: {}, contentItem: {}};
+    this.state = {containerStyles: {}, widgetStyles: {}, settings: {}, contentItem: {}};
   }
 
   componentDidMount() {
-    var styles = this.buildWidgetStyles(this.props.settings);
-    this.setState({contentItem: this.props.contentItem, styles: styles, settings: this.props.settings || {}});
+    this.setStyles(this.props);
   }
 
   componentWillReceiveProps(newProps){
-    var styles = this.buildWidgetStyles(newProps.settings);
-    this.setState({contentItem: this.props.contentItem, styles: styles, settings: newProps.settings || {}});
+    this.setStyles(newProps);
+  }
+
+  setStyles(propsData){
+    var containerStyles = this.buildWidgetStyles(propsData.settings);
+    var widgetStyles = this.getStylesForWidgetElement(containerStyles);
+
+    //remove width and height from container styles
+    containerStyles['width'] = null;
+    containerStyles['height'] = null;
+
+    this.setState({contentItem: propsData.contentItem, widgetStyles: widgetStyles,
+      containerStyles: containerStyles, settings: propsData.settings || {}});
+  }
+
+  getStylesForWidgetElement(styles){
+    var widgetElementStyles = {};
+    var width = styles['width'];
+    if(width){
+      widgetElementStyles['width'] = width;
+    }
+    var height = styles['height'];
+    if(height){
+      widgetElementStyles['height'] = height;
+    }
+
+    return widgetElementStyles
   }
 
   buildWidgetStyles(settings){
@@ -53,10 +78,20 @@ class ContentSettingsReadOnly extends React.Component {
     return styles;
   }
 
+  renderChildren() {
+    var widgetStyles = this.state.widgetStyles;
+
+    return ReactAddOns.Children.map(this.props.children, function (child) {
+      return ReactAddOns.addons.cloneWithProps(child, {
+        styles: widgetStyles
+      })
+    }.bind(this))
+  }
+
   render() {
     return (
-      <div className="content-settings-container-readonly" style={this.state.styles}>
-        {this.props.children}
+      <div className="content-settings-container-readonly" style={this.state.containerStyles}>
+        {this.renderChildren()}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import ContentSettings from '../Components/ContentSettings/ContentSettings';
+import IframeElementReadOnly from './IframeElementReadOnly';
 
 class IframeReadOnly extends React.Component {
   constructor(props) {
@@ -19,10 +20,7 @@ class IframeReadOnly extends React.Component {
     return (
       <div className="Content-iframe-container">
         <ContentSettings {...this.props}>
-          <div className="Content-item">
-            <iframe src={this.props.value} className="Content-iframe">
-            </iframe>
-          </div>
+          <IframeElementReadOnly {...this.props} />
         </ContentSettings>
       </div>
     );
