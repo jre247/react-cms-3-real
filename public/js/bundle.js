@@ -3357,7 +3357,6 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'onSettingsSave',
     value: function onSettingsSave(contentItem, contentIndex) {
-      debugger;
       self.state.contentList[contentIndex] = contentItem;
       self.setStateForContentList(self.state.contentList);
     }
@@ -5134,6 +5133,7 @@ var ContentSettingsEdit = (function (_React$Component) {
       var settingsLookups = self.lookupState.lookups.settings;
       var setting = _underscore._.clone(settingsLookups[index]);
       setting.setting_value = event.target.value;
+      setting.setting_id = setting.id;
 
       self.state.settings[setting.id] = setting;
       self.setState({ settings: self.state.settings });
@@ -5141,7 +5141,6 @@ var ContentSettingsEdit = (function (_React$Component) {
   }, {
     key: 'onSave',
     value: function onSave() {
-      debugger;
       self.setState({ showModal: false });
       self.isSaving = true;
 
@@ -7790,7 +7789,6 @@ var LongDescriptionElementReadOnly = (function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      debugger;
       return _react2.default.createElement(
         "div",
         { className: "Content-long-description widget", style: this.props.styles },
@@ -9215,7 +9213,7 @@ var WidgetService = (function () {
     key: 'save',
     value: function save(contentList, pageId) {
       var promise = $.Deferred();
-      debugger;
+
       var contentListProcessed = [];
 
       _underscore._.each(contentList, function (contentItem) {
@@ -9261,7 +9259,6 @@ var WidgetService = (function () {
       var self = this;
 
       _API2.default.getContentListForPage(pageId, isEdit).done(function (viewmodel) {
-        debugger;
         _underscore._.each(viewmodel.contentList, function (contentItem) {
           var settings = _underscore._.where(viewmodel.contentSettings, { content_id: contentItem.id });
           var settingsHash = self.formatContentSettingsAsHash(settings);

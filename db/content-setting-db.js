@@ -47,7 +47,7 @@ exports.save = function(contentSettings, pageId){
         // deactivate existing content settings for all content ids being saved
         client.query(buildBulkUpdateStatement(contentSettings));
 
-        client.query(buildBulkInsertStatement(contentSettings, contentListCount));
+        client.query(buildBulkInsertStatement(contentSettings));
 
         done();
 
@@ -77,7 +77,7 @@ var buildBulkUpdateStatement = function(rows){
   }
 }
 
-var buildBulkInsertStatement = function(rows, contentListCount) {
+var buildBulkInsertStatement = function(rows) {
     var params = []
     var chunks = []
     _.each(rows, function(row){

@@ -5,7 +5,7 @@ import API from '../../API';
 class WidgetService {
   static save(contentList, pageId) {
     var promise = $.Deferred();
-    debugger;
+
     var contentListProcessed = [];
 
     _.each(contentList, (contentItem) => {
@@ -52,7 +52,6 @@ class WidgetService {
 
     API.getContentListForPage(pageId, isEdit)
       .done(function(viewmodel){
-        debugger;
         _.each(viewmodel.contentList, function(contentItem){
           var settings = _.where(viewmodel.contentSettings, {content_id: contentItem.id});
           var settingsHash = self.formatContentSettingsAsHash(settings);

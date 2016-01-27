@@ -14,7 +14,6 @@ class LongDescriptionElementReadOnly extends React.Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="Content-long-description widget" style={this.props.styles}>
         {this.props.value}

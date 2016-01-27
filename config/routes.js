@@ -123,7 +123,7 @@ module.exports = function(app, passport) {
           var settings = flattenContentsSettings(contents, contentsHash, contentListDb);
 
           if(settings && settings.length > 0){
-            return ContentSettingDb.save(settingsFormatted, pageId);
+            return ContentSettingDb.save(settings, pageId);
           }
         })
         .then(function(data){
@@ -220,7 +220,7 @@ var saveUniqueIdentifierForContents = function(contents){
 }
 
 var flattenContentsSettings = function(contents, contentsHash, contentsDb){
-    var settingsArray [];
+    var settingsArray = [];
 
     _.each(contentsDb, function(contentDbItem){
       var contentItem = contentsHash[contentDbItem.unique_identifier];
@@ -228,9 +228,10 @@ var flattenContentsSettings = function(contents, contentsHash, contentsDb){
       var settings = contentItem.settings;
       _.each(settings, function(setting){
         setting.content_id = contentDbItem.id;
+          settingsArray.push(setting);
       });
 
-      settingsArray.push(settings);
+
     });
 
     return settingsArray;

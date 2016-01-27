@@ -48,13 +48,13 @@ class ContentSettingsEdit extends React.Component {
     var settingsLookups = self.lookupState.lookups.settings;
     var setting = _.clone(settingsLookups[index]);
     setting.setting_value = event.target.value;
+    setting.setting_id = setting.id;
 
     self.state.settings[setting.id] = setting;
     self.setState({settings: self.state.settings});
   }
 
   onSave(){
-    debugger;
     self.setState({showModal: false});
     self.isSaving = true;
 
