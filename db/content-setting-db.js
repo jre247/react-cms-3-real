@@ -34,7 +34,7 @@ exports.getSettingsForPage = function(pageId){
   return promise;
 }
 
-exports.save = function(contentSettings, pageId, contentListCount){
+exports.save = function(contentSettings, pageId){
   try{
     var results = [];
     var promise = new Promise();
@@ -84,7 +84,7 @@ var buildBulkInsertStatement = function(rows, contentListCount) {
         var valueClause = [];
         params.push(row.setting_id);
         valueClause.push('$' + params.length);
-        params.push(parseInt(row.content_id) + parseInt(contentListCount));
+        params.push(row.content_id);
         valueClause.push('$' + params.length);
         params.push(row.setting_value);
         valueClause.push('$' + params.length);

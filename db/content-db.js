@@ -18,9 +18,17 @@ exports.save = function(pageId, userId, contents){
 
         client.query(buildBulkInsertStatement(pageId, userId, contents));
 
-        done();
+        var query = client.query("select c.* from content c join page p on c.page_id = p.id where p.is_active = true And c.is_active = true And c.page_id = $1 order by c.sort_order", [pageId]);
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
 
-        promise.resolve();
+        query.on('end', function() {
+          var contentList = processQueryEnd(done, results);
+          console.log('query on end');
+          promise.resolve(contentList);
+        });
     });
   }
   catch(ex){
@@ -57,10 +65,12 @@ var buildBulkInsertStatement = function(pageId, userId, rows) {
         valueClause.push('$' + params.length);
         params.push(row.column_number == "" ? null : row.column_number);
         valueClause.push('$' + params.length);
+        params.push(row.unique_identifier);
+        valueClause.push('$' + params.length);
         chunks.push('(' + valueClause.join(', ') + ')');
     });
     return {
-        text: 'INSERT INTO content(name, value, page_id, content_type_id, user_id, sort_order, parent_index, date_created, is_active, row_number, column_number) VALUES ' +
+        text: 'INSERT INTO content(name, value, page_id, content_type_id, user_id, sort_order, parent_index, date_created, is_active, row_number, column_number, unique_identifier) VALUES ' +
             chunks.join(', '),
         values: params
     }

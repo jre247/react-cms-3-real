@@ -147,13 +147,13 @@ class API {
     return promise.promise();
   }
 
-  static saveContentListForPage(contentList, contentSettings, pageId) {
+  static saveContentListForPage(contentList, pageId) {
     var promise = $.Deferred();
 
     $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId + '/content-list',
-        data: {contents: contentList, contentSettings: contentSettings}
+        data: {contents: contentList}
       })
         .done((data) => {
           promise.resolve(data);

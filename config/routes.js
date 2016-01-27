@@ -8,6 +8,7 @@ var MealDb = require('../db/meal-db');
 var SettingDb = require('../db/setting-db');
 var ContentSettingDb = require('../db/content-setting-db');
 var _ = require('underscore-node');
+var UtilitiesHelper = require('../helpers/utilities-helper');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -102,10 +103,13 @@ module.exports = function(app, passport) {
       var pageId = req.params.id;
       var userId = null;
       var contents = req.body.contents;
-      var contentSettings = req.body.contentSettings;
+
       if(req.user){
         userId = req.user.id;
       }
+
+      contents = saveUniqueIdentifierForContents(contents);
+      var contentsHash = buildContentsHash(contents);
 
       PageDb.findById(pageId)
         .then(function(page){
@@ -116,8 +120,10 @@ module.exports = function(app, passport) {
           }
         })
         .then(function(contentListDb){
-          if(contentSettings && contentSettings.length > 0){
-            return ContentSettingDb.save(contentSettings, pageId, contents.length);
+          var settings = flattenContentsSettings(contents, contentsHash, contentListDb);
+
+          if(settings && settings.length > 0){
+            return ContentSettingDb.save(settingsFormatted, pageId);
           }
         })
         .then(function(data){
@@ -199,6 +205,45 @@ module.exports = function(app, passport) {
       }
     });
 };
+
+var saveUniqueIdentifierForContents = function(contents){
+  _.each(contents, function(contentItem){
+    var guid = UtilitiesHelper.newGuid();
+    contentItem.unique_identifier = guid;
+
+    _.each(contentItem.settings, function(setting){
+      setting.contentUniqueIdentifier = guid;
+    });
+  });
+
+  return contents;
+}
+
+var flattenContentsSettings = function(contents, contentsHash, contentsDb){
+    var settingsArray [];
+
+    _.each(contentsDb, function(contentDbItem){
+      var contentItem = contentsHash[contentDbItem.unique_identifier];
+
+      var settings = contentItem.settings;
+      _.each(settings, function(setting){
+        setting.content_id = contentDbItem.id;
+      });
+
+      settingsArray.push(settings);
+    });
+
+    return settingsArray;
+}
+
+var buildContentsHash = function(contents){
+  var contentsHash = {};
+  _.each(contents, function(contentItem){
+    contentsHash[contentItem.unique_identifier] = contentItem;
+  });
+
+  return contentsHash;
+}
 
 var getAllAppSettings = function(req, res, next){
   AppSettingDb.findAll()

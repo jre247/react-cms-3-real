@@ -69,6 +69,7 @@ CREATE TABLE content
 	parent_index INTEGER NULL,
 	row_number INTEGER NOT NULL,
 	column_number INTEGER NOT NULL,
+	unique_identifier VARCHAR(840) null,
 	date_created TIMESTAMP null,
 	is_active BOOLEAN
 );

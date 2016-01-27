@@ -3,9 +3,9 @@ import WidgetFactory from './WidgetFactory';
 import API from '../../API';
 
 class WidgetService {
-  static save(contentList, contentSettingsHash, pageId) {
+  static save(contentList, pageId) {
     var promise = $.Deferred();
-
+    debugger;
     var contentListProcessed = [];
 
     _.each(contentList, (contentItem) => {
@@ -16,9 +16,13 @@ class WidgetService {
       contentListProcessed.push(contentItemProcessed);
     });
 
-    var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
+    var self = this;
+    _.each(contentList, function(contentItem){
+      var settingsFormatted = self.packageContentSettingsForSave(contentItem);
+      contentItem.settings = settingsFormatted;
+    });
 
-    API.saveContentListForPage(contentList, contentSettings, pageId)
+    API.saveContentListForPage(contentList, pageId)
       .done(function(){
         promise.resolve();
       })
@@ -29,19 +33,17 @@ class WidgetService {
     return promise.promise();
   }
 
-  static packageContentSettingsForSave(contentSettingsHash){
-    var contentSettings = [];
-    for(var contentKey in contentSettingsHash){
-      var contentId = contentKey;
-      var settingsHash = contentSettingsHash[contentKey];
+  static packageContentSettingsForSave(contentItem){
+    var settingsHash = contentItem.settings;
+    var contentId = contentItem.id;
+    var settingsArray = [];
 
-      for(var settingKey in settingsHash){
-        var settingValue = settingsHash[settingKey].setting_value;
-        contentSettings.push({setting_id: settingKey, content_id: contentId, setting_value: settingValue});
-      };
+    for(var settingKey in settingsHash){
+      var settingValue = settingsHash[settingKey].setting_value;
+      settingsArray.push({setting_id: settingKey, content_id: contentId, setting_value: settingValue});
     };
 
-    return contentSettings;
+    return settingsArray;
   }
 
   static getContentListForPage(pageId, isEdit){
@@ -50,11 +52,14 @@ class WidgetService {
 
     API.getContentListForPage(pageId, isEdit)
       .done(function(viewmodel){
-        var contentSettingsHash = self.formatContentSettingsAsHash(viewmodel.contentSettings);
+        debugger;
+        _.each(viewmodel.contentList, function(contentItem){
+          var settings = _.where(viewmodel.contentSettings, {content_id: contentItem.id});
+          var settingsHash = self.formatContentSettingsAsHash(settings);
+          contentItem.settings = settings;
+        });
 
-        var viewmodelFormatted = {contentSettings: contentSettingsHash, contentList: viewmodel.contentList};
-
-        promise.resolve(viewmodelFormatted);
+        promise.resolve(viewmodel.contentList || []);
       })
       .fail(function(){
         promise.reject("Error retrieving content list for widget.");
@@ -78,11 +83,8 @@ class WidgetService {
       if(!contentSettingsHash){
         contentSettingsHash = {};
       }
-      if(!contentSettingsHash[contentId]){
-        contentSettingsHash[contentId] = {};
-      }
 
-      contentSettingsHash[contentId][settingId] = setting;
+      contentSettingsHash[settingId] = setting;
     });
 
     return contentSettingsHash;

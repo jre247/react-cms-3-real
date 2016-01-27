@@ -174,7 +174,7 @@ var API = (function () {
     }
   }, {
     key: 'saveContentListForPage',
-    value: function saveContentListForPage(contentList, contentSettings, pageId) {
+    value: function saveContentListForPage(contentList, pageId) {
       var _this9 = this;
 
       var promise = $.Deferred();
@@ -182,7 +182,7 @@ var API = (function () {
       $.ajax({
         type: 'POST',
         url: '/api/pages/' + pageId + '/content-list',
-        data: { contents: contentList, contentSettings: contentSettings }
+        data: { contents: contentList }
       }).done(function (data) {
         promise.resolve(data);
       }).fail(function (jqXhr) {
@@ -3287,7 +3287,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicTemplateEdit).call(this, props));
 
     _this.templateId = 1;
-    _this.state = { contentList: [], contentSettings: {} };
+    _this.state = { contentList: [] };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -3312,7 +3312,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+        self.setState({ contentList: viewmodel.contentList || [] });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -3328,7 +3328,7 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      _WidgetService2.default.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function () {
+      _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
@@ -3356,9 +3356,10 @@ var BasicTemplateEdit = (function (_React$Component) {
     }
   }, {
     key: 'onSettingsSave',
-    value: function onSettingsSave(settings, contentId) {
-      this.state.contentSettings[contentId] = settings;
-      self.setState({ contentSettings: this.state.contentSettings });
+    value: function onSettingsSave(contentItem, contentIndex) {
+      debugger;
+      self.state.contentList[contentIndex] = contentItem;
+      self.setStateForContentList(self.state.contentList);
     }
   }, {
     key: 'render',
@@ -3377,11 +3378,9 @@ var BasicTemplateEdit = (function (_React$Component) {
         );
       } else {
         var nodes = self.state.contentList.map(function (contentItem, index) {
-          var settings = self.state.contentSettings[contentItem.id];
-
-          var propsData = { contentItem: contentItem, settings: settings, onSettingsSave: _this2.onSettingsSave,
-            contentSettings: _underscore._.clone(_this2.state.contentSettings), onSettingsSave: _this2.onSettingsSave.bind(_this2),
-            onChange: _this2.updateContent.bind(_this2, index), onRemove: _this2.removeContent.bind(_this2, index) };
+          var propsData = { contentItem: contentItem, settings: contentItem.settings, contentIndex: index,
+            onSettingsSave: _this2.onSettingsSave.bind(_this2), onChange: _this2.updateContent.bind(_this2, index),
+            onRemove: _this2.removeContent.bind(_this2, index) };
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
 
@@ -5118,7 +5117,9 @@ var ContentSettingsEdit = (function (_React$Component) {
     key: 'openModal',
     value: function openModal(contentItem, event) {
       self.isSaving = false;
-      var settings = _underscore._.clone(self.props.contentSettings[contentItem.id]);
+      var contentItem = _underscore._.clone(this.props.contentItem);
+
+      var settings = _underscore._.clone(this.props.settings);
 
       self.setState({ showModal: true, contentItem: contentItem, settings: settings || {} });
     }
@@ -5140,10 +5141,13 @@ var ContentSettingsEdit = (function (_React$Component) {
   }, {
     key: 'onSave',
     value: function onSave() {
+      debugger;
       self.setState({ showModal: false });
       self.isSaving = true;
 
-      self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
+      var contentItem = self.state.contentItem;
+      contentItem.settings = self.state.settings;
+      self.props.onSettingsSave(contentItem, self.props.contentIndex);
     }
   }, {
     key: 'render',
@@ -9209,9 +9213,9 @@ var WidgetService = (function () {
 
   _createClass(WidgetService, null, [{
     key: 'save',
-    value: function save(contentList, contentSettingsHash, pageId) {
+    value: function save(contentList, pageId) {
       var promise = $.Deferred();
-
+      debugger;
       var contentListProcessed = [];
 
       _underscore._.each(contentList, function (contentItem) {
@@ -9222,9 +9226,13 @@ var WidgetService = (function () {
         contentListProcessed.push(contentItemProcessed);
       });
 
-      var contentSettings = this.packageContentSettingsForSave(contentSettingsHash);
+      var self = this;
+      _underscore._.each(contentList, function (contentItem) {
+        var settingsFormatted = self.packageContentSettingsForSave(contentItem);
+        contentItem.settings = settingsFormatted;
+      });
 
-      _API2.default.saveContentListForPage(contentList, contentSettings, pageId).done(function () {
+      _API2.default.saveContentListForPage(contentList, pageId).done(function () {
         promise.resolve();
       }).fail(function () {
         promise.reject("Error save for widget.");
@@ -9234,19 +9242,17 @@ var WidgetService = (function () {
     }
   }, {
     key: 'packageContentSettingsForSave',
-    value: function packageContentSettingsForSave(contentSettingsHash) {
-      var contentSettings = [];
-      for (var contentKey in contentSettingsHash) {
-        var contentId = contentKey;
-        var settingsHash = contentSettingsHash[contentKey];
+    value: function packageContentSettingsForSave(contentItem) {
+      var settingsHash = contentItem.settings;
+      var contentId = contentItem.id;
+      var settingsArray = [];
 
-        for (var settingKey in settingsHash) {
-          var settingValue = settingsHash[settingKey].setting_value;
-          contentSettings.push({ setting_id: settingKey, content_id: contentId, setting_value: settingValue });
-        };
+      for (var settingKey in settingsHash) {
+        var settingValue = settingsHash[settingKey].setting_value;
+        settingsArray.push({ setting_id: settingKey, content_id: contentId, setting_value: settingValue });
       };
 
-      return contentSettings;
+      return settingsArray;
     }
   }, {
     key: 'getContentListForPage',
@@ -9255,11 +9261,14 @@ var WidgetService = (function () {
       var self = this;
 
       _API2.default.getContentListForPage(pageId, isEdit).done(function (viewmodel) {
-        var contentSettingsHash = self.formatContentSettingsAsHash(viewmodel.contentSettings);
+        debugger;
+        _underscore._.each(viewmodel.contentList, function (contentItem) {
+          var settings = _underscore._.where(viewmodel.contentSettings, { content_id: contentItem.id });
+          var settingsHash = self.formatContentSettingsAsHash(settings);
+          contentItem.settings = settings;
+        });
 
-        var viewmodelFormatted = { contentSettings: contentSettingsHash, contentList: viewmodel.contentList };
-
-        promise.resolve(viewmodelFormatted);
+        promise.resolve(viewmodel.contentList || []);
       }).fail(function () {
         promise.reject("Error retrieving content list for widget.");
       });
@@ -9285,11 +9294,8 @@ var WidgetService = (function () {
         if (!contentSettingsHash) {
           contentSettingsHash = {};
         }
-        if (!contentSettingsHash[contentId]) {
-          contentSettingsHash[contentId] = {};
-        }
 
-        contentSettingsHash[contentId][settingId] = setting;
+        contentSettingsHash[settingId] = setting;
       });
 
       return contentSettingsHash;

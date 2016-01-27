@@ -14,7 +14,7 @@ class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: [], contentSettings: {}};
+    this.state = {contentList: []};
     this.maxContentId;
     self = this;
   }
@@ -33,7 +33,7 @@ class BasicTemplateEdit extends React.Component {
 
   getContentListForPage(propsData){
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
+      self.setState({contentList: viewmodel.contentList || []});
 
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
@@ -45,7 +45,7 @@ class BasicTemplateEdit extends React.Component {
   }
 
   submit(event){
-    WidgetService.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
@@ -66,9 +66,10 @@ class BasicTemplateEdit extends React.Component {
     self.state.contentList.splice(index, 1);
     self.setStateForContentList(self.state.contentList);
   }
-  onSettingsSave(settings, contentId){
-    this.state.contentSettings[contentId] = settings;
-    self.setState({contentSettings: this.state.contentSettings});
+  onSettingsSave(contentItem, contentIndex){
+    debugger;
+    self.state.contentList[contentIndex] = contentItem;
+    self.setStateForContentList(self.state.contentList);
   }
   render() {
     var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
@@ -85,11 +86,9 @@ class BasicTemplateEdit extends React.Component {
     }
     else{
       let nodes = self.state.contentList.map((contentItem, index) => {
-        var settings = self.state.contentSettings[contentItem.id];
-
-        var propsData = {contentItem: contentItem, settings: settings, onSettingsSave: this.onSettingsSave,
-          contentSettings: _.clone(this.state.contentSettings), onSettingsSave: this.onSettingsSave.bind(this),
-          onChange:  this.updateContent.bind(this, index), onRemove: this.removeContent.bind(this, index)};
+        var propsData = {contentItem: contentItem, settings: contentItem.settings, contentIndex: index,
+          onSettingsSave: this.onSettingsSave.bind(this), onChange:  this.updateContent.bind(this, index),
+          onRemove: this.removeContent.bind(this, index)};
 
         var fieldsPropData = _.extend(propsData, self.props);
 

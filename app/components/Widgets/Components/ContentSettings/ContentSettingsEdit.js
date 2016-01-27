@@ -33,7 +33,9 @@ class ContentSettingsEdit extends React.Component {
 
   openModal(contentItem, event) {
     self.isSaving = false;
-    var settings = _.clone(self.props.contentSettings[contentItem.id]);
+    var contentItem = _.clone(this.props.contentItem);
+
+    var settings = _.clone(this.props.settings);
 
     self.setState({showModal: true, contentItem: contentItem, settings: settings || {}});
   }
@@ -52,10 +54,13 @@ class ContentSettingsEdit extends React.Component {
   }
 
   onSave(){
+    debugger;
     self.setState({showModal: false});
     self.isSaving = true;
 
-    self.props.onSettingsSave(self.state.settings, self.state.contentItem.id);
+    var contentItem = self.state.contentItem;
+    contentItem.settings = self.state.settings;
+    self.props.onSettingsSave(contentItem, self.props.contentIndex);
   }
 
   render() {
