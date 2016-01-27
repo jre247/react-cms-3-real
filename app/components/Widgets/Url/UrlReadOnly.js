@@ -16,7 +16,6 @@ class UrlReadOnly extends React.Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="content-url-container content-container">
         <ContentSettings {...this.props}>

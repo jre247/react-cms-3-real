@@ -14,7 +14,6 @@ class Image extends React.Component {
   }
 
   render() {
-    debugger;
     if(this.props.imageSize == 'small'){
       return (
         <img className="Content-small-image widget" src={this.props.value} alt="Image" style={this.props.styles} />

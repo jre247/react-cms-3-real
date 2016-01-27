@@ -6264,7 +6264,6 @@ var Image = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       if (this.props.imageSize == 'small') {
         return _react2.default.createElement('img', { className: 'Content-small-image widget', src: this.props.value, alt: 'Image', style: this.props.styles });
       } else if (this.props.imageSize == 'medium') {
@@ -8858,7 +8857,6 @@ var UrlReadOnly = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'content-url-container content-container' },
