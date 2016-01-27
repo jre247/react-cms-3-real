@@ -16,7 +16,6 @@ class LongDescriptionReadOnly extends React.Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="Content-long-description-container">
         <ContentSettings {...this.props}>

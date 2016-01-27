@@ -5297,6 +5297,8 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       //remove width and height from container styles
       containerStyles['width'] = null;
       containerStyles['height'] = null;
+      containerStyles['marginLeft'] = null;
+      containerStyles['marginRight'] = null;
 
       this.setState({ contentItem: propsData.contentItem, widgetStyles: widgetStyles,
         containerStyles: containerStyles, settings: propsData.settings || {} });
@@ -5312,6 +5314,14 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       var height = styles['height'];
       if (height) {
         widgetElementStyles['height'] = height;
+      }
+      var marginLeft = styles['marginLeft'];
+      if (marginLeft) {
+        widgetElementStyles['marginLeft'] = marginLeft;
+      }
+      var marginRight = styles['marginRight'];
+      if (marginRight) {
+        widgetElementStyles['marginRight'] = marginRight;
       }
 
       return widgetElementStyles;
@@ -7893,7 +7903,6 @@ var LongDescriptionReadOnly = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      debugger;
       return _react2.default.createElement(
         'div',
         { className: 'Content-long-description-container' },

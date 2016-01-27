@@ -23,6 +23,8 @@ class ContentSettingsReadOnly extends React.Component {
     //remove width and height from container styles
     containerStyles['width'] = null;
     containerStyles['height'] = null;
+    containerStyles['marginLeft'] = null;
+    containerStyles['marginRight'] = null;
 
     this.setState({contentItem: propsData.contentItem, widgetStyles: widgetStyles,
       containerStyles: containerStyles, settings: propsData.settings || {}});
@@ -37,6 +39,14 @@ class ContentSettingsReadOnly extends React.Component {
     var height = styles['height'];
     if(height){
       widgetElementStyles['height'] = height;
+    }
+    var marginLeft = styles['marginLeft'];
+    if(marginLeft){
+      widgetElementStyles['marginLeft'] = marginLeft;
+    }
+    var marginRight= styles['marginRight'];
+    if(marginRight){
+      widgetElementStyles['marginRight'] = marginRight;
     }
 
     return widgetElementStyles
