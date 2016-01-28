@@ -3508,7 +3508,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+        self.setState({ contentList: viewmodel.contentList || [] });
       });
     }
   }, {
@@ -3521,7 +3521,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
         var nodes = this.state.contentList.map(function (contentItem, index) {
-          var settings = self.state.contentSettings[contentItem.id];
+          var settings = contentItem.settings;
 
           var propsData = _underscore._.extend({ contentItem: contentItem, isEdit: _this2.props.isEdit,
             settings: _underscore._.clone(settings) }, _this2.props);
@@ -9259,13 +9259,16 @@ var WidgetService = (function () {
       var self = this;
 
       _API2.default.getContentListForPage(pageId, isEdit).done(function (viewmodel) {
-        _underscore._.each(viewmodel.contentList, function (contentItem) {
+        var contentList = _underscore._.clone(viewmodel.contentList) || [];
+
+        _underscore._.each(contentList, function (contentItem) {
           var settings = _underscore._.where(viewmodel.contentSettings, { content_id: contentItem.id });
           var settingsHash = self.formatContentSettingsAsHash(settings);
-          contentItem.settings = settings;
+          contentItem.settings = settingsHash;
         });
 
-        promise.resolve(viewmodel.contentList || []);
+        var viewmodel = { contentList: contentList };
+        promise.resolve(viewmodel);
       }).fail(function () {
         promise.reject("Error retrieving content list for widget.");
       });
@@ -9273,9 +9276,7 @@ var WidgetService = (function () {
       return promise.promise();
     }
 
-    // build a hash where the key is the content id and the value is
-    // another hash where that inner hash's key is the setting id and t
-    // he value is the setting
+    // build a hash where the key is the setting id and the value is the setting
 
   }, {
     key: 'formatContentSettingsAsHash',

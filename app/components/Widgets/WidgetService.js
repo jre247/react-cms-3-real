@@ -52,13 +52,16 @@ class WidgetService {
 
     API.getContentListForPage(pageId, isEdit)
       .done(function(viewmodel){
-        _.each(viewmodel.contentList, function(contentItem){
+        var contentList = _.clone(viewmodel.contentList) || [];
+
+        _.each(contentList, function(contentItem){
           var settings = _.where(viewmodel.contentSettings, {content_id: contentItem.id});
           var settingsHash = self.formatContentSettingsAsHash(settings);
-          contentItem.settings = settings;
+          contentItem.settings = settingsHash;
         });
 
-        promise.resolve(viewmodel.contentList || []);
+        var viewmodel = {contentList: contentList};
+        promise.resolve(viewmodel);
       })
       .fail(function(){
         promise.reject("Error retrieving content list for widget.");
@@ -67,9 +70,7 @@ class WidgetService {
     return promise.promise();
   }
 
-  // build a hash where the key is the content id and the value is
-  // another hash where that inner hash's key is the setting id and t
-  // he value is the setting
+  // build a hash where the key is the setting id and the value is the setting
   static formatContentSettingsAsHash(contentSettings){
     var contentSettingsHash = {};
     _.each(contentSettings, (contentSetting) =>{

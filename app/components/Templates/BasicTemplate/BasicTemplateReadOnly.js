@@ -32,7 +32,7 @@ class BasicTemplateReadOnly extends React.Component {
 
   getContentListForPage(propsData){
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
+      self.setState({contentList: viewmodel.contentList || []});
     });
   }
 
@@ -45,7 +45,7 @@ class BasicTemplateReadOnly extends React.Component {
     }
     else {
       let nodes = this.state.contentList.map((contentItem, index) => {
-        var settings = self.state.contentSettings[contentItem.id];
+        var settings = contentItem.settings;
 
         var propsData = _.extend({contentItem: contentItem, isEdit: this.props.isEdit,
           settings: _.clone(settings)}, this.props);
