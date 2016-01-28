@@ -14,7 +14,7 @@ var self;
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: [], contentList: [], contentSettings: {}};
+    this.state = {contentGroupList: [], contentList: []};
     this.templateId = 4;
     self = this;
   }
@@ -30,15 +30,11 @@ class ListGridTemplate extends React.Component {
 
   getContentListForPage(propsData){
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
+      self.setState({contentList: viewmodel.contentList || []});
+
       self.buildContentGroupList();
       self.setStateForContentGroupList();
     });
-  }
-
-  onSettingsSave(settings, contentId){
-    this.state.contentSettings[contentId] = settings;
-    self.setState({contentSettings: this.state.contentSettings});
   }
 
   setStateForContentList(newContentList){
@@ -57,7 +53,7 @@ class ListGridTemplate extends React.Component {
   }
 
   submit(event){
-    WidgetService.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
@@ -158,9 +154,7 @@ class ListGridTemplate extends React.Component {
           templateId: this.templateId,
           contentGroupIndex: index,
           contentList: this.state.contentList,
-          setStateForContentList: this.setStateForContentList.bind(this),
-          contentSettings: _.clone(this.state.contentSettings),
-          onSettingsSave: this.onSettingsSave.bind(this)
+          setStateForContentList: this.setStateForContentList.bind(this)
         };
         var listItemProps = _.extend(propsData, this.props);
 

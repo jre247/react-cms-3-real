@@ -27,6 +27,12 @@ class ListGridGroupColumn extends React.Component {
     this.props.setStateForContentGroupList();
   }
 
+  onSettingsSave(contentItem, contentIndex){
+    debugger;
+    this.props.column.contentList[contentIndex] = contentItem;
+    this.props.setStateForContentGroupList();
+  }
+
   removeContent(index, event){
     this.props.column.contentList.splice(index, 1);
     TemplateHelper.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
@@ -43,20 +49,24 @@ class ListGridGroupColumn extends React.Component {
   }
 
   render() {
-    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-      parentIndex: this.props.contentGroupIndex, templateId: this.templateId, row_number: this.props.row_number,
-      column_number: this.props.column_number};
+    var widgetListPropsData = {
+      onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+      parentIndex: this.props.contentGroupIndex,
+      templateId: this.templateId,
+      row_number: this.props.row_number,
+      column_number: this.props.column_number
+    };
 
     let nodes = this.props.column.contentList.map((contentItem, index) => {
-      var settings = self.props.contentSettings[contentItem.id];
-
       var propsData = {
         value: contentItem.value,
-        contentItem: contentItem,
+        contentItem: _.clone(contentItem),
+        contentIndex: _.clone(index),
         onRemove: this.removeContent.bind(this, index),
         onChange: this.updateContent.bind(this, index),
         imageSize: 'small',
-        settings: settings
+        settings: contentItem.settings,
+        onSettingsSave: this.onSettingsSave.bind(this)
       };
       var fieldPropsData = _.extend(propsData, this.props);
 

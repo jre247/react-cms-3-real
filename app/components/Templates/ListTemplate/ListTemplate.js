@@ -15,7 +15,7 @@ class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 3;
-    this.state = {contentList: [], contentSettings: {}};
+    this.state = {contentList: []};
     this.isContentListRetrieved = false;
     self = this;
   }
@@ -30,7 +30,7 @@ class ListTemplate extends React.Component {
 
   getContentListForPage(propsData){
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings});
+      self.setState({contentList: viewmodel.contentList || []});
 
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
@@ -45,7 +45,7 @@ class ListTemplate extends React.Component {
   }
 
   submit(event){
-    WidgetService.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function(){
+    WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
   }
@@ -92,9 +92,9 @@ class ListTemplate extends React.Component {
       this.addParentListItem();
     }
   }
-  onSettingsSave(settings, contentId){
-    this.state.contentSettings[contentId] = settings;
-    self.setState({contentSettings: this.state.contentSettings});
+  onSettingsSave(contentItem, contentIndex){
+    self.state.contentList[contentIndex] = contentItem;
+    self.setStateForContentList(self.state.contentList);
   }
   setNewSortOrderForChildrenForParent(itemsToKeep, itemsToRemove){
     var lastItemIndexToRemove = itemsToRemove[itemsToRemove.length - 1].sort_order;
@@ -128,18 +128,17 @@ class ListTemplate extends React.Component {
     else {
       var subListItemIndex = 0;
       let nodes = this.state.contentList.map((contentItem, index) => {
-        var settings = self.state.contentSettings[contentItem.id];
-
         var propsData = {
-          contentItem: contentItem, isEdit: this.props.isEdit,
+          contentItem: contentItem,
+          contentIndex: index,
+          isEdit: this.props.isEdit,
           contentList: this.state.contentList,
           setStateForContentList: this.setStateForContentList.bind(this),
           onRemove: this.removeContent.bind(this, index),
           onChange: this.updateContent.bind(this, index),
           templateId: this.templateId,
           index: index,
-          settings: settings, onSettingsSave: this.onSettingsSave,
-          contentSettings: _.clone(this.state.contentSettings),
+          settings: contentItem.settings,
           onSettingsSave: this.onSettingsSave.bind(this)
         };
         var listItemProps = _.extend(propsData, this.props);

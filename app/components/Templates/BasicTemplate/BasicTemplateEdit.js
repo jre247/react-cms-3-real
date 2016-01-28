@@ -71,8 +71,11 @@ class BasicTemplateEdit extends React.Component {
     self.setStateForContentList(self.state.contentList);
   }
   render() {
-    var widgetListPropsData = {onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-      templateId: this.templateId, row_number: 1, column_number: 1};
+    var widgetListPropsData = {
+      onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+      templateId: this.templateId,
+      row_number: 1, column_number: 1
+    };
 
     if(_.isEmpty(self.state.contentList)){
       return (
@@ -85,9 +88,14 @@ class BasicTemplateEdit extends React.Component {
     }
     else{
       let nodes = self.state.contentList.map((contentItem, index) => {
-        var propsData = {contentItem: contentItem, settings: contentItem.settings, contentIndex: index,
-          onSettingsSave: this.onSettingsSave.bind(this), onChange:  this.updateContent.bind(this, index),
-          onRemove: this.removeContent.bind(this, index)};
+        var propsData = {
+          contentItem: contentItem,
+          settings: contentItem.settings,
+          contentIndex: index,
+          onSettingsSave: this.onSettingsSave.bind(this),
+          onChange:  this.updateContent.bind(this, index),
+          onRemove: this.removeContent.bind(this, index)
+        };
 
         var fieldsPropData = _.extend(propsData, self.props);
 

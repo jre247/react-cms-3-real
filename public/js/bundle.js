@@ -3365,8 +3365,11 @@ var BasicTemplateEdit = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var widgetListPropsData = { onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-        templateId: this.templateId, row_number: 1, column_number: 1 };
+      var widgetListPropsData = {
+        onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+        templateId: this.templateId,
+        row_number: 1, column_number: 1
+      };
 
       if (_underscore._.isEmpty(self.state.contentList)) {
         return _react2.default.createElement(
@@ -3377,9 +3380,14 @@ var BasicTemplateEdit = (function (_React$Component) {
         );
       } else {
         var nodes = self.state.contentList.map(function (contentItem, index) {
-          var propsData = { contentItem: contentItem, settings: contentItem.settings, contentIndex: index,
-            onSettingsSave: _this2.onSettingsSave.bind(_this2), onChange: _this2.updateContent.bind(_this2, index),
-            onRemove: _this2.removeContent.bind(_this2, index) };
+          var propsData = {
+            contentItem: contentItem,
+            settings: contentItem.settings,
+            contentIndex: index,
+            onSettingsSave: _this2.onSettingsSave.bind(_this2),
+            onChange: _this2.updateContent.bind(_this2, index),
+            onRemove: _this2.removeContent.bind(_this2, index)
+          };
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
 
@@ -3619,7 +3627,7 @@ var ListGridTemplate = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridTemplate).call(this, props));
 
-    _this.state = { contentGroupList: [], contentList: [], contentSettings: {} };
+    _this.state = { contentGroupList: [], contentList: [] };
     _this.templateId = 4;
     self = _this;
     return _this;
@@ -3639,16 +3647,11 @@ var ListGridTemplate = (function (_React$Component) {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+        self.setState({ contentList: viewmodel.contentList || [] });
+
         self.buildContentGroupList();
         self.setStateForContentGroupList();
       });
-    }
-  }, {
-    key: 'onSettingsSave',
-    value: function onSettingsSave(settings, contentId) {
-      this.state.contentSettings[contentId] = settings;
-      self.setState({ contentSettings: this.state.contentSettings });
     }
   }, {
     key: 'setStateForContentList',
@@ -3671,7 +3674,7 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      _WidgetService2.default.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function () {
+      _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
@@ -3782,9 +3785,7 @@ var ListGridTemplate = (function (_React$Component) {
             templateId: _this2.templateId,
             contentGroupIndex: index,
             contentList: _this2.state.contentList,
-            setStateForContentList: _this2.setStateForContentList.bind(_this2),
-            contentSettings: _underscore._.clone(_this2.state.contentSettings),
-            onSettingsSave: _this2.onSettingsSave.bind(_this2)
+            setStateForContentList: _this2.setStateForContentList.bind(_this2)
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
 
@@ -3912,7 +3913,7 @@ var ListTemplate = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
 
     _this.templateId = 3;
-    _this.state = { contentList: [], contentSettings: {} };
+    _this.state = { contentList: [] };
     _this.isContentListRetrieved = false;
     self = _this;
     return _this;
@@ -3932,7 +3933,7 @@ var ListTemplate = (function (_React$Component) {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [], contentSettings: viewmodel.contentSettings });
+        self.setState({ contentList: viewmodel.contentList || [] });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -3953,7 +3954,7 @@ var ListTemplate = (function (_React$Component) {
   }, {
     key: 'submit',
     value: function submit(event) {
-      _WidgetService2.default.save(self.state.contentList, self.state.contentSettings, self.props.pageId).then(function () {
+      _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
     }
@@ -4005,9 +4006,9 @@ var ListTemplate = (function (_React$Component) {
     }
   }, {
     key: 'onSettingsSave',
-    value: function onSettingsSave(settings, contentId) {
-      this.state.contentSettings[contentId] = settings;
-      self.setState({ contentSettings: this.state.contentSettings });
+    value: function onSettingsSave(contentItem, contentIndex) {
+      self.state.contentList[contentIndex] = contentItem;
+      self.setStateForContentList(self.state.contentList);
     }
   }, {
     key: 'setNewSortOrderForChildrenForParent',
@@ -4051,18 +4052,17 @@ var ListTemplate = (function (_React$Component) {
       } else {
         var subListItemIndex = 0;
         var nodes = this.state.contentList.map(function (contentItem, index) {
-          var settings = self.state.contentSettings[contentItem.id];
-
           var propsData = {
-            contentItem: contentItem, isEdit: _this2.props.isEdit,
+            contentItem: contentItem,
+            contentIndex: index,
+            isEdit: _this2.props.isEdit,
             contentList: _this2.state.contentList,
             setStateForContentList: _this2.setStateForContentList.bind(_this2),
             onRemove: _this2.removeContent.bind(_this2, index),
             onChange: _this2.updateContent.bind(_this2, index),
             templateId: _this2.templateId,
             index: index,
-            settings: settings, onSettingsSave: _this2.onSettingsSave,
-            contentSettings: _underscore._.clone(_this2.state.contentSettings),
+            settings: contentItem.settings,
             onSettingsSave: _this2.onSettingsSave.bind(_this2)
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
@@ -6793,6 +6793,13 @@ var ListGridGroupColumn = (function (_React$Component) {
       this.props.setStateForContentGroupList();
     }
   }, {
+    key: 'onSettingsSave',
+    value: function onSettingsSave(contentItem, contentIndex) {
+      debugger;
+      this.props.column.contentList[contentIndex] = contentItem;
+      this.props.setStateForContentGroupList();
+    }
+  }, {
     key: 'removeContent',
     value: function removeContent(index, event) {
       this.props.column.contentList.splice(index, 1);
@@ -6814,20 +6821,24 @@ var ListGridGroupColumn = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var widgetListPropsData = { onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
-        parentIndex: this.props.contentGroupIndex, templateId: this.templateId, row_number: this.props.row_number,
-        column_number: this.props.column_number };
+      var widgetListPropsData = {
+        onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
+        parentIndex: this.props.contentGroupIndex,
+        templateId: this.templateId,
+        row_number: this.props.row_number,
+        column_number: this.props.column_number
+      };
 
       var nodes = this.props.column.contentList.map(function (contentItem, index) {
-        var settings = self.props.contentSettings[contentItem.id];
-
         var propsData = {
           value: contentItem.value,
-          contentItem: contentItem,
+          contentItem: _underscore._.clone(contentItem),
+          contentIndex: _underscore._.clone(index),
           onRemove: _this2.removeContent.bind(_this2, index),
           onChange: _this2.updateContent.bind(_this2, index),
           imageSize: 'small',
-          settings: settings
+          settings: contentItem.settings,
+          onSettingsSave: _this2.onSettingsSave.bind(_this2)
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
