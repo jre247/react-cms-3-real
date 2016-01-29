@@ -5152,7 +5152,7 @@ var ContentSettingsEdit = (function (_React$Component) {
 
       var contentItem = self.state.contentItem;
       contentItem.settings = self.state.settings;
-      debugger;
+
       self.props.onSettingsSave(contentItem, self.state.contentIndex, self.state.contentGroupIndex);
     }
   }, {
