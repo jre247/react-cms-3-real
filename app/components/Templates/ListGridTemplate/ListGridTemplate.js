@@ -41,7 +41,8 @@ class ListGridTemplate extends React.Component {
     this.setState({contentList: newContentList})
   }
 
-  setStateForContentGroupList(){
+  setStateForContentGroupList(groupIndex){
+    debugger;
     var newContentList = this.buildContentList();
 
     this.setState({contentGroupList: this.state.contentGroupList});
@@ -149,7 +150,8 @@ class ListGridTemplate extends React.Component {
       let nodes = this.state.contentGroupList.map((contentGroupItem, index) => {
         var propsData = {
           contentGroupList: this.state.contentGroupList,
-          contentGroupItem: contentGroupItem, isEdit: this.props.isEdit,
+          contentGroupItem: contentGroupItem,
+          isEdit: this.props.isEdit,
           setStateForContentGroupList: this.setStateForContentGroupList.bind(this, index),
           templateId: this.templateId,
           contentGroupIndex: index,

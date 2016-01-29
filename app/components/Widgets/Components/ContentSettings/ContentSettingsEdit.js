@@ -7,7 +7,7 @@ var self;
 class ContentSettingsEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {settings: {}, showModal: false, contentItem: {}};
+    this.state = {settings: {}, contentGroupIndex: null, showModal: false, contentItem: {}, contentIndex: null};
     this.lookupState = LookupStore.getState();
     this.onChange = this.onChange.bind(this);
     this.isSaving = false;
@@ -32,12 +32,16 @@ class ContentSettingsEdit extends React.Component {
   }
 
   openModal(contentItem, event) {
+    debugger;
     self.isSaving = false;
     var contentItem = _.clone(this.props.contentItem);
+    var contentIndex = _.clone(this.props.contentIndex);
+    var contentGroupIndex = _.clone(this.props.contentGroupIndex);
 
     var settings = _.clone(this.props.settings);
 
-    self.setState({showModal: true, contentItem: contentItem, settings: settings || {}});
+    self.setState({showModal: true, contentGroupIndex: contentGroupIndex, contentItem: contentItem,
+      settings: settings || {}, contentIndex: contentIndex});
   }
 
   onChange(state) {
@@ -60,7 +64,8 @@ class ContentSettingsEdit extends React.Component {
 
     var contentItem = self.state.contentItem;
     contentItem.settings = self.state.settings;
-    self.props.onSettingsSave(contentItem, self.props.contentIndex);
+    debugger;
+    self.props.onSettingsSave(contentItem, self.state.contentIndex, self.state.contentGroupIndex);
   }
 
   render() {

@@ -23,13 +23,20 @@ class ListGridGroupColumn extends React.Component {
   }
 
   updateContent(index, event) {
+    debugger;
     this.props.column.contentList[index].value = event.target.value;
     this.props.setStateForContentGroupList();
   }
 
-  onSettingsSave(contentItem, contentIndex){
+  onSettingsSave(contentItem, contentIndex, contentGroupIndex){
     debugger;
-    this.props.column.contentList[contentIndex] = contentItem;
+    var row = contentItem.row_number;
+    var column = contentItem.column_number;
+
+    var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+    var contentList = contentGroupItem.rows[row].columns[column].contentList;
+    contentList[contentIndex] = contentItem;
+  //  this.props.setStateForContentSettings(contentItem);
     this.props.setStateForContentGroupList();
   }
 
@@ -60,8 +67,8 @@ class ListGridGroupColumn extends React.Component {
     let nodes = this.props.column.contentList.map((contentItem, index) => {
       var propsData = {
         value: contentItem.value,
-        contentItem: _.clone(contentItem),
-        contentIndex: _.clone(index),
+        contentItem: contentItem,
+        contentIndex: index,
         onRemove: this.removeContent.bind(this, index),
         onChange: this.updateContent.bind(this, index),
         imageSize: 'small',

@@ -3660,7 +3660,8 @@ var ListGridTemplate = (function (_React$Component) {
     }
   }, {
     key: 'setStateForContentGroupList',
-    value: function setStateForContentGroupList() {
+    value: function setStateForContentGroupList(groupIndex) {
+      debugger;
       var newContentList = this.buildContentList();
 
       this.setState({ contentGroupList: this.state.contentGroupList });
@@ -3780,7 +3781,8 @@ var ListGridTemplate = (function (_React$Component) {
         var nodes = this.state.contentGroupList.map(function (contentGroupItem, index) {
           var propsData = {
             contentGroupList: _this2.state.contentGroupList,
-            contentGroupItem: contentGroupItem, isEdit: _this2.props.isEdit,
+            contentGroupItem: contentGroupItem,
+            isEdit: _this2.props.isEdit,
             setStateForContentGroupList: _this2.setStateForContentGroupList.bind(_this2, index),
             templateId: _this2.templateId,
             contentGroupIndex: index,
@@ -5083,7 +5085,7 @@ var ContentSettingsEdit = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContentSettingsEdit).call(this, props));
 
-    _this.state = { settings: {}, showModal: false, contentItem: {} };
+    _this.state = { settings: {}, contentGroupIndex: null, showModal: false, contentItem: {}, contentIndex: null };
     _this.lookupState = _LookupStore2.default.getState();
     _this.onChange = _this.onChange.bind(_this);
     _this.isSaving = false;
@@ -5115,12 +5117,16 @@ var ContentSettingsEdit = (function (_React$Component) {
   }, {
     key: 'openModal',
     value: function openModal(contentItem, event) {
+      debugger;
       self.isSaving = false;
       var contentItem = _underscore._.clone(this.props.contentItem);
+      var contentIndex = _underscore._.clone(this.props.contentIndex);
+      var contentGroupIndex = _underscore._.clone(this.props.contentGroupIndex);
 
       var settings = _underscore._.clone(this.props.settings);
 
-      self.setState({ showModal: true, contentItem: contentItem, settings: settings || {} });
+      self.setState({ showModal: true, contentGroupIndex: contentGroupIndex, contentItem: contentItem,
+        settings: settings || {}, contentIndex: contentIndex });
     }
   }, {
     key: 'onChange',
@@ -5146,7 +5152,8 @@ var ContentSettingsEdit = (function (_React$Component) {
 
       var contentItem = self.state.contentItem;
       contentItem.settings = self.state.settings;
-      self.props.onSettingsSave(contentItem, self.props.contentIndex);
+      debugger;
+      self.props.onSettingsSave(contentItem, self.state.contentIndex, self.state.contentGroupIndex);
     }
   }, {
     key: 'render',
@@ -6789,14 +6796,21 @@ var ListGridGroupColumn = (function (_React$Component) {
   }, {
     key: 'updateContent',
     value: function updateContent(index, event) {
+      debugger;
       this.props.column.contentList[index].value = event.target.value;
       this.props.setStateForContentGroupList();
     }
   }, {
     key: 'onSettingsSave',
-    value: function onSettingsSave(contentItem, contentIndex) {
+    value: function onSettingsSave(contentItem, contentIndex, contentGroupIndex) {
       debugger;
-      this.props.column.contentList[contentIndex] = contentItem;
+      var row = contentItem.row_number;
+      var column = contentItem.column_number;
+
+      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+      var contentList = contentGroupItem.rows[row].columns[column].contentList;
+      contentList[contentIndex] = contentItem;
+      //  this.props.setStateForContentSettings(contentItem);
       this.props.setStateForContentGroupList();
     }
   }, {
@@ -6832,8 +6846,8 @@ var ListGridGroupColumn = (function (_React$Component) {
       var nodes = this.props.column.contentList.map(function (contentItem, index) {
         var propsData = {
           value: contentItem.value,
-          contentItem: _underscore._.clone(contentItem),
-          contentIndex: _underscore._.clone(index),
+          contentItem: contentItem,
+          contentIndex: index,
           onRemove: _this2.removeContent.bind(_this2, index),
           onChange: _this2.updateContent.bind(_this2, index),
           imageSize: 'small',
