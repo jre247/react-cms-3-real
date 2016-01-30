@@ -85,7 +85,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
           <Modal {...modalProps}>
             <div id="largeCarouselModal">
               <div className="modal-content-area">
-                <div className="modal-content">
+                <div className="modal-content-transparent">
                   <div className="modal-header">
                     <button type="button" className="close" onClick={this.closeModal.bind(this)}>&times;</button>
                   </div>

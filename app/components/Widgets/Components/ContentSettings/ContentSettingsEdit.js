@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '../Modal';
 import LookupStore from '../../../../stores/LookupStore';
 import {_} from 'underscore';
+import ContentSettingsEditContent from './ContentSettingsEditContent';
 var self;
 
 class ContentSettingsEdit extends React.Component {
@@ -47,16 +48,6 @@ class ContentSettingsEdit extends React.Component {
     self.setState(state);
   }
 
-  onSettingChange(index, event){
-    var settingsLookups = self.lookupState.lookups.settings;
-    var setting = _.clone(settingsLookups[index]);
-    setting.setting_value = event.target.value;
-    setting.setting_id = setting.id;
-
-    self.state.settings[setting.id] = setting;
-    self.setState({settings: self.state.settings});
-  }
-
   onSave(){
     self.setState({showModal: false});
     self.isSaving = true;
@@ -67,34 +58,26 @@ class ContentSettingsEdit extends React.Component {
     self.props.onSettingsSave(contentItem, self.state.contentIndex, self.state.contentGroupIndex);
   }
 
+  updateSettingsForContent(setting){
+    debugger;
+    var settings = self.state.settings;
+    settings[setting.id] = setting;
+    self.setState({settings: settings});
+  }
+
   render() {
     var showModal = self.state.showModal && !self.isSaving;
 
-    var modalProps = _.extend({modalElement: '.settingsModal', showModal: showModal,
+    var modalProps = _.extend({modalElement: '.settingsModal', showModal: showModal, isTransparent: false,
       closeModal: this.closeModal.bind(this)}, this.props);
 
     var settingsLookups = _.clone(self.lookupState.lookups.settings);
 
-    let settingNodes = settingsLookups.map((settingLookup, index) => {
-      var setting = self.state.settings[settingLookup.id];
-
-      var settingName = settingLookup.name;
-      var settingValue;
-
-      if(setting){
-        settingValue = setting.setting_value;
-      }
-
-      return (
-        <div key={index}>
-          <div className="form-group">
-              <label>{settingName}</label>
-              <input type="text" className="form-control setting-input" name={settingName} value={settingValue}
-                onChange={self.onSettingChange.bind(self, index)} />
-          </div>
-        </div>
-      );
-    });
+    var propsData = _.extend({
+      settingsToEdit: this.state.settings,
+      settingsLookups: settingsLookups,
+      updateSettingsForContent: this.updateSettingsForContent.bind(this)
+    }, this.props);
 
     return (
       <div className="content-settings-container">
@@ -105,17 +88,22 @@ class ContentSettingsEdit extends React.Component {
         </div>
 
         <Modal {...modalProps}>
-          <div className="col-sm-6 col-sm-offset-2 settingsModal">
+          <div className="settingsModal">
             <div className="modal-content-area">
-              <div className="modal-content">
+              <div className="modal-content modal-form">
                 <div className="modal-header">
+                  Settings
                   <button type="button" className="close" onClick={self.closeModal.bind(this)}>&times;</button>
                 </div>
                 <div className="body">
-                  Settings
-                  {settingNodes}
+                  <div className="col-md-12">
 
-                  <button className="btn btn-warning btn-lg" onClick={self.onSave.bind(this)}>Save</button>
+                    <ContentSettingsEditContent {...propsData} />
+
+                    <div className="save-btn">
+                      <button className="btn btn-warning btn-lg" onClick={self.onSave.bind(this)}>Save</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
