@@ -2730,7 +2730,7 @@ var Header = (function (_React$Component) {
           _react2.default.createElement(
             'h2',
             null,
-            'November 5th, 2016'
+            'November 5, 2016'
           )
         )
       );
@@ -3543,7 +3543,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { className: 'Content-panel' },
+          { className: 'Content-panel basic-template-read-only' },
           _react2.default.createElement(
             'div',
             { className: 'Content-container Content-centered-container' },

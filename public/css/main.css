@@ -7447,7 +7447,7 @@ a:hover {
 .Content-image-container {
   margin: 0 auto;
   text-align: center;
-  width: 65%;
+  width: 75%;
 }
 .Content-image-input-container {
   display: inline-block;
@@ -7472,7 +7472,6 @@ a:hover {
 }
 .Content-small-image {
   width: 115px;
-  height: 115px;
   margin-top: 10px;
 }
 .Content-Image-Edit-Button {
@@ -7567,7 +7566,7 @@ a:hover {
   vertical-align: top;
 }
 .List-Grid-Group-Column-Small {
-  width: 33%;
+  width: 35%;
 }
 .List-Grid-Template input,
 .List-Grid-Template textarea {
@@ -7606,7 +7605,7 @@ a:hover {
 }
 .List-Grid-Template .List-Page-Read-Only {
   margin: 0 auto;
-  width: 60%;
+  width: 64%;
 }
 .Add-row-button {
   display: inline-block;
@@ -7633,6 +7632,13 @@ a:hover {
   text-align: left;
   width: 78%;
   display: inline-block;
+}
+.List-Grid-Template .Sub-List-Items {
+  padding-left: 6%;
+}
+.List-Grid-Template .Content-small-image {
+  width: 162px;
+  height: inherit;
 }
 .Content-long-description-container {
   display: inline-block;
@@ -7745,6 +7751,14 @@ a:hover {
 }
 .basic-template-edit .content-container {
   text-align: center;
+}
+.basic-template-read-only .Content-item-container {
+  width: 59%;
+  margin: 0px auto;
+  text-align: left;
+}
+.basic-template-read-only .Content-extra-large-image-percentage {
+  width: 100%;
 }
 .carousel-control.left {
   left: 100px;

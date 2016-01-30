@@ -6,7 +6,7 @@ drop table wedding_user_role;
 drop table wedding_role;
 drop table wedding_user;
 drop table template;
-drop table app_settings;
+drop table app_setting;
 drop table meal;
 drop table setting;
 CREATE TABLE app_setting
@@ -133,8 +133,8 @@ insert into template(name, is_active) values ('Photo Gallery', true);
 insert into template(name, is_active) values ('List', true);
 insert into template(name, is_active) values ('ListGrid', true);
 
-insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Venue', 'Venue', 'venue', 1, null, 1, 0, true);
-insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('The Proposal', 'The Proposal', 'our-story', 1, null, 1, 1, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('The Wedding', 'Venue', 'venue', 1, null, 1, 0, true);
+insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Our Story', 'The Proposal', 'our-story', 1, null, 1, 1, true);
 insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Things To Do', 'Things To Do', 'things-to-do', 1, null, 3, 2, true);
 insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Photo Album', 'Photo Album', 'photo-album', 1, null, 2, 3, true);
 insert into page(name, description, url, user_id, date_created, template_id, sort_order, is_active) values ('Gift Registry', 'Gift Registry', 'gift-registry', 1, null, 3, 4, true);

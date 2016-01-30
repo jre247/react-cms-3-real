@@ -58,7 +58,7 @@ class BasicTemplateReadOnly extends React.Component {
       });
 
       return (
-        <div className='Content-panel'>
+        <div className='Content-panel basic-template-read-only'>
           <div className="Content-container Content-centered-container">
             <EditLink {...this.props} />
 

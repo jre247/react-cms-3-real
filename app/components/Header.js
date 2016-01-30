@@ -39,7 +39,7 @@ class Header extends React.Component {
             <span className="Header-brandTxt">JASON & JENNA</span>
           </div>
 
-          <h2>November 5th, 2016</h2>
+          <h2>November 5, 2016</h2>
 
 
         </div>
