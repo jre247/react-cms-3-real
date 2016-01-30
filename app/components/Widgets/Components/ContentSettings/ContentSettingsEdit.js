@@ -59,7 +59,6 @@ class ContentSettingsEdit extends React.Component {
   }
 
   updateSettingsForContent(setting){
-    debugger;
     var settings = self.state.settings;
     settings[setting.id] = setting;
     self.setState({settings: settings});

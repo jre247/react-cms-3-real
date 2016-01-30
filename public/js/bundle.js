@@ -5149,7 +5149,6 @@ var ContentSettingsEdit = (function (_React$Component) {
   }, {
     key: 'updateSettingsForContent',
     value: function updateSettingsForContent(setting) {
-      debugger;
       var settings = self.state.settings;
       settings[setting.id] = setting;
       self.setState({ settings: settings });
@@ -5341,7 +5340,6 @@ var ContentSettingsEditContent = (function (_React$Component) {
   }, {
     key: 'setupSpacingLeft',
     value: function setupSpacingLeft() {
-      debugger;
       var lookup = this.props.settingsLookups[4];
       var setting = self.props.settingsToEdit[lookup.id];
       if (setting) {

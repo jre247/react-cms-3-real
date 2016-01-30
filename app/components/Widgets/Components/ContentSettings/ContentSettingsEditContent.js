@@ -71,7 +71,6 @@ class ContentSettingsEditContent extends React.Component {
   }
 
   setupSpacingLeft(){
-    debugger;
     var lookup = this.props.settingsLookups[4];
     var setting = self.props.settingsToEdit[lookup.id];
     if(setting){
