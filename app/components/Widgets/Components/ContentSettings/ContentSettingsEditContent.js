@@ -15,7 +15,8 @@ class ContentSettingsEditContent extends React.Component {
       fontColor: null,
       backgroundColor: null,
       width: null,
-      height: null
+      height: null,
+      lineHeight: null
     };
 
     self = this;
@@ -31,6 +32,7 @@ class ContentSettingsEditContent extends React.Component {
     this.setupBackgroundColor();
     this.setupWidth();
     this.setupHeight();
+    this.setupLineHeight();
   }
 
   setupFontSize(){
@@ -112,6 +114,15 @@ class ContentSettingsEditContent extends React.Component {
     if(setting){
       var settingValue = setting.setting_value;
       this.setState({height: settingValue});
+    }
+  }
+
+  setupLineHeight(){
+    var lookup = this.props.settingsLookups[9];
+    var setting = self.props.settingsToEdit[lookup.id];
+    if(setting){
+      var settingValue = setting.setting_value;
+      this.setState({lineHeight: settingValue});
     }
   }
 
@@ -240,6 +251,19 @@ class ContentSettingsEditContent extends React.Component {
     self.props.updateSettingsForContent(setting);
   }
 
+  onLineHeightChange(event){
+    var settingValue = event.target.value;
+
+    self.setState({lineHeight: settingValue});
+
+    var settingsLookups = self.props.settingsLookups;
+    var setting = _.clone(settingsLookups[9]);
+    setting.setting_value = settingValue;
+    setting.setting_id = setting.id;
+
+    self.props.updateSettingsForContent(setting);
+  }
+
   render() {
     return (
       <div className="container-fluid">
@@ -276,12 +300,23 @@ class ContentSettingsEditContent extends React.Component {
           </div>
           <div className="col-md-6">
             <div className="setting-sizes">
-              <div className="form-group">
-                  <label>Font Size</label>
-                  <div className="setting-font-size">
-                    <input type="text" className="form-control setting-input" value={this.state.fontSize}
-                      onChange={self.onFontSizeChange.bind(self)} />
-                  </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                    <label>Font Size</label>
+                    <div className="setting-font-size">
+                      <input type="text" className="form-control setting-input" value={this.state.fontSize}
+                        onChange={self.onFontSizeChange.bind(self)} />
+                    </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                    <label>Line Height</label>
+                    <div className="setting-line-height">
+                      <input type="text" className="form-control setting-input" value={this.state.lineHeight}
+                        onChange={self.onLineHeightChange.bind(self)} />
+                    </div>
+                </div>
               </div>
             </div>
           </div>

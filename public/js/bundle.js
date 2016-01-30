@@ -5276,7 +5276,8 @@ var ContentSettingsEditContent = (function (_React$Component) {
       fontColor: null,
       backgroundColor: null,
       width: null,
-      height: null
+      height: null,
+      lineHeight: null
     };
 
     self = _this;
@@ -5295,6 +5296,7 @@ var ContentSettingsEditContent = (function (_React$Component) {
       this.setupBackgroundColor();
       this.setupWidth();
       this.setupHeight();
+      this.setupLineHeight();
     }
   }, {
     key: 'setupFontSize',
@@ -5385,6 +5387,16 @@ var ContentSettingsEditContent = (function (_React$Component) {
       if (setting) {
         var settingValue = setting.setting_value;
         this.setState({ height: settingValue });
+      }
+    }
+  }, {
+    key: 'setupLineHeight',
+    value: function setupLineHeight() {
+      var lookup = this.props.settingsLookups[9];
+      var setting = self.props.settingsToEdit[lookup.id];
+      if (setting) {
+        var settingValue = setting.setting_value;
+        this.setState({ lineHeight: settingValue });
       }
     }
   }, {
@@ -5520,6 +5532,20 @@ var ContentSettingsEditContent = (function (_React$Component) {
       self.props.updateSettingsForContent(setting);
     }
   }, {
+    key: 'onLineHeightChange',
+    value: function onLineHeightChange(event) {
+      var settingValue = event.target.value;
+
+      self.setState({ lineHeight: settingValue });
+
+      var settingsLookups = self.props.settingsLookups;
+      var setting = _underscore._.clone(settingsLookups[9]);
+      setting.setting_value = settingValue;
+      setting.setting_id = setting.id;
+
+      self.props.updateSettingsForContent(setting);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -5600,17 +5626,40 @@ var ContentSettingsEditContent = (function (_React$Component) {
               { className: 'setting-sizes' },
               _react2.default.createElement(
                 'div',
-                { className: 'form-group' },
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  'Font Size'
-                ),
+                { className: 'col-md-4' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'setting-font-size' },
-                  _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', value: this.state.fontSize,
-                    onChange: self.onFontSizeChange.bind(self) })
+                  { className: 'form-group' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Font Size'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'setting-font-size' },
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', value: this.state.fontSize,
+                      onChange: self.onFontSizeChange.bind(self) })
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-md-4' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-group' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Line Height'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'setting-line-height' },
+                    _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', value: this.state.lineHeight,
+                      onChange: self.onLineHeightChange.bind(self) })
+                  )
                 )
               )
             )
@@ -5824,6 +5873,8 @@ var ContentSettingsReadOnly = (function (_React$Component) {
           styles['width'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 9) {
           styles['height'] = setting.setting_value + 'px';
+        } else if (setting.setting_id === 10) {
+          styles['lineHeight'] = setting.setting_value + 'px';
         }
       });
 

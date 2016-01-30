@@ -83,6 +83,9 @@ class ContentSettingsReadOnly extends React.Component {
       else if(setting.setting_id === 9){
         styles['height'] = setting.setting_value+ 'px';
       }
+      else if(setting.setting_id === 10){
+        styles['lineHeight'] = setting.setting_value+ 'px';
+      }
     });
 
     return styles;

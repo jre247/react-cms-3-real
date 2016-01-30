@@ -7812,9 +7812,6 @@ a:hover {
 .modal-form .setting-sizes {
   text-align: left;
 }
-.modal-form .setting-sizes input {
-  width: 15%;
-}
 .modal-form .setting-colors,
 .modal-form .setting-dimensions {
   margin-top: 50px;
