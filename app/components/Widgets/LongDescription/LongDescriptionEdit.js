@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import ContentSettings from '../Components/ContentSettings/ContentSettings';
+import LongDescriptionElementEdit from './LongDescriptionElementEdit';
 var self;
 
 class LongDescriptionEdit extends React.Component {
@@ -14,9 +15,7 @@ class LongDescriptionEdit extends React.Component {
       <div>
         <div className="Content-long-description-container content-container">
           <div className="Content-long-description Content-item">
-            <textarea className='form-control Widget-input' placeholder="Long Description"
-              value={this.props.value} onChange={this.props.onChange}>
-            </textarea>
+            <LongDescriptionElementEdit {...this.props} />
           </div>
 
           <ContentSettings {...this.props} />
