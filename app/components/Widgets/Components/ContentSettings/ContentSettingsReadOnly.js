@@ -17,7 +17,7 @@ class ContentSettingsReadOnly extends React.Component {
   }
 
   setStyles(propsData){
-    var containerStyles = this.buildWidgetStyles(propsData.settings);
+    var containerStyles = this.buildWidgetStyles(propsData.contentItem.settings);
     var widgetStyles = this.getStylesForWidgetElement(containerStyles);
 
     //remove width and height from container styles
@@ -27,7 +27,7 @@ class ContentSettingsReadOnly extends React.Component {
     containerStyles['marginRight'] = null;
 
     this.setState({contentItem: propsData.contentItem, widgetStyles: widgetStyles,
-      containerStyles: containerStyles, settings: propsData.settings || {}});
+      containerStyles: containerStyles, settings: propsData.contentItem.settings || {}});
   }
 
   getStylesForWidgetElement(styles){

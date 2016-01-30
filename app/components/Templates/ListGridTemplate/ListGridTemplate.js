@@ -42,7 +42,6 @@ class ListGridTemplate extends React.Component {
   }
 
   setStateForContentGroupList(groupIndex){
-    debugger;
     var newContentList = this.buildContentList();
 
     this.setState({contentGroupList: this.state.contentGroupList});

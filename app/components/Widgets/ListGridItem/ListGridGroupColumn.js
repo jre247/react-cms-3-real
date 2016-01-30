@@ -23,20 +23,24 @@ class ListGridGroupColumn extends React.Component {
   }
 
   updateContent(index, event) {
-    debugger;
     this.props.column.contentList[index].value = event.target.value;
     this.props.setStateForContentGroupList();
   }
 
   onSettingsSave(contentItem, contentIndex, contentGroupIndex){
-    debugger;
-    var row = contentItem.row_number;
-    var column = contentItem.column_number;
+    if(!contentItem.parent_index && typeof contentItem.parent_index !== 'number'){
+      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+      contentGroupItem.parentListItem = contentItem;
+    }
+    else{
+      var row = contentItem.row_number;
+      var column = contentItem.column_number;
 
-    var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
-    var contentList = contentGroupItem.rows[row].columns[column].contentList;
-    contentList[contentIndex] = contentItem;
-  //  this.props.setStateForContentSettings(contentItem);
+      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+      var contentList = contentGroupItem.rows[row].columns[column].contentList;
+      contentList[contentIndex] = contentItem;
+    }
+
     this.props.setStateForContentGroupList();
   }
 

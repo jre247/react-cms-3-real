@@ -7484,14 +7484,14 @@ a:hover {
   display: inline-block;
   text-align: center;
 }
-.Content-title,
-.Content-title > input {
-  display: inline-block;
-  text-align: center;
+.Content-title-container {
   font-size: 36px;
   font-family: 'Source Sans Pro';
 }
 .Content-title > input {
+  display: inline-block;
+  text-align: center;
+  font-size: 36px;
   width: 100%;
   height: 62px;
 }
@@ -7628,6 +7628,11 @@ a:hover {
 .list-grid-column-content-container .Content-title > input {
   font-size: 25px;
   height: 43px;
+}
+.List-Grid-Template .List-Grid-Group-Column-Edit .Content-item {
+  text-align: left;
+  width: 78%;
+  display: inline-block;
 }
 .Content-long-description-container {
   display: inline-block;

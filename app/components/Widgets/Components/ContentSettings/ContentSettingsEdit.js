@@ -32,7 +32,6 @@ class ContentSettingsEdit extends React.Component {
   }
 
   openModal(contentItem, event) {
-    debugger;
     self.isSaving = false;
     var contentItem = _.clone(this.props.contentItem);
     var contentIndex = _.clone(this.props.contentIndex);

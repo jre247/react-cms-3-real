@@ -3661,7 +3661,6 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'setStateForContentGroupList',
     value: function setStateForContentGroupList(groupIndex) {
-      debugger;
       var newContentList = this.buildContentList();
 
       this.setState({ contentGroupList: this.state.contentGroupList });
@@ -5117,7 +5116,6 @@ var ContentSettingsEdit = (function (_React$Component) {
   }, {
     key: 'openModal',
     value: function openModal(contentItem, event) {
-      debugger;
       self.isSaving = false;
       var contentItem = _underscore._.clone(this.props.contentItem);
       var contentIndex = _underscore._.clone(this.props.contentIndex);
@@ -5301,7 +5299,7 @@ var ContentSettingsReadOnly = (function (_React$Component) {
   }, {
     key: 'setStyles',
     value: function setStyles(propsData) {
-      var containerStyles = this.buildWidgetStyles(propsData.settings);
+      var containerStyles = this.buildWidgetStyles(propsData.contentItem.settings);
       var widgetStyles = this.getStylesForWidgetElement(containerStyles);
 
       //remove width and height from container styles
@@ -5311,7 +5309,7 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       containerStyles['marginRight'] = null;
 
       this.setState({ contentItem: propsData.contentItem, widgetStyles: widgetStyles,
-        containerStyles: containerStyles, settings: propsData.settings || {} });
+        containerStyles: containerStyles, settings: propsData.contentItem.settings || {} });
     }
   }, {
     key: 'getStylesForWidgetElement',
@@ -6796,21 +6794,24 @@ var ListGridGroupColumn = (function (_React$Component) {
   }, {
     key: 'updateContent',
     value: function updateContent(index, event) {
-      debugger;
       this.props.column.contentList[index].value = event.target.value;
       this.props.setStateForContentGroupList();
     }
   }, {
     key: 'onSettingsSave',
     value: function onSettingsSave(contentItem, contentIndex, contentGroupIndex) {
-      debugger;
-      var row = contentItem.row_number;
-      var column = contentItem.column_number;
+      if (!contentItem.parent_index && typeof contentItem.parent_index !== 'number') {
+        var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+        contentGroupItem.parentListItem = contentItem;
+      } else {
+        var row = contentItem.row_number;
+        var column = contentItem.column_number;
 
-      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
-      var contentList = contentGroupItem.rows[row].columns[column].contentList;
-      contentList[contentIndex] = contentItem;
-      //  this.props.setStateForContentSettings(contentItem);
+        var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+        var contentList = contentGroupItem.rows[row].columns[column].contentList;
+        contentList[contentIndex] = contentItem;
+      }
+
       this.props.setStateForContentGroupList();
     }
   }, {
@@ -8343,6 +8344,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _ContentSettings = require('../Components/ContentSettings/ContentSettings');
+
+var _ContentSettings2 = _interopRequireDefault(_ContentSettings);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8378,6 +8383,7 @@ var TitleEdit = (function (_React$Component) {
           _react2.default.createElement('input', { className: 'form-control Widget-input', placeholder: 'Title', value: this.props.value,
             onChange: this.props.onChange })
         ),
+        _react2.default.createElement(_ContentSettings2.default, this.props),
         _react2.default.createElement(
           'div',
           { className: 'Widget-Remove-Button-Container' },
@@ -8396,7 +8402,7 @@ var TitleEdit = (function (_React$Component) {
 
 exports.default = TitleEdit;
 
-},{"react":"react","react-router":"react-router"}],87:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"react":"react","react-router":"react-router"}],87:[function(require,module,exports){
 "use strict";
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
