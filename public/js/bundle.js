@@ -5919,6 +5919,7 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       containerStyles['height'] = null;
       containerStyles['marginLeft'] = null;
       containerStyles['marginRight'] = null;
+      containerStyles['marginBottom'] = null;
 
       if (this.props.isContentEditable) {
         containerStyles['fontSize'] = null;
@@ -5949,6 +5950,14 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       var marginRight = styles['marginRight'];
       if (marginRight) {
         widgetElementStyles['marginRight'] = marginRight;
+      }
+      var marginBottom = styles['marginBottom'];
+      if (marginBottom) {
+        widgetElementStyles['marginBottom'] = marginBottom;
+      }
+      var marginTop = styles['marginTop'];
+      if (marginTop) {
+        widgetElementStyles['marginTop'] = marginTop;
       }
 
       if (this.props.isContentEditable) {

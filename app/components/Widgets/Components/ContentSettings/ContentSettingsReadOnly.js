@@ -25,6 +25,7 @@ class ContentSettingsReadOnly extends React.Component {
     containerStyles['height'] = null;
     containerStyles['marginLeft'] = null;
     containerStyles['marginRight'] = null;
+    containerStyles['marginBottom'] = null;
 
     if(this.props.isContentEditable){
         containerStyles['fontSize'] = null;
@@ -51,9 +52,17 @@ class ContentSettingsReadOnly extends React.Component {
     if(marginLeft){
       widgetElementStyles['marginLeft'] = marginLeft;
     }
-    var marginRight= styles['marginRight'];
+    var marginRight = styles['marginRight'];
     if(marginRight){
       widgetElementStyles['marginRight'] = marginRight;
+    }
+    var marginBottom = styles['marginBottom'];
+    if(marginBottom){
+      widgetElementStyles['marginBottom'] = marginBottom;
+    }
+    var marginTop = styles['marginTop'];
+    if(marginTop){
+      widgetElementStyles['marginTop'] = marginTop;
     }
 
     if(this.props.isContentEditable){
