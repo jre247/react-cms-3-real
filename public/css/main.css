@@ -7893,10 +7893,13 @@ a:hover {
 .content-settings-preview {
   position: relative;
   bottom: 80px;
-  right: 75px;
+  right: 117px;
   background: rgba(0, 0, 0, 0.3);
-  width: 119%;
+  width: 130%;
   padding: 20px;
+}
+.content-settings-preview .Content-image-container {
+  width: 100%;
 }
 .content-url-container {
   margin: 0 auto;

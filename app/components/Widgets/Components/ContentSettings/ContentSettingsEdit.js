@@ -76,7 +76,8 @@ class ContentSettingsEdit extends React.Component {
       settingsToEdit: this.state.settings,
       settingsLookups: settingsLookups,
       updateSettingsForContent: this.updateSettingsForContent.bind(this),
-      contentItemPreview: self.state.contentItem
+      contentItemPreview: self.state.contentItem,
+      onSave: this.onSave.bind(this)
     }, this.props);
 
     return (
@@ -99,10 +100,6 @@ class ContentSettingsEdit extends React.Component {
                   <div className="col-md-12">
 
                     <ContentSettingsEditContent {...propsData} />
-
-                    <div className="save-btn">
-                      <button className="btn btn-warning btn-lg" onClick={self.onSave.bind(this)}>Save</button>
-                    </div>
                   </div>
                 </div>
               </div>

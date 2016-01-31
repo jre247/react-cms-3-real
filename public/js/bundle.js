@@ -5195,7 +5195,8 @@ var ContentSettingsEdit = (function (_React$Component) {
         settingsToEdit: this.state.settings,
         settingsLookups: settingsLookups,
         updateSettingsForContent: this.updateSettingsForContent.bind(this),
-        contentItemPreview: self.state.contentItem
+        contentItemPreview: self.state.contentItem,
+        onSave: this.onSave.bind(this)
       }, this.props);
 
       return _react2.default.createElement(
@@ -5238,16 +5239,7 @@ var ContentSettingsEdit = (function (_React$Component) {
                   _react2.default.createElement(
                     'div',
                     { className: 'col-md-12' },
-                    _react2.default.createElement(_ContentSettingsEditContent2.default, propsData),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'save-btn' },
-                      _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-warning btn-lg', onClick: self.onSave.bind(this) },
-                        'Save'
-                      )
-                    )
+                    _react2.default.createElement(_ContentSettingsEditContent2.default, propsData)
                   )
                 )
               )
@@ -5774,6 +5766,23 @@ var ContentSettingsEditContent = (function (_React$Component) {
                       ),
                       _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', value: this.state.height,
                         onChange: self.onHeightChange.bind(self) })
+                    )
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'row' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'save-btn' },
+                      _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-warning btn-lg', onClick: self.props.onSave.bind(this) },
+                        'Save'
+                      )
                     )
                   )
                 )

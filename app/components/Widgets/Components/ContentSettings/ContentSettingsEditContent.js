@@ -358,6 +358,13 @@ class ContentSettingsEditContent extends React.Component {
                     </div>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="save-btn">
+                      <button className="btn btn-warning btn-lg" onClick={self.props.onSave.bind(this)}>Save</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
