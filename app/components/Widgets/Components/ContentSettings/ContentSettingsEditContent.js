@@ -1,5 +1,6 @@
 import React from 'react';
 import {_} from 'underscore';
+import ContentSettingsPreview from './ContentSettingsPreview';
 var self;
 
 class ContentSettingsEditContent extends React.Component {
@@ -54,7 +55,6 @@ class ContentSettingsEditContent extends React.Component {
   }
 
   setupSpacingAbove(){
-    debugger;
     var lookup = this.props.settingsLookups[2];
     var setting = self.props.settingsToEdit[lookup.id];
     if(setting){
@@ -320,8 +320,6 @@ class ContentSettingsEditContent extends React.Component {
               </div>
             </div>
           </div>
-
-
         </div>
         <div className="row">
           <div className="col-md-6">
@@ -342,28 +340,30 @@ class ContentSettingsEditContent extends React.Component {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="col-md-6">
-            <div className="setting-dimensions">
-              <div className="row">
-                <div className="col-md-4">
-                  <div className="form-group">
-                      <label>Width</label>
-                      <input type="text" className="form-control setting-input" value={this.state.width}
-                        onChange={self.onWidthChange.bind(self)} />
+              <div className="setting-dimensions">
+                <div className="row">
+                  <div className="col-md-4">
+                    <div className="form-group">
+                        <label>Width</label>
+                        <input type="text" className="form-control setting-input" value={this.state.width}
+                          onChange={self.onWidthChange.bind(self)} />
+                    </div>
                   </div>
-                </div>
-                <div className="col-md-4">
-                  <div className="form-group">
-                      <label>Height</label>
-                      <input type="text" className="form-control setting-input" value={this.state.height}
-                        onChange={self.onHeightChange.bind(self)} />
+                  <div className="col-md-4">
+                    <div className="form-group">
+                        <label>Height</label>
+                        <input type="text" className="form-control setting-input" value={this.state.height}
+                          onChange={self.onHeightChange.bind(self)} />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="col-md-6">
+            <ContentSettingsPreview {...this.props} />
           </div>
         </div>
       </div>

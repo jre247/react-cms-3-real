@@ -75,7 +75,8 @@ class ContentSettingsEdit extends React.Component {
     var propsData = _.extend({
       settingsToEdit: this.state.settings,
       settingsLookups: settingsLookups,
-      updateSettingsForContent: this.updateSettingsForContent.bind(this)
+      updateSettingsForContent: this.updateSettingsForContent.bind(this),
+      contentItemReference: self.state.contentItem
     }, this.props);
 
     return (

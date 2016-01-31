@@ -7802,7 +7802,7 @@ a:hover {
 }
 .modal-form {
   width: 70%;
-  height: 72vh;
+  height: 93vh;
   color: #5F5858;
   margin: 0px auto;
 }
@@ -7886,6 +7886,14 @@ a:hover {
 }
 .content-settings-container-readonly {
   display: inline;
+}
+.content-settings-preview {
+  position: relative;
+  bottom: 80px;
+  right: 75px;
+  background: rgba(0, 0, 0, 0.3);
+  width: 119%;
+  padding: 20px;
 }
 .content-url-container {
   margin: 0 auto;

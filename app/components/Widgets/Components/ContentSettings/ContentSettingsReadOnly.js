@@ -26,6 +26,13 @@ class ContentSettingsReadOnly extends React.Component {
     containerStyles['marginLeft'] = null;
     containerStyles['marginRight'] = null;
 
+    if(this.props.isContentEditable){
+        containerStyles['fontSize'] = null;
+        containerStyles['color'] = null;
+        containerStyles['lineHeight'] = null;
+        containerStyles['backgroundColor'] = null;
+    }
+
     this.setState({contentItem: propsData.contentItem, widgetStyles: widgetStyles,
       containerStyles: containerStyles, settings: propsData.contentItem.settings || {}});
   }
@@ -38,7 +45,7 @@ class ContentSettingsReadOnly extends React.Component {
     }
     var height = styles['height'];
     if(height){
-      widgetElementStyles['height'] = height;
+      widgetElementStyles['height'] = height || "inherited";
     }
     var marginLeft = styles['marginLeft'];
     if(marginLeft){
@@ -47,6 +54,25 @@ class ContentSettingsReadOnly extends React.Component {
     var marginRight= styles['marginRight'];
     if(marginRight){
       widgetElementStyles['marginRight'] = marginRight;
+    }
+
+    if(this.props.isContentEditable){
+      var fontSize = styles['fontSize'];
+      if(fontSize){
+        widgetElementStyles['fontSize'] = fontSize;
+      }
+      var lineHeight = styles['lineHeight'];
+      if(lineHeight){
+        widgetElementStyles['lineHeight'] = lineHeight;
+      }
+      var color = styles['color'];
+      if(color){
+        widgetElementStyles['color'] = color;
+      }
+      var backgroundColor = styles['backgroundColor'];
+      if(backgroundColor){
+        widgetElementStyles['backgroundColor'] = backgroundColor;
+      }
     }
 
     return widgetElementStyles

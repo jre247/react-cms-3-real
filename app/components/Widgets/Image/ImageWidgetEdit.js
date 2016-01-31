@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import ContentSettings from '../Components/ContentSettings/ContentSettings';
 import ContentSettingsReadOnly from '../Components/ContentSettings/ContentSettingsReadOnly';
 import Image from './Image';
+import {_} from 'underscore';
 
 class ImageWidgetEdit extends React.Component {
   constructor(props) {
@@ -52,9 +53,10 @@ class ImageWidgetEdit extends React.Component {
         )
       }
       else{
+        var propsData = _.extend({isContentEditable: true}, this.props);
         return (
           <div className="Content-image-container">
-            <ContentSettingsReadOnly {...this.props}>
+            <ContentSettingsReadOnly {...propsData}>
               <Image {...this.props} />
             </ContentSettingsReadOnly>
 
