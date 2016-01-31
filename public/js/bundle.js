@@ -3531,8 +3531,10 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         var nodes = this.state.contentList.map(function (contentItem, index) {
           var settings = contentItem.settings;
 
-          var propsData = _underscore._.extend({ contentItem: contentItem, isEdit: _this2.props.isEdit,
-            settings: _underscore._.clone(settings) }, _this2.props);
+          var propsData = _underscore._.extend({
+            contentItem: contentItem,
+            settings: _underscore._.clone(settings)
+          }, _this2.props);
 
           return _react2.default.createElement(
             'div',
@@ -4278,20 +4280,22 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     value: function componentDidMount() {
       this.getContentListForPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.getContentListForPage(nextProps);
     }
   }, {
+    key: 'setStateForContentList',
+    value: function setStateForContentList(newContentList) {
+      self.setState({ contentList: newContentList || [] });
+    }
+  }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
-      _API2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList });
+      _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList || [] });
+
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
         });
@@ -4309,6 +4313,12 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       _WidgetService2.default.save(self.state.contentList, self.props.pageId).then(function () {
         self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
       });
+    }
+  }, {
+    key: 'onSettingsSave',
+    value: function onSettingsSave(contentItem, contentIndex) {
+      self.state.contentList[contentIndex] = contentItem;
+      self.setStateForContentList(self.state.contentList);
     }
   }, {
     key: 'createImage',
@@ -4347,7 +4357,13 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       var _this2 = this;
 
       var nodes = this.state.contentList.map(function (contentItem, index) {
-        var propsData = { contentItem: contentItem, isEdit: true, imageSize: 'small',
+        var propsData = {
+          contentItem: contentItem,
+          isEdit: true,
+          imageSize: 'small',
+          settings: contentItem.settings,
+          contentIndex: index,
+          onSettingsSave: _this2.onSettingsSave.bind(_this2),
           onChange: _this2.updateContent.bind(_this2, index),
           onRemove: _this2.removeContent.bind(_this2, index) };
 
@@ -4481,6 +4497,10 @@ var _Modal = require('../../Widgets/Components/Modal');
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
+var _WidgetService = require('../../Widgets/WidgetService');
+
+var _WidgetService2 = _interopRequireDefault(_WidgetService);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4508,29 +4528,28 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
   _createClass(PhotoAlbumTemplateReadOnly, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      _API2.default.getContentListForPage(this.props.pageId, this.props.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(this.props);
     }
-
-    //need to get page in this method since componentDidMount does not get called when
-    //changing routes to another page
-
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      _API2.default.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function (viewmodel) {
-        self.setStateForContentList(viewmodel.contentList);
-      });
+      this.getContentListForPage(nextProps);
     }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {}
   }, {
     key: 'setStateForContentList',
     value: function setStateForContentList(newContentList) {
       self.setState({ contentList: newContentList });
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {}
+    key: 'getContentListForPage',
+    value: function getContentListForPage(propsData) {
+      _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
+        self.setState({ contentList: viewmodel.contentList || [] });
+      });
+    }
   }, {
     key: 'closeModal',
     value: function closeModal() {
@@ -4548,11 +4567,20 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var propsData = _underscore._.extend({ selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
-        imageSize: 'small', showIndicators: false }, this.props);
+      var propsData = _underscore._.extend({
+        selectedPhoto: this.state.selectedPhoto,
+        contentList: this.state.contentList,
+        imageSize: 'small',
+        showIndicators: false
+      }, this.props);
 
       var nodes = this.state.contentList.map(function (contentItem, index) {
-        var fieldPropsData = _underscore._.extend({ contentItem: contentItem }, propsData);
+        var settings = contentItem.settings;
+        var fieldPropsData = _underscore._.extend({
+          contentItem: contentItem,
+          settings: _underscore._.clone(settings)
+        }, propsData);
+
         return _react2.default.createElement(
           'div',
           { key: contentItem.sort_order, className: 'Photo', onClick: _this2.openModal.bind(_this2, index) },
@@ -4614,7 +4642,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateReadOnly;
 
-},{"../../../API":1,"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Components/Carousel/Carousel":42,"../../Widgets/Components/Modal":50,"../../Widgets/Field/Field":52,"../../Widgets/Field/FieldHelper":54,"../../Widgets/Image/ImageWidget":63,"../../Widgets/LongDescription/LongDescription":77,"../../Widgets/ShortDescription/ShortDescription":83,"../../Widgets/Title/Title":88,"react":"react","react-router":"react-router","underscore":"underscore"}],40:[function(require,module,exports){
+},{"../../../API":1,"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Components/Carousel/Carousel":42,"../../Widgets/Components/Modal":50,"../../Widgets/Field/Field":52,"../../Widgets/Field/FieldHelper":54,"../../Widgets/Image/ImageWidget":63,"../../Widgets/LongDescription/LongDescription":77,"../../Widgets/ShortDescription/ShortDescription":83,"../../Widgets/Title/Title":88,"../../Widgets/WidgetService":101,"react":"react","react-router":"react-router","underscore":"underscore"}],40:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5167,7 +5195,7 @@ var ContentSettingsEdit = (function (_React$Component) {
         settingsToEdit: this.state.settings,
         settingsLookups: settingsLookups,
         updateSettingsForContent: this.updateSettingsForContent.bind(this),
-        contentItemReference: self.state.contentItem
+        contentItemPreview: self.state.contentItem
       }, this.props);
 
       return _react2.default.createElement(
@@ -5815,7 +5843,7 @@ var ContentSettingsPreview = (function (_React$Component) {
   _createClass(ContentSettingsPreview, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var contentItem = this.props.contentItemReference;
+      var contentItem = this.props.contentItemPreview;
       this.setState({ contentItem: contentItem });
     }
   }, {
@@ -5920,12 +5948,12 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       containerStyles['marginLeft'] = null;
       containerStyles['marginRight'] = null;
       containerStyles['marginBottom'] = null;
+      containerStyles['backgroundColor'] = null;
 
       if (this.props.isContentEditable) {
         containerStyles['fontSize'] = null;
         containerStyles['color'] = null;
         containerStyles['lineHeight'] = null;
-        containerStyles['backgroundColor'] = null;
       }
 
       this.setState({ contentItem: propsData.contentItem, widgetStyles: widgetStyles,
@@ -5959,6 +5987,10 @@ var ContentSettingsReadOnly = (function (_React$Component) {
       if (marginTop) {
         widgetElementStyles['marginTop'] = marginTop;
       }
+      var backgroundColor = styles['backgroundColor'];
+      if (backgroundColor) {
+        widgetElementStyles['backgroundColor'] = backgroundColor;
+      }
 
       if (this.props.isContentEditable) {
         var fontSize = styles['fontSize'];
@@ -5972,10 +6004,6 @@ var ContentSettingsReadOnly = (function (_React$Component) {
         var color = styles['color'];
         if (color) {
           widgetElementStyles['color'] = color;
-        }
-        var backgroundColor = styles['backgroundColor'];
-        if (backgroundColor) {
-          widgetElementStyles['backgroundColor'] = backgroundColor;
         }
       }
 
@@ -9281,7 +9309,7 @@ var TitleReadOnly = (function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'Content-title-container' },
+        { className: 'Content-title-container Content-item-container' },
         _react2.default.createElement(
           _ContentSettings2.default,
           this.props,

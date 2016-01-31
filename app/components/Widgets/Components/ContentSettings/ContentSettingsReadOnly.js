@@ -26,12 +26,12 @@ class ContentSettingsReadOnly extends React.Component {
     containerStyles['marginLeft'] = null;
     containerStyles['marginRight'] = null;
     containerStyles['marginBottom'] = null;
+    containerStyles['backgroundColor'] = null;
 
     if(this.props.isContentEditable){
         containerStyles['fontSize'] = null;
         containerStyles['color'] = null;
         containerStyles['lineHeight'] = null;
-        containerStyles['backgroundColor'] = null;
     }
 
     this.setState({contentItem: propsData.contentItem, widgetStyles: widgetStyles,
@@ -64,6 +64,10 @@ class ContentSettingsReadOnly extends React.Component {
     if(marginTop){
       widgetElementStyles['marginTop'] = marginTop;
     }
+    var backgroundColor = styles['backgroundColor'];
+    if(backgroundColor){
+      widgetElementStyles['backgroundColor'] = backgroundColor;
+    }
 
     if(this.props.isContentEditable){
       var fontSize = styles['fontSize'];
@@ -77,10 +81,6 @@ class ContentSettingsReadOnly extends React.Component {
       var color = styles['color'];
       if(color){
         widgetElementStyles['color'] = color;
-      }
-      var backgroundColor = styles['backgroundColor'];
-      if(backgroundColor){
-        widgetElementStyles['backgroundColor'] = backgroundColor;
       }
     }
 

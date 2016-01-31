@@ -12,7 +12,7 @@ class ContentSettingsPreview extends React.Component {
   }
 
   componentDidMount() {
-    var contentItem  = this.props.contentItemReference;
+    var contentItem  = this.props.contentItemPreview;
     this.setState({contentItem: contentItem});
   }
 
@@ -24,7 +24,7 @@ class ContentSettingsPreview extends React.Component {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
       s4() + '-' + s4() + s4() + s4();
-  }   
+  }
 
 
   render() {

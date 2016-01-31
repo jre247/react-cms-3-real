@@ -47,8 +47,10 @@ class BasicTemplateReadOnly extends React.Component {
       let nodes = this.state.contentList.map((contentItem, index) => {
         var settings = contentItem.settings;
 
-        var propsData = _.extend({contentItem: contentItem, isEdit: this.props.isEdit,
-          settings: _.clone(settings)}, this.props);
+        var propsData = _.extend({
+          contentItem: contentItem,
+          settings: _.clone(settings)
+        }, this.props);
 
         return (
           <div key={index}>

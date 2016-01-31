@@ -12,6 +12,7 @@ import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import Carousel from '../../Widgets/Components/Carousel/Carousel';
 import EditLink from '../../EditLink';
 import Modal from '../../Widgets/Components/Modal';
+import WidgetService from '../../Widgets/WidgetService';
 var self;
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
@@ -22,25 +23,24 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
     self = this;
   }
   componentDidMount() {
-    API.getContentListForPage(this.props.pageId, this.props.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
-    });
+    this.getContentListForPage(this.props);
   }
 
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
   componentWillReceiveProps(nextProps){
-    API.getContentListForPage(nextProps.pageId, nextProps.isEdit).then(function(viewmodel){
-      self.setStateForContentList(viewmodel.contentList);
-    });
-  }
-
-  setStateForContentList(newContentList){
-    self.setState({contentList: newContentList})
+    this.getContentListForPage(nextProps);
   }
 
   componentWillUnmount() {
 
+  }
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList})
+  }
+
+  getContentListForPage(propsData){
+    WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList || []});
+    });
   }
 
   closeModal() {
@@ -54,11 +54,20 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   render() {
-    var propsData = _.extend({selectedPhoto: this.state.selectedPhoto, contentList: this.state.contentList,
-      imageSize: 'small', showIndicators: false}, this.props);
+    var propsData = _.extend({
+        selectedPhoto: this.state.selectedPhoto,
+        contentList: this.state.contentList,
+        imageSize: 'small',
+        showIndicators: false
+      }, this.props);
 
     let nodes = this.state.contentList.map((contentItem, index) => {
-      var fieldPropsData = _.extend({contentItem: contentItem}, propsData);
+      var settings = contentItem.settings;
+      var fieldPropsData = _.extend({
+        contentItem: contentItem,
+        settings: _.clone(settings)
+      }, propsData);
+
       return (
         <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
             <Field {...fieldPropsData} />

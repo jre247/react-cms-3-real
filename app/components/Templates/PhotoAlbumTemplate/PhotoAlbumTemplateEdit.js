@@ -23,15 +23,18 @@ class PhotoAlbumTemplateEdit extends React.Component {
     this.getContentListForPage(this.props);
   }
 
-  //need to get page in this method since componentDidMount does not get called when
-  //changing routes to another page
   componentWillReceiveProps(nextProps){
     this.getContentListForPage(nextProps);
   }
 
+  setStateForContentList(newContentList){
+    self.setState({contentList: newContentList || []});
+  }
+
   getContentListForPage(propsData){
-    API.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList});
+    WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
+      self.setState({contentList: viewmodel.contentList || []});
+
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;
     });
@@ -45,6 +48,11 @@ class PhotoAlbumTemplateEdit extends React.Component {
     WidgetService.save(self.state.contentList, self.props.pageId).then(function(){
       self.props.history.pushState(null, '/' + self.props.readOnlyPageLink);
     });
+  }
+
+  onSettingsSave(contentItem, contentIndex){
+    self.state.contentList[contentIndex] = contentItem;
+    self.setStateForContentList(self.state.contentList);
   }
 
   createImage(event){
@@ -74,7 +82,13 @@ class PhotoAlbumTemplateEdit extends React.Component {
 
   render() {
     let nodes = this.state.contentList.map((contentItem, index) => {
-      var propsData = {contentItem: contentItem, isEdit: true, imageSize: 'small',
+      var propsData = {
+        contentItem: contentItem,
+        isEdit: true,
+        imageSize: 'small',
+        settings: contentItem.settings,
+        contentIndex: index,
+        onSettingsSave: this.onSettingsSave.bind(this),
         onChange:  this.updateContent.bind(this, index),
         onRemove: this.removeContent.bind(this, index)};
 
