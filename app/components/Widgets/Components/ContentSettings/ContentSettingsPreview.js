@@ -35,7 +35,8 @@ class ContentSettingsPreview extends React.Component {
 
       var propsData = {
         contentItem: contentItem,
-        settings: settings
+        settings: settings,
+        isResizable: true
       };
 
       return (

@@ -14,7 +14,7 @@ class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: []};
+    this.state = {contentList: [], isSortingEnabled: true};
     this.maxContentId;
     self = this;
   }
@@ -70,6 +70,12 @@ class BasicTemplateEdit extends React.Component {
     self.state.contentList[contentIndex] = contentItem;
     self.setStateForContentList(self.state.contentList);
   }
+  enableSorting(){
+    this.setState({isSortingEnabled: true});
+  }
+  disableorting(){
+    this.setState({isSortingEnabled: false});
+  }
   render() {
     var widgetListPropsData = {
       onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
@@ -100,15 +106,19 @@ class BasicTemplateEdit extends React.Component {
         var fieldsPropData = _.extend(propsData, self.props);
 
         return (
-          <div key={contentItem.sort_order} className='ContentItem' data-id={contentItem.id}>
+          <div key={contentItem.sort_order} className='ContentItem content-item-sortable' data-id={contentItem.id}>
             <Field {...fieldsPropData} />
           </div>
         );
       });
 
-      var sortableProps = _.extend({sortableItemElement: '.ContentItem', itemList: self.state.contentList,
-        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this)},
-        this.props);
+      var sortableProps = _.extend({
+        sortableItemElement: '.content-item-sortable',
+        itemList: self.state.contentList,
+        itemPropertyToSortBy: 'sort_order',
+        setStateForItemList: self.setStateForContentList.bind(this),
+        isSortingEnabled: this.state.isSortingEnabled
+      }, this.props);
 
       return(
         <div className='Content-panel basic-template-edit'>

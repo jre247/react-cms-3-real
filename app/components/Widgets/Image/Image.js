@@ -1,4 +1,6 @@
 import React from 'react';
+import Resizable from '../Components/Resizable';
+import {_} from 'underscore';
 
 class Image extends React.Component {
   constructor(props) {
@@ -6,17 +8,26 @@ class Image extends React.Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   componentWillUnmount() {
 
   }
 
+  onResize(data){
+    var xChange = data.xChange;
+    debugger;
+  }
+
   render() {
+    var propsData = _.extend({onResize: this.onResize.bind(this), isResizable: this.props.isResizable},
+      this.props);
+
     if(this.props.imageSize == 'small'){
       return (
-        <img className="Content-small-image widget image-width" src={this.props.value} alt="Image" style={this.props.styles} />
+        <img className="Content-small-image widget image-width" src={this.props.value} alt="Image"
+          style={this.props.styles} onMouseHover />
       );
     }
     else if(this.props.imageSize == 'medium'){
@@ -26,7 +37,9 @@ class Image extends React.Component {
     }
     else{
       return (
-        <img className="Content-extra-large-image-percentage widget image-width" src={this.props.value} style={this.props.styles} alt="Image" />
+        <Resizable {...propsData}>
+          <img className="Content-extra-large-image-percentage widget image-width" src={this.props.value} style={this.props.styles} alt="Image" />
+        </Resizable>
       );
     }
   }

@@ -10,7 +10,9 @@ class Sortable extends React.Component {
   }
 
   componentDidMount() {
-    self.setupSortableTable();
+    if(this.props.isSortingEnabled){
+      self.setupSortableTable();
+    }  
   }
 
   componentWillUnmount() {
