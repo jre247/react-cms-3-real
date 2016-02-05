@@ -6,7 +6,7 @@ var self;
 class ContentSettingsPreview extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentItem: null};
+    this.state = {contentItem: null, isRelativeResize: true};
 
     self = this;
   }
@@ -36,7 +36,10 @@ class ContentSettingsPreview extends React.Component {
       var propsData = {
         contentItem: contentItem,
         settings: settings,
-        isResizable: true
+        isResizable: true,
+        setNewWidth: this.props.setNewWidth,
+        setNewHeight: this.props.setNewHeight,
+        isRelativeResize: this.state.isRelativeResize
       };
 
       return (

@@ -8,12 +8,39 @@ class Resizable extends React.Component {
   }
 
   componentDidMount() {
+    var self = this;
     if(this.props.isResizable){
-      $(ReactDOM.findDOMNode(this)).resizable();
+      $(ReactDOM.findDOMNode(self)).resizable({
+        start: self.start.bind(self),
+        start: self.stop.bind(self),
+        resize: self.resize.bind(self)
+      });
     }
   }
 
   componentWillUnmount() {
+
+  }
+
+  start(event, ui){
+
+  }
+
+  resize(event, ui){
+    this.props.setNewWidth(ui.size.width);
+
+    if(this.props.isRelativeResize){
+      // setting null for height will force only the width of the image to change, which will make the
+      // image resize relatively
+      this.props.setNewHeight(null);
+    }
+    else{
+      this.props.setNewHeight(ui.size.height);
+    }
+
+  }
+
+  stop(event, ui){
 
   }
 

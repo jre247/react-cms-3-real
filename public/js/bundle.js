@@ -5547,6 +5547,11 @@ var ContentSettingsEditContent = (function (_React$Component) {
     value: function onWidthChange(event) {
       var settingValue = event.target.value;
 
+      this.setNewWidth(settingValue);
+    }
+  }, {
+    key: 'setNewWidth',
+    value: function setNewWidth(settingValue) {
       self.setState({ width: settingValue });
 
       var settingsLookups = self.props.settingsLookups;
@@ -5561,6 +5566,11 @@ var ContentSettingsEditContent = (function (_React$Component) {
     value: function onHeightChange(event) {
       var settingValue = event.target.value;
 
+      this.setNewHeight(settingValue);
+    }
+  }, {
+    key: 'setNewHeight',
+    value: function setNewHeight(settingValue) {
       self.setState({ height: settingValue });
 
       var settingsLookups = self.props.settingsLookups;
@@ -5587,6 +5597,11 @@ var ContentSettingsEditContent = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var previewProps = _underscore._.extend({
+        setNewHeight: this.setNewHeight.bind(this),
+        setNewWidth: this.setNewWidth.bind(this)
+      }, this.props);
+
       return _react2.default.createElement(
         'div',
         { className: 'container-fluid' },
@@ -5807,7 +5822,7 @@ var ContentSettingsEditContent = (function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-6' },
-            _react2.default.createElement(_ContentSettingsPreview2.default, this.props)
+            _react2.default.createElement(_ContentSettingsPreview2.default, previewProps)
           )
         )
       );
@@ -5858,7 +5873,7 @@ var ContentSettingsPreview = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ContentSettingsPreview).call(this, props));
 
-    _this.state = { contentItem: null };
+    _this.state = { contentItem: null, isRelativeResize: true };
 
     self = _this;
     return _this;
@@ -5889,7 +5904,10 @@ var ContentSettingsPreview = (function (_React$Component) {
         var propsData = {
           contentItem: contentItem,
           settings: settings,
-          isResizable: true
+          isResizable: true,
+          setNewWidth: this.props.setNewWidth,
+          setNewHeight: this.props.setNewHeight,
+          isRelativeResize: this.state.isRelativeResize
         };
 
         return _react2.default.createElement(
@@ -6202,13 +6220,37 @@ var Resizable = (function (_React$Component) {
   _createClass(Resizable, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var self = this;
       if (this.props.isResizable) {
-        $(_reactDom2.default.findDOMNode(this)).resizable();
+        $(_reactDom2.default.findDOMNode(self)).resizable({
+          start: self.start.bind(self),
+          start: self.stop.bind(self),
+          resize: self.resize.bind(self)
+        });
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
+  }, {
+    key: 'start',
+    value: function start(event, ui) {}
+  }, {
+    key: 'resize',
+    value: function resize(event, ui) {
+      this.props.setNewWidth(ui.size.width);
+
+      if (this.props.isRelativeResize) {
+        // setting null for height will force only the width of the image to change, which will make the
+        // image resize relatively
+        this.props.setNewHeight(null);
+      } else {
+        this.props.setNewHeight(ui.size.height);
+      }
+    }
+  }, {
+    key: 'stop',
+    value: function stop(event, ui) {}
   }, {
     key: 'render',
     value: function render() {
@@ -7049,8 +7091,9 @@ var Image = (function (_React$Component) {
     value: function componentWillUnmount() {}
   }, {
     key: 'onResize',
-    value: function onResize(data) {
-      var xChange = data.xChange;
+    value: function onResize(sizeData) {
+      var width = sizeData.width;
+      var height = sizeData.height;
       debugger;
     }
   }, {

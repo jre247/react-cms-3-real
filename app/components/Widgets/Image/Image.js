@@ -15,8 +15,9 @@ class Image extends React.Component {
 
   }
 
-  onResize(data){
-    var xChange = data.xChange;
+  onResize(sizeData){
+    var width = sizeData.width;
+    var height = sizeData.height;
     debugger;
   }
 

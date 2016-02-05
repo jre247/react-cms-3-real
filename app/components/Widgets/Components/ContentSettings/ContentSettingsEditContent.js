@@ -228,6 +228,10 @@ class ContentSettingsEditContent extends React.Component {
   onWidthChange(event){
     var settingValue = event.target.value;
 
+    this.setNewWidth(settingValue);
+  }
+
+  setNewWidth(settingValue){
     self.setState({width: settingValue});
 
     var settingsLookups = self.props.settingsLookups;
@@ -241,6 +245,10 @@ class ContentSettingsEditContent extends React.Component {
   onHeightChange(event){
     var settingValue = event.target.value;
 
+    this.setNewHeight(settingValue);
+  }
+
+  setNewHeight(settingValue){
     self.setState({height: settingValue});
 
     var settingsLookups = self.props.settingsLookups;
@@ -265,6 +273,11 @@ class ContentSettingsEditContent extends React.Component {
   }
 
   render() {
+    var previewProps = _.extend({
+        setNewHeight: this.setNewHeight.bind(this),
+        setNewWidth: this.setNewWidth.bind(this),
+    }, this.props);
+
     return (
       <div className="container-fluid">
         <div className="row">
@@ -370,7 +383,7 @@ class ContentSettingsEditContent extends React.Component {
           </div>
 
           <div className="col-md-6">
-            <ContentSettingsPreview {...this.props} />
+            <ContentSettingsPreview {...previewProps} />
           </div>
         </div>
       </div>
