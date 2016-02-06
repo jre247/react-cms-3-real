@@ -1601,9 +1601,14 @@ var PagesAdministration = (function (_React$Component) {
           );
         });
 
-        var sortableProps = _underscore._.extend({ sortableItemElement: 'tr', itemList: self.state.pages,
-          itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForPages.bind(this),
-          onSortingUpdateCallback: self.onSortingUpdate.bind(this) }, this.props);
+        var sortableProps = _underscore._.extend({
+          sortableItemElement: 'tr',
+          itemList: self.state.pages,
+          itemPropertyToSortBy: 'sort_order',
+          setStateForItemList: self.setStateForPages.bind(this),
+          onSortingUpdateCallback: self.onSortingUpdate.bind(this),
+          isSortingEnabled: true
+        }, this.props);
 
         return _react2.default.createElement(
           'div',
@@ -3413,7 +3418,7 @@ var BasicTemplateEdit = (function (_React$Component) {
           itemList: self.state.contentList,
           itemPropertyToSortBy: 'sort_order',
           setStateForItemList: self.setStateForContentList.bind(this),
-          isSortingEnabled: this.state.isSortingEnabled
+          isSortingEnabled: true
         }, this.props);
 
         return _react2.default.createElement(
@@ -6343,6 +6348,7 @@ var Sortable = (function (_React$Component) {
   _createClass(Sortable, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      debugger;
       if (this.props.isSortingEnabled) {
         self.setupSortableTable();
       }
@@ -8336,7 +8342,7 @@ var ParentListItemEdit = (function (_React$Component) {
               { className: 'col-sm-6 col-md-offset-2' },
               _react2.default.createElement(
                 'div',
-                { className: 'form-group' },
+                { className: 'form-group parent-item-edit' },
                 _react2.default.createElement(_Field2.default, propsData)
               )
             )

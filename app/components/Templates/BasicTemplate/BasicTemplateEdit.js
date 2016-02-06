@@ -117,7 +117,7 @@ class BasicTemplateEdit extends React.Component {
         itemList: self.state.contentList,
         itemPropertyToSortBy: 'sort_order',
         setStateForItemList: self.setStateForContentList.bind(this),
-        isSortingEnabled: this.state.isSortingEnabled
+        isSortingEnabled: true
       }, this.props);
 
       return(

@@ -58,10 +58,14 @@ class PagesAdministration extends React.Component {
         );
       });
 
-      var sortableProps = _.extend({sortableItemElement: 'tr', itemList: self.state.pages,
-        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForPages.bind(this),
-        onSortingUpdateCallback: self.onSortingUpdate.bind(this)},
-        this.props);
+      var sortableProps = _.extend({
+        sortableItemElement: 'tr',
+        itemList: self.state.pages,
+        itemPropertyToSortBy: 'sort_order',
+        setStateForItemList: self.setStateForPages.bind(this),
+        onSortingUpdateCallback: self.onSortingUpdate.bind(this),
+        isSortingEnabled: true
+      }, this.props);
 
       return (
         <div className='Content-panel'>

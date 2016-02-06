@@ -61,7 +61,7 @@ class ParentListItemEdit extends React.Component {
           </div>
           <div className='row'>
             <div className='col-sm-6 col-md-offset-2'>
-              <div className="form-group">
+              <div className="form-group parent-item-edit">
                 <Field {...propsData} />
               </div>
             </div>
