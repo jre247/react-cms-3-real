@@ -40,7 +40,7 @@ class ParentListGridItemEdit extends React.Component {
         'List-item-group Row-separator' : 'List-item-group'}>
           <div className='row'>
             <div className='col-sm-6 col-md-offset-2'>
-              <div className="form-group">
+              <div className="form-group list-grid-parent-item-edit">
                 <Field {...propsData} />
               </div>
             </div>

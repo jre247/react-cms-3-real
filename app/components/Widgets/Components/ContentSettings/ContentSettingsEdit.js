@@ -77,6 +77,9 @@ class ContentSettingsEdit extends React.Component {
   updateSettingsForContentPreview(setting){
     var settings = self.state.settings;
     settings[setting.id] = setting;
+
+    // I want to suppress react from re-rendering if an image is in preview mode because
+    // the Resizable widget would trigger a re-render for every pixel resize, which bogs down the browser
     self.setState({settings: settings, isPreviewingContent: true});
   }
 

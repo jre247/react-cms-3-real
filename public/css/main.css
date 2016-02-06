@@ -7517,7 +7517,7 @@ a:hover {
 }
 .Photo {
   display: inline-block;
-  margin-right: 30px;
+  margin-right: 33px;
 }
 .Photo-album-content {
   margin-top: 40px;
@@ -7527,10 +7527,13 @@ a:hover {
   width: 100%;
 }
 .Photo-album-template .Content-image-input-container {
-  width: 78%;
+  width: 71%;
 }
 .Photo-album-template .Content-image-input-container > input {
   width: 100%;
+}
+.Photo-album-container-edit .Photo {
+  margin-right: 19px;
 }
 .List-items {
   text-align: center;
@@ -7584,7 +7587,7 @@ a:hover {
 .Sub-List-Items {
   padding-left: 10%;
 }
-.List-Grid-Group-Column .Content-title {
+.List-Grid-Group-Column .Content-title-container {
   font-size: 27px;
 }
 .List-Grid-Template .Parent-list-item-readonly .Content-long-description {
@@ -7639,6 +7642,12 @@ a:hover {
 .List-Grid-Template .Content-small-image {
   width: 162px;
   height: inherit;
+}
+.list-grid-parent-item-edit .Content-item {
+  width: 85%;
+}
+.List-Grid-Template .Content-image-input-container {
+  width: 64%;
 }
 .Content-long-description-container {
   display: inline-block;

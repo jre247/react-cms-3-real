@@ -5211,6 +5211,9 @@ var ContentSettingsEdit = (function (_React$Component) {
     value: function updateSettingsForContentPreview(setting) {
       var settings = self.state.settings;
       settings[setting.id] = setting;
+
+      // I want to suppress react from re-rendering if an image is in preview mode because
+      // the Resizable widget would trigger a re-render for every pixel resize, which bogs down the browser
       self.setState({ settings: settings, isPreviewingContent: true });
     }
   }, {
@@ -8057,7 +8060,7 @@ var ParentListGridItemEdit = (function (_React$Component) {
               { className: 'col-sm-6 col-md-offset-2' },
               _react2.default.createElement(
                 'div',
-                { className: 'form-group' },
+                { className: 'form-group list-grid-parent-item-edit' },
                 _react2.default.createElement(_Field2.default, propsData)
               )
             ),
