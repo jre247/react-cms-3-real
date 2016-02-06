@@ -7901,6 +7901,10 @@ a:hover {
 .content-settings-preview .Content-image-container {
   width: 100%;
 }
+.content-settings-preview image {
+  width: 100% !important;
+  height: inherited !important;
+}
 .content-url-container {
   margin: 0 auto;
   width: 100%;

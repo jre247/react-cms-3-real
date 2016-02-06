@@ -8,7 +8,7 @@ var self;
 class ContentSettingsEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {settings: {}, contentGroupIndex: null, showModal: false, contentItem: {}, contentIndex: null};
+    this.state = {settings: {}, contentGroupIndex: null, showModal: false, contentItem: {}, contentIndex: null, isPreviewingContent: false};
     this.lookupState = LookupStore.getState();
     this.onChange = this.onChange.bind(this);
     this.isSaving = false;
@@ -29,7 +29,7 @@ class ContentSettingsEdit extends React.Component {
   }
 
   closeModal() {
-    self.setState({showModal: false});
+    self.setState({showModal: false, isPreviewingContent: false});
   }
 
   openModal(contentItem, event) {
@@ -58,10 +58,26 @@ class ContentSettingsEdit extends React.Component {
     self.props.onSettingsSave(contentItem, self.state.contentIndex, self.state.contentGroupIndex);
   }
 
+  shouldComponentUpdate(){
+    if(this.state.isPreviewingContent){
+      debugger;
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
   updateSettingsForContent(setting){
     var settings = self.state.settings;
     settings[setting.id] = setting;
-    self.setState({settings: settings});
+    self.setState({settings: settings, isPreviewingContent: false});
+  }
+
+  updateSettingsForContentPreview(setting){
+    var settings = self.state.settings;
+    settings[setting.id] = setting;
+    self.setState({settings: settings, isPreviewingContent: true});
   }
 
   render() {
@@ -76,6 +92,7 @@ class ContentSettingsEdit extends React.Component {
       settingsToEdit: this.state.settings,
       settingsLookups: settingsLookups,
       updateSettingsForContent: this.updateSettingsForContent.bind(this),
+      updateSettingsForContentPreview: this.updateSettingsForContentPreview.bind(this),
       contentItemPreview: self.state.contentItem,
       onSave: this.onSave.bind(this)
     }, this.props);

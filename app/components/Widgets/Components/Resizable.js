@@ -12,7 +12,6 @@ class Resizable extends React.Component {
     if(this.props.isResizable){
       $(ReactDOM.findDOMNode(self)).resizable({
         start: self.start.bind(self),
-        start: self.stop.bind(self),
         resize: self.resize.bind(self)
       });
     }
@@ -27,7 +26,7 @@ class Resizable extends React.Component {
   }
 
   resize(event, ui){
-    this.props.setNewWidth(ui.size.width);
+    this.props.setNewWidth(ui.size.width, true);
 
     if(this.props.isRelativeResize){
       // setting null for height will force only the width of the image to change, which will make the
@@ -35,7 +34,7 @@ class Resizable extends React.Component {
       this.props.setNewHeight(null);
     }
     else{
-      this.props.setNewHeight(ui.size.height);
+      this.props.setNewHeight(ui.size.height, true);
     }
 
   }

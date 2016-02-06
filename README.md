@@ -39,6 +39,13 @@ Mac OSX install instructions:
 
 ------------------------------------------------------------------------------------------------
 
+Windows Instructions for Opening Postgres:
+
+1) Run SQL Shell (Psql)
+2) press enter except for database (type wedding), username (type jevans), and password (type jj1108jj)
+
+------------------------------------------------------------------------------------------------
+
 Run the following script in psql to create the database and necessary tables:
 
 CREATE USER jevans WITH PASSWORD 'jj1108jj';
@@ -47,6 +54,8 @@ GRANT ALL PRIVILEGES ON DATABASE Wedding to jevans;
 
 6) run seed.sql in postgres to create tables, data, etc.
 	-you can find seed.sql in the root directory of the project
+
+
 
 
 -------------------------------------------------------------------------------------------------------------------
