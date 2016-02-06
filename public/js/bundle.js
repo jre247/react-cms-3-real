@@ -3332,7 +3332,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicTemplateEdit).call(this, props));
 
     _this.templateId = 1;
-    _this.state = { contentList: [], isSortingEnabled: true };
+    _this.state = { contentList: [], isSortingEnabled: true, changeSpacingAsRelative: true };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -3426,10 +3426,26 @@ var BasicTemplateEdit = (function (_React$Component) {
           setting_id: 2
         };
       }
-      setting.setting_value = height - originalHeight;
+      var newSettingValue = height - originalHeight;
+      setting.setting_value = newSettingValue;
       contentItem.settings[2] = setting;
 
       self.state.contentList[contentItemIndex] = contentItem;
+
+      // find the spacing below/above from whichever content item was changed and use that for ALL
+      // content items
+      if (this.state.changeSpacingAsRelative) {
+        debugger;
+        _underscore._.each(this.state.contentList, function (contentItemCompare) {
+          var settingsCompare = contentItemCompare.settings;
+          var spacingBelowToChange = settingsCompare[2];
+          if (!spacingBelowToChange) {
+            spacingBelowToChange = { content_id: contentItemCompare.id, setting_id: 2 };
+          }
+          spacingBelowToChange.setting_value = newSettingValue;
+        });
+      }
+
       self.setState({ isResizing: true });
       self.setStateForContentList(self.state.contentList);
     }
@@ -3443,9 +3459,9 @@ var BasicTemplateEdit = (function (_React$Component) {
     value: function getContentItemContainerStyles(contentItem) {
       var contentItemContainerStyles = null;
       var settings = contentItem.settings;
-      var spacingAbove = settings[3];
-      var spacingBelow = settings[2];
-      if (!this.state.isResizing && (spacingAbove || spacingBelow)) {
+      var spacingAbove = _underscore._.clone(settings[3]);
+      var spacingBelow = _underscore._.clone(settings[2]);
+      if (spacingAbove || spacingBelow) {
         contentItemContainerStyles = {};
 
         if (spacingBelow) {
@@ -3457,6 +3473,12 @@ var BasicTemplateEdit = (function (_React$Component) {
       }
 
       return contentItemContainerStyles;
+    }
+  }, {
+    key: 'onRelativeSpacingChange',
+    value: function onRelativeSpacingChange(event) {
+      changeSpacingAsRelative = event.target.checked;
+      this.setState({ changeSpacingAsRelative: changeSpacingAsRelative });
     }
   }, {
     key: 'render',
@@ -3512,6 +3534,10 @@ var BasicTemplateEdit = (function (_React$Component) {
           );
         });
 
+        if (this.state.changeSpacingAsRelative) {
+          this.setState({ contentList: this.state.contentList });
+        }
+
         var sortableProps = _underscore._.extend({
           sortableItemElement: '.content-item-sortable',
           itemList: self.state.contentList,
@@ -3526,7 +3552,20 @@ var BasicTemplateEdit = (function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'Content-container Content-centered-container' },
-            _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData),
+            _react2.default.createElement(
+              'div',
+              { className: 'row' },
+              _react2.default.createElement(
+                'div',
+                { className: 'col-md-6' },
+                _react2.default.createElement(_WidgetSelectList2.default, widgetListPropsData)
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-md-2' },
+                _react2.default.createElement('input', { className: 'form-control', type: 'checkbox', value: this.state.changeSpacingAsRelative, checked: this.state.changeSpacingAsRelative, onChange: this.onRelativeSpacingChange.bind(this) })
+              )
+            ),
             _react2.default.createElement(
               _Sortable2.default,
               sortableProps,

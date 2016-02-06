@@ -15,7 +15,7 @@ class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: [], isSortingEnabled: true};
+    this.state = {contentList: [], isSortingEnabled: true, changeSpacingAsRelative: true};
     this.maxContentId;
     self = this;
   }
@@ -86,10 +86,27 @@ class BasicTemplateEdit extends React.Component {
         setting_id: 2
       }
     }
-    setting.setting_value = height - originalHeight;
+    var newSettingValue = height - originalHeight;
+    setting.setting_value = newSettingValue;
     contentItem.settings[2] = setting;
 
     self.state.contentList[contentItemIndex] = contentItem;
+
+    // find the spacing below/above from whichever content item was changed and use that for ALL
+    // content items
+    if(this.state.changeSpacingAsRelative){
+      debugger;
+      _.each(this.state.contentList, (contentItemCompare) =>{
+        var settingsCompare = contentItemCompare.settings;
+        var spacingBelowToChange = settingsCompare[2];
+        if(!spacingBelowToChange){
+          spacingBelowToChange = {content_id: contentItemCompare.id, setting_id: 2};
+        }
+        spacingBelowToChange.setting_value = newSettingValue;
+
+      });
+    }
+
     self.setState({isResizing: true});
     self.setStateForContentList(self.state.contentList);
   }
@@ -99,10 +116,10 @@ class BasicTemplateEdit extends React.Component {
   getContentItemContainerStyles(contentItem){
     var contentItemContainerStyles = null;
     var settings = contentItem.settings;
-    var spacingAbove = settings[3];
-    var spacingBelow = settings[2];
-    if(!this.state.isResizing && (spacingAbove || spacingBelow)){
-      contentItemContainerStyles = { };
+    var spacingAbove = _.clone(settings[3]);
+    var spacingBelow = _.clone(settings[2]);
+    if(spacingAbove || spacingBelow){
+      contentItemContainerStyles = {};
 
       if(spacingBelow){
         contentItemContainerStyles.marginBottom = spacingBelow.setting_value;
@@ -114,6 +131,11 @@ class BasicTemplateEdit extends React.Component {
 
     return contentItemContainerStyles;
   }
+  onRelativeSpacingChange(event){
+    changeSpacingAsRelative = event.target.checked;
+    this.setState({changeSpacingAsRelative: changeSpacingAsRelative});
+  }
+
   render() {
     var widgetListPropsData = {
       onAddWidgetToContentList: this.onAddWidgetToContentList.bind(this),
@@ -162,6 +184,10 @@ class BasicTemplateEdit extends React.Component {
         );
       });
 
+      if(this.state.changeSpacingAsRelative){
+        this.setState({contentList: this.state.contentList});
+      }
+
       var sortableProps = _.extend({
         sortableItemElement: '.content-item-sortable',
         itemList: self.state.contentList,
@@ -173,8 +199,14 @@ class BasicTemplateEdit extends React.Component {
       return(
         <div className='Content-panel basic-template-edit'>
           <div className="Content-container Content-centered-container">
-            <WidgetSelectList {...widgetListPropsData} />
-
+            <div className="row">
+              <div className="col-md-6">
+                <WidgetSelectList {...widgetListPropsData} />
+              </div>
+              <div className="col-md-2">
+                <input className="form-control" type="checkbox" value={this.state.changeSpacingAsRelative} checked={this.state.changeSpacingAsRelative} onChange={this.onRelativeSpacingChange.bind(this)} />
+              </div>
+            </div>
             <Sortable {...sortableProps}>
               <div>
                 {nodes}
