@@ -3309,6 +3309,10 @@ var _Sortable = require('../../Widgets/Components/Sortable');
 
 var _Sortable2 = _interopRequireDefault(_Sortable);
 
+var _Resizable = require('../../Widgets/Components/Resizable');
+
+var _Resizable2 = _interopRequireDefault(_Resizable);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3407,9 +3411,52 @@ var BasicTemplateEdit = (function (_React$Component) {
       this.setState({ isSortingEnabled: true });
     }
   }, {
-    key: 'disableorting',
-    value: function disableorting() {
+    key: 'disableSorting',
+    value: function disableSorting() {
       this.setState({ isSortingEnabled: false });
+    }
+  }, {
+    key: 'setNewHeight',
+    value: function setNewHeight(contentItem, contentItemIndex, height, originalHeight) {
+      var settings = contentItem.settings;
+      var setting = settings[2];
+      if (!setting) {
+        setting = {
+          content_id: contentItem.id,
+          setting_id: 2
+        };
+      }
+      setting.setting_value = height - originalHeight;
+      contentItem.settings[2] = setting;
+
+      self.state.contentList[contentItemIndex] = contentItem;
+      self.setState({ isResizing: true });
+      self.setStateForContentList(self.state.contentList);
+    }
+  }, {
+    key: 'setNewWidth',
+    value: function setNewWidth(width, contentItem) {
+      self.setState({ isResizing: true });
+    }
+  }, {
+    key: 'getContentItemContainerStyles',
+    value: function getContentItemContainerStyles(contentItem) {
+      var contentItemContainerStyles = null;
+      var settings = contentItem.settings;
+      var spacingAbove = settings[3];
+      var spacingBelow = settings[2];
+      if (!this.state.isResizing && (spacingAbove || spacingBelow)) {
+        contentItemContainerStyles = {};
+
+        if (spacingBelow) {
+          contentItemContainerStyles.marginBottom = spacingBelow.setting_value;
+        }
+        if (spacingAbove) {
+          contentItemContainerStyles.marginTop = spacingAbove.setting_value;
+        }
+      }
+
+      return contentItemContainerStyles;
     }
   }, {
     key: 'render',
@@ -3442,10 +3489,26 @@ var BasicTemplateEdit = (function (_React$Component) {
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
 
+          var resizableProps = _underscore._.extend({
+            setNewWidth: _this2.setNewWidth.bind(_this2, contentItem, index),
+            setNewHeight: _this2.setNewHeight.bind(_this2, contentItem, index),
+            isResizable: true
+          }, _this2.props);
+
+          var contentItemContainerStyles = _this2.getContentItemContainerStyles(contentItem);
+
           return _react2.default.createElement(
             'div',
             { key: contentItem.sort_order, className: 'ContentItem content-item-sortable', 'data-id': contentItem.id },
-            _react2.default.createElement(_Field2.default, fieldsPropData)
+            _react2.default.createElement(
+              'div',
+              { className: 'content-item-container', style: contentItemContainerStyles },
+              _react2.default.createElement(
+                _Resizable2.default,
+                resizableProps,
+                _react2.default.createElement(_Field2.default, fieldsPropData)
+              )
+            )
           );
         });
 
@@ -3493,7 +3556,7 @@ var BasicTemplateEdit = (function (_React$Component) {
 
 exports.default = BasicTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":25,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/WidgetSelectList":101,"../../Widgets/WidgetService":102,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],34:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":25,"../../Widgets/Components/Resizable":51,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/WidgetSelectList":101,"../../Widgets/WidgetService":102,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],34:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -5613,7 +5676,7 @@ var ContentSettingsEditContent = (function (_React$Component) {
     }
   }, {
     key: 'setNewWidth',
-    value: function setNewWidth(settingValue, valueFromPreview) {
+    value: function setNewWidth(settingValue, originalSettingValue, valueFromPreview) {
       self.setState({ width: settingValue });
 
       var settingsLookups = self.props.settingsLookups;
@@ -5636,7 +5699,7 @@ var ContentSettingsEditContent = (function (_React$Component) {
     }
   }, {
     key: 'setNewHeight',
-    value: function setNewHeight(settingValue) {
+    value: function setNewHeight(settingValue, originalSettingValue, valueFromPreview) {
       self.setState({ height: settingValue });
 
       var settingsLookups = self.props.settingsLookups;
@@ -6303,14 +6366,15 @@ var Resizable = (function (_React$Component) {
   }, {
     key: 'resize',
     value: function resize(event, ui) {
-      this.props.setNewWidth(ui.size.width, true);
+      this.props.setNewWidth(ui.size.width, ui.originalSize.width, true);
 
       if (this.props.isRelativeResize) {
         // setting null for height will force only the width of the image to change, which will make the
         // image resize relatively
         this.props.setNewHeight(null);
       } else {
-        this.props.setNewHeight(ui.size.height, true);
+        debugger;
+        this.props.setNewHeight(ui.size.height, ui.originalSize.height, true);
       }
     }
   }, {
@@ -6384,7 +6448,6 @@ var Sortable = (function (_React$Component) {
   _createClass(Sortable, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      debugger;
       if (this.props.isSortingEnabled) {
         self.setupSortableTable();
       }
@@ -7160,7 +7223,6 @@ var Image = (function (_React$Component) {
     value: function onResize(sizeData) {
       var width = sizeData.width;
       var height = sizeData.height;
-      debugger;
     }
   }, {
     key: 'render',

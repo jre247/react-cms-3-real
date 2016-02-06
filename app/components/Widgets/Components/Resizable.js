@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 class Resizable extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   componentDidMount() {
@@ -26,7 +25,7 @@ class Resizable extends React.Component {
   }
 
   resize(event, ui){
-    this.props.setNewWidth(ui.size.width, true);
+    this.props.setNewWidth(ui.size.width, ui.originalSize.width, true);
 
     if(this.props.isRelativeResize){
       // setting null for height will force only the width of the image to change, which will make the
@@ -34,9 +33,9 @@ class Resizable extends React.Component {
       this.props.setNewHeight(null);
     }
     else{
-      this.props.setNewHeight(ui.size.height, true);
+      debugger;
+      this.props.setNewHeight(ui.size.height, ui.originalSize.height, true);
     }
-
   }
 
   stop(event, ui){

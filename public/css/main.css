@@ -7787,6 +7787,13 @@ a:hover {
 .basic-template-read-only .Content-extra-large-image-percentage {
   width: 100%;
 }
+.basic-template-edit .content-item-container > .resizable-container {
+  width: 100%;
+}
+.basic-template-edit .content-item-container {
+  border-bottom: 1px dotted lightgray;
+  padding-top: 10px;
+}
 .carousel-control.left {
   left: 100px;
 }

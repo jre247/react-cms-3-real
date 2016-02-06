@@ -8,6 +8,7 @@ import TemplateHelper from '../TemplateHelper';
 import WidgetService from '../../Widgets/WidgetService';
 import API from '../../../API';
 import Sortable from '../../Widgets/Components/Sortable';
+import Resizable from '../../Widgets/Components/Resizable';
 var self;
 
 class BasicTemplateEdit extends React.Component {
@@ -73,8 +74,45 @@ class BasicTemplateEdit extends React.Component {
   enableSorting(){
     this.setState({isSortingEnabled: true});
   }
-  disableorting(){
+  disableSorting(){
     this.setState({isSortingEnabled: false});
+  }
+  setNewHeight(contentItem, contentItemIndex, height, originalHeight){
+    var settings = contentItem.settings;
+    var setting = settings[2];
+    if(!setting){
+      setting = {
+        content_id: contentItem.id,
+        setting_id: 2
+      }
+    }
+    setting.setting_value = height - originalHeight;
+    contentItem.settings[2] = setting;
+
+    self.state.contentList[contentItemIndex] = contentItem;
+    self.setState({isResizing: true});
+    self.setStateForContentList(self.state.contentList);
+  }
+  setNewWidth(width, contentItem){
+    self.setState({isResizing: true});
+  }
+  getContentItemContainerStyles(contentItem){
+    var contentItemContainerStyles = null;
+    var settings = contentItem.settings;
+    var spacingAbove = settings[3];
+    var spacingBelow = settings[2];
+    if(!this.state.isResizing && (spacingAbove || spacingBelow)){
+      contentItemContainerStyles = { };
+
+      if(spacingBelow){
+        contentItemContainerStyles.marginBottom = spacingBelow.setting_value;
+      }
+      if(spacingAbove){
+        contentItemContainerStyles.marginTop = spacingAbove.setting_value
+      }
+    }
+
+    return contentItemContainerStyles;
   }
   render() {
     var widgetListPropsData = {
@@ -105,9 +143,21 @@ class BasicTemplateEdit extends React.Component {
 
         var fieldsPropData = _.extend(propsData, self.props);
 
+        var resizableProps = _.extend({
+            setNewWidth: this.setNewWidth.bind(this, contentItem, index),
+            setNewHeight: this.setNewHeight.bind(this, contentItem, index),
+            isResizable: true
+          }, this.props);
+
+        var contentItemContainerStyles = this.getContentItemContainerStyles(contentItem);
+
         return (
           <div key={contentItem.sort_order} className='ContentItem content-item-sortable' data-id={contentItem.id}>
-            <Field {...fieldsPropData} />
+            <div className="content-item-container" style={contentItemContainerStyles}>
+              <Resizable {...resizableProps}>
+                <Field {...fieldsPropData} />
+              </Resizable>
+            </div>
           </div>
         );
       });

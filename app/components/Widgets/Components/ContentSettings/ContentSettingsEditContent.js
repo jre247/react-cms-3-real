@@ -231,7 +231,7 @@ class ContentSettingsEditContent extends React.Component {
     this.setNewWidth(settingValue);
   }
 
-  setNewWidth(settingValue, valueFromPreview){
+  setNewWidth(settingValue, originalSettingValue, valueFromPreview){
     self.setState({width: settingValue});
 
     var settingsLookups = self.props.settingsLookups;
@@ -253,7 +253,7 @@ class ContentSettingsEditContent extends React.Component {
     this.setNewHeight(settingValue);
   }
 
-  setNewHeight(settingValue){
+  setNewHeight(settingValue, originalSettingValue, valueFromPreview){
     self.setState({height: settingValue});
 
     var settingsLookups = self.props.settingsLookups;

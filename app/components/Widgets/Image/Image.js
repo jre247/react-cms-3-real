@@ -18,7 +18,6 @@ class Image extends React.Component {
   onResize(sizeData){
     var width = sizeData.width;
     var height = sizeData.height;
-    debugger;
   }
 
   render() {
