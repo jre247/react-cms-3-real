@@ -2254,7 +2254,7 @@ var RoleManagerUser = (function (_React$Component) {
       } else {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-panel' },
+          { className: 'Content-panel role-manager-edit-user' },
           _react2.default.createElement(
             'div',
             null,
@@ -2270,28 +2270,64 @@ var RoleManagerUser = (function (_React$Component) {
             ),
             _react2.default.createElement(
               'div',
-              { className: 'form-group' },
+              { className: 'form-group auth-row' },
               _react2.default.createElement(
-                'label',
-                null,
-                'Admin'
-              ),
-              _react2.default.createElement('input', { className: 'form-control', name: 'admin', type: 'checkbox', value: this.state.isAdmin, checked: this.state.isAdmin, onChange: this.onAdminRoleChange.bind(this) })
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-1' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Admin:'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'role-input col-sm-2' },
+                  _react2.default.createElement('input', { className: 'form-control role-checkbox', name: 'admin', type: 'checkbox', value: this.state.isAdmin, checked: this.state.isAdmin, onChange: this.onAdminRoleChange.bind(this) })
+                )
+              )
             ),
             _react2.default.createElement(
               'div',
-              { className: 'form-group' },
+              { className: 'form-group auth-row' },
               _react2.default.createElement(
-                'label',
-                null,
-                'Publisher'
-              ),
-              _react2.default.createElement('input', { className: 'form-control', name: 'publisher', type: 'checkbox', value: this.state.isPublisher, checked: this.state.isPublisher, onChange: this.onPublisherRoleChange.bind(this) })
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'col-sm-1' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Publisher:'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'role-input col-sm-2' },
+                  _react2.default.createElement('input', { className: 'form-control role-checkbox', name: 'publisher', type: 'checkbox', value: this.state.isPublisher, checked: this.state.isPublisher, onChange: this.onPublisherRoleChange.bind(this) })
+                )
+              )
             ),
             _react2.default.createElement(
-              'button',
-              { type: 'button', className: 'btn btn-warning btn-lg', onClick: this.submit.bind(this) },
-              'Save'
+              'div',
+              { className: 'form-group save-btn' },
+              _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'role-input col-sm-2' },
+                  _react2.default.createElement(
+                    'button',
+                    { type: 'button', className: 'btn btn-warning btn-lg', onClick: this.submit.bind(this) },
+                    'Save'
+                  )
+                )
+              )
             )
           )
         );

@@ -65,24 +65,41 @@ class RoleManagerUser extends React.Component {
     }
     else{
       return(
-        <div className='Content-panel'>
+        <div className='Content-panel role-manager-edit-user'>
           <div>
               <div className="form-group">
                   <label>Email</label>
                   <input type="text" className="form-control" name="email" value={this.state.user.email} onChange={this.onEmailChange.bind(this)} />
               </div>
 
-              <div className="form-group">
-                  <label>Admin</label>
-                  <input className="form-control" name="admin" type="checkbox" value={this.state.isAdmin} checked={this.state.isAdmin} onChange={this.onAdminRoleChange.bind(this)} />
+              <div className="form-group auth-row">
+                <div className="row">
+                  <div className="col-sm-1">
+                    <label>Admin:</label>
+                  </div>
+                  <div className="role-input col-sm-2">
+                    <input className="form-control role-checkbox" name="admin" type="checkbox" value={this.state.isAdmin} checked={this.state.isAdmin} onChange={this.onAdminRoleChange.bind(this)} />
+                  </div>
+                </div>
               </div>
 
-              <div className="form-group">
-                  <label>Publisher</label>
-                  <input className="form-control" name="publisher" type="checkbox" value={this.state.isPublisher} checked={this.state.isPublisher} onChange={this.onPublisherRoleChange.bind(this)} />
+              <div className="form-group auth-row">
+                <div className="row">
+                  <div className="col-sm-1">
+                    <label>Publisher:</label>
+                  </div>
+                  <div className="role-input col-sm-2">
+                    <input className="form-control role-checkbox" name="publisher" type="checkbox" value={this.state.isPublisher} checked={this.state.isPublisher} onChange={this.onPublisherRoleChange.bind(this)} />
+                  </div>
+                </div>
               </div>
-
-              <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
+              <div className="form-group save-btn">
+                <div className="row">
+                  <div className="role-input col-sm-2">
+                    <button type="button" className="btn btn-warning btn-lg" onClick={this.submit.bind(this)}>Save</button>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       );
