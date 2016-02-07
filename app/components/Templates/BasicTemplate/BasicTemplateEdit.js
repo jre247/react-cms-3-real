@@ -90,25 +90,30 @@ class BasicTemplateEdit extends React.Component {
     setting.setting_value = newSettingValue;
     contentItem.settings[2] = setting;
 
-    self.state.contentList[contentItemIndex] = contentItem;
+    this.state.contentList[contentItemIndex] = contentItem;
 
     // find the spacing below/above from whichever content item was changed and use that for ALL
     // content items
-    if(this.state.changeSpacingAsRelative){
-      debugger;
-      _.each(this.state.contentList, (contentItemCompare) =>{
-        var settingsCompare = contentItemCompare.settings;
-        var spacingBelowToChange = settingsCompare[2];
-        if(!spacingBelowToChange){
-          spacingBelowToChange = {content_id: contentItemCompare.id, setting_id: 2};
-        }
-        spacingBelowToChange.setting_value = newSettingValue;
-
-      });
-    }
+    this.updateSpacingBelowSettingForAllContents(newSettingValue);
 
     self.setState({isResizing: true});
     self.setStateForContentList(self.state.contentList);
+  }
+  updateSpacingBelowSettingForAllContents(newSettingValue){
+    if(this.state.changeSpacingAsRelative){
+      var self = this;
+      _.each(self.state.contentList, (contentItemCompare, indexCompare) =>{
+        var settingsCompare = contentItemCompare.settings;
+        var spacingBelow = settingsCompare[2];
+        if(!spacingBelow){
+          spacingBelow = {content_id: contentItemCompare.id, setting_id: 2};
+        }
+        spacingBelow.setting_value = newSettingValue;
+
+        contentItemCompare.settings[2] = spacingBelow;
+        self.state.contentList[indexCompare] = contentItemCompare;
+      });
+    }
   }
   setNewWidth(width, contentItem){
     self.setState({isResizing: true});
@@ -183,10 +188,6 @@ class BasicTemplateEdit extends React.Component {
           </div>
         );
       });
-
-      if(this.state.changeSpacingAsRelative){
-        this.setState({contentList: this.state.contentList});
-      }
 
       var sortableProps = _.extend({
         sortableItemElement: '.content-item-sortable',
