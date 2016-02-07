@@ -15,7 +15,7 @@ class BasicTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: [], isSortingEnabled: true, changeSpacingAsRelative: true};
+    this.state = {contentList: [], isSortingEnabled: true, changeSpacingAsRelative: false};
     this.maxContentId;
     self = this;
   }
@@ -78,7 +78,7 @@ class BasicTemplateEdit extends React.Component {
     this.setState({isSortingEnabled: false});
   }
   onRelativeSpacingChange(event){
-    changeSpacingAsRelative = event.target.checked;
+    var changeSpacingAsRelative = event.target.checked;
     this.setState({changeSpacingAsRelative: changeSpacingAsRelative});
   }
 

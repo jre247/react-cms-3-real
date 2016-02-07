@@ -99,7 +99,8 @@ class GridRowLayout extends React.Component {
         setNewWidth: this.setNewWidth.bind(this, this.props.contentItem, this.props.contentIndex),
         setNewHeight: this.setNewHeight.bind(this, this.props.contentItem, this.props.contentIndex),
         isResizable: true,
-        alsoResizeElement: '.grid-row-layout > div'
+        alsoResizeElement: '.grid-row-layout > div',
+        alsoResize: this.props.alsoResize
       }, this.props);
 
     var contentItemContainerStyles;

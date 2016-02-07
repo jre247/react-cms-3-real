@@ -3332,7 +3332,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicTemplateEdit).call(this, props));
 
     _this.templateId = 1;
-    _this.state = { contentList: [], isSortingEnabled: true, changeSpacingAsRelative: true };
+    _this.state = { contentList: [], isSortingEnabled: true, changeSpacingAsRelative: false };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -3418,7 +3418,7 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'onRelativeSpacingChange',
     value: function onRelativeSpacingChange(event) {
-      changeSpacingAsRelative = event.target.checked;
+      var changeSpacingAsRelative = event.target.checked;
       this.setState({ changeSpacingAsRelative: changeSpacingAsRelative });
     }
   }, {
@@ -6362,7 +6362,8 @@ var GridRowLayout = (function (_React$Component) {
         setNewWidth: this.setNewWidth.bind(this, this.props.contentItem, this.props.contentIndex),
         setNewHeight: this.setNewHeight.bind(this, this.props.contentItem, this.props.contentIndex),
         isResizable: true,
-        alsoResizeElement: '.grid-row-layout > div'
+        alsoResizeElement: '.grid-row-layout > div',
+        alsoResize: this.props.alsoResize
       }, this.props);
 
       var contentItemContainerStyles;
@@ -6513,7 +6514,7 @@ var Resizable = (function (_React$Component) {
           resize: self.resize.bind(self)
         };
 
-        if (self.props.alsoResizeElement) {
+        if (self.props.alsoResize) {
           debugger;
           resizableConfig.alsoResize = self.props.alsoResizeElement;
         }

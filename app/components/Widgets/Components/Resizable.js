@@ -14,7 +14,7 @@ class Resizable extends React.Component {
         resize: self.resize.bind(self)
       }
 
-      if(self.props.alsoResizeElement){
+      if(self.props.alsoResize){
         debugger;
         resizableConfig.alsoResize = self.props.alsoResizeElement;
       }
