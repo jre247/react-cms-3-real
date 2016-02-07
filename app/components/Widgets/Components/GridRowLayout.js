@@ -22,6 +22,23 @@ class GridRowLayout extends React.Component {
       this.state.originalSizes.height = originalHeight;
     }
 
+    var setting = this.getSpacingBelowSetting(contentItem);
+
+    var newSettingValue = this.getNewSpacingBelowSettingValue(height);
+
+    setting.setting_value = newSettingValue;
+    contentItem.settings[2] = setting;
+
+    this.state.contentList[contentItemIndex] = contentItem;
+
+    // find the spacing below/above from whichever content item was changed and use that for all
+    // content items
+    this.updateSpacingBelowSettingForAllContents(newSettingValue);
+
+    this.setState({isResizing: true, originalSizes: this.state.originalSizes});
+    this.props.setStateForContentList(this.state.contentList);
+  }
+  getSpacingBelowSetting(contentItem){
     var settings = contentItem.settings;
     var setting = settings[2];
     if(!setting){
@@ -36,6 +53,9 @@ class GridRowLayout extends React.Component {
       }
     }
 
+    return setting;
+  }
+  getNewSpacingBelowSettingValue(height){
     var newSettingValue = null;
     if(this.state.originalSettings.spacingBelow > 0){
       newSettingValue = this.state.originalSettings.spacingBelow + (height - this.state.originalSizes.height);
@@ -44,17 +64,7 @@ class GridRowLayout extends React.Component {
       newSettingValue = height - originalHeight;
     }
 
-    setting.setting_value = newSettingValue;
-    contentItem.settings[2] = setting;
-
-    this.state.contentList[contentItemIndex] = contentItem;
-
-    // find the spacing below/above from whichever content item was changed and use that for ALL
-    // content items
-    this.updateSpacingBelowSettingForAllContents(newSettingValue);
-
-    this.setState({isResizing: true, originalSizes: this.state.originalSizes});
-    this.props.setStateForContentList(this.state.contentList);
+    return newSettingValue;
   }
   updateSpacingBelowSettingForAllContents(newSettingValue){
     if(this.props.changeSpacingAsRelative){
