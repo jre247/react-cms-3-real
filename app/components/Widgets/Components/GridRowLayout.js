@@ -24,7 +24,7 @@ class GridRowLayout extends React.Component {
 
     var setting = this.getSpacingBelowSetting(contentItem);
 
-    var newSettingValue = this.getNewSpacingBelowSettingValue(height);
+    var newSettingValue = this.getNewSpacingBelowSettingValue(height, originalHeight);
 
     setting.setting_value = newSettingValue;
     contentItem.settings[2] = setting;
@@ -55,7 +55,7 @@ class GridRowLayout extends React.Component {
 
     return setting;
   }
-  getNewSpacingBelowSettingValue(height){
+  getNewSpacingBelowSettingValue(height, originalHeight){
     var newSettingValue = null;
     if(this.state.originalSettings.spacingBelow > 0){
       newSettingValue = this.state.originalSettings.spacingBelow + (height - this.state.originalSizes.height);
@@ -88,6 +88,9 @@ class GridRowLayout extends React.Component {
   getContentItemContainerStyles(contentItem){
     var contentItemContainerStyles = null;
     var settings = contentItem.settings;
+    if(!settings){
+      return null;
+    }
     var spacingAbove = _.clone(settings[3]);
     var spacingBelow = _.clone(settings[2]);
     if(spacingAbove || spacingBelow){

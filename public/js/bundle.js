@@ -1772,137 +1772,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _AuthStore = require('../stores/AuthStore');
-
-var _AuthStore2 = _interopRequireDefault(_AuthStore);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AuthHeader = (function (_React$Component) {
-  _inherits(AuthHeader, _React$Component);
-
-  function AuthHeader(props) {
-    _classCallCheck(this, AuthHeader);
-
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthHeader).call(this, props));
-
-    _this.state = _AuthStore2.default.getState();
-    _this.onChange = _this.onChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(AuthHeader, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _AuthStore2.default.listen(this.onChange);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      _AuthStore2.default.unlisten(this.onChange);
-    }
-  }, {
-    key: 'onChange',
-    value: function onChange(state) {
-      this.setState(state);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      if (this.state.isAdmin) {
-        return _react2.default.createElement(
-          'nav',
-          { className: 'navbar navbar-default auth-nav-container' },
-          _react2.default.createElement(
-            'div',
-            { className: 'container' },
-            _react2.default.createElement(
-              'div',
-              { id: 'navbar', className: 'navbar-collapse collapse' },
-              _react2.default.createElement(
-                'ul',
-                { className: 'nav navbar-nav' },
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'auth-link', to: '/auth/role-manager' },
-                    'Role Manager'
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'auth-link', to: '/admin/pages' },
-                    'Pages Administration'
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'auth-link', to: '/admin/app-settings' },
-                    'App Settings'
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'auth-link', to: '/admin/meals' },
-                    'Meals'
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  { className: 'pull-right' },
-                  _react2.default.createElement(
-                    _reactRouter.Link,
-                    { className: 'auth-link', to: '/logout' },
-                    'Logout'
-                  )
-                )
-              )
-            )
-          )
-        );
-      } else {
-        return _react2.default.createElement('span', null);
-      }
-    }
-  }]);
-
-  return AuthHeader;
-})(_react2.default.Component);
-
-exports.default = AuthHeader;
-
-},{"../stores/AuthStore":110,"react":"react","react-router":"react-router"}],20:[function(require,module,exports){
-'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouter = require('react-router');
-
 var _underscore = require('underscore');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2004,7 +1873,7 @@ var Login = (function (_React$Component) {
 
 exports.default = Login;
 
-},{"react":"react","react-router":"react-router","underscore":"underscore"}],21:[function(require,module,exports){
+},{"react":"react","react-router":"react-router","underscore":"underscore"}],20:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2147,7 +2016,7 @@ var RoleManager = (function (_React$Component) {
 
 exports.default = RoleManager;
 
-},{"../../API":1,"../../helpers/AuthHelper":105,"history":133,"react":"react","underscore":"underscore"}],22:[function(require,module,exports){
+},{"../../API":1,"../../helpers/AuthHelper":105,"history":133,"react":"react","underscore":"underscore"}],21:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2340,7 +2209,7 @@ var RoleManagerUser = (function (_React$Component) {
 
 exports.default = RoleManagerUser;
 
-},{"../../API":1,"../../helpers/AuthHelper":105,"react":"react","underscore":"underscore"}],23:[function(require,module,exports){
+},{"../../API":1,"../../helpers/AuthHelper":105,"react":"react","underscore":"underscore"}],22:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -2476,7 +2345,138 @@ var Signup = (function (_React$Component) {
 
 exports.default = Signup;
 
-},{"react":"react","react-router":"react-router","underscore":"underscore"}],24:[function(require,module,exports){
+},{"react":"react","react-router":"react-router","underscore":"underscore"}],23:[function(require,module,exports){
+'use strict';
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var _AuthStore = require('../stores/AuthStore');
+
+var _AuthStore2 = _interopRequireDefault(_AuthStore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AuthHeader = (function (_React$Component) {
+  _inherits(AuthHeader, _React$Component);
+
+  function AuthHeader(props) {
+    _classCallCheck(this, AuthHeader);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AuthHeader).call(this, props));
+
+    _this.state = _AuthStore2.default.getState();
+    _this.onChange = _this.onChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(AuthHeader, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _AuthStore2.default.listen(this.onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _AuthStore2.default.unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.isAdmin) {
+        return _react2.default.createElement(
+          'nav',
+          { className: 'navbar navbar-default auth-nav-container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'container' },
+            _react2.default.createElement(
+              'div',
+              { id: 'navbar', className: 'navbar-collapse collapse' },
+              _react2.default.createElement(
+                'ul',
+                { className: 'nav navbar-nav' },
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/auth/role-manager' },
+                    'Role Manager'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/admin/pages' },
+                    'Pages Administration'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/admin/app-settings' },
+                    'App Settings'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  null,
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/admin/meals' },
+                    'Meals'
+                  )
+                ),
+                _react2.default.createElement(
+                  'li',
+                  { className: 'pull-right' },
+                  _react2.default.createElement(
+                    _reactRouter.Link,
+                    { className: 'auth-link', to: '/logout' },
+                    'Logout'
+                  )
+                )
+              )
+            )
+          )
+        );
+      } else {
+        return _react2.default.createElement('span', null);
+      }
+    }
+  }]);
+
+  return AuthHeader;
+})(_react2.default.Component);
+
+exports.default = AuthHeader;
+
+},{"../stores/AuthStore":110,"react":"react","react-router":"react-router"}],24:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -6282,7 +6282,7 @@ var GridRowLayout = (function (_React$Component) {
 
       var setting = this.getSpacingBelowSetting(contentItem);
 
-      var newSettingValue = this.getNewSpacingBelowSettingValue(height);
+      var newSettingValue = this.getNewSpacingBelowSettingValue(height, originalHeight);
 
       setting.setting_value = newSettingValue;
       contentItem.settings[2] = setting;
@@ -6316,7 +6316,7 @@ var GridRowLayout = (function (_React$Component) {
     }
   }, {
     key: 'getNewSpacingBelowSettingValue',
-    value: function getNewSpacingBelowSettingValue(height) {
+    value: function getNewSpacingBelowSettingValue(height, originalHeight) {
       var newSettingValue = null;
       if (this.state.originalSettings.spacingBelow > 0) {
         newSettingValue = this.state.originalSettings.spacingBelow + (height - this.state.originalSizes.height);
@@ -6354,6 +6354,9 @@ var GridRowLayout = (function (_React$Component) {
     value: function getContentItemContainerStyles(contentItem) {
       var contentItemContainerStyles = null;
       var settings = contentItem.settings;
+      if (!settings) {
+        return null;
+      }
       var spacingAbove = _underscore._.clone(settings[3]);
       var spacingBelow = _underscore._.clone(settings[2]);
       if (spacingAbove || spacingBelow) {
@@ -10672,7 +10675,7 @@ var App = (function (_React$Component) {
 
 exports.default = App;
 
-},{"../actions/AuthActions":3,"../actions/LookupActions":5,"../actions/PageActions":8,"../stores/AuthStore":110,"../stores/LookupStore":112,"../stores/PageStore":115,"./AppBackdrop":18,"./AuthHeader":19,"./Footer":26,"./Header":27,"react":"react"}],105:[function(require,module,exports){
+},{"../actions/AuthActions":3,"../actions/LookupActions":5,"../actions/PageActions":8,"../stores/AuthStore":110,"../stores/LookupStore":112,"../stores/PageStore":115,"./AppBackdrop":18,"./AuthHeader":23,"./Footer":26,"./Header":27,"react":"react"}],105:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -10884,7 +10887,7 @@ exports.default = _react2.default.createElement(
   _react2.default.createElement(_reactRouter.Route, { path: '/admin/meals/:id/edit', component: _Meal2.default })
 );
 
-},{"./components/Admin/AppSetting":10,"./components/Admin/AppSettings":11,"./components/Admin/Meal":12,"./components/Admin/Meals":13,"./components/Admin/PageAdministrationCreate":15,"./components/Admin/PageAdministrationEdit":16,"./components/Admin/PagesAdministration":17,"./components/Auth/Login":20,"./components/Auth/RoleManager":21,"./components/Auth/RoleManagerUser":22,"./components/Auth/Signup":23,"./components/Home":28,"./components/Page/PageEdit":30,"./components/Page/PageReadOnly":31,"./components/app":104,"react":"react","react-router":"react-router"}],109:[function(require,module,exports){
+},{"./components/Admin/AppSetting":10,"./components/Admin/AppSettings":11,"./components/Admin/Meal":12,"./components/Admin/Meals":13,"./components/Admin/PageAdministrationCreate":15,"./components/Admin/PageAdministrationEdit":16,"./components/Admin/PagesAdministration":17,"./components/Auth/Login":19,"./components/Auth/RoleManager":20,"./components/Auth/RoleManagerUser":21,"./components/Auth/Signup":22,"./components/Home":28,"./components/Page/PageEdit":30,"./components/Page/PageReadOnly":31,"./components/app":104,"react":"react","react-router":"react-router"}],109:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
