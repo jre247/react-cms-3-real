@@ -9,10 +9,17 @@ class Resizable extends React.Component {
   componentDidMount() {
     var self = this;
     if(this.props.isResizable){
-      $(ReactDOM.findDOMNode(self)).resizable({
+      var resizableConfig = {
         start: self.start.bind(self),
         resize: self.resize.bind(self)
-      });
+      }
+
+      if(self.props.alsoResizeElement){
+        debugger;
+        resizableConfig.alsoResize = self.props.alsoResizeElement;
+      }
+
+      $(ReactDOM.findDOMNode(self)).resizable(resizableConfig);
     }
   }
 
@@ -33,7 +40,6 @@ class Resizable extends React.Component {
       this.props.setNewHeight(null);
     }
     else{
-      debugger;
       this.props.setNewHeight(ui.size.height, ui.originalSize.height, true);
     }
   }

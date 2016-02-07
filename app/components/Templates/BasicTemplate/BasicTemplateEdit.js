@@ -8,7 +8,7 @@ import TemplateHelper from '../TemplateHelper';
 import WidgetService from '../../Widgets/WidgetService';
 import API from '../../../API';
 import Sortable from '../../Widgets/Components/Sortable';
-import Resizable from '../../Widgets/Components/Resizable';
+import GridRowLayout from '../../Widgets/Components/GridRowLayout';
 var self;
 
 class BasicTemplateEdit extends React.Component {
@@ -77,65 +77,6 @@ class BasicTemplateEdit extends React.Component {
   disableSorting(){
     this.setState({isSortingEnabled: false});
   }
-  setNewHeight(contentItem, contentItemIndex, height, originalHeight){
-    var settings = contentItem.settings;
-    var setting = settings[2];
-    if(!setting){
-      setting = {
-        content_id: contentItem.id,
-        setting_id: 2
-      }
-    }
-    var newSettingValue = height - originalHeight;
-    setting.setting_value = newSettingValue;
-    contentItem.settings[2] = setting;
-
-    this.state.contentList[contentItemIndex] = contentItem;
-
-    // find the spacing below/above from whichever content item was changed and use that for ALL
-    // content items
-    this.updateSpacingBelowSettingForAllContents(newSettingValue);
-
-    self.setState({isResizing: true});
-    self.setStateForContentList(self.state.contentList);
-  }
-  updateSpacingBelowSettingForAllContents(newSettingValue){
-    if(this.state.changeSpacingAsRelative){
-      var self = this;
-      _.each(self.state.contentList, (contentItemCompare, indexCompare) =>{
-        var settingsCompare = contentItemCompare.settings;
-        var spacingBelow = settingsCompare[2];
-        if(!spacingBelow){
-          spacingBelow = {content_id: contentItemCompare.id, setting_id: 2};
-        }
-        spacingBelow.setting_value = newSettingValue;
-
-        contentItemCompare.settings[2] = spacingBelow;
-        self.state.contentList[indexCompare] = contentItemCompare;
-      });
-    }
-  }
-  setNewWidth(width, contentItem){
-    self.setState({isResizing: true});
-  }
-  getContentItemContainerStyles(contentItem){
-    var contentItemContainerStyles = null;
-    var settings = contentItem.settings;
-    var spacingAbove = _.clone(settings[3]);
-    var spacingBelow = _.clone(settings[2]);
-    if(spacingAbove || spacingBelow){
-      contentItemContainerStyles = {};
-
-      if(spacingBelow){
-        contentItemContainerStyles.marginBottom = spacingBelow.setting_value;
-      }
-      if(spacingAbove){
-        contentItemContainerStyles.marginTop = spacingAbove.setting_value
-      }
-    }
-
-    return contentItemContainerStyles;
-  }
   onRelativeSpacingChange(event){
     changeSpacingAsRelative = event.target.checked;
     this.setState({changeSpacingAsRelative: changeSpacingAsRelative});
@@ -169,22 +110,19 @@ class BasicTemplateEdit extends React.Component {
         };
 
         var fieldsPropData = _.extend(propsData, self.props);
-
-        var resizableProps = _.extend({
-            setNewWidth: this.setNewWidth.bind(this, contentItem, index),
-            setNewHeight: this.setNewHeight.bind(this, contentItem, index),
-            isResizable: true
-          }, this.props);
-
-        var contentItemContainerStyles = this.getContentItemContainerStyles(contentItem);
+        var gridRowLayoutProps = _.extend({
+          contentItem: contentItem,
+          contentIndex: index,
+          contentList: this.state.contentList,
+          setStateForContentList: this.setStateForContentList.bind(this),
+          changeSpacingAsRelative: this.state.changeSpacingAsRelative
+        }, this.props);
 
         return (
           <div key={contentItem.sort_order} className='ContentItem content-item-sortable' data-id={contentItem.id}>
-            <div className="content-item-container" style={contentItemContainerStyles}>
-              <Resizable {...resizableProps}>
-                <Field {...fieldsPropData} />
-              </Resizable>
-            </div>
+            <GridRowLayout {...gridRowLayoutProps}>
+              <Field {...fieldsPropData} />
+            </GridRowLayout>
           </div>
         );
       });
@@ -204,8 +142,15 @@ class BasicTemplateEdit extends React.Component {
               <div className="col-md-6">
                 <WidgetSelectList {...widgetListPropsData} />
               </div>
-              <div className="col-md-2">
-                <input className="form-control" type="checkbox" value={this.state.changeSpacingAsRelative} checked={this.state.changeSpacingAsRelative} onChange={this.onRelativeSpacingChange.bind(this)} />
+              <div className="col-md-4">
+                <div className="row">
+                  <div className="col-md-6">
+                    Resize in unison:
+                  </div>
+                  <div className="col-md-2">
+                    <input className="form-control unison-checkbox" type="checkbox" value={this.state.changeSpacingAsRelative} checked={this.state.changeSpacingAsRelative} onChange={this.onRelativeSpacingChange.bind(this)} />
+                  </div>
+                </div>
               </div>
             </div>
             <Sortable {...sortableProps}>

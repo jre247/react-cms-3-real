@@ -60,7 +60,6 @@ class ContentSettingsEdit extends React.Component {
 
   shouldComponentUpdate(){
     if(this.state.isPreviewingContent){
-      debugger;
       return false;
     }
     else{
