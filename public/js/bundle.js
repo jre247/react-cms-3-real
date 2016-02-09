@@ -6276,6 +6276,8 @@ var GridRowLayout = (function (_React$Component) {
   }, {
     key: 'setNewHeight',
     value: function setNewHeight(contentItem, contentItemIndex, height, originalHeight) {
+      this.setState({ isResizing: true, originalSizes: this.state.originalSizes });
+
       if (!this.state.originalSizes.height) {
         this.state.originalSizes.height = originalHeight;
       }
@@ -6287,14 +6289,33 @@ var GridRowLayout = (function (_React$Component) {
       setting.setting_value = newSettingValue;
       contentItem.settings[2] = setting;
 
-      this.state.contentList[contentItemIndex] = contentItem;
+      if (this.props.isListGridTemplate) {
+        var contentGroupIndex = _underscore._.clone(this.props.contentGroupIndex);
 
-      // find the spacing below/above from whichever content item was changed and use that for all
-      // content items
-      this.updateSpacingBelowSettingForAllContents(newSettingValue);
+        if (!contentItem.parent_index && typeof contentItem.parent_index !== 'number') {
+          var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+          contentGroupItem.parentListItem = contentItem;
+        } else {
+          var row = contentItem.row_number;
+          var column = contentItem.column_number;
 
-      this.setState({ isResizing: true, originalSizes: this.state.originalSizes });
-      this.props.setStateForContentList(this.state.contentList);
+          var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+          var contentList = contentGroupItem.rows[row].columns[column].contentList;
+          contentList[contentItemIndex] = contentItem;
+        }
+
+        this.props.setStateForContentGroupList();
+
+        // find the spacing below/above from whichever content item was changed and use that for all
+        // content items
+        this.updateSpacingBelowSettingForAllContents(newSettingValue);
+      } else {
+        this.state.contentList[contentItemIndex] = contentItem;
+
+        // find the spacing below/above from whichever content item was changed and use that for all
+        // content items
+        this.updateSpacingBelowSettingForAllContents(newSettingValue);
+      }
     }
   }, {
     key: 'getSpacingBelowSetting',
@@ -6378,7 +6399,7 @@ var GridRowLayout = (function (_React$Component) {
       var resizableProps = _underscore._.extend({
         setNewWidth: this.setNewWidth.bind(this, this.props.contentItem, this.props.contentIndex),
         setNewHeight: this.setNewHeight.bind(this, this.props.contentItem, this.props.contentIndex),
-        isResizable: true,
+        isResizable: this.props.isEdit ? true : false,
         alsoResizeElement: '.grid-row-layout > div',
         alsoResize: this.props.alsoResize
       }, this.props);
@@ -7916,6 +7937,10 @@ var _WidgetSelectList = require('../../Widgets/WidgetSelectList');
 
 var _WidgetSelectList2 = _interopRequireDefault(_WidgetSelectList);
 
+var _GridRowLayout = require('../../Widgets/Components/GridRowLayout');
+
+var _GridRowLayout2 = _interopRequireDefault(_GridRowLayout);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7986,6 +8011,9 @@ var ListGridGroupColumn = (function (_React$Component) {
       this.props.setStateForContentGroupList();
     }
   }, {
+    key: 'onGridRowLayoutChange',
+    value: function onGridRowLayoutChange(size) {}
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -8011,10 +8039,23 @@ var ListGridGroupColumn = (function (_React$Component) {
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 
+        var gridRowLayoutProps = _underscore._.extend({
+          contentItem: contentItem,
+          contentIndex: index,
+          contentList: self.props.contentList,
+          setStateForContentGroupList: self.props.setStateForContentGroupList.bind(_this2),
+          changeSpacingAsRelative: self.props.changeSpacingAsRelative,
+          isListGridTemplate: true
+        }, self.props);
+
         return _react2.default.createElement(
           'div',
           { key: index, className: 'List-Grid-Group-Column-Content-Item' },
-          _react2.default.createElement(_Field2.default, fieldPropsData)
+          _react2.default.createElement(
+            _GridRowLayout2.default,
+            gridRowLayoutProps,
+            _react2.default.createElement(_Field2.default, fieldPropsData)
+          )
         );
       });
 
@@ -8044,7 +8085,7 @@ var ListGridGroupColumn = (function (_React$Component) {
 
 exports.default = ListGridGroupColumn;
 
-},{"../../Templates/TemplateHelper":40,"../../Widgets/Field/Field":54,"../../Widgets/Field/FieldHelper":56,"../../Widgets/WidgetSelectList":102,"react":"react","react-router":"react-router","underscore":"underscore"}],70:[function(require,module,exports){
+},{"../../Templates/TemplateHelper":40,"../../Widgets/Components/GridRowLayout":50,"../../Widgets/Field/Field":54,"../../Widgets/Field/FieldHelper":56,"../../Widgets/WidgetSelectList":102,"react":"react","react-router":"react-router","underscore":"underscore"}],70:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

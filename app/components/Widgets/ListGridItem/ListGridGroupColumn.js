@@ -5,6 +5,7 @@ import Field from '../../Widgets/Field/Field';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import TemplateHelper from '../../Templates/TemplateHelper';
 import WidgetSelectList from '../../Widgets/WidgetSelectList';
+import GridRowLayout from '../../Widgets/Components/GridRowLayout';
 var self;
 
 class ListGridGroupColumn extends React.Component {
@@ -58,6 +59,9 @@ class ListGridGroupColumn extends React.Component {
     TemplateHelper.setSortOrderAndRowAndColumnForContentGroups(this.props.contentGroupList);
     this.props.setStateForContentGroupList();
   }
+  onGridRowLayoutChange(size){
+
+  }
 
   render() {
     var widgetListPropsData = {
@@ -81,9 +85,20 @@ class ListGridGroupColumn extends React.Component {
       };
       var fieldPropsData = _.extend(propsData, this.props);
 
+      var gridRowLayoutProps = _.extend({
+        contentItem: contentItem,
+        contentIndex: index,
+        contentList: self.props.contentList,
+        setStateForContentGroupList: self.props.setStateForContentGroupList.bind(this),
+        changeSpacingAsRelative: self.props.changeSpacingAsRelative,
+        isListGridTemplate: true
+      }, self.props);
+
       return(
         <div key={index} className="List-Grid-Group-Column-Content-Item">
-          <Field {...fieldPropsData} />
+          <GridRowLayout {...gridRowLayoutProps}>
+            <Field {...fieldPropsData} />
+          </GridRowLayout>
         </div>
       );
     });
