@@ -22,7 +22,7 @@
   margin-bottom: 40px;
 }
 .List-Grid-Group-Column-Small-Edit {
-  width: 47%;
+  // width: 47%;
 }
 
 .List-Grid-Row-Edit{
@@ -113,4 +113,49 @@
 
 .List-Grid-Template .Content-image-input-container{
   width: 64%;
+}
+
+.Content-item{
+  max-width: 253px;
+}
+
+.List-Grid-Template{
+  .list-grid-row-container{
+    display:inline-block;
+    width: 35%;
+  }
+  .List-Grid-Row-Edit{
+    .List-Grid-Group-Column-Small-Edit{
+      width: 100%;
+    }
+    .List-Grid-Group-Column-Content-Item{
+      .grid-row-layout{
+        width: 100%;
+
+        .resizable-container{
+          border-right: none;
+          border-bottom: 1px dotted lightgray;
+          padding: 5px;
+        }
+      }
+    }
+    .grid-row-layout{
+      display: inline-block;
+
+      .resizable-container{
+        border-right: 1px dotted lightgray;
+        border-bottom: none;
+        padding: 5px;
+      }
+    }
+  }
+
+  .List-Page-Read-Only{
+    .List-Grid-Row {
+      .grid-row-layout{
+        display: inline-block;
+        width: 35%;
+      }
+    }
+  }
 }

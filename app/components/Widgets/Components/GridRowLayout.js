@@ -18,11 +18,11 @@ class GridRowLayout extends React.Component {
   }
 
   setNewHeight(contentItem, contentItemIndex, height, originalHeight){
-    this.setState({isResizing: true, originalSizes: this.state.originalSizes});
-
     if(!this.state.originalSizes.height){
       this.state.originalSizes.height = originalHeight;
     }
+
+    this.setState({isResizing: true, originalSizes: this.state.originalSizes});
 
     var setting = this.getSpacingBelowSetting(contentItem);
 
@@ -32,26 +32,7 @@ class GridRowLayout extends React.Component {
     contentItem.settings[2] = setting;
 
     if(this.props.isListGridTemplate){
-      var contentGroupIndex = _.clone(this.props.contentGroupIndex);
-
-      if(!contentItem.parent_index && typeof contentItem.parent_index !== 'number'){
-        var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
-        contentGroupItem.parentListItem = contentItem;
-      }
-      else{
-        var row = contentItem.row_number;
-        var column = contentItem.column_number;
-
-        var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
-        var contentList = contentGroupItem.rows[row].columns[column].contentList;
-        contentList[contentItemIndex] = contentItem;
-      }
-
-      this.props.setStateForContentGroupList();
-
-      // find the spacing below/above from whichever content item was changed and use that for all
-      // content items
-      this.updateSpacingBelowSettingForAllContents(newSettingValue);
+      this.updateContentItemForListGridTemplate(contentItem, contentItemIndex, newSettingValue);
     }
     else{
       this.state.contentList[contentItemIndex] = contentItem;
@@ -60,6 +41,72 @@ class GridRowLayout extends React.Component {
       // content items
       this.updateSpacingBelowSettingForAllContents(newSettingValue);
     }
+  }
+
+  setNewWidth(contentItem, contentItemIndex, width, originalWidth){
+    if(!this.state.originalSizes.width){
+      this.state.originalSizes.width = originalWidth;
+    }
+
+    this.setState({isResizing: true, originalSizes: this.state.originalSizes});
+
+    var setting = this.getSpacingRightSetting(contentItem);
+
+    var newSettingValue = this.getNewSpacingRightSettingValue(width, originalWidth);
+
+    setting.setting_value = newSettingValue;
+    contentItem.settings[4] = setting;
+
+    if(this.props.isListGridTemplate){
+      this.updateContentItemForListGridTemplate(contentItem, contentItemIndex, width);
+    }
+    else{
+      this.state.contentList[contentItemIndex] = contentItem;
+
+      // find the spacing below/above from whichever content item was changed and use that for all
+      // content items
+    //  this.updateSpacingBelowSettingForAllContents(newSettingValue);
+    }
+  }
+
+  updateContentItemForListGridTemplate(contentItem, contentItemIndex, newSettingValue){
+    var contentGroupIndex = _.clone(this.props.contentGroupIndex);
+
+    if(!contentItem.parent_index && typeof contentItem.parent_index !== 'number'){
+      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+      contentGroupItem.parentListItem = contentItem;
+    }
+    else{
+      var row = contentItem.row_number;
+      var column = contentItem.column_number;
+
+      var contentGroupItem = this.props.contentGroupList[contentGroupIndex];
+      var contentList = contentGroupItem.rows[row].columns[column].contentList;
+      contentList[contentItemIndex] = contentItem;
+    }
+
+    this.props.setStateForContentGroupList();
+
+    // find the spacing below/above from whichever content item was changed and use that for all
+    // content items
+    this.updateSpacingBelowSettingForAllContents(newSettingValue);
+  }
+  getSpacingRightSetting(contentItem){
+    var settings = contentItem.settings;
+    var setting = settings[4];
+    if(!setting){
+      setting = {
+        content_id: contentItem.id,
+        setting_id: 4
+      }
+    }
+    else{
+      if(!this.state.originalSettings.spacingRight){
+        this.state.originalSettings.spacingRight = parseInt(setting.setting_value);
+      }
+    }
+
+    return setting;
   }
   getSpacingBelowSetting(contentItem){
     var settings = contentItem.settings;
@@ -89,6 +136,17 @@ class GridRowLayout extends React.Component {
 
     return newSettingValue;
   }
+  getNewSpacingRightSettingValue(width, originalWidth){
+    var newSettingValue = null;
+    if(this.state.originalSettings.width > 0){
+      newSettingValue = this.state.originalSettings.width + (width - this.state.originalSizes.width);
+    }
+    else{
+      newSettingValue = width - originalWidth;
+    }
+
+    return newSettingValue;
+  }
   updateSpacingBelowSettingForAllContents(newSettingValue){
     if(this.props.changeSpacingAsRelative){
       var self = this;
@@ -105,11 +163,9 @@ class GridRowLayout extends React.Component {
       });
     }
   }
-  setNewWidth(width, contentItem){
-    this.setState({isResizing: true});
-  }
+
   getContentItemContainerStyles(contentItem){
-    var contentItemContainerStyles = null;
+    var contentItemContainerStyles = {};
     var settings = contentItem.settings;
     if(!settings){
       return null;
@@ -117,14 +173,21 @@ class GridRowLayout extends React.Component {
     var spacingAbove = _.clone(settings[3]);
     var spacingBelow = _.clone(settings[2]);
     if(spacingAbove || spacingBelow){
-      contentItemContainerStyles = {};
-
       if(spacingBelow){
         contentItemContainerStyles.marginBottom = spacingBelow.setting_value;
       }
       if(spacingAbove){
         contentItemContainerStyles.marginTop = spacingAbove.setting_value
       }
+    }
+
+    var spacingRight = _.clone(settings[4]);
+    var spacingLeft = _.clone(settings[5]);
+    if(spacingRight){
+      contentItemContainerStyles.marginRight = spacingRight.setting_value;
+    }
+    if(spacingLeft){
+      contentItemContainerStyles.marginLeft = spacingLeft.setting_value;
     }
 
     return contentItemContainerStyles;
@@ -141,7 +204,9 @@ class GridRowLayout extends React.Component {
 
     var contentItemContainerStyles;
     if(!this.state.isResizing){
-      contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
+      if(this.props.contentItem){
+        contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
+      }
     }
 
     var contentItemContainerClass = classNames({

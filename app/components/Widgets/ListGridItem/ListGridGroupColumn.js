@@ -88,9 +88,6 @@ class ListGridGroupColumn extends React.Component {
       var gridRowLayoutProps = _.extend({
         contentItem: contentItem,
         contentIndex: index,
-        contentList: self.props.contentList,
-        setStateForContentGroupList: self.props.setStateForContentGroupList.bind(this),
-        changeSpacingAsRelative: self.props.changeSpacingAsRelative,
         isListGridTemplate: true
       }, self.props);
 
@@ -110,7 +107,7 @@ class ListGridGroupColumn extends React.Component {
             <WidgetSelectList {...widgetListPropsData} />
           </div>
 
-          <div className='row list-grid-column-content-container'>
+          <div className='list-grid-column-content-container'>
             {nodes}
           </div>
         </div>
