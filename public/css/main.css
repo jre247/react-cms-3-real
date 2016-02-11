@@ -7561,9 +7561,6 @@ a:hover {
 .List-template .parent-item-edit .Content-item {
   width: 86%;
 }
-.List-Grid-Group-Column {
-  width: 65%;
-}
 .List-Grid-Group-Column,
 .List-Grid-Group-Column-Edit,
 .List-Grid-Group-Column-Small,
@@ -7684,7 +7681,6 @@ a:hover {
 }
 .List-Grid-Template .List-Page-Read-Only .List-Grid-Row .grid-row-layout {
   display: inline-block;
-  width: 35%;
 }
 .Content-long-description-container {
   display: inline-block;
