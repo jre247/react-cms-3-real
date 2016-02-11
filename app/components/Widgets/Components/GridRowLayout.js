@@ -138,8 +138,8 @@ class GridRowLayout extends React.Component {
   }
   getNewSpacingRightSettingValue(width, originalWidth){
     var newSettingValue = null;
-    if(this.state.originalSettings.width > 0){
-      newSettingValue = this.state.originalSettings.width + (width - this.state.originalSizes.width);
+    if(this.state.originalSettings.spacingRight > 0){
+      newSettingValue = this.state.originalSettings.spacingRight + (width - this.state.originalSizes.width);
     }
     else{
       newSettingValue = width - originalWidth;
