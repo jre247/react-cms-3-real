@@ -9,13 +9,14 @@ import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import EditLink from '../../EditLink';
 import WidgetService from '../../Widgets/WidgetService';
+import GridRowLayout from '../../Widgets/Components/GridRowLayout';
 var self;
 
 class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 3;
-    this.state = {contentList: []};
+    this.state = {contentList: [], changeSpacingAsRelative: false};
     this.isContentListRetrieved = false;
     self = this;
   }
@@ -143,13 +144,23 @@ class ListTemplate extends React.Component {
         };
         var listItemProps = _.extend(propsData, this.props);
 
+        var gridRowLayoutProps = _.extend({
+          contentItem: contentItem,
+          contentIndex: index,
+          contentList: this.state.contentList,
+          setStateForContentList: this.setStateForContentList.bind(this),
+          changeSpacingAsRelative: this.state.changeSpacingAsRelative
+        }, this.props);
+
         //override onRemove function for list item if lit item is parent list item
         if(FieldHelper.isSubListItem(contentItem)){
           subListItemIndex++;
           listItemProps.subListItemIndex = subListItemIndex;
           return(
             <div key={index}>
-              <SubListItem {...listItemProps} />
+              <GridRowLayout {...gridRowLayoutProps}>
+                <SubListItem {...listItemProps} />
+              </GridRowLayout>
             </div>
           );
         }
@@ -158,7 +169,9 @@ class ListTemplate extends React.Component {
           subListItemIndex = 0;
           return(
             <div key={index}>
-              <ParentListItem {...listItemProps} />
+              <GridRowLayout {...gridRowLayoutProps}>
+                <ParentListItem {...listItemProps} />
+              </GridRowLayout>
             </div>
           );
         }

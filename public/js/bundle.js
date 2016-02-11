@@ -4000,6 +4000,10 @@ var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
 
+var _GridRowLayout = require('../../Widgets/Components/GridRowLayout');
+
+var _GridRowLayout2 = _interopRequireDefault(_GridRowLayout);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4019,7 +4023,7 @@ var ListTemplate = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
 
     _this.templateId = 3;
-    _this.state = { contentList: [] };
+    _this.state = { contentList: [], changeSpacingAsRelative: false };
     _this.isContentListRetrieved = false;
     self = _this;
     return _this;
@@ -4173,6 +4177,14 @@ var ListTemplate = (function (_React$Component) {
           };
           var listItemProps = _underscore._.extend(propsData, _this2.props);
 
+          var gridRowLayoutProps = _underscore._.extend({
+            contentItem: contentItem,
+            contentIndex: index,
+            contentList: _this2.state.contentList,
+            setStateForContentList: _this2.setStateForContentList.bind(_this2),
+            changeSpacingAsRelative: _this2.state.changeSpacingAsRelative
+          }, _this2.props);
+
           //override onRemove function for list item if lit item is parent list item
           if (_FieldHelper2.default.isSubListItem(contentItem)) {
             subListItemIndex++;
@@ -4180,7 +4192,11 @@ var ListTemplate = (function (_React$Component) {
             return _react2.default.createElement(
               'div',
               { key: index },
-              _react2.default.createElement(_SubListItem2.default, listItemProps)
+              _react2.default.createElement(
+                _GridRowLayout2.default,
+                gridRowLayoutProps,
+                _react2.default.createElement(_SubListItem2.default, listItemProps)
+              )
             );
           } else {
             listItemProps.onRemove = _this2.removeContentAndItsSubListItems.bind(_this2, index);
@@ -4188,7 +4204,11 @@ var ListTemplate = (function (_React$Component) {
             return _react2.default.createElement(
               'div',
               { key: index },
-              _react2.default.createElement(_ParentListItem2.default, listItemProps)
+              _react2.default.createElement(
+                _GridRowLayout2.default,
+                gridRowLayoutProps,
+                _react2.default.createElement(_ParentListItem2.default, listItemProps)
+              )
             );
           }
         });
@@ -4242,7 +4262,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/FieldHelper":56,"../../Widgets/ListItem/ParentListItem":75,"../../Widgets/ListItem/SubListItem":78,"../../Widgets/Title/TitleFactory":93,"../../Widgets/WidgetService":103,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],37:[function(require,module,exports){
+},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Components/GridRowLayout":50,"../../Widgets/Field/FieldHelper":56,"../../Widgets/ListItem/ParentListItem":75,"../../Widgets/ListItem/SubListItem":78,"../../Widgets/Title/TitleFactory":93,"../../Widgets/WidgetService":103,"../TemplateHelper":40,"react":"react","react-router":"react-router","underscore":"underscore"}],37:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
