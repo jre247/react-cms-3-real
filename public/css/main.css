@@ -7633,7 +7633,7 @@ a:hover {
 }
 .List-Grid-Template .List-Grid-Group-Column-Edit .Content-item {
   text-align: left;
-  width: 78%;
+  width: 70%;
   display: inline-block;
 }
 .List-Grid-Template .Sub-List-Items {
@@ -7649,12 +7649,19 @@ a:hover {
 .List-Grid-Template .Content-image-input-container {
   width: 64%;
 }
-.Content-item {
-  max-width: 253px;
-}
 .List-Grid-Template .list-grid-row-container {
   display: inline-block;
   width: 35%;
+}
+.List-Grid-Template .List-Grid-Row-Edit .Content-item {
+  max-width: 253px;
+  width: 70%;
+}
+.List-Grid-Template .List-Grid-Row-Edit .Content-image-container {
+  width: 100%;
+}
+.List-Grid-Template .List-Grid-Row-Edit .Content-title {
+  width: 61%;
 }
 .List-Grid-Template .List-Grid-Row-Edit .List-Grid-Group-Column-Small-Edit {
   width: 100%;
