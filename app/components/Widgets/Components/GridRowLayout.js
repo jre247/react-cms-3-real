@@ -186,7 +186,13 @@ class GridRowLayout extends React.Component {
 
     // for now don't add spacing right for list grid template since it's manually added
     if(spacingRight && !this.props.suppressSpacingRight){
-      contentItemContainerStyles.marginRight = spacingRight.setting_value;
+      if(this.props.useRelativePositioningForSpacingRight){
+        contentItemContainerStyles.position = 'relative';
+        contentItemContainerStyles.right = spacingRight.setting_value;
+      }
+      else{
+        contentItemContainerStyles.marginRight = spacingRight.setting_value;
+      }
     }
     if(spacingLeft){
       contentItemContainerStyles.marginLeft = spacingLeft.setting_value;

@@ -7854,6 +7854,7 @@ a:hover {
   width: 1300px;
   top: 15px;
   transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+  margin: 0px auto;
 }
 .modal-content-area {
   width: 100%;

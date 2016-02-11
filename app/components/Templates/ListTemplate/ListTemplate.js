@@ -149,7 +149,8 @@ class ListTemplate extends React.Component {
           contentIndex: index,
           contentList: this.state.contentList,
           setStateForContentList: this.setStateForContentList.bind(this),
-          changeSpacingAsRelative: this.state.changeSpacingAsRelative
+          changeSpacingAsRelative: this.state.changeSpacingAsRelative,
+          useRelativePositioningForSpacingRight: true
         }, this.props);
 
         //override onRemove function for list item if lit item is parent list item
