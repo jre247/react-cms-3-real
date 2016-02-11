@@ -88,7 +88,8 @@ class ListGridGroupColumn extends React.Component {
       var gridRowLayoutProps = _.extend({
         contentItem: contentItem,
         contentIndex: index,
-        isListGridTemplate: true
+        isListGridTemplate: true,
+        suppressSpacingRight: true
       }, self.props);
 
       return(

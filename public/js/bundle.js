@@ -6303,7 +6303,7 @@ var GridRowLayout = (function (_React$Component) {
     key: 'setNewWidth',
     value: function setNewWidth(contentItem, contentItemIndex, width, originalWidth) {
       if (!this.state.originalSizes.width) {
-        this.state.originalSizes.width = originalWidth;
+        this.state.originalSizes.width = originalWidth + 10; // add padding
       }
 
       this.setState({ isResizing: true, originalSizes: this.state.originalSizes });
@@ -6447,7 +6447,9 @@ var GridRowLayout = (function (_React$Component) {
 
       var spacingRight = _underscore._.clone(settings[4]);
       var spacingLeft = _underscore._.clone(settings[5]);
-      if (spacingRight) {
+
+      // for now don't add spacing right for list grid template since it's manually added
+      if (spacingRight && !this.props.suppressSpacingRight) {
         contentItemContainerStyles.marginRight = spacingRight.setting_value;
       }
       if (spacingLeft) {
@@ -8107,7 +8109,8 @@ var ListGridGroupColumn = (function (_React$Component) {
         var gridRowLayoutProps = _underscore._.extend({
           contentItem: contentItem,
           contentIndex: index,
-          isListGridTemplate: true
+          isListGridTemplate: true,
+          suppressSpacingRight: true
         }, self.props);
 
         return _react2.default.createElement(
