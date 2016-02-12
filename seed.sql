@@ -8,6 +8,7 @@ drop table wedding_user;
 drop table template;
 drop table app_setting;
 drop table meal;
+drop table rsvp;
 drop table setting;
 CREATE TABLE app_setting
 (
@@ -30,6 +31,18 @@ CREATE TABLE meal
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(40) not null,
 	sort_order INTEGER NOT NULL,
+	is_active BOOLEAN
+);
+CREATE TABLE rsvp
+(
+	id SERIAL PRIMARY KEY,
+	first_name VARCHAR(80),
+	last_name VARCHAR(80),
+	full_name VARCHAR(80),
+	email VARCHAR(280),
+	comments VARCHAR(680),
+	is_attending BOOLEAN,
+	meal_id INTEGER NOT NULL references meal(id),
 	is_active BOOLEAN
 );
 CREATE TABLE template
@@ -168,6 +181,8 @@ GRANT ALL PRIVILEGES ON TABLE app_setting TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE app_setting_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE meal TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE meal_id_seq TO jevans;
+GRANT ALL PRIVILEGES ON TABLE rsvp TO jevans;
+GRANT USAGE, SELECT ON SEQUENCE rsvp_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE setting TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE setting_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE content_setting TO jevans;
