@@ -6282,7 +6282,8 @@ var GridRowLayout = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(GridRowLayout).call(this, props));
 
-    _this.state = { isResizing: false, contentList: null, contentItem: null, originalSizes: {}, originalSettings: {} };
+    _this.state = { isResizing: false, contentList: null, contentItem: null, originalSizes: {},
+      originalSettings: {} };
     return _this;
   }
 
@@ -6415,6 +6416,11 @@ var GridRowLayout = (function (_React$Component) {
         newSettingValue = height - originalHeight;
       }
 
+      // make sure setting value is never below 0
+      if (newSettingValue < 0) {
+        newSettingValue = 0;
+      }
+
       return newSettingValue;
     }
   }, {
@@ -6445,6 +6451,8 @@ var GridRowLayout = (function (_React$Component) {
           contentItemCompare.settings[2] = spacingBelow;
           self.state.contentList[indexCompare] = contentItemCompare;
         });
+
+        this.props.setStateForContentList(self.state.contentList);
       }
     }
   }, {
@@ -6496,10 +6504,8 @@ var GridRowLayout = (function (_React$Component) {
       }, this.props);
 
       var contentItemContainerStyles;
-      if (!this.state.isResizing) {
-        if (this.props.contentItem) {
-          contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
-        }
+      if (this.props.contentItem) {
+        contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
       }
 
       var contentItemContainerClass = (0, _classnames2.default)({

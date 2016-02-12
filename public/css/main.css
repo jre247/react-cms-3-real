@@ -7561,6 +7561,9 @@ a:hover {
 .List-template .parent-item-edit .Content-item {
   width: 86%;
 }
+.List-template .edit-content .Content-image-container .content-settings-container-readonly .non-resizable-container {
+  width: inherit;
+}
 .List-Grid-Group-Column,
 .List-Grid-Group-Column-Edit,
 .List-Grid-Group-Column-Small,
@@ -7825,6 +7828,9 @@ a:hover {
 }
 .basic-template-edit .unison-checkbox {
   height: 15px;
+}
+.basic-template-edit .Content-image-container .content-settings-container-readonly .non-resizable-container {
+  width: inherit;
 }
 .carousel-control.left {
   left: 100px;

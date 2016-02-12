@@ -6,7 +6,8 @@ import Resizable from './Resizable';
 class GridRowLayout extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {isResizing: false, contentList: null, contentItem: null, originalSizes: {}, originalSettings: {}};
+    this.state = {isResizing: false, contentList: null, contentItem: null, originalSizes: {},
+      originalSettings: {}};
   }
 
   componentDidMount() {
@@ -134,6 +135,11 @@ class GridRowLayout extends React.Component {
       newSettingValue = height - originalHeight;
     }
 
+    // make sure setting value is never below 0
+    if(newSettingValue < 0){
+      newSettingValue = 0;
+    }
+
     return newSettingValue;
   }
   getNewSpacingRightSettingValue(width, originalWidth){
@@ -161,6 +167,8 @@ class GridRowLayout extends React.Component {
         contentItemCompare.settings[2] = spacingBelow;
         self.state.contentList[indexCompare] = contentItemCompare;
       });
+
+      this.props.setStateForContentList(self.state.contentList);
     }
   }
 
@@ -211,10 +219,8 @@ class GridRowLayout extends React.Component {
       }, this.props);
 
     var contentItemContainerStyles;
-    if(!this.state.isResizing){
-      if(this.props.contentItem){
-        contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
-      }
+    if(this.props.contentItem){
+      contentItemContainerStyles = this.getContentItemContainerStyles(this.props.contentItem);
     }
 
     var contentItemContainerClass = classNames({
