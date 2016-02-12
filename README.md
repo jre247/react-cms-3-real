@@ -55,6 +55,14 @@ GRANT ALL PRIVILEGES ON DATABASE Wedding to jevans;
 6) run seed.sql in postgres to create tables, data, etc.
 	-you can find seed.sql in the root directory of the project
 
+------------------------------------------------------------------------------------------------
+
+Deploy Instructions:
+
+1) run the following command in a folder that is linked to your remote heroku:
+
+git push heroku master
+
 
 
 
