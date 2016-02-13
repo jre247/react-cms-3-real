@@ -104,9 +104,13 @@ class PhotoAlbumTemplateEdit extends React.Component {
         }
     });
 
-    var sortableProps = _.extend({sortableItemElement: '.Photo', itemList: self.state.contentList,
-      itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this)},
-      this.props);
+    var sortableProps = _.extend({
+      sortableItemElement: '.Photo',
+      itemList: self.state.contentList,
+      itemPropertyToSortBy: 'sort_order',
+      setStateForItemList: self.setStateForContentList.bind(this),
+      isSortingEnabled: true
+    }, this.props);
 
     return (
       <div className='Content-panel Photo-album-template'>

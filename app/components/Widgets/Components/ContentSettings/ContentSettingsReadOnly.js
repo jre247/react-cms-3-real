@@ -30,6 +30,7 @@ class ContentSettingsReadOnly extends React.Component {
 
     if(this.props.isContentEditable){
         containerStyles['fontSize'] = null;
+        containerStyles['fontWeight'] = null;
         containerStyles['color'] = null;
         containerStyles['lineHeight'] = null;
     }
@@ -113,13 +114,16 @@ class ContentSettingsReadOnly extends React.Component {
         styles['backgroundColor'] = setting.setting_value;
       }
       else if(setting.setting_id === 8){
-        styles['width'] = setting.setting_value+ 'px';
+        styles['width'] = setting.setting_value + 'px';
       }
       else if(setting.setting_id === 9){
-        styles['height'] = setting.setting_value+ 'px';
+        styles['height'] = setting.setting_value + 'px';
       }
       else if(setting.setting_id === 10){
-        styles['lineHeight'] = setting.setting_value+ 'px';
+        styles['lineHeight'] = setting.setting_value + 'px';
+      }
+      else if(setting.setting_id === 11){
+        styles['fontWeight'] = setting.setting_value;
       }
     });
 

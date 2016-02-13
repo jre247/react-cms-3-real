@@ -59,14 +59,18 @@ GRANT ALL PRIVILEGES ON DATABASE Wedding to jevans;
 
 Deploy Instructions:
 
-1) run the following command in a folder that is linked to your remote heroku:
-
-git push heroku master
-
+Visit this website to get instructions on this:
+https://dashboard.heroku.com/apps/jasonandjenna/deploy/heroku-git
 
 
+------------------------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------------------------------------------
+Heroku Database Access Instructions:
+
+Visit this website to get instuctions on this:
+https://devcenter.heroku.com/articles/heroku-postgresql#pg-psql
+
+---------------------------------------------------------------------------------------------------------------
 
 Note: reference this article for concepts used in this app:
 http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/

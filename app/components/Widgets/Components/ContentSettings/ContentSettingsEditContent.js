@@ -17,7 +17,8 @@ class ContentSettingsEditContent extends React.Component {
       backgroundColor: null,
       width: null,
       height: null,
-      lineHeight: null
+      lineHeight: null,
+      isFontBold: null
     };
 
     self = this;
@@ -34,6 +35,7 @@ class ContentSettingsEditContent extends React.Component {
     this.setupWidth();
     this.setupHeight();
     this.setupLineHeight();
+    this.setupFontWeight();
   }
 
   setupFontSize(){
@@ -123,6 +125,14 @@ class ContentSettingsEditContent extends React.Component {
     if(setting){
       var settingValue = setting.setting_value;
       this.setState({lineHeight: settingValue});
+    }
+  }
+  setupFontWeight(){
+    var lookup = this.props.settingsLookups[10];
+    var setting = self.props.settingsToEdit[lookup.id];
+    if(setting){
+      var settingValue = setting.setting_value;
+      this.setState({'isFontBold': settingValue === 'bold' ? true : false});
     }
   }
 
@@ -277,6 +287,19 @@ class ContentSettingsEditContent extends React.Component {
     self.props.updateSettingsForContent(setting);
   }
 
+  onFontWeightChange(event){
+    var settingValue = event.target.checked;
+
+    self.setState({'isFontBold': settingValue});
+
+    var settingsLookups = self.props.settingsLookups;
+    var setting = _.clone(settingsLookups[10]);
+    setting.setting_value = settingValue == true ? 'bold' : 'inherit';
+    setting.setting_id = setting.id;
+
+    self.props.updateSettingsForContent(setting);
+  }
+
   render() {
     var previewProps = _.extend({
         setNewHeight: this.setNewHeight.bind(this),
@@ -333,6 +356,15 @@ class ContentSettingsEditContent extends React.Component {
                     <div className="setting-line-height">
                       <input type="text" className="form-control setting-input" value={this.state.lineHeight}
                         onChange={self.onLineHeightChange.bind(self)} />
+                    </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="form-group">
+                    <label>Font Bold</label>
+                    <div>
+                      <input type="checkbox" value={this.state.isFontBold}
+                        onChange={self.onFontWeightChange.bind(self)} checked={this.state.isFontBold} />
                     </div>
                 </div>
               </div>

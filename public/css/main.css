@@ -7447,7 +7447,7 @@ a:hover {
 .Content-image-container {
   margin: 0 auto;
   text-align: center;
-  width: 75%;
+  width: 100%;
 }
 .Content-image-input-container {
   display: inline-block;
@@ -7828,6 +7828,12 @@ a:hover {
 }
 .basic-template-edit .unison-checkbox {
   height: 15px;
+}
+.basic-template-read-only .content-item-container {
+  width: 84%;
+}
+.basic-template-edit .Content-image-container {
+  width: 84%;
 }
 .basic-template-edit .Content-image-container .content-settings-container-readonly .non-resizable-container {
   width: inherit;

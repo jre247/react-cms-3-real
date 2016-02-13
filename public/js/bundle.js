@@ -4502,8 +4502,13 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
         }
       });
 
-      var sortableProps = _underscore._.extend({ sortableItemElement: '.Photo', itemList: self.state.contentList,
-        itemPropertyToSortBy: 'sort_order', setStateForItemList: self.setStateForContentList.bind(this) }, this.props);
+      var sortableProps = _underscore._.extend({
+        sortableItemElement: '.Photo',
+        itemList: self.state.contentList,
+        itemPropertyToSortBy: 'sort_order',
+        setStateForItemList: self.setStateForContentList.bind(this),
+        isSortingEnabled: true
+      }, this.props);
 
       return _react2.default.createElement(
         'div',
@@ -5446,7 +5451,8 @@ var ContentSettingsEditContent = (function (_React$Component) {
       backgroundColor: null,
       width: null,
       height: null,
-      lineHeight: null
+      lineHeight: null,
+      isFontBold: null
     };
 
     self = _this;
@@ -5466,6 +5472,7 @@ var ContentSettingsEditContent = (function (_React$Component) {
       this.setupWidth();
       this.setupHeight();
       this.setupLineHeight();
+      this.setupFontWeight();
     }
   }, {
     key: 'setupFontSize',
@@ -5565,6 +5572,16 @@ var ContentSettingsEditContent = (function (_React$Component) {
       if (setting) {
         var settingValue = setting.setting_value;
         this.setState({ lineHeight: settingValue });
+      }
+    }
+  }, {
+    key: 'setupFontWeight',
+    value: function setupFontWeight() {
+      var lookup = this.props.settingsLookups[10];
+      var setting = self.props.settingsToEdit[lookup.id];
+      if (setting) {
+        var settingValue = setting.setting_value;
+        this.setState({ 'isFontBold': settingValue === 'bold' ? true : false });
       }
     }
   }, {
@@ -5728,6 +5745,20 @@ var ContentSettingsEditContent = (function (_React$Component) {
       self.props.updateSettingsForContent(setting);
     }
   }, {
+    key: 'onFontWeightChange',
+    value: function onFontWeightChange(event) {
+      var settingValue = event.target.checked;
+
+      self.setState({ 'isFontBold': settingValue });
+
+      var settingsLookups = self.props.settingsLookups;
+      var setting = _underscore._.clone(settingsLookups[10]);
+      setting.setting_value = settingValue == true ? 'bold' : 'inherit';
+      setting.setting_id = setting.id;
+
+      self.props.updateSettingsForContent(setting);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var previewProps = _underscore._.extend({
@@ -5846,6 +5877,25 @@ var ContentSettingsEditContent = (function (_React$Component) {
                     { className: 'setting-line-height' },
                     _react2.default.createElement('input', { type: 'text', className: 'form-control setting-input', value: this.state.lineHeight,
                       onChange: self.onLineHeightChange.bind(self) })
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'col-md-4' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'form-group' },
+                  _react2.default.createElement(
+                    'label',
+                    null,
+                    'Font Bold'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement('input', { type: 'checkbox', value: this.state.isFontBold,
+                      onChange: self.onFontWeightChange.bind(self), checked: this.state.isFontBold })
                   )
                 )
               )
@@ -6128,6 +6178,7 @@ var ContentSettingsReadOnly = (function (_React$Component) {
 
       if (this.props.isContentEditable) {
         containerStyles['fontSize'] = null;
+        containerStyles['fontWeight'] = null;
         containerStyles['color'] = null;
         containerStyles['lineHeight'] = null;
       }
@@ -6211,6 +6262,8 @@ var ContentSettingsReadOnly = (function (_React$Component) {
           styles['height'] = setting.setting_value + 'px';
         } else if (setting.setting_id === 10) {
           styles['lineHeight'] = setting.setting_value + 'px';
+        } else if (setting.setting_id === 11) {
+          styles['fontWeight'] = setting.setting_value;
         }
       });
 

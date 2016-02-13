@@ -164,9 +164,11 @@ insert into setting (name, is_active) Values ('Font color', true);
 insert into setting (name, is_active) Values ('Background color', true);
 insert into setting (name, is_active) Values ('Width', true);
 insert into setting (name, is_active) Values ('Height', true);
-insert into setting (name, is_active) Values ('Line Height', true);
+insert into setting (name, is_active) Values ('Line height', true);
+insert into setting (name, is_active) Values ('Font weight', true);
 
 
+--note: Don't need to run the below privileges commands in heroku remote
 GRANT ALL PRIVILEGES ON TABLE content TO jevans;
 GRANT USAGE, SELECT ON SEQUENCE content_id_seq TO jevans;
 GRANT ALL PRIVILEGES ON TABLE wedding_user TO jevans;
