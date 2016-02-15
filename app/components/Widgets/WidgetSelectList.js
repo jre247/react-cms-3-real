@@ -23,8 +23,8 @@ class WidgetSelectList extends React.Component {
   onAddWidget(event){
     var selectedWidget = this.state.selectedWidget;
     var parentIndex = this.props.parentIndex;
-    var factory = new WidgetInstanceFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex, this.props.row_number,
-      this.props.column_number);
+    var factory = new WidgetInstanceFactory(selectedWidget, null, '', '', this.props.templateId, parentIndex,
+      this.props.row_number, this.props.column_number);
     var factoryInstance = factory.create();
 
     this.props.onAddWidgetToContentList(factoryInstance);
@@ -49,15 +49,14 @@ class WidgetSelectList extends React.Component {
                 <option value="shortDescription">Short Description</option>
                 <option value="title">Title</option>
                 <option value="iframe">Iframe</option>
-                <option value="image">Image</option>
+                <option value="image">Image Url</option>
+                <option value="imageUpload">Image Upload</option>
                 <option value="link">link</option>
               </select>
             </div>
           </div>
         </div>
       </div>
-
-
     );
   }
 }

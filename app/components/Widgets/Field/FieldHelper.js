@@ -32,6 +32,9 @@ class FieldHelper {
   static isIframe(node){
     return node.content_type_id == 6;
   }
+  static isImageUpload(node){
+    return node.content_type_id == 7;
+  }
 }
 
 export default FieldHelper;

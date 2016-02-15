@@ -2,6 +2,7 @@ import {_} from 'underscore';
 import LongDescription from './LongDescription/LongDescription';
 import Iframe from './Iframe/Iframe';
 import ImageWidget from './Image/ImageWidget';
+import ImageUpload from './Image/ImageUpload';
 import Title from './Title/Title';
 import ShortDescription from './ShortDescription/ShortDescription';
 import Url from './Url/Url';
@@ -25,6 +26,9 @@ class WidgetFactory {
     }
     else if(contentItem.content_type_id === 6){
       return Iframe;
+    }
+    else if(contentItem.content_type_id === 7){
+      return ImageUpload;
     }
     else{
       throw "There is no Widget that matches for content_type_id.";

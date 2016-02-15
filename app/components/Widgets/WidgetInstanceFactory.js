@@ -3,6 +3,7 @@ import FieldHelper from './Field/FieldHelper';
 import LongDescriptionFactory from './LongDescription/LongDescriptionFactory';
 import IframeFactory from './Iframe/IframeFactory';
 import ImageFactory from './Image/ImageFactory';
+import ImageUploadFactory from './Image/ImageUploadFactory';
 import TitleFactory from './Title/TitleFactory';
 import ShortDescriptionFactory from './ShortDescription/ShortDescriptionFactory';
 import UrlFactory from './Url/UrlFactory';
@@ -35,6 +36,13 @@ class WidgetInstanceFactory {
     }
     else if(this.widgetName === 'image'){
       var factory = new ImageFactory(this.sortOrder, this.name, this.description, this.templateId, this.parentIndex,
+        this.row_number, this.column_number);
+      var factoryInstance = factory.create();
+
+      return factoryInstance;
+    }
+    else if(this.widgetName === 'imageUpload'){
+      var factory = new ImageUploadFactory(this.sortOrder, this.name, this.description, this.templateId, this.parentIndex,
         this.row_number, this.column_number);
       var factoryInstance = factory.create();
 

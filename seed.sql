@@ -134,6 +134,7 @@ insert into content_type (name, description, is_active) values ('Title', 'Title'
 insert into content_type (name, description, is_active) values ('ShortDescription', 'ShortDescription', true);
 insert into content_type (name, description, is_active) values ('Link', 'Link', true);
 insert into content_type (name, description, is_active) values ('Iframe', 'Iframe', true);
+insert into content_type (name, description, is_active) values ('ImageUpload', 'Upload an Image', true);
 
 insert into wedding_user (first_name, last_name, email, password, is_active) Values ('Jason', 'Evans', 'jevans8011@gmail.com', '$2a$08$vq.A/nFxWWGYceljbK.Ct.5X/dN.0.VsvXsSsF8O58ckkVfqE/8n2', true);
 insert into wedding_user (first_name, last_name, email, password, is_active) Values ('Jason', 'Evans', 't1', '$2a$08$vq.A/nFxWWGYceljbK.Ct.5X/dN.0.VsvXsSsF8O58ckkVfqE/8n2', true);

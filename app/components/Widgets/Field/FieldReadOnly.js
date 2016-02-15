@@ -7,6 +7,7 @@ import Url from '../../Widgets/Url/Url';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import Iframe from '../../Widgets/Iframe/Iframe';
+import ImageUpload from '../../Widgets/Image/ImageUpload';
 
 class FieldReadOnly extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class FieldReadOnly extends React.Component {
   }
 
   componentDidMount() {
-  
+
   }
 
   componentWillUnmount() {
@@ -64,6 +65,13 @@ class FieldReadOnly extends React.Component {
       return (
         <div className="Content-item-container" key={contentItem.sort_order}>
           <Iframe {...propsData} />
+        </div>
+      );
+    }
+    else if(FieldHelper.isImageUpload(contentItem)){
+      return (
+        <div className="Content-item-container" key={contentItem.sort_order}>
+          <ImageUpload {...propsData} />
         </div>
       );
     }

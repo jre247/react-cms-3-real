@@ -106,6 +106,7 @@ class BasicTemplateEdit extends React.Component {
           contentIndex: index,
           onSettingsSave: this.onSettingsSave.bind(this),
           onChange:  this.updateContent.bind(this, index),
+          setStateForContentList: this.setStateForContentList.bind(this),
           onRemove: this.removeContent.bind(this, index)
         };
 

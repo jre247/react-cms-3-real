@@ -2,6 +2,7 @@ import {_} from 'underscore';
 import React from 'react';
 import FieldHelper from '../../Widgets/Field/FieldHelper';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
+import ImageUpload from '../../Widgets/Image/ImageUpload';
 import Title from '../../Widgets/Title/Title';
 import Url from '../../Widgets/Url/Url';
 import ShortDescription from '../../Widgets/ShortDescription/ShortDescription';
@@ -56,6 +57,13 @@ class FieldEdit extends React.Component {
       return (
         <div key={contentItem.sort_order} className="form-group">
           <Iframe {...propsData} />
+        </div>
+      );
+    }
+    else if(FieldHelper.isImageUpload(contentItem)){
+      return (
+        <div key={contentItem.sort_order} className="form-group">
+          <ImageUpload {...propsData} />
         </div>
       );
     }
