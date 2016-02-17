@@ -4,24 +4,77 @@ import ContentSettings from '../Components/ContentSettings/ContentSettings';
 import ContentSettingsReadOnly from '../Components/ContentSettings/ContentSettingsReadOnly';
 import Image from './Image';
 import {_} from 'underscore';
-import AWS from 'AWS-sdk';
-var awsBucket = 'jenna-and-jason-wedding';
+//var awsBucket = 'jenna-and-jason-wedding';
 
 class ImageUploadEdit extends React.Component {
   constructor(props) {
       super(props);
-      this.state = {isImageEditable: false, percentComplete: 0, contentList: this.props.contentList};
+      this.state = {isImageEditable: false, percentComplete: 0, contentList: []};
   }
 
   componentDidMount() {
     if(!this.props.value){
-      this.setState({isImageEditable: true});
+      this.setState({isImageEditable: true, contentList: this.props.contentList});
     }
   }
 
   componentWillUnmount() {
 
   }
+
+
+  uploadFile(){
+    var file = $("#image-file")[0].files[0];
+    if(file == null){
+        alert("No file selected.");
+    }
+    else{
+        this.getSignedRequest(file);
+    }
+  }
+
+  getSignedRequest(file){
+    var self = this;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/sign_s3?file_name="+file.name+"&file_type="+file.type);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+                var response = JSON.parse(xhr.responseText);
+                self.executeUploadFile(file, response.signed_request, response.url);
+            }
+            else{
+                alert("Could not get signed URL.");
+            }
+        }
+    };
+    xhr.send();
+  }
+
+  executeUploadFile(file, signed_request, url){
+    var self = this;
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT", signed_request);
+    xhr.setRequestHeader('x-amz-acl', 'public-read');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+          //$("#preview").src = url;
+          //$("#avatar_url").value = url;
+          self.updateContent(url);
+        }
+    };
+    xhr.onerror = function() {
+        alert("Could not upload file.");
+    };
+    xhr.send(file);
+  }
+
+  updateContent(url) {
+    //var url = 'https://s3.amazonaws.com/' + awsBucket + '/' + filename;
+    this.state.contentList[this.props.contentIndex].value = url;
+    this.props.setStateForContentList(this.state.contentList);
+  }
+
   getPolicyJson(){
     var policy = {
       "expiration": "2020-12-01T12:00:00.000Z",
@@ -39,13 +92,11 @@ class ImageUploadEdit extends React.Component {
     return policy;
   }
 
-  uploadFile(){
+  uploadFile2(){
     // Get our File object
     var file = $('#file')[0].files[0];
 
     AWS.config = new AWS.Config();
-    AWS.config.accessKeyId = "AKIAJVUQN6PVYROCNTNA";
-    AWS.config.secretAccessKey = "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";
 
     // Upload the File
     var bucket = new AWS.S3({
@@ -97,12 +148,6 @@ class ImageUploadEdit extends React.Component {
   saveImage(){
       this.setState({isImageEditable: false});
   }
-  updateContent(filename) {
-    debugger;
-    var url = 'https://s3.amazonaws.com/' + awsBucket + '/' + filename;
-    this.state.contentList[this.props.contentIndex].value = url;
-    this.props.setStateForContentList(this.state.contentList);
-  }
 
   render() {
       if(this.state.isImageEditable){
@@ -114,7 +159,7 @@ class ImageUploadEdit extends React.Component {
                   <label for="file">Select a File to Upload</label>
                 </div>
                 <div className="col-md-4">
-                  <input type="file" name="file" id="file" />
+                  <input type="file" name="file" id="image-file" />
                 </div>
                 <div className="col-md-2">
                   <input id="fileUpload" type="button" value="Upload" onClick={this.uploadFile.bind(this)} />
