@@ -107,7 +107,8 @@ class BasicTemplateEdit extends React.Component {
           onSettingsSave: this.onSettingsSave.bind(this),
           onChange:  this.updateContent.bind(this, index),
           setStateForContentList: this.setStateForContentList.bind(this),
-          onRemove: this.removeContent.bind(this, index)
+          onRemove: this.removeContent.bind(this, index),
+          contentList: this.state.contentList
         };
 
         var fieldsPropData = _.extend(propsData, self.props);

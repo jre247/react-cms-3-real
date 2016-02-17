@@ -3448,7 +3448,8 @@ var BasicTemplateEdit = (function (_React$Component) {
             onSettingsSave: _this2.onSettingsSave.bind(_this2),
             onChange: _this2.updateContent.bind(_this2, index),
             setStateForContentList: _this2.setStateForContentList.bind(_this2),
-            onRemove: _this2.removeContent.bind(_this2, index)
+            onRemove: _this2.removeContent.bind(_this2, index),
+            contentList: _this2.state.contentList
           };
 
           var fieldsPropData = _underscore._.extend(propsData, self.props);
