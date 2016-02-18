@@ -7923,7 +7923,7 @@ var ImageUploadEdit = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { className: 'Content-image-container' },
+          { className: 'Content-image-container image-upload-area' },
           _react2.default.createElement(
             'div',
             { className: 'image-upload-container' },
@@ -7961,14 +7961,18 @@ var ImageUploadEdit = (function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'Content-Image-Edit-Button edit-content-button', onClick: this.saveImage.bind(this) },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
-          ),
-          _react2.default.createElement(_ContentSettings2.default, this.props),
-          _react2.default.createElement(
-            'div',
-            { className: 'Widget-Remove-Button-Container', onClick: this.props.onRemove },
-            _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            { className: 'btns-container' },
+            _react2.default.createElement(
+              'div',
+              { className: 'Content-Image-Edit-Button edit-content-button', onClick: this.saveImage.bind(this) },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-ok' })
+            ),
+            _react2.default.createElement(_ContentSettings2.default, this.props),
+            _react2.default.createElement(
+              'div',
+              { className: 'Widget-Remove-Button-Container', onClick: this.props.onRemove },
+              _react2.default.createElement('span', { className: 'glyphicon glyphicon-remove', 'aria-hidden': 'true' })
+            )
           )
         );
       } else {

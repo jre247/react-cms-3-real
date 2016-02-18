@@ -127,7 +127,7 @@ class ImageUploadEdit extends React.Component {
         });
 
         return (
-          <div className="Content-image-container">
+          <div className="Content-image-container image-upload-area">
             <div className="image-upload-container">
               <div className="row">
                 <div className="col-md-12">
@@ -149,14 +149,16 @@ class ImageUploadEdit extends React.Component {
               </div>
             </div>
 
-            <div className="Content-Image-Edit-Button edit-content-button" onClick={this.saveImage.bind(this)}>
-              <span className="glyphicon glyphicon-ok" />
-            </div>
+            <div className="btns-container">
+              <div className="Content-Image-Edit-Button edit-content-button" onClick={this.saveImage.bind(this)}>
+                <span className="glyphicon glyphicon-ok" />
+              </div>
 
-            <ContentSettings {...this.props} />
+              <ContentSettings {...this.props} />
 
-            <div className="Widget-Remove-Button-Container" onClick={this.props.onRemove}>
-              <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <div className="Widget-Remove-Button-Container" onClick={this.props.onRemove}>
+                <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </div>
             </div>
           </div>
         )
