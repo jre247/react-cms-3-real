@@ -4,30 +4,40 @@ import ContentSettings from '../Components/ContentSettings/ContentSettings';
 import ContentSettingsReadOnly from '../Components/ContentSettings/ContentSettingsReadOnly';
 import Image from './Image';
 import {_} from 'underscore';
-//var awsBucket = 'jenna-and-jason-wedding';
+import classNames from 'classnames';
 
 class ImageUploadEdit extends React.Component {
   constructor(props) {
       super(props);
-      this.state = {isImageEditable: false, percentComplete: 0, contentList: [], contentIndex: null};
+      this.state = {
+        isImageEditable: false,
+        percentComplete: 0,
+        contentList: [],
+        contentIndex: null,
+        isImageUploading: false
+      };
   }
 
   componentDidMount() {
-    if(!this.props.value){
-      var contentList;
-      if(this.props.isListGrid){
-        contentList = this.props.contentListForColumn;
-      }
-      else{
-        contentList = this.props.contentList;
-      }
+    var isImageEditable = false;
 
-      this.setState({
-        isImageEditable: true,
-        contentList: contentList,
-        contentIndex: this.props.contentIndex
-      });
+    var contentList;
+    if(this.props.isListGrid){
+      contentList = this.props.contentListForColumn;
     }
+    else{
+      contentList = this.props.contentList;
+    }
+
+    if(!this.props.value){
+      isImageEditable = true;
+    }
+
+    this.setState({
+      isImageEditable: isImageEditable,
+      contentList: contentList,
+      contentIndex: this.props.contentIndex
+    });
   }
 
   componentWillUnmount() {
@@ -36,6 +46,8 @@ class ImageUploadEdit extends React.Component {
 
 
   uploadFile(){
+    this.setState({isImageUploading: true});
+
     var file = $("#image-file")[0].files[0];
     if(file == null){
         alert("No file selected.");
@@ -90,6 +102,14 @@ class ImageUploadEdit extends React.Component {
     else{
       this.props.setStateForContentList(this.state.contentList);
     }
+
+    this.setState({
+      contentList: this.state.contentList,
+      isImageEditable: false,
+      isImageUploading: false,
+      contentList: this.state.contentList,
+      contentIndex: this.state.contentIndex
+    })
   }
 
   editImage(){
@@ -101,21 +121,30 @@ class ImageUploadEdit extends React.Component {
 
   render() {
       if(this.state.isImageEditable){
+        var spinnerClass = classNames({
+          'hidden': !this.state.isImageUploading,
+          'image-loader': true
+        });
+
         return (
           <div className="Content-image-container">
             <div className="image-upload-container">
               <div className="row">
-                <div className="col-md-2">
-                  <label for="file">Select a File to Upload</label>
-                </div>
-                <div className="col-md-4">
+                <div className="col-md-12">
                   <input type="file" name="file" id="image-file" />
-                </div>
-                <div className="col-md-2">
-                  <input id="fileUpload" type="button" value="Upload" onClick={this.uploadFile.bind(this)} />
-                </div>
-                <div className="col-md-2">
-                  <div id="progressNumber">{this.state.percentComplete}</div>%
+
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="image-upload-btn">
+                        <button type="button" className="btn btn-warning btn-sm" onClick={this.uploadFile.bind(this)}>
+                          Upload
+                        </button>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <img src="/css/images/ajax-loader.gif" className={spinnerClass} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

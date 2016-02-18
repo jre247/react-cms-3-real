@@ -7779,6 +7779,10 @@ var _Image2 = _interopRequireDefault(_Image);
 
 var _underscore = require('underscore');
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7786,8 +7790,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//var awsBucket = 'jenna-and-jason-wedding';
 
 var ImageUploadEdit = (function (_React$Component) {
   _inherits(ImageUploadEdit, _React$Component);
@@ -7797,27 +7799,37 @@ var ImageUploadEdit = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageUploadEdit).call(this, props));
 
-    _this.state = { isImageEditable: false, percentComplete: 0, contentList: [], contentIndex: null };
+    _this.state = {
+      isImageEditable: false,
+      percentComplete: 0,
+      contentList: [],
+      contentIndex: null,
+      isImageUploading: false
+    };
     return _this;
   }
 
   _createClass(ImageUploadEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (!this.props.value) {
-        var contentList;
-        if (this.props.isListGrid) {
-          contentList = this.props.contentListForColumn;
-        } else {
-          contentList = this.props.contentList;
-        }
+      var isImageEditable = false;
 
-        this.setState({
-          isImageEditable: true,
-          contentList: contentList,
-          contentIndex: this.props.contentIndex
-        });
+      var contentList;
+      if (this.props.isListGrid) {
+        contentList = this.props.contentListForColumn;
+      } else {
+        contentList = this.props.contentList;
       }
+
+      if (!this.props.value) {
+        isImageEditable = true;
+      }
+
+      this.setState({
+        isImageEditable: isImageEditable,
+        contentList: contentList,
+        contentIndex: this.props.contentIndex
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -7825,6 +7837,8 @@ var ImageUploadEdit = (function (_React$Component) {
   }, {
     key: 'uploadFile',
     value: function uploadFile() {
+      this.setState({ isImageUploading: true });
+
       var file = $("#image-file")[0].files[0];
       if (file == null) {
         alert("No file selected.");
@@ -7879,6 +7893,14 @@ var ImageUploadEdit = (function (_React$Component) {
       } else {
         this.props.setStateForContentList(this.state.contentList);
       }
+
+      this.setState({
+        contentList: this.state.contentList,
+        isImageEditable: false,
+        isImageUploading: false,
+        contentList: this.state.contentList,
+        contentIndex: this.state.contentIndex
+      });
     }
   }, {
     key: 'editImage',
@@ -7894,6 +7916,11 @@ var ImageUploadEdit = (function (_React$Component) {
     key: 'render',
     value: function render() {
       if (this.state.isImageEditable) {
+        var spinnerClass = (0, _classnames2.default)({
+          'hidden': !this.state.isImageUploading,
+          'image-loader': true
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-image-container' },
@@ -7905,32 +7932,30 @@ var ImageUploadEdit = (function (_React$Component) {
               { className: 'row' },
               _react2.default.createElement(
                 'div',
-                { className: 'col-md-2' },
-                _react2.default.createElement(
-                  'label',
-                  { 'for': 'file' },
-                  'Select a File to Upload'
-                )
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-md-4' },
-                _react2.default.createElement('input', { type: 'file', name: 'file', id: 'image-file' })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-md-2' },
-                _react2.default.createElement('input', { id: 'fileUpload', type: 'button', value: 'Upload', onClick: this.uploadFile.bind(this) })
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'col-md-2' },
+                { className: 'col-md-12' },
+                _react2.default.createElement('input', { type: 'file', name: 'file', id: 'image-file' }),
                 _react2.default.createElement(
                   'div',
-                  { id: 'progressNumber' },
-                  this.state.percentComplete
-                ),
-                '%'
+                  { className: 'row' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'image-upload-btn' },
+                      _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn btn-warning btn-sm', onClick: this.uploadFile.bind(this) },
+                        'Upload'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif', className: spinnerClass })
+                  )
+                )
               )
             )
           ),
@@ -7977,7 +8002,7 @@ var ImageUploadEdit = (function (_React$Component) {
 
 exports.default = ImageUploadEdit;
 
-},{"../Components/ContentSettings/ContentSettings":45,"../Components/ContentSettings/ContentSettingsReadOnly":49,"./Image":63,"react":"react","react-router":"react-router","underscore":"underscore"}],67:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"../Components/ContentSettings/ContentSettingsReadOnly":49,"./Image":63,"classnames":121,"react":"react","react-router":"react-router","underscore":"underscore"}],67:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
