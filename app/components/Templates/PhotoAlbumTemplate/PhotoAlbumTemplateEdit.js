@@ -7,6 +7,7 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import ImageWidget from '../../Widgets/Image/ImageWidget';
 import ImageFactory from '../../Widgets/Image/ImageFactory';
+import ImageUploadFactory from '../../Widgets/Image/ImageUploadFactory';
 import Sortable from '../../Widgets/Components/Sortable';
 import WidgetService from '../../Widgets/WidgetService';
 var self;
@@ -15,7 +16,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 2;
-    this.state = {contentList: []};
+    this.state = {contentList: [], isMultiUpload: false};
     this.maxContentId;
     self = this;
   }
@@ -68,6 +69,19 @@ class PhotoAlbumTemplateEdit extends React.Component {
     this.state.contentList.push(image);
     self.setState({contentList: this.state.contentList});
   }
+  uploadImage(event){
+    var sortOrder = this.state.contentList.length + 1;
+
+    var imageUploadFactory = new ImageUploadFactory(sortOrder, 'Photo Album Image',
+      'Photo Album Image');
+    var image = imageUploadFactory.create();
+    self.maxContentId++;
+    image.id = self.maxContentId;
+    image.sort_order = self.state.contentList.length;
+
+    this.state.contentList.push(image);
+    self.setState({contentList: this.state.contentList, isMultiUpload: true});
+  }
   updateContent(index, event) {
     this.state.contentList[index].value = event.target.value;
     self.setState({contentList: this.state.contentList});
@@ -79,7 +93,6 @@ class PhotoAlbumTemplateEdit extends React.Component {
   setStateForContentList(newContentList){
     self.setState({contentList: newContentList})
   }
-
   render() {
     let nodes = this.state.contentList.map((contentItem, index) => {
       var propsData = {
@@ -88,20 +101,21 @@ class PhotoAlbumTemplateEdit extends React.Component {
         imageSize: 'small',
         settings: contentItem.settings,
         contentIndex: index,
+        contentList: this.state.contentList,
         onSettingsSave: this.onSettingsSave.bind(this),
         onChange:  this.updateContent.bind(this, index),
-        onRemove: this.removeContent.bind(this, index)};
+        onRemove: this.removeContent.bind(this, index),
+        isMultiUpload: this.state.isMultiUpload,
+        buildUploadImageInstance: this.uploadImage.bind(this),
+        maxContentId: self.maxContentId,
+        setStateForContentList: self.setStateForContentList.bind(this)
+      };
 
-        if(FieldHelper.isImage(contentItem)){
-          return (
-            <div key={contentItem.sort_order} data-id={contentItem.id} className="Photo">
-              <Field {...propsData} />
-            </div>
-          );
-        }
-        else{
-          throw 'content type should be image.';
-        }
+        return (
+          <div key={index} data-id={contentItem.id} className="Photo">
+            <Field {...propsData} />
+          </div>
+        );
     });
 
     var sortableProps = _.extend({
@@ -119,7 +133,14 @@ class PhotoAlbumTemplateEdit extends React.Component {
             <div className='col-sm-3'>
               <div className="form-group">
                 <button className="btn btn-primary" onClick={this.createImage.bind(this)}>
-                  Create Image
+                  Add Image By Url
+                </button>
+              </div>
+            </div>
+            <div className='col-sm-3'>
+              <div className="form-group">
+                <button className="btn btn-primary" onClick={this.uploadImage.bind(this)}>
+                  Upload Image
                 </button>
               </div>
             </div>

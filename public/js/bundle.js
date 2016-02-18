@@ -4368,6 +4368,10 @@ var _ImageFactory = require('../../Widgets/Image/ImageFactory');
 
 var _ImageFactory2 = _interopRequireDefault(_ImageFactory);
 
+var _ImageUploadFactory = require('../../Widgets/Image/ImageUploadFactory');
+
+var _ImageUploadFactory2 = _interopRequireDefault(_ImageUploadFactory);
+
 var _Sortable = require('../../Widgets/Components/Sortable');
 
 var _Sortable2 = _interopRequireDefault(_Sortable);
@@ -4395,7 +4399,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhotoAlbumTemplateEdit).call(this, props));
 
     _this.templateId = 2;
-    _this.state = { contentList: [] };
+    _this.state = { contentList: [], isMultiUpload: false };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -4461,6 +4465,20 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
       self.setState({ contentList: this.state.contentList });
     }
   }, {
+    key: 'uploadImage',
+    value: function uploadImage(event) {
+      var sortOrder = this.state.contentList.length + 1;
+
+      var imageUploadFactory = new _ImageUploadFactory2.default(sortOrder, 'Photo Album Image', 'Photo Album Image');
+      var image = imageUploadFactory.create();
+      self.maxContentId++;
+      image.id = self.maxContentId;
+      image.sort_order = self.state.contentList.length;
+
+      this.state.contentList.push(image);
+      self.setState({ contentList: this.state.contentList, isMultiUpload: true });
+    }
+  }, {
     key: 'updateContent',
     value: function updateContent(index, event) {
       this.state.contentList[index].value = event.target.value;
@@ -4489,19 +4507,21 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
           imageSize: 'small',
           settings: contentItem.settings,
           contentIndex: index,
+          contentList: _this2.state.contentList,
           onSettingsSave: _this2.onSettingsSave.bind(_this2),
           onChange: _this2.updateContent.bind(_this2, index),
-          onRemove: _this2.removeContent.bind(_this2, index) };
+          onRemove: _this2.removeContent.bind(_this2, index),
+          isMultiUpload: _this2.state.isMultiUpload,
+          buildUploadImageInstance: _this2.uploadImage.bind(_this2),
+          maxContentId: self.maxContentId,
+          setStateForContentList: self.setStateForContentList.bind(_this2)
+        };
 
-        if (_FieldHelper2.default.isImage(contentItem)) {
-          return _react2.default.createElement(
-            'div',
-            { key: contentItem.sort_order, 'data-id': contentItem.id, className: 'Photo' },
-            _react2.default.createElement(_Field2.default, propsData)
-          );
-        } else {
-          throw 'content type should be image.';
-        }
+        return _react2.default.createElement(
+          'div',
+          { key: index, 'data-id': contentItem.id, className: 'Photo' },
+          _react2.default.createElement(_Field2.default, propsData)
+        );
       });
 
       var sortableProps = _underscore._.extend({
@@ -4530,7 +4550,20 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
                 _react2.default.createElement(
                   'button',
                   { className: 'btn btn-primary', onClick: this.createImage.bind(this) },
-                  'Create Image'
+                  'Add Image By Url'
+                )
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'col-sm-3' },
+              _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                  'button',
+                  { className: 'btn btn-primary', onClick: this.uploadImage.bind(this) },
+                  'Upload Image'
                 )
               )
             )
@@ -4567,7 +4600,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":25,"../../Widgets/Components/Sortable":53,"../../Widgets/Field/Field":54,"../../Widgets/Field/FieldHelper":56,"../../Widgets/Image/ImageFactory":64,"../../Widgets/Image/ImageWidget":69,"../../Widgets/WidgetService":107,"react":"react","react-router":"react-router","underscore":"underscore"}],39:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":25,"../../Widgets/Components/Sortable":53,"../../Widgets/Field/Field":54,"../../Widgets/Field/FieldHelper":56,"../../Widgets/Image/ImageFactory":64,"../../Widgets/Image/ImageUploadFactory":67,"../../Widgets/Image/ImageWidget":69,"../../Widgets/WidgetService":107,"react":"react","react-router":"react-router","underscore":"underscore"}],39:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -7783,6 +7816,10 @@ var _classnames = require('classnames');
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _ImageUploadFactory = require('./ImageUploadFactory');
+
+var _ImageUploadFactory2 = _interopRequireDefault(_ImageUploadFactory);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7804,7 +7841,12 @@ var ImageUploadEdit = (function (_React$Component) {
       percentComplete: 0,
       contentList: [],
       contentIndex: null,
-      isImageUploading: false
+      isImageUploading: false,
+      currentContentIndex: null,
+      isMultiImageUploading: false,
+      filesUploaded: [],
+      filesLength: 0,
+      maxContentId: null
     };
     return _this;
   }
@@ -7828,12 +7870,31 @@ var ImageUploadEdit = (function (_React$Component) {
       this.setState({
         isImageEditable: isImageEditable,
         contentList: contentList,
-        contentIndex: this.props.contentIndex
+        contentIndex: this.props.contentIndex,
+        isMultiUpload: this.props.isMultiUpload,
+        currentContentIndex: _underscore._.clone(this.props.contentIndex),
+        maxContentId: this.props.maxContentId
       });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {}
+  }, {
+    key: 'uploadMultipleFiles',
+    value: function uploadMultipleFiles() {
+      var _this2 = this;
+
+      var files = $("#image-files")[0].files;
+      if (files == null) {
+        alert("No file(s) selected.");
+      } else {
+        this.setState({ isMultiImageUploading: true, filesLength: files.length });
+
+        _underscore._.each(files, function (file, f) {
+          _this2.getSignedRequest(file, f);
+        });
+      }
+    }
   }, {
     key: 'uploadFile',
     value: function uploadFile() {
@@ -7843,12 +7904,12 @@ var ImageUploadEdit = (function (_React$Component) {
       if (file == null) {
         alert("No file selected.");
       } else {
-        this.getSignedRequest(file);
+        this.getSignedRequest(file, 0);
       }
     }
   }, {
     key: 'getSignedRequest',
-    value: function getSignedRequest(file) {
+    value: function getSignedRequest(file, fileIndex) {
       var self = this;
       var xhr = new XMLHttpRequest();
       xhr.open("GET", "/sign_s3?file_name=" + file.name + "&file_type=" + file.type);
@@ -7856,7 +7917,7 @@ var ImageUploadEdit = (function (_React$Component) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
-            self.executeUploadFile(file, response.signed_request, response.url);
+            self.executeUploadFile(file, fileIndex, response.signed_request, response.url);
           } else {
             alert("Could not get signed URL.");
           }
@@ -7866,22 +7927,71 @@ var ImageUploadEdit = (function (_React$Component) {
     }
   }, {
     key: 'executeUploadFile',
-    value: function executeUploadFile(file, signed_request, url) {
+    value: function executeUploadFile(file, fileIndex, signed_request, url) {
       var self = this;
       var xhr = new XMLHttpRequest();
       xhr.open("PUT", signed_request);
       xhr.setRequestHeader('x-amz-acl', 'public-read');
       xhr.onload = function () {
         if (xhr.status === 200) {
-          //$("#preview").src = url;
-          //$("#avatar_url").value = url;
-          self.updateContent(url);
+          if (self.state.isMultiUpload) {
+            self.updateFilesUploadStatus(url, fileIndex);
+          } else {
+            self.updateContent(url);
+          }
         }
       };
       xhr.onerror = function () {
         alert("Could not upload file.");
       };
       xhr.send(file);
+    }
+  }, {
+    key: 'updateFilesUploadStatus',
+    value: function updateFilesUploadStatus(url, fileIndex) {
+      var files = this.state.filesUploaded;
+      files.push(url);
+
+      this.setState({ filesUploaded: files });
+
+      if (files.length == this.state.filesLength) {
+        this.updateContentForMultiUpload(files);
+      }
+    }
+  }, {
+    key: 'updateContentForMultiUpload',
+    value: function updateContentForMultiUpload(fileUrlList) {
+      var _this3 = this;
+
+      // remove the empty content item since adding multiple ones for multi upload
+      this.state.contentList.splice(this.state.contentList.length - 1, 1);
+
+      _underscore._.each(fileUrlList, function (fileUrl) {
+        _this3.buildUploadImageInstance(fileUrl);
+      });
+
+      this.props.setStateForContentList(this.state.contentList);
+
+      this.setState({
+        isImageEditable: false,
+        isMultiImageUploading: false,
+        contentList: this.state.contentList
+      });
+    }
+  }, {
+    key: 'buildUploadImageInstance',
+    value: function buildUploadImageInstance(fileUrl) {
+      debugger;
+      var sortOrder = this.state.contentList.length + 1;
+
+      var imageUploadFactory = new _ImageUploadFactory2.default(sortOrder, null, null);
+      var image = imageUploadFactory.create();
+      this.state.maxContentId++;
+      image.id = this.state.maxContentId;
+      image.value = fileUrl;
+
+      this.state.contentList.push(image);
+      //self.setState({contentList: this.state.contentList});
     }
   }, {
     key: 'updateContent',
@@ -7898,7 +8008,6 @@ var ImageUploadEdit = (function (_React$Component) {
         contentList: this.state.contentList,
         isImageEditable: false,
         isImageUploading: false,
-        contentList: this.state.contentList,
         contentIndex: this.state.contentIndex
       });
     }
@@ -7921,6 +8030,21 @@ var ImageUploadEdit = (function (_React$Component) {
           'image-loader': true
         });
 
+        var uploadStatusForMultiUpload = (0, _classnames2.default)({
+          'hidden': !this.state.isMultiImageUploading,
+          "col-md-6": true
+        });
+
+        var uploadSingleImageClassNames = (0, _classnames2.default)({
+          'hidden': this.props.isMultiUpload,
+          'col-md-12': true
+        });
+
+        var uploadMultiImageClassNames = (0, _classnames2.default)({
+          'hidden': !this.props.isMultiUpload,
+          'col-md-12': true
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-image-container image-upload-area' },
@@ -7932,7 +8056,7 @@ var ImageUploadEdit = (function (_React$Component) {
               { className: 'row' },
               _react2.default.createElement(
                 'div',
-                { className: 'col-md-12' },
+                { className: uploadSingleImageClassNames },
                 _react2.default.createElement('input', { type: 'file', name: 'file', id: 'image-file' }),
                 _react2.default.createElement(
                   'div',
@@ -7954,6 +8078,38 @@ var ImageUploadEdit = (function (_React$Component) {
                     'div',
                     { className: 'col-md-6' },
                     _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif', className: spinnerClass })
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: uploadMultiImageClassNames },
+                _react2.default.createElement('input', { type: 'file', name: 'file', id: 'image-files', multiple: true }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'row' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'col-md-6' },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'image-upload-btn' },
+                      _react2.default.createElement(
+                        'button',
+                        { type: 'button', className: 'btn btn-warning btn-sm', onClick: this.uploadMultipleFiles.bind(this) },
+                        'Upload'
+                      )
+                    )
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: uploadStatusForMultiUpload },
+                    _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif', className: 'image-loader' }),
+                    '(',
+                    this.state.filesUploaded.length,
+                    ' of ',
+                    this.state.filesLength,
+                    ' uploaded)'
                   )
                 )
               )
@@ -8006,7 +8162,7 @@ var ImageUploadEdit = (function (_React$Component) {
 
 exports.default = ImageUploadEdit;
 
-},{"../Components/ContentSettings/ContentSettings":45,"../Components/ContentSettings/ContentSettingsReadOnly":49,"./Image":63,"classnames":121,"react":"react","react-router":"react-router","underscore":"underscore"}],67:[function(require,module,exports){
+},{"../Components/ContentSettings/ContentSettings":45,"../Components/ContentSettings/ContentSettingsReadOnly":49,"./Image":63,"./ImageUploadFactory":67,"classnames":121,"react":"react","react-router":"react-router","underscore":"underscore"}],67:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
