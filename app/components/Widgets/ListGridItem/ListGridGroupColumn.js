@@ -62,6 +62,10 @@ class ListGridGroupColumn extends React.Component {
   onGridRowLayoutChange(size){
 
   }
+  setStateForContentListForColumn(newContentList){
+    this.props.column.contentList = newContentList;
+    this.props.setStateForContentGroupList();
+  }
 
   render() {
     var widgetListPropsData = {
@@ -81,7 +85,10 @@ class ListGridGroupColumn extends React.Component {
         onChange: this.updateContent.bind(this, index),
         imageSize: 'small',
         settings: contentItem.settings,
-        onSettingsSave: this.onSettingsSave.bind(this)
+        isListGrid: true,
+        contentListForColumn: this.props.column.contentList,
+        onSettingsSave: this.onSettingsSave.bind(this),
+        setStateForContentListForColumn: this.setStateForContentListForColumn.bind(this)
       };
       var fieldPropsData = _.extend(propsData, this.props);
 

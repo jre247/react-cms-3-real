@@ -3771,7 +3771,12 @@ var ListGridTemplate = (function (_React$Component) {
       var newContentList = this.buildContentList();
 
       this.setState({ contentGroupList: this.state.contentGroupList });
-      this.setStateForContentList(newContentList);
+
+      if (this.props.isListGrid) {
+        this.setStateForContentListForColumn(newContentList);
+      } else {
+        this.setStateForContentList(newContentList);
+      }
     }
   }, {
     key: 'handleSubmit',
@@ -7797,7 +7802,7 @@ var ImageUploadEdit = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ImageUploadEdit).call(this, props));
 
-    _this.state = { isImageEditable: false, percentComplete: 0, contentList: [] };
+    _this.state = { isImageEditable: false, percentComplete: 0, contentList: [], contentIndex: null };
     return _this;
   }
 
@@ -7805,7 +7810,18 @@ var ImageUploadEdit = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (!this.props.value) {
-        this.setState({ isImageEditable: true, contentList: this.props.contentList });
+        var contentList;
+        if (this.props.isListGrid) {
+          contentList = this.props.contentListForColumn;
+        } else {
+          contentList = this.props.contentList;
+        }
+
+        this.setState({
+          isImageEditable: true,
+          contentList: contentList,
+          contentIndex: this.props.contentIndex
+        });
       }
     }
   }, {
@@ -7861,78 +7877,14 @@ var ImageUploadEdit = (function (_React$Component) {
   }, {
     key: 'updateContent',
     value: function updateContent(url) {
-      //var url = 'https://s3.amazonaws.com/' + awsBucket + '/' + filename;
-      this.state.contentList[this.props.contentIndex].value = url;
-      this.props.setStateForContentList(this.state.contentList);
-    }
-  }, {
-    key: 'getPolicyJson',
-    value: function getPolicyJson() {
-      var policy = {
-        "expiration": "2020-12-01T12:00:00.000Z",
-        "conditions": [{
-          "bucket": awsBucket
-        }, ["starts-with", "$key", ""], {
-          "acl": 'public-read'
-        }, ["starts-with", "$Content-Type", ""], ["content-length-range", 0, 524288000]]
-      };
+      debugger;
+      this.state.contentList[this.state.contentIndex].value = url;
 
-      return policy;
-    }
-  }, {
-    key: 'uploadFile2',
-    value: function uploadFile2() {
-      // Get our File object
-      var file = $('#file')[0].files[0];
-
-      AWS.config = new AWS.Config();
-
-      // Upload the File
-      var bucket = new AWS.S3({
-        params: {
-          Bucket: awsBucket
-        }
-      });
-
-      var params = {
-        Key: file.name,
-        ContentType: file.type,
-        Body: file
-      };
-
-      var self = this;
-      bucket.upload(params, function (err, data) {
-        debugger;
-        self.updateContent(file.name);
-        self.setState({ isImageEditable: false });
-      });
-    }
-  }, {
-    key: 'uploadProgress',
-    value: function uploadProgress(evt) {
-      if (evt.lengthComputable) {
-        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-        this.setState({ percentComplete: percentComplete });
-        //  document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+      if (this.props.isListGrid) {
+        this.props.setStateForContentListForColumn(this.state.contentList);
       } else {
-          //document.getElementById('progressNumber').innerHTML = 'unable to compute';
-        }
-    }
-  }, {
-    key: 'uploadComplete',
-    value: function uploadComplete(evt) {
-      /* This event is raised when the server send back a response */
-      alert("Done - " + evt.target.responseText);
-    }
-  }, {
-    key: 'uploadFailed',
-    value: function uploadFailed(evt) {
-      alert("There was an error attempting to upload the file." + evt);
-    }
-  }, {
-    key: 'uploadCanceled',
-    value: function uploadCanceled(evt) {
-      alert("The upload has been canceled by the user or the browser dropped the connection.");
+        this.props.setStateForContentList(this.state.contentList);
+      }
     }
   }, {
     key: 'editImage',
@@ -8660,6 +8612,12 @@ var ListGridGroupColumn = (function (_React$Component) {
     key: 'onGridRowLayoutChange',
     value: function onGridRowLayoutChange(size) {}
   }, {
+    key: 'setStateForContentListForColumn',
+    value: function setStateForContentListForColumn(newContentList) {
+      this.props.column.contentList = newContentList;
+      this.props.setStateForContentGroupList();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -8681,7 +8639,10 @@ var ListGridGroupColumn = (function (_React$Component) {
           onChange: _this2.updateContent.bind(_this2, index),
           imageSize: 'small',
           settings: contentItem.settings,
-          onSettingsSave: _this2.onSettingsSave.bind(_this2)
+          isListGrid: true,
+          contentListForColumn: _this2.props.column.contentList,
+          onSettingsSave: _this2.onSettingsSave.bind(_this2),
+          setStateForContentListForColumn: _this2.setStateForContentListForColumn.bind(_this2)
         };
         var fieldPropsData = _underscore._.extend(propsData, _this2.props);
 

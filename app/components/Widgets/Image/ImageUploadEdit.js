@@ -9,12 +9,24 @@ import {_} from 'underscore';
 class ImageUploadEdit extends React.Component {
   constructor(props) {
       super(props);
-      this.state = {isImageEditable: false, percentComplete: 0, contentList: []};
+      this.state = {isImageEditable: false, percentComplete: 0, contentList: [], contentIndex: null};
   }
 
   componentDidMount() {
     if(!this.props.value){
-      this.setState({isImageEditable: true, contentList: this.props.contentList});
+      var contentList;
+      if(this.props.isListGrid){
+        contentList = this.props.contentListForColumn;
+      }
+      else{
+        contentList = this.props.contentList;
+      }
+
+      this.setState({
+        isImageEditable: true,
+        contentList: contentList,
+        contentIndex: this.props.contentIndex
+      });
     }
   }
 
@@ -70,76 +82,15 @@ class ImageUploadEdit extends React.Component {
   }
 
   updateContent(url) {
-    //var url = 'https://s3.amazonaws.com/' + awsBucket + '/' + filename;
-    this.state.contentList[this.props.contentIndex].value = url;
-    this.props.setStateForContentList(this.state.contentList);
-  }
+    debugger;
+    this.state.contentList[this.state.contentIndex].value = url;
 
-  getPolicyJson(){
-    var policy = {
-      "expiration": "2020-12-01T12:00:00.000Z",
-      "conditions": [{
-          "bucket": awsBucket
-        },
-        ["starts-with", "$key", ""], {
-          "acl": 'public-read'
-        },
-        ["starts-with", "$Content-Type", ""],
-        ["content-length-range", 0, 524288000]
-      ]
-    };
-
-    return policy;
-  }
-
-  uploadFile2(){
-    // Get our File object
-    var file = $('#file')[0].files[0];
-
-    AWS.config = new AWS.Config();
-
-    // Upload the File
-    var bucket = new AWS.S3({
-        params: {
-          Bucket: awsBucket
-        }
-      });
-
-    var params = {
-      Key: file.name,
-      ContentType: file.type,
-      Body: file
-    };
-
-    var self = this;
-    bucket.upload(params, function (err, data) {
-      debugger;
-      self.updateContent(file.name);
-      self.setState({isImageEditable: false});
-    });
-  }
-
-  uploadProgress(evt) {
-    if (evt.lengthComputable) {
-      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-      this.setState({percentComplete: percentComplete});
-    //  document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
-    } else {
-      //document.getElementById('progressNumber').innerHTML = 'unable to compute';
+    if(this.props.isListGrid){
+      this.props.setStateForContentListForColumn(this.state.contentList);
     }
-  }
-
-  uploadComplete(evt) {
-    /* This event is raised when the server send back a response */
-    alert("Done - " + evt.target.responseText);
-  }
-
-  uploadFailed(evt) {
-    alert("There was an error attempting to upload the file." + evt);
-  }
-
-  uploadCanceled(evt) {
-    alert("The upload has been canceled by the user or the browser dropped the connection.");
+    else{
+      this.props.setStateForContentList(this.state.contentList);
+    }
   }
 
   editImage(){

@@ -45,7 +45,14 @@ class ListGridTemplate extends React.Component {
     var newContentList = this.buildContentList();
 
     this.setState({contentGroupList: this.state.contentGroupList});
-    this.setStateForContentList(newContentList);
+
+    if(this.props.isListGrid){
+      this.setStateForContentListForColumn(newContentList);
+
+    }
+    else{
+      this.setStateForContentList(newContentList);
+    }
   }
 
   handleSubmit(event) {

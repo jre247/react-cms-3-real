@@ -12,7 +12,7 @@ var UtilitiesHelper = require('../helpers/utilities-helper');
 var aws = require('AWS-sdk');
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY || 'AKIAJWGRXOLBSZFVW55A';
 var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY || '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';
-var S3_BUCKET = process.env.S3_BUCKET || 'jenna-and-jason-wedding';
+var S3_BUCKET = process.env.S3_BUCKET || 'jenna-and-jason-wedding-test';
 
 // app/routes.js
 module.exports = function(app, passport) {
