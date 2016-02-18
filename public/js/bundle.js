@@ -7884,12 +7884,13 @@ var ImageUploadEdit = (function (_React$Component) {
     value: function uploadMultipleFiles() {
       var _this2 = this;
 
+      debugger;
       var files = $("#image-files")[0].files;
       if (files == null) {
         alert("No file(s) selected.");
       } else {
         this.setState({ isMultiImageUploading: true, filesLength: files.length });
-
+        debugger;
         _underscore._.each(files, function (file, f) {
           _this2.getSignedRequest(file, f);
         });
@@ -7970,13 +7971,13 @@ var ImageUploadEdit = (function (_React$Component) {
         _this3.buildUploadImageInstance(fileUrl);
       });
 
-      this.props.setStateForContentList(this.state.contentList);
-
       this.setState({
         isImageEditable: false,
         isMultiImageUploading: false,
         contentList: this.state.contentList
       });
+
+      this.props.setStateForContentList(this.state.contentList);
     }
   }, {
     key: 'buildUploadImageInstance',
