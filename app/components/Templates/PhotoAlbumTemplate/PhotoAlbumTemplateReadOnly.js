@@ -69,7 +69,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       }, propsData);
 
       return (
-        <div key={contentItem.sort_order} className="Photo" onClick={this.openModal.bind(this, index)}>
+        <div key={index} className="Photo" onClick={this.openModal.bind(this, index)}>
             <Field {...fieldPropsData} />
         </div>
       );

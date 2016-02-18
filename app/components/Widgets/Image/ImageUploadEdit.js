@@ -54,14 +54,13 @@ class ImageUploadEdit extends React.Component {
   }
 
   uploadMultipleFiles(){
-    debugger;
     var files = $("#image-files")[0].files;
     if(files == null){
         alert("No file(s) selected.");
     }
     else{
       this.setState({isMultiImageUploading: true, filesLength: files.length});
-      debugger;
+
       _.each(files, (file, f) => {
         this.getSignedRequest(file, f);
       })
@@ -149,7 +148,6 @@ class ImageUploadEdit extends React.Component {
   }
 
   buildUploadImageInstance(fileUrl){
-    debugger;
     var sortOrder = this.state.contentList.length + 1;
 
     var imageUploadFactory = new ImageUploadFactory(sortOrder, null, null);
@@ -159,7 +157,6 @@ class ImageUploadEdit extends React.Component {
     image.value = fileUrl;
 
     this.state.contentList.push(image);
-    //self.setState({contentList: this.state.contentList});
   }
 
   updateContent(url) {

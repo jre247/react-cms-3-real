@@ -4747,7 +4747,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
 
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'Photo', onClick: _this2.openModal.bind(_this2, index) },
+          { key: index, className: 'Photo', onClick: _this2.openModal.bind(_this2, index) },
           _react2.default.createElement(_Field2.default, fieldPropsData)
         );
       });
@@ -7884,13 +7884,12 @@ var ImageUploadEdit = (function (_React$Component) {
     value: function uploadMultipleFiles() {
       var _this2 = this;
 
-      debugger;
       var files = $("#image-files")[0].files;
       if (files == null) {
         alert("No file(s) selected.");
       } else {
         this.setState({ isMultiImageUploading: true, filesLength: files.length });
-        debugger;
+
         _underscore._.each(files, function (file, f) {
           _this2.getSignedRequest(file, f);
         });
@@ -7982,7 +7981,6 @@ var ImageUploadEdit = (function (_React$Component) {
   }, {
     key: 'buildUploadImageInstance',
     value: function buildUploadImageInstance(fileUrl) {
-      debugger;
       var sortOrder = this.state.contentList.length + 1;
 
       var imageUploadFactory = new _ImageUploadFactory2.default(sortOrder, null, null);
@@ -7992,7 +7990,6 @@ var ImageUploadEdit = (function (_React$Component) {
       image.value = fileUrl;
 
       this.state.contentList.push(image);
-      //self.setState({contentList: this.state.contentList});
     }
   }, {
     key: 'updateContent',
