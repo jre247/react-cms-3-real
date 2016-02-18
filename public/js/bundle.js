@@ -7872,7 +7872,6 @@ var ImageUploadEdit = (function (_React$Component) {
   }, {
     key: 'updateContent',
     value: function updateContent(url) {
-      debugger;
       this.state.contentList[this.state.contentIndex].value = url;
 
       if (this.props.isListGrid) {

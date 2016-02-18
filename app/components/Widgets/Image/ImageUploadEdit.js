@@ -82,7 +82,6 @@ class ImageUploadEdit extends React.Component {
   }
 
   updateContent(url) {
-    debugger;
     this.state.contentList[this.state.contentIndex].value = url;
 
     if(this.props.isListGrid){
