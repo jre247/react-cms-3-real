@@ -3771,12 +3771,7 @@ var ListGridTemplate = (function (_React$Component) {
       var newContentList = this.buildContentList();
 
       this.setState({ contentGroupList: this.state.contentGroupList });
-
-      if (this.props.isListGrid) {
-        this.setStateForContentListForColumn(newContentList);
-      } else {
-        this.setStateForContentList(newContentList);
-      }
+      this.setStateForContentList(newContentList);
     }
   }, {
     key: 'handleSubmit',
