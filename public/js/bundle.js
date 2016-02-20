@@ -4717,14 +4717,12 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
   }, {
     key: 'closeModal',
     value: function closeModal() {
-      this.setState({ selectedPhoto: 1 });
-      this.setState({ showModal: false });
+      this.setState({ selectedPhoto: 1, showModal: false });
     }
   }, {
     key: 'openModal',
     value: function openModal(index) {
-      this.setState({ selectedPhoto: index });
-      this.setState({ showModal: true });
+      this.setState({ selectedPhoto: index, showModal: true });
     }
   }, {
     key: 'render',
@@ -7227,43 +7225,43 @@ var FieldReadOnly = (function (_React$Component) {
       if (_FieldHelper2.default.isDescription(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_LongDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_ShortDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImage(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_ImageWidget2.default, propsData)
         );
       } else if (_FieldHelper2.default.isTitle(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_Title2.default, propsData)
         );
       } else if (_FieldHelper2.default.isUrl(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_Url2.default, propsData)
         );
       } else if (_FieldHelper2.default.isIframe(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_Iframe2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImageUpload(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { className: 'Content-item-container', key: contentItem.sort_order },
+          { className: 'Content-item-container' },
           _react2.default.createElement(_ImageUpload2.default, propsData)
         );
       } else {
@@ -7645,7 +7643,7 @@ var Image = (function (_React$Component) {
 
       if (this.props.imageSize == 'small') {
         return _react2.default.createElement('img', { className: 'Content-small-image widget image-width', src: this.props.value, alt: 'Image',
-          style: this.props.styles, onMouseHover: true });
+          style: this.props.styles });
       } else if (this.props.imageSize == 'medium') {
         return _react2.default.createElement('img', { className: 'Content-medium-image widget image-width', src: this.props.value, alt: 'Image', style: this.props.styles });
       } else {

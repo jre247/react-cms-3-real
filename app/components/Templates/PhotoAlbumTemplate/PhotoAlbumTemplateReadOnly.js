@@ -44,13 +44,11 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   closeModal() {
-    this.setState({selectedPhoto: 1});
-    this.setState({showModal: false});
+    this.setState({selectedPhoto: 1, showModal: false});
   }
 
   openModal(index) {
-    this.setState({selectedPhoto: index});
-    this.setState({showModal: true});
+    this.setState({selectedPhoto: index, showModal: true});
   }
 
   render() {
@@ -70,7 +68,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
 
       return (
         <div key={index} className="Photo" onClick={this.openModal.bind(this, index)}>
-            <Field {...fieldPropsData} />
+          <Field {...fieldPropsData} />
         </div>
       );
     });

@@ -28,49 +28,49 @@ class FieldReadOnly extends React.Component {
 
     if(FieldHelper.isDescription(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <LongDescription {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isShortDescription(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <ShortDescription {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isImage(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <ImageWidget {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isTitle(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <Title {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isUrl(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <Url {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isIframe(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <Iframe {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isImageUpload(contentItem)){
       return (
-        <div className="Content-item-container" key={contentItem.sort_order}>
+        <div className="Content-item-container">
           <ImageUpload {...propsData} />
         </div>
       );

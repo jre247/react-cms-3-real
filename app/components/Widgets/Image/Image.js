@@ -27,7 +27,7 @@ class Image extends React.Component {
     if(this.props.imageSize == 'small'){
       return (
         <img className="Content-small-image widget image-width" src={this.props.value} alt="Image"
-          style={this.props.styles} onMouseHover />
+          style={this.props.styles} />
       );
     }
     else if(this.props.imageSize == 'medium'){
