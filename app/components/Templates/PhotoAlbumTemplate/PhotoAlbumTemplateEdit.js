@@ -16,7 +16,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 2;
-    this.state = {contentList: [], isMultiUpload: false};
+    this.state = {contentList: [], isMultiUpload: false, isPageLoading: false};
     this.maxContentId;
     self = this;
   }
@@ -33,8 +33,10 @@ class PhotoAlbumTemplateEdit extends React.Component {
   }
 
   getContentListForPage(propsData){
+    this.setState({isPageLoading: true});
+
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || []});
+      self.setState({isPageLoading: false, contentList: viewmodel.contentList || []});
 
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;

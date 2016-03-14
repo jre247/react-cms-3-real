@@ -3332,7 +3332,7 @@ var BasicTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicTemplateEdit).call(this, props));
 
     _this.templateId = 1;
-    _this.state = { contentList: [], isSortingEnabled: true, changeSpacingAsRelative: false };
+    _this.state = { contentList: [], isSortingEnabled: true, changeSpacingAsRelative: false, isPageLoading: false };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -3356,8 +3356,10 @@ var BasicTemplateEdit = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -3575,6 +3577,10 @@ var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3594,7 +3600,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BasicTemplateReadOnly).call(this, props));
 
     _this.templateId = 1;
-    _this.state = { contentList: [] };
+    _this.state = { contentList: [], isPageLoading: false };
     self = _this;
     return _this;
   }
@@ -3620,8 +3626,10 @@ var BasicTemplateReadOnly = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
       });
     }
   }, {
@@ -3633,6 +3641,11 @@ var BasicTemplateReadOnly = (function (_React$Component) {
         var emptyContentProps = { editLink: this.props.editLink };
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
+        var spinnerClass = (0, _classnames2.default)({
+          'hidden': !this.state.isPageLoading,
+          'page-image-loader': true
+        });
+
         var nodes = this.state.contentList.map(function (contentItem, index) {
           var settings = contentItem.settings;
 
@@ -3655,6 +3668,11 @@ var BasicTemplateReadOnly = (function (_React$Component) {
             'div',
             { className: 'Content-container Content-centered-container' },
             _react2.default.createElement(_EditLink2.default, this.props),
+            _react2.default.createElement(
+              'div',
+              { className: spinnerClass },
+              _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
+            ),
             nodes
           )
         );
@@ -3667,7 +3685,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
 
 exports.default = BasicTemplateReadOnly;
 
-},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/Field":54,"../../Widgets/WidgetService":107,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
+},{"../../EditLink":24,"../../EmptyContent":25,"../../Widgets/Field/Field":54,"../../Widgets/WidgetService":107,"classnames":121,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3734,7 +3752,7 @@ var ListGridTemplate = (function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListGridTemplate).call(this, props));
 
-    _this.state = { contentGroupList: [], contentList: [] };
+    _this.state = { contentGroupList: [], contentList: [], isPageLoading: false };
     _this.templateId = 4;
     self = _this;
     return _this;
@@ -3753,8 +3771,10 @@ var ListGridTemplate = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
 
         self.buildContentGroupList();
         self.setStateForContentGroupList();
@@ -4025,7 +4045,7 @@ var ListTemplate = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ListTemplate).call(this, props));
 
     _this.templateId = 3;
-    _this.state = { contentList: [], changeSpacingAsRelative: false };
+    _this.state = { contentList: [], changeSpacingAsRelative: false, isPageLoading: false };
     _this.isContentListRetrieved = false;
     self = _this;
     return _this;
@@ -4044,8 +4064,10 @@ var ListTemplate = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -4399,7 +4421,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhotoAlbumTemplateEdit).call(this, props));
 
     _this.templateId = 2;
-    _this.state = { contentList: [], isMultiUpload: false };
+    _this.state = { contentList: [], isMultiUpload: false, isPageLoading: false };
     _this.maxContentId;
     self = _this;
     return _this;
@@ -4423,8 +4445,10 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
 
         var contentItemWithMaxId = _underscore._.max(viewmodel.contentList, function (contentItem) {
           return contentItem.id;
@@ -4684,7 +4708,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhotoAlbumTemplateReadOnly).call(this, props));
 
     _this.templateId = 2;
-    _this.state = { contentList: [], selectedPhoto: 1, showModal: false };
+    _this.state = { contentList: [], selectedPhoto: 1, showModal: false, isPageLoading: false };
     self = _this;
     return _this;
   }
@@ -4710,8 +4734,10 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
   }, {
     key: 'getContentListForPage',
     value: function getContentListForPage(propsData) {
+      this.setState({ isPageLoading: true });
+
       _WidgetService2.default.getContentListForPage(propsData.pageId, propsData.isEdit).then(function (viewmodel) {
-        self.setState({ contentList: viewmodel.contentList || [] });
+        self.setState({ isPageLoading: false, contentList: viewmodel.contentList || [] });
       });
     }
   }, {
@@ -6519,6 +6545,11 @@ var GridRowLayout = (function (_React$Component) {
         newSettingValue = width - originalWidth;
       }
 
+      // make sure setting value is never below 0
+      if (newSettingValue < 0) {
+        newSettingValue = 0;
+      }
+
       return newSettingValue;
     }
   }, {
@@ -7023,43 +7054,43 @@ var FieldEdit = (function (_React$Component) {
       if (_FieldHelper2.default.isDescription(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_LongDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isShortDescription(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_ShortDescription2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImage(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_ImageWidget2.default, propsData)
         );
       } else if (_FieldHelper2.default.isTitle(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_Title2.default, propsData)
         );
       } else if (_FieldHelper2.default.isUrl(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_Url2.default, propsData)
         );
       } else if (_FieldHelper2.default.isIframe(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_Iframe2.default, propsData)
         );
       } else if (_FieldHelper2.default.isImageUpload(contentItem)) {
         return _react2.default.createElement(
           'div',
-          { key: contentItem.sort_order, className: 'form-group' },
+          { key: contentItem.sort_order },
           _react2.default.createElement(_ImageUpload2.default, propsData)
         );
       } else {

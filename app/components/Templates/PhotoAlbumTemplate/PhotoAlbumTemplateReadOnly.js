@@ -19,7 +19,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 2;
-    this.state = {contentList: [], selectedPhoto: 1, showModal: false};
+    this.state = {contentList: [], selectedPhoto: 1, showModal: false, isPageLoading: false};
     self = this;
   }
   componentDidMount() {
@@ -38,8 +38,10 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
   }
 
   getContentListForPage(propsData){
+    this.setState({isPageLoading: true});
+
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || []});
+      self.setState({isPageLoading: false, contentList: viewmodel.contentList || []});
     });
   }
 

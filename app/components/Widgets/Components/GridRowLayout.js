@@ -151,6 +151,11 @@ class GridRowLayout extends React.Component {
       newSettingValue = width - originalWidth;
     }
 
+    // make sure setting value is never below 0
+    if(newSettingValue < 0){
+      newSettingValue = 0;
+    }
+
     return newSettingValue;
   }
   updateSpacingBelowSettingForAllContents(newSettingValue){

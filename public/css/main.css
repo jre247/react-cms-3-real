@@ -7419,6 +7419,12 @@ a:hover {
   padding: 20px;
   vertical-align: baseline;
 }
+.page-image-loader {
+  text-align: center;
+}
+.page-image-loader img {
+  width: 39px;
+}
 .glyphicon-remove {
   color: #a94442;
   cursor: pointer;

@@ -14,7 +14,7 @@ var self;
 class ListGridTemplate extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {contentGroupList: [], contentList: []};
+    this.state = {contentGroupList: [], contentList: [], isPageLoading: false};
     this.templateId = 4;
     self = this;
   }
@@ -29,8 +29,10 @@ class ListGridTemplate extends React.Component {
   }
 
   getContentListForPage(propsData){
+    this.setState({isPageLoading: true});
+
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || []});
+      self.setState({isPageLoading: false, contentList: viewmodel.contentList || []});
 
       self.buildContentGroupList();
       self.setStateForContentGroupList();

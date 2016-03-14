@@ -16,7 +16,7 @@ class ListTemplate extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 3;
-    this.state = {contentList: [], changeSpacingAsRelative: false};
+    this.state = {contentList: [], changeSpacingAsRelative: false, isPageLoading: false};
     this.isContentListRetrieved = false;
     self = this;
   }
@@ -30,8 +30,10 @@ class ListTemplate extends React.Component {
   }
 
   getContentListForPage(propsData){
+    this.setState({isPageLoading: true});
+
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || []});
+      self.setState({isPageLoading: false, contentList: viewmodel.contentList || []});
 
       var contentItemWithMaxId = _.max(viewmodel.contentList, function(contentItem){ return contentItem.id; });
       self.maxContentId = contentItemWithMaxId.id;

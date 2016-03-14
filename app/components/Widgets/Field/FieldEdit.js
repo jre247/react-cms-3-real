@@ -20,49 +20,49 @@ class FieldEdit extends React.Component {
 
     if(FieldHelper.isDescription(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order} >
           <LongDescription {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isShortDescription(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order} >
           <ShortDescription {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isImage(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order}>
           <ImageWidget {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isTitle(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order}>
           <Title {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isUrl(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order} >
           <Url {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isIframe(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order} >
           <Iframe {...propsData} />
         </div>
       );
     }
     else if(FieldHelper.isImageUpload(contentItem)){
       return (
-        <div key={contentItem.sort_order} className="form-group">
+        <div key={contentItem.sort_order} >
           <ImageUpload {...propsData} />
         </div>
       );

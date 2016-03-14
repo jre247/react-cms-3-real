@@ -5,13 +5,14 @@ import EmptyContent from '../../EmptyContent';
 import {_} from 'underscore';
 import EditLink from '../../EditLink';
 import WidgetService from '../../Widgets/WidgetService';
+import classNames from 'classnames';
 var self;
 
 class BasicTemplateReadOnly extends React.Component {
   constructor(props) {
     super(props);
     this.templateId = 1;
-    this.state = {contentList: []};
+    this.state = {contentList: [], isPageLoading: false};
     self = this;
   }
 
@@ -31,8 +32,10 @@ class BasicTemplateReadOnly extends React.Component {
   }
 
   getContentListForPage(propsData){
+    this.setState({isPageLoading: true});
+
     WidgetService.getContentListForPage(propsData.pageId, propsData.isEdit).then(function(viewmodel){
-      self.setState({contentList: viewmodel.contentList || []});
+      self.setState({isPageLoading: false, contentList: viewmodel.contentList || []});
     });
   }
 
@@ -44,6 +47,11 @@ class BasicTemplateReadOnly extends React.Component {
       );
     }
     else {
+      var spinnerClass = classNames({
+        'hidden': !this.state.isPageLoading,
+        'page-image-loader': true
+      });
+
       let nodes = this.state.contentList.map((contentItem, index) => {
         var settings = contentItem.settings;
 
@@ -63,6 +71,10 @@ class BasicTemplateReadOnly extends React.Component {
         <div className='Content-panel basic-template-read-only'>
           <div className="Content-container Content-centered-container">
             <EditLink {...this.props} />
+
+            <div className={spinnerClass}>
+              <img src="/css/images/ajax-loader.gif"  />
+            </div>
 
             {nodes}
           </div>
