@@ -3933,6 +3933,11 @@ var ListGridTemplate = (function (_React$Component) {
           'List-Page-Read-Only': !this.props.isEdit
         });
 
+        var spinnerClass = (0, _classnames2.default)({
+          'hidden': !this.state.isPageLoading,
+          'page-image-loader': true
+        });
+
         return _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit.bind(this) },
@@ -3946,6 +3951,11 @@ var ListGridTemplate = (function (_React$Component) {
                 'div',
                 { className: 'Content-panel List-Grid-Template' },
                 _react2.default.createElement(_EditLink2.default, this.props),
+                _react2.default.createElement(
+                  'div',
+                  { className: spinnerClass },
+                  _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
+                ),
                 _react2.default.createElement(
                   'div',
                   { className: !this.props.isEdit ? "hidden" : "" },
@@ -4257,6 +4267,11 @@ var ListTemplate = (function (_React$Component) {
           'List-Page-Read-Only': !this.props.isEdit
         });
 
+        var spinnerClass = (0, _classnames2.default)({
+          'hidden': !this.state.isPageLoading,
+          'page-image-loader': true
+        });
+
         return _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit.bind(this) },
@@ -4270,6 +4285,11 @@ var ListTemplate = (function (_React$Component) {
                 'div',
                 { className: 'Content-panel List-Grid-Template List-template' },
                 _react2.default.createElement(_EditLink2.default, this.props),
+                _react2.default.createElement(
+                  'div',
+                  { className: spinnerClass },
+                  _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
+                ),
                 _react2.default.createElement(
                   'div',
                   { className: !this.props.isEdit ? "hidden" : "" },
@@ -4818,10 +4838,20 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
           'Photo-album-container-read-only': true
         });
 
+        var spinnerClass = (0, _classnames2.default)({
+          'hidden': !this.state.isPageLoading,
+          'page-image-loader': true
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-panel' },
           _react2.default.createElement(_EditLink2.default, this.props),
+          _react2.default.createElement(
+            'div',
+            { className: spinnerClass },
+            _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
+          ),
           _react2.default.createElement(
             'div',
             { className: nodesClassName },

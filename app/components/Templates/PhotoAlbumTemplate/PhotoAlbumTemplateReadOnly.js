@@ -89,10 +89,19 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
         'Photo-album-container-read-only': true,
       });
 
+      var spinnerClass = classNames({
+        'hidden': !this.state.isPageLoading,
+        'page-image-loader': true
+      });
+
       return (
         <div className='Content-panel'>
           <EditLink {...this.props} />
 
+          <div className={spinnerClass}>
+            <img src="/css/images/ajax-loader.gif"  />
+          </div>
+          
           <div className={nodesClassName}>
             {nodes}
           </div>

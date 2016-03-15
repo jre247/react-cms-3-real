@@ -187,12 +187,21 @@ class ListTemplate extends React.Component {
         'List-Page-Read-Only': !this.props.isEdit
       });
 
+      var spinnerClass = classNames({
+        'hidden': !this.state.isPageLoading,
+        'page-image-loader': true
+      });
+
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className='List-page'>
             <div className='row List-container'>
               <div className='Content-panel List-Grid-Template List-template'>
                 <EditLink {...this.props} />
+
+                <div className={spinnerClass}>
+                  <img src="/css/images/ajax-loader.gif"  />
+                </div>
 
                 <div className={!this.props.isEdit ? "hidden" : ""}>
                   <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
