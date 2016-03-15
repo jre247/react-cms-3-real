@@ -118,7 +118,7 @@ class ListTemplate extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.state.contentList)){
+    if(_.isEmpty(this.state.contentList) && !this.state.isPageLoading){
       var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
       return (
         <div>

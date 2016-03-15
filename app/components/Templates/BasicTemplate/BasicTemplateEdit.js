@@ -9,6 +9,7 @@ import WidgetService from '../../Widgets/WidgetService';
 import API from '../../../API';
 import Sortable from '../../Widgets/Components/Sortable';
 import GridRowLayout from '../../Widgets/Components/GridRowLayout';
+import classNames from 'classnames';
 var self;
 
 class BasicTemplateEdit extends React.Component {
@@ -91,7 +92,7 @@ class BasicTemplateEdit extends React.Component {
       row_number: 1, column_number: 1
     };
 
-    if(_.isEmpty(self.state.contentList)){
+    if(_.isEmpty(self.state.contentList) && !this.state.isPageLoading){
       return (
         <div>
           <WidgetSelectList {...widgetListPropsData} />
@@ -139,6 +140,10 @@ class BasicTemplateEdit extends React.Component {
         isSortingEnabled: true
       }, this.props);
 
+      var nodesClassName = classNames({
+        'hidden': this.state.isPageLoading
+      });
+
       return(
         <div className='Content-panel basic-template-edit'>
           <div className="Content-container Content-centered-container">
@@ -158,7 +163,7 @@ class BasicTemplateEdit extends React.Component {
               </div>
             </div>
             <Sortable {...sortableProps}>
-              <div>
+              <div className={nodesClassName}>
                 {nodes}
               </div>
             </Sortable>

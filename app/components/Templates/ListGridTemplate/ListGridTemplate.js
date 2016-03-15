@@ -136,7 +136,7 @@ class ListGridTemplate extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.state.contentGroupList)){
+    if(_.isEmpty(this.state.contentGroupList) && !this.state.isPageLoading){
       var emptyContentProps = _.extend({editLink: this.props.editLink}, this.props);
 
       return (

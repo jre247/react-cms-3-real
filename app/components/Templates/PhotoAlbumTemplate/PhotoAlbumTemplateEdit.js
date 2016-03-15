@@ -10,6 +10,7 @@ import ImageFactory from '../../Widgets/Image/ImageFactory';
 import ImageUploadFactory from '../../Widgets/Image/ImageUploadFactory';
 import Sortable from '../../Widgets/Components/Sortable';
 import WidgetService from '../../Widgets/WidgetService';
+import classNames from 'classnames';
 var self;
 
 class PhotoAlbumTemplateEdit extends React.Component {
@@ -128,6 +129,11 @@ class PhotoAlbumTemplateEdit extends React.Component {
       isSortingEnabled: true
     }, this.props);
 
+    var nodesClassName = classNames({
+      'hidden': this.state.isPageLoading,
+      'Photo-album-container-read-only': true,
+    });
+
     return (
       <div className='Content-panel Photo-album-template'>
         <div className="Content-container">
@@ -150,7 +156,7 @@ class PhotoAlbumTemplateEdit extends React.Component {
 
           <div className="Photo-album-container-edit">
             <Sortable {...sortableProps}>
-              <div>
+              <div className={nodesClassName}>
                 {nodes}
               </div>
             </Sortable>

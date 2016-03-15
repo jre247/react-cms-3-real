@@ -3296,6 +3296,10 @@ var _GridRowLayout = require('../../Widgets/Components/GridRowLayout');
 
 var _GridRowLayout2 = _interopRequireDefault(_GridRowLayout);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3417,7 +3421,7 @@ var BasicTemplateEdit = (function (_React$Component) {
         row_number: 1, column_number: 1
       };
 
-      if (_underscore._.isEmpty(self.state.contentList)) {
+      if (_underscore._.isEmpty(self.state.contentList) && !this.state.isPageLoading) {
         return _react2.default.createElement(
           'div',
           null,
@@ -3465,6 +3469,10 @@ var BasicTemplateEdit = (function (_React$Component) {
           isSortingEnabled: true
         }, this.props);
 
+        var nodesClassName = (0, _classnames2.default)({
+          'hidden': this.state.isPageLoading
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-panel basic-template-edit' },
@@ -3503,7 +3511,7 @@ var BasicTemplateEdit = (function (_React$Component) {
               sortableProps,
               _react2.default.createElement(
                 'div',
-                null,
+                { className: nodesClassName },
                 nodes
               )
             ),
@@ -3527,7 +3535,7 @@ var BasicTemplateEdit = (function (_React$Component) {
 
 exports.default = BasicTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":24,"../../Widgets/Components/GridRowLayout":49,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/WidgetSelectList":105,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"react":"react","react-router":"react-router","underscore":"underscore"}],33:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":24,"../../Widgets/Components/GridRowLayout":49,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/WidgetSelectList":105,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"classnames":119,"react":"react","react-router":"react-router","underscore":"underscore"}],33:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -3620,7 +3628,7 @@ var BasicTemplateReadOnly = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (_underscore._.isEmpty(this.state.contentList)) {
+      if (_underscore._.isEmpty(this.state.contentList) && !this.state.isPageLoading) {
         var emptyContentProps = { editLink: this.props.editLink };
         return _react2.default.createElement(_EmptyContent2.default, emptyContentProps);
       } else {
@@ -3881,7 +3889,7 @@ var ListGridTemplate = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (_underscore._.isEmpty(this.state.contentGroupList)) {
+      if (_underscore._.isEmpty(this.state.contentGroupList) && !this.state.isPageLoading) {
         var emptyContentProps = _underscore._.extend({ editLink: this.props.editLink }, this.props);
 
         return _react2.default.createElement(
@@ -4172,7 +4180,7 @@ var ListTemplate = (function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      if (_underscore._.isEmpty(this.state.contentList)) {
+      if (_underscore._.isEmpty(this.state.contentList) && !this.state.isPageLoading) {
         var emptyContentProps = _underscore._.extend({ editLink: this.props.editLink }, this.props);
         return _react2.default.createElement(
           'div',
@@ -4413,6 +4421,10 @@ var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4567,6 +4579,11 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
         isSortingEnabled: true
       }, this.props);
 
+      var nodesClassName = (0, _classnames2.default)({
+        'hidden': this.state.isPageLoading,
+        'Photo-album-container-read-only': true
+      });
+
       return _react2.default.createElement(
         'div',
         { className: 'Content-panel Photo-album-template' },
@@ -4611,7 +4628,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
               sortableProps,
               _react2.default.createElement(
                 'div',
-                null,
+                { className: nodesClassName },
                 nodes
               )
             )
@@ -4635,7 +4652,7 @@ var PhotoAlbumTemplateEdit = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateEdit;
 
-},{"../../../API":1,"../../EmptyContent":24,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/Field/FieldHelper":55,"../../Widgets/Image/ImageFactory":63,"../../Widgets/Image/ImageUploadFactory":66,"../../Widgets/Image/ImageWidget":68,"../../Widgets/WidgetService":106,"react":"react","react-router":"react-router","underscore":"underscore"}],38:[function(require,module,exports){
+},{"../../../API":1,"../../EmptyContent":24,"../../Widgets/Components/Sortable":52,"../../Widgets/Field/Field":53,"../../Widgets/Field/FieldHelper":55,"../../Widgets/Image/ImageFactory":63,"../../Widgets/Image/ImageUploadFactory":66,"../../Widgets/Image/ImageWidget":68,"../../Widgets/WidgetService":106,"classnames":119,"react":"react","react-router":"react-router","underscore":"underscore"}],38:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4791,7 +4808,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
         );
       });
 
-      if (_underscore._.isEmpty(this.state.contentList)) {
+      if (_underscore._.isEmpty(this.state.contentList) && !this.state.isPageLoading) {
         return _react2.default.createElement(_EmptyContent2.default, propsData);
       } else {
         var modalProps = { modalElement: '#largeCarouselModal', showModal: this.state.showModal };

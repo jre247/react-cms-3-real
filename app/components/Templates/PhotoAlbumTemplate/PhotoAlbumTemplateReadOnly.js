@@ -76,7 +76,7 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
       );
     });
 
-    if(_.isEmpty(this.state.contentList)){
+    if(_.isEmpty(this.state.contentList) && !this.state.isPageLoading){
       return (
         <EmptyContent {...propsData} />
       );

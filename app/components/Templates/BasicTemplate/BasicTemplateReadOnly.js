@@ -40,7 +40,7 @@ class BasicTemplateReadOnly extends React.Component {
   }
 
   render() {
-    if(_.isEmpty(this.state.contentList)){
+    if(_.isEmpty(this.state.contentList) && !this.state.isPageLoading){
       var emptyContentProps = {editLink: this.props.editLink};
       return (
         <EmptyContent {...emptyContentProps} />
