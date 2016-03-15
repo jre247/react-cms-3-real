@@ -1,22 +1,23 @@
 import React from 'react';
-import NavbarStore from '../stores/NavbarStore';
-import NavbarActions from '../actions/NavbarActions';
+import AppSettingStore from '../stores/AppSettingStore';
+import AppSettingActions from '../actions/AppSettingActions';
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = NavbarStore.getState();
+    this.state = AppSettingStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   //this method will only get called when the first page route is loaded. Subsequent page route changes will
   //fire componentWillReceiveProps
   componentDidMount() {
-    NavbarStore.listen(this.onChange);
+    AppSettingStore.listen(this.onChange);
+    AppSettingActions.getAppSettings();
   }
 
   componentWillUnmount() {
-    NavbarStore.unlisten(this.onChange);
+    AppSettingStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -24,9 +25,15 @@ class Home extends React.Component {
   }
 
   render() {
+    var hashtag = this.state.appSettingsDictionary["Wedding Hashtag"];
+
     return (
       <div className="Home-content">
           <h3>Middletown, CT</h3>
+
+          <div className="wedding-hashtag">
+            {hashtag}
+          </div>
       </div>
     );
   }

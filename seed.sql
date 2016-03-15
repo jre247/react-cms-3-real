@@ -120,6 +120,8 @@ CREATE TABLE wedding_user_role
 CREATE INDEX conect_user_permission_idx ON wedding_user_role (user_id);
 
 insert into app_setting (name, value, is_active) values ('Background Image', 'http://passcdn-cf1.pass.us/bKn1Z1557788/fDjB1266150348l.jpg', true);
+insert into app_setting (name, value, is_active) values ('Wedding Hashtag', '#JandJGetHitched', true);
+
 insert into wedding_role (name, description, is_active) values ('Publisher', 'Publish Content', true);
 insert into wedding_role (name, description, is_active) values ('Admin', 'Full control', true);
 
