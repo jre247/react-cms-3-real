@@ -13,6 +13,7 @@ import Carousel from '../../Widgets/Components/Carousel/Carousel';
 import EditLink from '../../EditLink';
 import Modal from '../../Widgets/Components/Modal';
 import WidgetService from '../../Widgets/WidgetService';
+import classNames from 'classnames';
 var self;
 
 class PhotoAlbumTemplateReadOnly extends React.Component {
@@ -83,11 +84,16 @@ class PhotoAlbumTemplateReadOnly extends React.Component {
     else {
       var modalProps = {modalElement: '#largeCarouselModal', showModal: this.state.showModal};
 
+      var nodesClassName = classNames({
+        'hidden': this.state.isPageLoading,
+        'Photo-album-container-read-only': true,
+      });
+
       return (
         <div className='Content-panel'>
           <EditLink {...this.props} />
 
-          <div className="Photo-album-container-read-only">
+          <div className={nodesClassName}>
             {nodes}
           </div>
 

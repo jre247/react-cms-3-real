@@ -3644,6 +3644,10 @@ var BasicTemplateReadOnly = (function (_React$Component) {
           );
         });
 
+        var nodesClassName = (0, _classnames2.default)({
+          'hidden': this.state.isPageLoading
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-panel basic-template-read-only' },
@@ -3656,7 +3660,11 @@ var BasicTemplateReadOnly = (function (_React$Component) {
               { className: spinnerClass },
               _react2.default.createElement('img', { src: '/css/images/ajax-loader.gif' })
             ),
-            nodes
+            _react2.default.createElement(
+              'div',
+              { className: nodesClassName },
+              nodes
+            )
           )
         );
       }
@@ -3716,6 +3724,10 @@ var _EditLink2 = _interopRequireDefault(_EditLink);
 var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3907,6 +3919,12 @@ var ListGridTemplate = (function (_React$Component) {
           );
         });
 
+        var nodesClassName = (0, _classnames2.default)({
+          'hidden': this.state.isPageLoading,
+          'List-page': this.props.isEdit,
+          'List-Page-Read-Only': !this.props.isEdit
+        });
+
         return _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit.bind(this) },
@@ -3931,7 +3949,7 @@ var ListGridTemplate = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page' },
+                  { className: nodesClassName },
                   nodes
                 ),
                 _react2.default.createElement(
@@ -3956,7 +3974,7 @@ var ListGridTemplate = (function (_React$Component) {
 
 exports.default = ListGridTemplate;
 
-},{"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Field/FieldHelper":55,"../../Widgets/ListGridItem/ListGridGroup":71,"../../Widgets/ListGridItem/ListGridGroupFactory":73,"../../Widgets/Title/TitleFactory":96,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
+},{"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Field/FieldHelper":55,"../../Widgets/ListGridItem/ListGridGroup":71,"../../Widgets/ListGridItem/ListGridGroupFactory":73,"../../Widgets/Title/TitleFactory":96,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"classnames":119,"react":"react","react-router":"react-router","underscore":"underscore"}],35:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4008,6 +4026,10 @@ var _WidgetService2 = _interopRequireDefault(_WidgetService);
 var _GridRowLayout = require('../../Widgets/Components/GridRowLayout');
 
 var _GridRowLayout2 = _interopRequireDefault(_GridRowLayout);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4221,6 +4243,12 @@ var ListTemplate = (function (_React$Component) {
           }
         });
 
+        var nodesClassName = (0, _classnames2.default)({
+          'hidden': this.state.isPageLoading,
+          'List-page edit-content': this.props.isEdit,
+          'List-Page-Read-Only': !this.props.isEdit
+        });
+
         return _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit.bind(this) },
@@ -4245,7 +4273,7 @@ var ListTemplate = (function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: !this.props.isEdit ? 'List-Page-Read-Only' : 'List-page edit-content' },
+                  { className: nodesClassName },
                   nodes
                 )
               )
@@ -4270,7 +4298,7 @@ var ListTemplate = (function (_React$Component) {
 
 exports.default = ListTemplate;
 
-},{"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Components/GridRowLayout":49,"../../Widgets/Field/FieldHelper":55,"../../Widgets/ListItem/ParentListItem":78,"../../Widgets/ListItem/SubListItem":81,"../../Widgets/Title/TitleFactory":96,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"react":"react","react-router":"react-router","underscore":"underscore"}],36:[function(require,module,exports){
+},{"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Components/GridRowLayout":49,"../../Widgets/Field/FieldHelper":55,"../../Widgets/ListItem/ParentListItem":78,"../../Widgets/ListItem/SubListItem":81,"../../Widgets/Title/TitleFactory":96,"../../Widgets/WidgetService":106,"../TemplateHelper":39,"classnames":119,"react":"react","react-router":"react-router","underscore":"underscore"}],36:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -4672,6 +4700,10 @@ var _WidgetService = require('../../Widgets/WidgetService');
 
 var _WidgetService2 = _interopRequireDefault(_WidgetService);
 
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -4764,13 +4796,18 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
       } else {
         var modalProps = { modalElement: '#largeCarouselModal', showModal: this.state.showModal };
 
+        var nodesClassName = (0, _classnames2.default)({
+          'hidden': this.state.isPageLoading,
+          'Photo-album-container-read-only': true
+        });
+
         return _react2.default.createElement(
           'div',
           { className: 'Content-panel' },
           _react2.default.createElement(_EditLink2.default, this.props),
           _react2.default.createElement(
             'div',
-            { className: 'Photo-album-container-read-only' },
+            { className: nodesClassName },
             nodes
           ),
           _react2.default.createElement(
@@ -4813,7 +4850,7 @@ var PhotoAlbumTemplateReadOnly = (function (_React$Component) {
 
 exports.default = PhotoAlbumTemplateReadOnly;
 
-},{"../../../API":1,"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Components/Carousel/Carousel":41,"../../Widgets/Components/Modal":50,"../../Widgets/Field/Field":53,"../../Widgets/Field/FieldHelper":55,"../../Widgets/Image/ImageWidget":68,"../../Widgets/LongDescription/LongDescription":82,"../../Widgets/ShortDescription/ShortDescription":88,"../../Widgets/Title/Title":93,"../../Widgets/WidgetService":106,"react":"react","react-router":"react-router","underscore":"underscore"}],39:[function(require,module,exports){
+},{"../../../API":1,"../../EditLink":23,"../../EmptyContent":24,"../../Widgets/Components/Carousel/Carousel":41,"../../Widgets/Components/Modal":50,"../../Widgets/Field/Field":53,"../../Widgets/Field/FieldHelper":55,"../../Widgets/Image/ImageWidget":68,"../../Widgets/LongDescription/LongDescription":82,"../../Widgets/ShortDescription/ShortDescription":88,"../../Widgets/Title/Title":93,"../../Widgets/WidgetService":106,"classnames":119,"react":"react","react-router":"react-router","underscore":"underscore"}],39:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();

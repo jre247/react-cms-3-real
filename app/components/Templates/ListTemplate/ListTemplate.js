@@ -10,6 +10,7 @@ import TitleFactory from '../../Widgets/Title/TitleFactory';
 import EditLink from '../../EditLink';
 import WidgetService from '../../Widgets/WidgetService';
 import GridRowLayout from '../../Widgets/Components/GridRowLayout';
+import classNames from 'classnames';
 var self;
 
 class ListTemplate extends React.Component {
@@ -180,6 +181,12 @@ class ListTemplate extends React.Component {
         }
       });
 
+      var nodesClassName = classNames({
+        'hidden': this.state.isPageLoading,
+        'List-page edit-content': this.props.isEdit,
+        'List-Page-Read-Only': !this.props.isEdit
+      });
+
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className='List-page'>
@@ -191,7 +198,7 @@ class ListTemplate extends React.Component {
                   <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
                 </div>
 
-                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page edit-content'}>
+                <div className={nodesClassName}>
                   {nodes}
                 </div>
               </div>

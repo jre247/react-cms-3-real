@@ -67,6 +67,10 @@ class BasicTemplateReadOnly extends React.Component {
         );
       });
 
+      var nodesClassName = classNames({
+        'hidden': this.state.isPageLoading
+      });
+
       return (
         <div className='Content-panel basic-template-read-only'>
           <div className="Content-container Content-centered-container">
@@ -76,7 +80,9 @@ class BasicTemplateReadOnly extends React.Component {
               <img src="/css/images/ajax-loader.gif"  />
             </div>
 
-            {nodes}
+            <div className={nodesClassName}>
+              {nodes}
+            </div>
           </div>
         </div>
       );

@@ -9,6 +9,7 @@ import {_} from 'underscore';
 import TitleFactory from '../../Widgets/Title/TitleFactory';
 import EditLink from '../../EditLink';
 import WidgetService from '../../Widgets/WidgetService';
+import classNames from 'classnames';
 var self;
 
 class ListGridTemplate extends React.Component {
@@ -168,6 +169,12 @@ class ListGridTemplate extends React.Component {
         );
       });
 
+      var nodesClassName = classNames({
+        'hidden': this.state.isPageLoading,
+        'List-page': this.props.isEdit,
+        'List-Page-Read-Only': !this.props.isEdit
+      });
+
       return (
         <form onSubmit={this.handleSubmit.bind(this)}>
           <div className='List-page'>
@@ -179,7 +186,7 @@ class ListGridTemplate extends React.Component {
                   <button className="btn btn-primary" onClick={this.addParentListItem.bind(this)}>Add Group</button>
                 </div>
 
-                <div className={!this.props.isEdit ? 'List-Page-Read-Only' : 'List-page'}>
+                <div className={nodesClassName}>
                   {nodes}
                 </div>
 
