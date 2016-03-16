@@ -8021,6 +8021,12 @@ a:hover {
   margin: 0 auto;
   width: 100%;
 }
+.content-url {
+  width: 500px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .non-resizable-container {
   display: inline-block;
 }
