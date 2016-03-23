@@ -23,19 +23,11 @@ class Url extends React.Component {
   }
 
   static formatValue(contentValue){
-    var wwwProtocol = "www.";
-    var httpProtocol = "http://";
+    var protocol = "http://";
 
     //if www is missing and http is not present
-    if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) < 0)
-      return wwwProtocol + contentValue;
-
-    // if www is missing, but http is present
-    if(contentValue.indexOf(wwwProtocol) < 0 && contentValue.indexOf(httpProtocol) >= 0){
-      var valueSplit = contentValue.split(httpProtocol);
-      var valueFormatted = valueSplit[0] + wwwProtocol + valueSplit[1];
-      return valueFormatted;
-    }
+    if(contentValue.indexOf(protocol) < 0)
+      return protocol + contentValue;
 
     return contentValue;
   }
